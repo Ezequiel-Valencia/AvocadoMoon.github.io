@@ -15,8 +15,6 @@ For CSS either
     - An extension of css with the files being seperate from css
     - Use npx command to run Sass since its saved locally
 
-https://hrishikeshpathak.com/blog/svelte-gh-pages/
-
 https://kit.svelte.dev/docs/adapters
 
 https://kit.svelte.dev/docs/adapter-static

@@ -1,38 +1,24 @@
-# create-svelte
+Tech Stack
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+For dealing with JS and HTML svelte will be used.
 
-## Creating a project
+- Vite
+    - Used for bundling the different svelte and other files together
+    - When needed, "npm run build" allows for the code to be processed for production, serving native HTML, CSS, and Javascript.
+    - https://youtu.be/KCrXgy8qtjM
 
-If you're seeing this, you've probably already done this step. Congrats!
+For CSS either
+- Tailwind
+    - Allows for css to be written directly into the HTML 
+    - HTML code can become very bloated
+- Sass
+    - An extension of css with the files being seperate from css
+    - Use npx command to run Sass since its saved locally
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+https://hrishikeshpathak.com/blog/svelte-gh-pages/
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+https://kit.svelte.dev/docs/adapters
 
-## Developing
+https://kit.svelte.dev/docs/adapter-static
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

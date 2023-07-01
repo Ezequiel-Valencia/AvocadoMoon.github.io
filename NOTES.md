@@ -14,7 +14,10 @@ For CSS either
 - Sass
     - An extension of css with the files being seperate from css
     - Use npx command to run Sass since its saved locally
-
+    - It just works with svelte. All that is required is for the sass package to be installed. Then simply just import the sass file into the svelte component.
+    - https://github.com/svelte-add/scss
+    - https://sveltesociety.dev/templates#adders
+    - https://kit.svelte.dev/docs/integrations#adders
 https://kit.svelte.dev/docs/adapters
 
 https://kit.svelte.dev/docs/adapter-static

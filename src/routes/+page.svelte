@@ -1,70 +1,109 @@
-<div>
-  <h1>Ezequiel Valencia</h1>
-  <dl>
-    <dt id="about_me_dt">
-      <a href="/about_me">About Me</a>
-    </dt>
-    <dt id="school_dt">
-      <a href="/school">Education Projects</a>
-    </dt>
-    <dt id="personal_dt">
-      <a href="/personal_projects">Personal Projects</a>
-    </dt>
-    <dt id="company_dt">
-      <a href="/company">Company Projects</a>
-    </dt>
-  </dl>
+<script lang="ts">
+  const nRows = 3;
+  const nCols = 4;
+  /*
+  Trying to create reactive elements using classes is to much of a pain.
+  Svelte only seems to recognize top level abstraction elements, and does not bother with 
+  reactivity of nested class objects
+
+  */
+
+  class Channel {
+    channelImage;
+    gifImage;
+    currentImage = '';
+    hover = false;
+
+    constructor(
+      channelImage = "/Channel Covers/covers/no-signal.png",
+      gifImage = "/Channel Covers/no signal.gif"
+    ) {
+      this.channelImage = channelImage;
+      this.gifImage = gifImage;
+      this.currentImage = channelImage;
+    }
+    staticImage() {
+      this.currentImage = '/Channel Covers/covers/no-signal.png';
+      this.hover = false;
+      console.log(this.hover);
+    }
+    playgif(event: PointerEvent) {
+      this.currentImage = '/Channel Covers/no signal.gif';
+      this.hover = true;
+      console.log(this.hover);
+      console.log(event.target.id)
+    }
+  }
+  const channelData: { coverImage: string; gifImage: string }[] = [];
+
+  let channels: Channel[] = [];
+
+  // Fill channels with all the different channels available
+  for (let index = 0; index < nRows * nCols; index++) {
+    index < channelData.length
+      ? channels.push(
+          new Channel(
+            channelData[index].coverImage,
+            channelData[index].gifImage
+          )
+        )
+      : channels.push(new Channel());
+  }
+
+  $: channels;
+</script>
+
+<div id="mainDiv">
+  <div id="grid-container">
+    {#each channels as currentChannel, index}
+      <div class="channel-container">
+        <div
+          on:pointerenter={currentChannel.playgif}
+          on:pointerleave={currentChannel.staticImage}
+          class="channel-box"
+          id="channelBox-{index}"
+        >
+          {#if currentChannel.hover}
+          <img src={currentChannel.currentImage} alt="GIF" class="gif" />
+          {/if}
+        </div>
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style lang="scss">
-  // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Border-image_generator
-  @mixin textBorder($borderIcon: DarkGrey, $slice: 80, $repeat: repeat, $textColor: aqua) {
-    border: 15px solid;
-    border-width: 1vw;
-    border-image-source: $borderIcon;
-    border-image-repeat: $repeat;
-    border-image-slice: $slice;
-    a:hover {
-      color: $textColor;
-    }
+  $channelGridHeight: 80vh;
+  #mainDiv {
+    height: 100vh;
+    width: 100vw;
   }
 
-  div {
-    padding-left: 70vw;
-    padding-top: 30vh;
+  #grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    height: $channelGridHeight;
   }
-  dl {
+
+  .channel-container {
+    background-color: #f1f1f1;
     text-align: center;
-  }
-  dt {
-    padding: 1%;
-  }
-
-  a {
-    color:orangered;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    padding: 5px;
+    border-radius: 10px;
+    display: inline-block;
   }
 
-  #about_me_dt:hover {
-    @include textBorder($borderIcon: url('/Text-borders/wet-leaf.png'));
+  .channel-container:hover {
+    background: linear-gradient(skyblue, blue);
   }
 
-  #company_dt:hover{
-    @include textBorder(linear-gradient(90deg, red, blue), $slice: 1, $repeat: auto)
-  }
+  .channel-box {
+    padding: 2px;
+    height: 100%;
 
-  #school_dt:hover{
-        // fds
-  }
-
-
-
-  h1 {
-    text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 2em;
-    background: -webkit-linear-gradient(#e6912f, #e6442f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    border-radius: 10px;
+    background: black;
   }
 </style>

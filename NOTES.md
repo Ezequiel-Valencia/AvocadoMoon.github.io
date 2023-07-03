@@ -22,4 +22,5 @@ https://kit.svelte.dev/docs/adapters
 
 https://kit.svelte.dev/docs/adapter-static
 
+https://stackoverflow.com/questions/64634996/dom-not-updating-when-object-is-changed
 

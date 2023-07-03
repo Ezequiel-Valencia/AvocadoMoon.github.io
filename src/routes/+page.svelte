@@ -5,52 +5,41 @@
   Trying to create reactive elements using classes is to much of a pain.
   Svelte only seems to recognize top level abstraction elements, and does not bother with 
   reactivity of nested class objects
-
   */
-
-  class Channel {
-    channelImage;
-    gifImage;
-    currentImage = '';
-    hover = false;
-
-    constructor(
-      channelImage = "/Channel Covers/covers/no-signal.png",
-      gifImage = "/Channel Covers/no signal.gif"
-    ) {
-      this.channelImage = channelImage;
-      this.gifImage = gifImage;
-      this.currentImage = channelImage;
+  
+  // Needs to be initalized with some form of variables or else compiler throws fit
+  let channels: { coverImage: string; gifImage: string, currentImage: string }[] = [
+    {
+      coverImage: '/Channel Covers/covers/no-signal.png',
+      gifImage: '/Channel Covers/no signal.gif',
+      currentImage: ''
     }
-    staticImage() {
-      this.currentImage = '/Channel Covers/covers/no-signal.png';
-      this.hover = false;
-      console.log(this.hover);
-    }
-    playgif(event: PointerEvent) {
-      this.currentImage = '/Channel Covers/no signal.gif';
-      this.hover = true;
-      console.log(this.hover);
-      console.log(event.target.id)
-    }
-  }
-  const channelData: { coverImage: string; gifImage: string }[] = [];
+  ];
+  const channelPriorLength = channels.length
 
-  let channels: Channel[] = [];
-
-  // Fill channels with all the different channels available
+  // Fill channels with default if still space
   for (let index = 0; index < nRows * nCols; index++) {
-    index < channelData.length
-      ? channels.push(
-          new Channel(
-            channelData[index].coverImage,
-            channelData[index].gifImage
-          )
-        )
-      : channels.push(new Channel());
+    index < ((nRows * nCols) - channelPriorLength)
+      ? channels.push({coverImage: '/Channel Covers/covers/no-signal.png', gifImage: '/Channel Covers/no signal.gif', currentImage: ''})
+      : null;
+    channels[index].currentImage = channels[index].coverImage
   }
 
-  $: channels;
+
+  class ChannelFunctions {
+    staticImage(event: PointerEvent, id: number) {
+      channels[id].currentImage = channels[id].coverImage;
+    }
+    playgif(event: PointerEvent, id: number) {
+      channels[id].currentImage = channels[id].gifImage;
+    }
+  }
+
+  const channelFunctions = new ChannelFunctions();
+
+  
+
+  
 </script>
 
 <div id="mainDiv">
@@ -58,14 +47,12 @@
     {#each channels as currentChannel, index}
       <div class="channel-container">
         <div
-          on:pointerenter={currentChannel.playgif}
-          on:pointerleave={currentChannel.staticImage}
+          on:pointerenter={(e) => channelFunctions.playgif(e, index)}
+          on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
           class="channel-box"
           id="channelBox-{index}"
         >
-          {#if currentChannel.hover}
-          <img src={currentChannel.currentImage} alt="GIF" class="gif" />
-          {/if}
+          <img src={currentChannel.currentImage} alt="Channel covers" class="channel-cover" />
         </div>
       </div>
     {/each}
@@ -101,9 +88,14 @@
 
   .channel-box {
     padding: 2px;
-    height: 100%;
+    height: 80%;
 
     border-radius: 10px;
     background: black;
+  }
+  .channel-cover{
+    height: 100%;
+    width:min-content;
+    object-fit:contain;
   }
 </style>

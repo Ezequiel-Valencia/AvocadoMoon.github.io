@@ -1,6 +1,6 @@
 <script lang="ts">
-  const nRows = 3;
-  const nCols = 4;
+  const nRows = 4;
+  const nCols = 3;
   /*
   Trying to create reactive elements using classes is to much of a pain.
   Svelte only seems to recognize top level abstraction elements, and does not bother with 
@@ -62,7 +62,7 @@
           <img
             src={currentChannel.currentImage}
             alt="Channel covers"
-            class="channel-cover"
+            class="channel-image"
           />
         </div>
       </div>
@@ -74,28 +74,38 @@
 </div>
 
 <style lang="scss">
+  $border-radius: 40px;
   #mainDiv {
     height: 100vh;
     width: 100vw;
-    background: url('/wi-background.png');
+    // background: url('/wi-background.png');
+    background-color: rgb(0, 119, 255);
+    padding: 0%;
+    position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
     cursor: url("/Cursors/Wii-Curso-plain.png"), auto;
+
+    // covers whole screen
+    top:0px;
+    left:0px;
+    z-index:1000;
   }
 
   #grid-container {
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 10px;
     max-height: 80vh;
     max-width: 100vw;
+    padding: 1%;
   }
 
   .channel-container {
     background-color: #f1f1f1;
     text-align: center;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: $border-radius;
     max-height: 20vh;
     gap: 10px;
   }
@@ -109,14 +119,15 @@
     padding: 2px;
     height: 100%;
 
-    border-radius: 10px;
+    border-radius: $border-radius;
     background: black;
   }
 
-  .channel-cover {
+  .channel-image {
     object-fit: cover;
     height: 100%;
-    width: 100%
+    width: 100%;
+    border-radius: 40px;
   }
 
   

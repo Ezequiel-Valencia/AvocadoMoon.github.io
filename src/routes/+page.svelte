@@ -93,41 +93,49 @@
 
   #grid-container {
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 0fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
+    text-align: center;
+    justify-content: center;
+    gap: 1%;
     max-height: 80vh;
     max-width: 100vw;
-    padding: 1%;
+    padding: 1.5%;
   }
 
   .channel-container {
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 5px;
+    padding: 1px;
     border-radius: $border-radius;
-    max-height: 20vh;
-    gap: 10px;
+    max-height: 25vh;
+    max-width: 20vw;
+    text-align: center;
   }
 
   .channel-container:hover {
-    background: linear-gradient(skyblue, blue);
+    // background: linear-gradient(skyblue, blue);
+    box-shadow: 0px 0px 100px 100px lightblue inset;
   }
 
 
   .channel-box {
     padding: 2px;
-    height: 100%;
+    height: 20vh;
+    width: 19.85vw;
 
     border-radius: $border-radius;
-    background: black;
   }
+
+  .channel-box:hover{
+    box-shadow: 0px 0px 10px 10vh lightblue inset;
+  }
+
 
   .channel-image {
     object-fit: cover;
     height: 100%;
     width: 100%;
     border-radius: 40px;
+    text-align: center;
   }
 
   

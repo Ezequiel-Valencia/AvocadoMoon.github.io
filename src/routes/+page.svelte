@@ -8,11 +8,12 @@
   */
   
   // Needs to be initalized with some form of variables or else compiler throws fit
-  let channels: { coverImage: string; gifImage: string, currentImage: string, hover: boolean }[] = [
+  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean }[] = [
     {
       coverImage: '/Channel Covers/covers/no-signal.png',
       gifImage: '/Channel Covers/no signal.gif',
       currentImage: '',
+      focused: false,
       hover: false
     }
   ];
@@ -21,10 +22,10 @@
   // Fill channels with default if still space
   for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-      ? channels.push({coverImage: '/Channel Covers/covers/no-signal.png', gifImage: '/Channel Covers/no signal.gif', currentImage: '', hover:false})
+      ? channels.push({coverImage: '/Channel Covers/covers/no-signal.png', gifImage: '/Channel Covers/no signal.gif', currentImage: '', hover:false, focused:false})
       : null;
     channels[index].currentImage = channels[index].coverImage
-  }
+  };
 
 
   class ChannelFunctions {
@@ -40,12 +41,29 @@
       channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
     }
 
-  }
+    zoom(e: MouseEvent, id:number){
+      console.log("Zoomed")
+      let node = document.getElementById("channelBox-" + id)
+      function zoomIn(duration: number){
+        node ? node.style.transition = '.5s' : null;
+        node ? node.style.transform = "scale(1.5)": null;
+      }
 
+      function zoomOut(duration: number){
+        return {
+          duration,
+          css: 'transform: scale(1)'
+        }
+      }
+
+      let duration = 1
+      return channels[id].focused ? zoomIn(duration * 1.2) : zoomOut(duration) 
+    }
+  };
   const channelFunctions = new ChannelFunctions();
 
-  
-
+  // https://www.w3schools.com/howto/howto_css_zoom_hover.asp
+  // https://svelte.dev/repl/2cf17ac3b4ea47a0ade11361c242e068?version=3.29.4
 
 </script>
 
@@ -53,11 +71,16 @@
   <div id="grid-container">
     {#each channels as currentChannel, index}
       <div class="channel-container">
+        {#key currentChannel.focused}
         <div
           on:pointerenter={(e) => channelFunctions.playgif(e, index)}
           on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
+          on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.zoom(e, index)}}
           class="channel-box"
           id="channelBox-{index}"
+          role="tab"
+          aria-controls="tabpanel-{index}"
+          tabindex="{index}"
         >
           <img
             src={currentChannel.currentImage}
@@ -65,6 +88,7 @@
             class="channel-image"
           />
         </div>
+      {/key}
       </div>
     {/each}
   </div>

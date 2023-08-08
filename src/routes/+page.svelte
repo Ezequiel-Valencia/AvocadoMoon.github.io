@@ -45,8 +45,18 @@
       console.log("Zoomed")
       let node = document.getElementById("channelBox-" + id)
       function zoomIn(duration: number){
-        node ? node.style.transition = '.5s' : null;
-        node ? node.style.transform = "scale(1.5)": null;
+        node ? node.style.position = "fixed": null;
+        node ? node.style.left = "50%": null;
+        node ? node.style.top = "50%": null;
+        node ? node.style.transform = "translate(-50%, -50%)": null;
+        node ? node.style.width = '100vw' : null;
+        node ? node.style.height = '100vh' : null;
+        node ? node.style.transition = 'all 2s ease-in-out' : null;
+
+        // node ? node.classList.remove("channel-container"): null;
+        // node ? node.classList.add("big-channel-container"): null;
+
+
       }
 
       function zoomOut(duration: number){
@@ -70,17 +80,18 @@
 <div id="mainDiv">
   <div id="grid-container">
     {#each channels as currentChannel, index}
-      <div class="channel-container">
+      <div 
+      on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.zoom(e, index)}}
+      role="tab"
+      aria-controls="tabpanel-{index}"
+      tabindex="{index}"
+      class="channel-container">
         {#key currentChannel.focused}
         <div
           on:pointerenter={(e) => channelFunctions.playgif(e, index)}
           on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
-          on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.zoom(e, index)}}
           class="channel-box"
           id="channelBox-{index}"
-          role="tab"
-          aria-controls="tabpanel-{index}"
-          tabindex="{index}"
         >
           <img
             src={currentChannel.currentImage}
@@ -89,7 +100,18 @@
           />
         </div>
       {/key}
+
       </div>
+
+    {/each}
+
+    {#each channels as currentChannel, index}
+
+
+    <div class="center-channel-copy">
+
+    </div>
+      
     {/each}
   </div>
   <div id='meta-data'>
@@ -112,7 +134,6 @@
     // covers whole screen
     top:0px;
     left:0px;
-    z-index:1000;
   }
 
   #grid-container {
@@ -127,12 +148,23 @@
     padding: 1.5%;
   }
 
+  .big-channel-container{
+    width: 100vw;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    position:fixed;
+    transform: translate(-50%, -50%);
+    -webkit-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+  }
+
   .channel-container {
     padding: 1px;
     border-radius: $border-radius;
     max-height: 25vh;
     max-width: 20vw;
-    text-align: center;
+    // text-align: center;
   }
 
   .channel-container:hover {

@@ -41,6 +41,8 @@
       channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
     }
 
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+
     zoom(e: MouseEvent, id:number){
       console.log("Zoomed")
       let node = document.getElementById("channelBox-" + id)
@@ -51,7 +53,9 @@
         node ? node.style.transform = "translate(-50%, -50%)": null;
         node ? node.style.width = '100vw' : null;
         node ? node.style.height = '100vh' : null;
-        node ? node.style.transition = 'all 2s ease-in-out' : null;
+        node ? node.style.transition = 'all 1s ease-in-out' : null;
+        node ? node.style.zIndex = '50' : null;
+
 
         // node ? node.classList.remove("channel-container"): null;
         // node ? node.classList.add("big-channel-container"): null;
@@ -86,7 +90,6 @@
       aria-controls="tabpanel-{index}"
       tabindex="{index}"
       class="channel-container">
-        {#key currentChannel.focused}
         <div
           on:pointerenter={(e) => channelFunctions.playgif(e, index)}
           on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
@@ -98,20 +101,20 @@
             alt="Channel covers"
             class="channel-image"
           />
+
+          <div
+            class="channel-bar">
+
+            <button class="menu-button" id="mbutton-{index}">Menu</button>
+
+            <button class="play-button" id="pbutton-{index}">Play</button>
+            
+          </div>
+
         </div>
-      {/key}
 
       </div>
 
-    {/each}
-
-    {#each channels as currentChannel, index}
-
-
-    <div class="center-channel-copy">
-
-    </div>
-      
     {/each}
   </div>
   <div id='meta-data'>
@@ -121,6 +124,9 @@
 
 <style lang="scss">
   $border-radius: 40px;
+  $channel-button-height: 40%;
+  $channel-button-width: 40%;
+  $channel-button-offset: -5%;
   #mainDiv {
     height: 100vh;
     width: 100vw;
@@ -146,6 +152,35 @@
     max-height: 80vh;
     max-width: 100vw;
     padding: 1.5%;
+  }
+
+  .channel-bar{
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    height: 15%;
+    width: 100%;
+    bottom: 15%;
+    display:block;
+  }
+
+  .menu-button{
+    position: relative;
+    height: $channel-button-height;
+    width: $channel-button-width;
+    left: $channel-button-offset;
+    text-align: center;
+    top: 20%;
+
+  }
+
+  .play-button{
+    position: relative;
+    height: $channel-button-height;
+    width: $channel-button-width;
+    right: $channel-button-offset;
+    text-align: center;
+    top: 20%;
   }
 
   .big-channel-container{
@@ -177,7 +212,7 @@
     padding: 2px;
     height: 20vh;
     width: 19.85vw;
-
+    overflow: hidden;
     border-radius: $border-radius;
   }
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import {fade} from 'svelte/transition'
   const nRows = 4;
   const nCols = 3;
   /*
@@ -27,6 +28,12 @@
     channels[index].currentImage = channels[index].coverImage
   };
 
+  function focus(index: number, zIndex: string){
+    let node = document.getElementById("channelBox-" + index);
+    node ? node.style.zIndex = zIndex: null;
+    console.log(node);
+  }
+
 
   class ChannelFunctions {
     staticImage(event: PointerEvent, id: number) {
@@ -43,18 +50,17 @@
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 
-    zoom(e: MouseEvent, id:number){
-      console.log("Zoomed")
+    zoom(e: any, id:number){
       let node = document.getElementById("channelBox-" + id)
       function zoomIn(duration: number){
-        node ? node.style.position = "fixed": null;
-        node ? node.style.left = "50%": null;
-        node ? node.style.top = "50%": null;
-        node ? node.style.transform = "translate(-50%, -50%)": null;
-        node ? node.style.width = '100vw' : null;
-        node ? node.style.height = '100vh' : null;
-        node ? node.style.transition = 'all 1s ease-in-out' : null;
-        node ? node.style.zIndex = '50' : null;
+        // node ? node.style.position = "fixed": null;
+        // node ? node.style.left = "50%": null;
+        // node ? node.style.top = "50%": null;
+        // node ? node.style.transform = "translate(-50%, -50%)": null;
+        // node ? node.style.width = '100vw' : null;
+        // node ? node.style.height = '100vh' : null;
+        // node ? node.style.transition = 'all 1s ease-in-out' : null;
+        // node ? node.style.zIndex = '50' : null;
 
 
         // node ? node.classList.remove("channel-container"): null;
@@ -64,10 +70,12 @@
       }
 
       function zoomOut(duration: number){
-        return {
-          duration,
-          css: 'transform: scale(1)'
-        }
+        node ? node.style.zIndex = '50' : null;
+        
+        // return {
+        //   duration,
+        //   css: 'transform: scale(1)'
+        // }
       }
 
       let duration = 1
@@ -85,7 +93,7 @@
   <div id="grid-container">
     {#each channels as currentChannel, index}
       <div 
-      on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.zoom(e, index)}}
+      on:mousedown={(e) => {currentChannel.focused = true}}
       role="tab"
       aria-controls="tabpanel-{index}"
       tabindex="{index}"
@@ -93,24 +101,32 @@
         <div
           on:pointerenter={(e) => channelFunctions.playgif(e, index)}
           on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
-          class="channel-box"
+          class={currentChannel.focused ? "big-channel-container": "channel-box"}
           id="channelBox-{index}"
+          
+          on:animationstart={(e) => focus(index, "50")}
+          on:animationend={(e) => focus(index, "1")}
+          
         >
           <img
             src={currentChannel.currentImage}
             alt="Channel covers"
             class="channel-image"
           />
-
+          
+          {#if currentChannel.focused}
           <div
             class="channel-bar">
 
-            <button class="menu-button" id="mbutton-{index}">Menu</button>
+            <button 
+            on:click={(e) => {currentChannel.focused = false;}}
+            class="menu-button"
+            id="mbutton-{index}">Menu</button>
 
             <button class="play-button" id="pbutton-{index}">Play</button>
-            
+          
           </div>
-
+          {/if}
         </div>
 
       </div>
@@ -162,6 +178,7 @@
     width: 100%;
     bottom: 15%;
     display:block;
+    border-radius: $border-radius;
   }
 
   .menu-button{
@@ -184,14 +201,17 @@
   }
 
   .big-channel-container{
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
     left: 50%;
     top: 50%;
-    position:fixed;
-    transform: translate(-50%, -50%);
-    -webkit-transition: all 2s ease-in-out;
-    transition: all 2s ease-in-out;
+    max-width: 100vw;
+    max-height: 100vh;
+    transform: translate(-50%,-50%);
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    transition: all 1s;
+    border-radius: $border-radius;
   }
 
   .channel-container {
@@ -214,6 +234,18 @@
     width: 19.85vw;
     overflow: hidden;
     border-radius: $border-radius;
+    transition: all 1s;
+    z-index: 1;
+    animation: z-high 1s linear;
+  }
+
+  @keyframes z-high{
+    0%{
+      z-index: 100;
+    }
+    100%{
+      z-index: 100;
+    }
   }
 
   .channel-box:hover{

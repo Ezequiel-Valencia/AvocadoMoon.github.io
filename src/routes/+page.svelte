@@ -1,5 +1,6 @@
 <script lang="ts">
   import {fade} from 'svelte/transition'
+  import Channels from './channels.svelte';
   const nRows = 4;
   const nCols = 3;
   /*
@@ -11,8 +12,8 @@
   // Needs to be initalized with some form of variables or else compiler throws fit
   let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean }[] = [
     {
-      coverImage: '/Channel Covers/covers/no-signal.png',
-      gifImage: '/Channel Covers/no signal.gif',
+      coverImage: '/Channel Covers/no signal low con.gif',
+      gifImage: '/Channel Covers/no signal low con.gif',
       currentImage: '',
       focused: false,
       hover: false
@@ -23,7 +24,7 @@
   // Fill channels with default if still space
   for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-      ? channels.push({coverImage: '/Channel Covers/covers/no-signal.png', gifImage: '/Channel Covers/no signal.gif', currentImage: '', hover:false, focused:false})
+      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false})
       : null;
     channels[index].currentImage = channels[index].coverImage
   };
@@ -50,37 +51,6 @@
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 
-    zoom(e: any, id:number){
-      let node = document.getElementById("channelBox-" + id)
-      function zoomIn(duration: number){
-        // node ? node.style.position = "fixed": null;
-        // node ? node.style.left = "50%": null;
-        // node ? node.style.top = "50%": null;
-        // node ? node.style.transform = "translate(-50%, -50%)": null;
-        // node ? node.style.width = '100vw' : null;
-        // node ? node.style.height = '100vh' : null;
-        // node ? node.style.transition = 'all 1s ease-in-out' : null;
-        // node ? node.style.zIndex = '50' : null;
-
-
-        // node ? node.classList.remove("channel-container"): null;
-        // node ? node.classList.add("big-channel-container"): null;
-
-
-      }
-
-      function zoomOut(duration: number){
-        node ? node.style.zIndex = '50' : null;
-        
-        // return {
-        //   duration,
-        //   css: 'transform: scale(1)'
-        // }
-      }
-
-      let duration = 1
-      return channels[id].focused ? zoomIn(duration * 1.2) : zoomOut(duration) 
-    }
   };
   const channelFunctions = new ChannelFunctions();
 
@@ -120,10 +90,10 @@
 
             <button 
             on:click={(e) => {currentChannel.focused = false;}}
-            class="menu-button"
+            class="menu-button channel-buttons"
             id="mbutton-{index}">Menu</button>
 
-            <button class="play-button" id="pbutton-{index}">Play</button>
+            <button class="play-button channel-buttons" id="pbutton-{index}">Start</button>
           
           </div>
           {/if}
@@ -133,9 +103,19 @@
 
     {/each}
   </div>
-  <div id='meta-data'>
+  
+  <div
+  id="menu-bar">
 
+    <img
+    id="menu-svg"
+    src="wii bar final.png"
+    alt="wii bar"
+    />
+
+  
   </div>
+
 </div>
 
 <style lang="scss">
@@ -143,11 +123,12 @@
   $channel-button-height: 40%;
   $channel-button-width: 40%;
   $channel-button-offset: -5%;
+  $channel-view-height: 80vh;
   #mainDiv {
     height: 100vh;
     width: 100vw;
     // background: url('/wi-background.png');
-    background-color: rgb(0, 119, 255);
+    background-color: rgb(30, 85, 187);
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
@@ -158,6 +139,14 @@
     left:0px;
   }
 
+  #menu-svg{
+    position: fixed;
+    z-index: 900;
+    height: 25%;
+    bottom: 0%;
+    width: 100%;
+  }
+
   #grid-container {
     display:grid;
     grid-template-columns: repeat(4, 0fr);
@@ -165,9 +154,22 @@
     text-align: center;
     justify-content: center;
     gap: 1%;
-    max-height: 80vh;
+    max-height: $channel-view-height;
     max-width: 100vw;
     padding: 1.5%;
+  }
+
+  #menu-bar{
+    position: fixed;
+    height: 100vh - $channel-view-height;
+    width: 100vw;
+    bottom: 100%; 
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    // background-color: white;
   }
 
   .channel-bar{

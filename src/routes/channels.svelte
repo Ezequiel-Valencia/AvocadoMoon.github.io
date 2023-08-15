@@ -11,5 +11,10 @@
     // 2). Calculate exactly where the edge of the screen is, and then use that to determine where the edges go
 
     // 3). Calculate edges with regards to nav bar at the bottom
+
+    
+
     
 </script>
+
+

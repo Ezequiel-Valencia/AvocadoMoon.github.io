@@ -12,8 +12,8 @@
   // Needs to be initalized with some form of variables or else compiler throws fit
   let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean }[] = [
     {
-      coverImage: '/Channel Covers/no signal low con.gif',
-      gifImage: '/Channel Covers/no signal low con.gif',
+      coverImage: '/Channel Covers/about me cover.png',
+      gifImage: '/Channel Covers/about me cover.png',
       currentImage: '',
       focused: false,
       hover: false
@@ -32,7 +32,8 @@
   function focus(index: number, zIndex: string){
     let node = document.getElementById("channelBox-" + index);
     node ? node.style.zIndex = zIndex: null;
-    console.log(node);
+    let menuNode = document.getElementById("menu-bar");
+    menuNode ? menuNode.style.zIndex = "-20": null;
   }
 
 
@@ -49,6 +50,17 @@
       channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
     }
 
+    playHoverSound(event: MouseEvent){
+      let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
+      audio.play();
+    }
+
+    playClickSound(even: MouseEvent){
+      let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
+      clickAudio.play();
+      console.log("Click")
+    }
+
     // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 
   };
@@ -63,7 +75,8 @@
   <div id="grid-container">
     {#each channels as currentChannel, index}
       <div 
-      on:mousedown={(e) => {currentChannel.focused = true}}
+      on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.playClickSound(e);}}
+      on:mouseenter={(e) => {channelFunctions.playHoverSound(e)}}
       role="tab"
       aria-controls="tabpanel-{index}"
       tabindex="{index}"
@@ -80,6 +93,7 @@
         >
           <img
             src={currentChannel.currentImage}
+            id="channel-image-{index}"
             alt="Channel covers"
             class="channel-image"
           />
@@ -116,6 +130,14 @@
   
   </div>
 
+  <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
+
+  <!-- https://github.com/danintosh/Wii-Menu-HTML/blob/main/bgm2.wav -->
+  <!-- https://archive.org/details/all-wii-sounds/Click.wav -->
+  <audio src="/Audio/bgm.wav" autoplay loop></audio>
+
+  <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
+
 </div>
 
 <style lang="scss">
@@ -127,8 +149,11 @@
   #mainDiv {
     height: 100vh;
     width: 100vw;
-    // background: url('/wi-background.png');
-    background-color: rgb(30, 85, 187);
+    background: url('/Backgrounds/Waterfall.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    // background-color: rgb(9, 80, 33);
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
@@ -141,8 +166,7 @@
 
   #menu-svg{
     position: fixed;
-    z-index: 900;
-    height: 25%;
+    height: 20vh;
     bottom: 0%;
     width: 100%;
   }
@@ -252,6 +276,14 @@
 
   .channel-box:hover{
     box-shadow: 0px 0px 10px 10vh lightblue inset;
+  }
+
+  #channel-image-0{
+    
+    object-fit:inherit;
+    width: 100%;
+    min-width: 100%;
+    
   }
 
 

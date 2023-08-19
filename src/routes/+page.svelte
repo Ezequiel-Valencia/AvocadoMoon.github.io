@@ -26,11 +26,11 @@
   #mainDiv {
     height: 100vh;
     width: 100vw;
-    background: url('/Backgrounds/Waterfall.gif');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    // background-color: rgb(9, 80, 33);
+    // background: url('/Backgrounds/Waterfall.gif');
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-attachment: fixed;
+    background-color: rgb(238, 236, 236);
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor

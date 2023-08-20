@@ -22,13 +22,14 @@
   }
 
   // Needs to be initalized with some form of variables or else compiler throws fit
-  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean }[] = [
+  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean, redirect: string }[] = [
     {
       coverImage: '/Channel Covers/about me cover.png',
       gifImage: '/Channel Covers/about me cover.png',
       currentImage: '',
       focused: false,
-      hover: false
+      hover: false,
+      redirect: '/about_me'
     }
   ];
   const channelPriorLength = channels.length
@@ -36,7 +37,7 @@
   // Fill channels with default if still space
   for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false})
+      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false, redirect:''})
       : null;
     channels[index].currentImage = channels[index].coverImage
   };
@@ -62,8 +63,13 @@
     playClickSound(even: MouseEvent){
       let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
       clickAudio.play();
-      console.log("Click")
     }
+
+    redirect(id:number){
+      if(channels[id].redirect == '') return;
+      location.href = channels[id].redirect;
+    }
+
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 
@@ -112,7 +118,9 @@
         class="menu-button channel-buttons"
         id="mbutton-{index}">Menu</button>
 
-        <button class="play-button channel-buttons" id="pbutton-{index}">Start</button>
+        <button on:click={(e) => {channelFunctions.redirect(index)}}
+        class="play-button channel-buttons" 
+        id="pbutton-{index}">Start</button>
         
         </div>
         {/if}

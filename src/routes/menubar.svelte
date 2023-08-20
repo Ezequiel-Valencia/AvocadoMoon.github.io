@@ -1,6 +1,7 @@
 
 <!-- TODO: Make the center text formated more appropeatly -->
 <!-- TODO: Make left button themes, right ? -->
+<!-- TODO: Instead of auto play make a button to play the music -->
 
 <script lang="ts">
   import { onMount } from "svelte";

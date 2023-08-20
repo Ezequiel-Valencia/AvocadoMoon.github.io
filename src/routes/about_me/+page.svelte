@@ -2,17 +2,23 @@
 </script>
 
 <div id="main-div">
+  <div id="intro">
+    <h1 id="about-me">About Me</h1>
 
-    <div id="intro">
-        <img alt="Ezequel">
+    <div id="squircle" />
 
-    </div>
+    <div id="description"></div>
+
+  </div>
 
   <h1>About me</h1>
-
 </div>
 
+<!-- https://www.youtube.com/watch?v=vJNVramny9k -->
+<!-- Squircle is a lot easier so that for now -->
+
 <style lang="scss">
+  @import url("https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap");
 
   #main-div {
     height: 100%;
@@ -26,7 +32,35 @@
   #intro {
     height: 100vh;
     width: 100vw;
-    background-color:rgb(4, 70, 4);
+    background-color: rgb(4, 70, 4);
+    text-align: center;
   }
 
+  #squircle {
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    position: absolute;
+    height: 40%;
+    aspect-ratio: 1/1;
+    border-radius: 5%;
+
+    background-image: url("/about_me/stairs-candid.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  #about-me {
+    margin: 0;
+    font-family: "Tangerine", cursive;
+    font-size: 10vh;
+    position: absolute;
+    text-align: center;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    // padding-top: 5%;
+  }
 </style>

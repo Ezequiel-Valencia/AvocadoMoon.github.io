@@ -1,3 +1,7 @@
+
+<!-- TODO: Make the center text formated more appropeatly -->
+<!-- TODO: Make left button themes, right ? -->
+
 <script lang="ts">
   import { onMount } from "svelte";
 

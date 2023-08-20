@@ -1,3 +1,8 @@
+
+<!-- TODO: Add music to different channels -->
+<!-- TODO: Add work experience, school education, personal code projects, art projects, and other cool websites -->
+<!-- TODO: Make cursor be appropiate when hover buttons -->
+
 <script lang="ts">
     const nRows = 4;
   const nCols = 3;

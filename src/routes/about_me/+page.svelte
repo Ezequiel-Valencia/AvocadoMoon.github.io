@@ -7,11 +7,33 @@
 
     <div id="squircle" />
 
-    <div id="description"></div>
+    <div id="description">
+      <p id="description-text">
+        Text about me saying stuff about CS, Iregarmi, 
+        living life, and vibing.
+      </p>
+    </div>
 
   </div>
 
-  <h1>About me</h1>
+<div id="hobbies">
+  <div id="Atheletic">
+
+  </div>
+
+  <div id="Art">
+
+  </div>
+
+  <div id="Enviromental-Agriculture">
+
+  </div>
+
+  <div id="Community"></div>
+
+  <div id="Entertainment"></div>
+
+</div>
 </div>
 
 <!-- https://www.youtube.com/watch?v=vJNVramny9k -->
@@ -63,4 +85,21 @@
     transform: translate(-50%);
     // padding-top: 5%;
   }
+
+  #hobbies{
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(to bottom, rgb(4, 70, 4), rgb(8, 40, 126), rgb(45, 10, 102));
+  }
+
+  #description-text{
+    left: 50%;
+    transform: translate(-50%);
+    position: absolute;
+    margin: 0;
+    bottom: 25%;
+
+    font-size: x-large;
+  }
+
 </style>

@@ -11,8 +11,7 @@
       I'm a recent UConn graduate in Cybersecurity. I apply my knowledge to
       differing fields of computer science such as bio-informatics, IT, full-end
       development, and of course cybersecurity. CS is not my entire life and
-      although it helps me feel a sense of Ikurgami, life is not only work. In
-      my freetime I live life.
+      although it helps me feel a sense of Ikurgami, life is not only work.
     </p>
   </div>
 </div>

@@ -20,7 +20,7 @@
           name: "Skydiving",
           description:
             "I did it once and it'd do it again. At first it was very stressful, but then it became relaxing.",
-          image: "",
+          image: dirPrefix + "/sky-dive.jpg",
         },
         {
           name: "Biking",
@@ -32,13 +32,13 @@
           name: "Krav Maga",
           description:
             "For 1.5 years I occasioannly attended a Krav Maga self defense class. I still enjoy sparing every once and a while.",
-          image: "",
+          image: dirPrefix + "/krav_maga.jpg",
         },
         {
           name: "Weight Lifting",
           description:
             "I'm not a serious gym buff but I do enjoy weight lifting and being able to push the weights I can manage. It's especially enjoyable since I know my strength gained in the gym lets me do other physical activites with more confidence.",
-          image: "",
+          image: dirPrefix + "/weight lift.jpg",
         },
       ],
     },
@@ -55,19 +55,19 @@
           name: "Radio Show",
           description:
             "UConn has a radio station that students can slot an hour to be a DJ for. I found it a lot of fun to have my own radio show, talk, and play music.",
-          image: "",
+          image: dirPrefix + "/radio-show.jpg",
         },
         {
           name: "Breakdancing",
           description:
             "Been breakdancing now for 2 years, and try to continue break dancing. Its a little difficult to find locations to dance at, but I still try to dance. Won a very low stake dancing competition, and that was the peak of my dancing :v.",
-          image: "",
+          image: dirPrefix + "/bboy.jpg",
         },
         {
           name: "Swing dancing",
           description:
             "Before I did breakdancing I spent 6 months or so dancing to jazz music and enjoyed it, although I found it difficult to its structured nature.",
-          image: "",
+          image: dirPrefix + "/swing-dancing.jpg",
         },
         {
           name: "Saxaphone",
@@ -114,7 +114,7 @@
       <h2>{hob.category}</h2>
       {#each hob.activites as activity, index}
         <div id={activity.name} class="activity">
-          <h4>{activity.name}</h4>
+          <h3>{activity.name}</h3>
           <table>
             <tr>
               <td>
@@ -164,11 +164,18 @@
     margin-right: 10%;
     margin-top: 10%;
     padding: 0%;
+    border-style: solid;
+
     // float: inline-start;
+  }
+
+  .category h2{
+    padding: 2%;
   }
 
   .activity {
     // height: 100%;
+    padding: 2%;
     overflow: auto;
   }
 

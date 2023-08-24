@@ -148,6 +148,7 @@
     overflow: auto; //make stuff that overflows to make the div expand
     width: 100%;
     background: linear-gradient(to bottom, #40bfba, #40bf7b);
+    
   }
 
   #hob-title {
@@ -160,11 +161,14 @@
 
   .category {
     // position: absolute;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: auto; //aligns div in the center by auto making margins
+    margin-right: auto;
     margin-top: 10%;
     padding: 0%;
     border-style: solid;
+    max-width: 1000px;
+    // left: 50%;
+    // transform: translate(50%);
 
     // float: inline-start;
   }

@@ -8,16 +8,18 @@
 
   <div id="description">
     <p id="description-text">
-      I'm a recent UConn graduate in Cybersecurity. I apply my knowledge to
-      differing fields of computer science such as bio-informatics, IT, full-end
-      development, and of course cybersecurity. CS is not my entire life and
-      although it helps me feel a sense of Ikurgami, life is not only work.
+      I'm a Cybersecurity graduate from UConn. 
+      I apply my knowledge to differing fields of computer science, 
+      such as bio-informatics, IT, full-end development, and of course cybersecurity. 
+      Although computer science helps me feel a sense of Ikigai, work is not life, 
+      so I try to spend my free time exploring life to its fullest.
     </p>
   </div>
 </div>
 
 <style lang="scss">
-  @import url("https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
 
   #intro {
     height: 100vh;
@@ -26,39 +28,32 @@
     text-align: center;
   }
   #squircle {
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%);
-    text-align: center;
-    position: absolute;
     height: 40%;
     aspect-ratio: 1/1;
     border-radius: 5%;
+    overflow: auto;
+    margin: auto;
 
     background-image: url("/about_me/stairs-candid.jpg");
-    background-size: cover;
+    background-size:cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment:local;
   }
 
   #about-me {
     margin: 0;
-    font-family: "Tangerine", cursive;
+    padding: 2%;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 10vh;
-    position: absolute;
+    font-weight: 100;
     text-align: center;
     top: 5%;
-    left: 50%;
-    transform: translate(-50%);
-    // padding-top: 5%;
   }
 
   #description-text{
-    left: 50%;
-    transform: translate(-50%);
-    position: absolute;
-    margin: 0;
-    bottom: 10%;
+    padding: 5%;
+    margin: auto;
+    max-width: 900px;
 
     font-size: x-large;
   }

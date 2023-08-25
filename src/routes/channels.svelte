@@ -30,6 +30,22 @@
       focused: false,
       hover: false,
       redirect: '/about_me'
+    },
+    {
+      coverImage: "/Channel Covers/work experience.jpg",
+      gifImage: "/Channel Covers/work experience.jpg",
+      currentImage: '',
+      focused: false,
+      hover: false,
+      redirect: '/work_experience'
+    },
+    {
+      coverImage: "/Channel Covers/Zine_Cover.png",
+      gifImage: "Channel Covers/Zine_Cover.png",
+      currentImage: '',
+      focused: false,
+      hover: false,
+      redirect: "/zines"
     }
   ];
   const channelPriorLength = channels.length
@@ -210,17 +226,9 @@
     box-shadow: 0px 0px 10px 10vh lightblue inset;
   }
 
-  #channel-image-0{
-    
-    object-fit:inherit;
-    width: 100%;
-    min-width: 100%;
-    
-  }
-
 
   .channel-image {
-    object-fit: cover;
+    object-fit: inherit;
     height: 100%;
     width: 100%;
     border-radius: 40px;

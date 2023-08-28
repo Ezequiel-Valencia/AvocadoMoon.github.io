@@ -1,4 +1,37 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { browser } from '$app/environment';
+
+    let scroll:any = true;
+
+    let scrollTop:any = null;
+    let scrollLeft:any = null;
+
+    function disableScroll() {
+        if (browser) {
+            scrollTop = 
+                window.scrollY || window.document.documentElement.scrollTop;
+            scrollLeft = 
+                window.scrollX || window.document.documentElement.scrollLeft,
+                window.onscroll = function() {
+                window.scrollTo(scrollLeft, scrollTop);
+            }};
+        }
+
+    function enableScroll() {
+        if (browser) {
+            window.onscroll = function() {};
+        }
+    };
+
+    $: if (!scroll) {
+        disableScroll();
+    } else {
+        enableScroll();
+    }
+
+
+
     let home_menu = false;
     let contact_me = false;
     export let email:string;
@@ -7,7 +40,7 @@
 
 {#if !home_menu}
 <nav id="menu-nav">
-    <button on:click={(e)=> {home_menu = !home_menu}}>Menu</button>
+    <button on:click={(e)=> {home_menu = !home_menu; scroll = false}}>Menu</button>
 </nav>
 {/if}
 
@@ -16,7 +49,7 @@
     <div id="home-menu-nav">
         <div id="big-button-div">
             <button on:click={(e) => {location.href="/"}}>Main Menu</button>
-            <button on:click={(e) => {home_menu = !home_menu}}>Return</button>
+            <button on:click={(e) => {home_menu = !home_menu; scroll=true}}>Return</button>
         </div>
         <div id="contact-me">
             <h1>Contact Me</h1>
@@ -40,11 +73,9 @@
         padding: 1%;
         left: 50%;
         transform: translate(-50%);
-        // border-left-style: $border-style;
-        // border-right-style: $border-style;
         border-bottom-style: $border-style;
         border-width: 1px;
-        
+        border-color: white;
     }
 
     #home-menu-nav{
@@ -59,6 +90,7 @@
         background: none;
         border: none;
         font-size: large;
+        color: white;
     }
 
     #menu-nav button:hover{
@@ -78,12 +110,11 @@
         top: 50%;
         transform: translateY(-50%);
         background: grey;
-        border-radius: 100px;
+        border-radius: 40px;
         height: 10vh;
         width: 20vw;
         margin-left: 5%;
-        // max-height: 100px;
-        // max-width: 200px;
+        
     }
 
     #contact-me{
@@ -96,10 +127,12 @@
 
     #contact-me h1{
         transform: translateY(100%);
+        color: white;
     }
 
     #contact-me p{
         transform: translateY(200%);
+        color: white;
     }
 
     #contact-me:hover{

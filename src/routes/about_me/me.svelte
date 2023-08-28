@@ -24,7 +24,7 @@
   #intro {
     height: 100vh;
     width: 100vw;
-    background-color: #40bfba;
+    background-color: #339996;
     text-align: center;
   }
   #squircle {
@@ -47,6 +47,7 @@
     font-size: 10vh;
     font-weight: 100;
     text-align: center;
+    color: white;
     top: 5%;
   }
 
@@ -54,6 +55,7 @@
     padding: 5%;
     margin: auto;
     max-width: 900px;
+    color: white;
 
     font-size: x-large;
   }

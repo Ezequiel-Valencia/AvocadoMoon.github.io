@@ -138,16 +138,14 @@
   #hobbies {
     overflow: auto; //make stuff that overflows to make the div expand
     width: 100%;
-    background: linear-gradient(to bottom, #40bfba, #40bf7b, #12693b);
+    background: linear-gradient(to bottom, #339996, #329962, #12693b);
     
   }
 
   #hob-title {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    margin: 0;
-    padding: 0%;
+    margin: auto;
+    text-align: center;
+    color: white;
   }
 
   .category {
@@ -158,7 +156,9 @@
     margin-top: 10%;
     padding: 0%;
     border-style: solid;
+    border-color: white;
     max-width: 1000px;
+    width: 80vw;
     // left: 50%;
     // transform: translate(50%);
 
@@ -167,6 +167,7 @@
 
   .category h2{
     padding: 2%;
+    color: white;
   }
 
   .activity {
@@ -174,11 +175,13 @@
     padding: 2%;
     padding-bottom: 5%;
     overflow: auto;
+    color: white;
   }
 
   .description {
     font-size: large;
     top: 0%;
+    color: white;
   }
 
   .activity-image{

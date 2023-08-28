@@ -1,1 +1,23 @@
-<h1>Zines</h1>
+<script lang="ts">
+    import Intro from "./intro.svelte";
+  import Zines from "./zines.svelte";
+</script>
+
+
+
+<div id="main-div">
+    <Intro></Intro>
+    <Zines></Zines>
+</div>
+
+
+
+<style lang="scss">
+    #main-div{
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        height: 100%;
+        width: 100%;
+    }
+</style>

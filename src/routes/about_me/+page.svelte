@@ -1,9 +1,11 @@
 <script lang="ts">
   import Me from "./me.svelte";
   import Hobbies from "./hobbies.svelte";
+  import Menu from "../menu.svelte";
 </script>
 
 <div id="main-div">
+  <Menu email=""></Menu>
   <Me></Me>
 
   <Hobbies></Hobbies>

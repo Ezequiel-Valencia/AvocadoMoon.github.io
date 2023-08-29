@@ -4,27 +4,23 @@
   import Menu from "../menu.svelte";
 </script>
 
-<div id="main-div">
-  <Menu email=""></Menu>
-  <Me></Me>
+<span id="main-div">
+  <Menu email="" />
+  <Me />
 
-  <Hobbies></Hobbies>
-  
-
-</div>
+  <Hobbies />
+</span>
 
 <!-- https://www.youtube.com/watch?v=vJNVramny9k -->
 <!-- Squircle is a lot easier so that for now -->
 
 <style lang="scss">
-
   #main-div {
+    // overflow:visible;
+    position: absolute;
+    left: 0%;
+    top: 0%;
     height: 100%;
     width: 100%;
-    top: 0px;
-    left: 0px;
-    padding: 0%;
-    position: absolute;
   }
-
 </style>

@@ -98,7 +98,7 @@
 </script>
 
 <div id="hobbies">
-  <h1 id="hob-title">Freetime spent</h1>
+  <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
     <div id={hob.category} class="category">
       <h2>{hob.category}</h2>
@@ -139,7 +139,6 @@
     overflow: auto; //make stuff that overflows to make the div expand
     width: 100%;
     background: linear-gradient(to bottom, #339996, #329962, #12693b);
-    
   }
 
   #hob-title {
@@ -149,7 +148,6 @@
   }
 
   .category {
-    // position: absolute;
     margin-left: auto; //aligns div in the center by auto making margins
     margin-right: auto;
     padding-left: 5%;

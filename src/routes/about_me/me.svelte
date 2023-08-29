@@ -15,6 +15,10 @@
       so I try to spend my free time exploring life to its fullest.
     </p>
   </div>
+
+  <h2>
+    Free time spent <br> ▼ 
+  </h2>
 </div>
 
 <style lang="scss">
@@ -26,6 +30,7 @@
     width: 100vw;
     background-color: #339996;
     text-align: center;
+    overflow:visible;
   }
   #squircle {
     height: 40%;
@@ -38,6 +43,11 @@
     background-size:cover;
     background-repeat: no-repeat;
     background-attachment:local;
+  }
+
+  #description{
+    position: relative;
+    width: 100vw;
   }
 
   #about-me {
@@ -58,5 +68,9 @@
     color: white;
 
     font-size: x-large;
+  }
+
+  h2{
+    color: white;
   }
 </style>

@@ -76,6 +76,7 @@
         border-bottom-style: $border-style;
         border-width: 1px;
         border-color: white;
+        z-index: 3;
     }
 
     #home-menu-nav{

@@ -12,7 +12,7 @@
     canvas.height = window.innerHeight;
 
     const context = canvas.getContext("2d");
-    const frameCount = 129;
+    const frameCount = 200;
 
     const currentFrame = (index: any) =>
       `/work_experience/intro/${(index + 1).toString()}.jpg`;

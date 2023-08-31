@@ -51,6 +51,7 @@
 </div>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
   #wrapper-div {
     margin: 0;
     padding: 0;
@@ -61,6 +62,7 @@
   }
 
   #world {
+    font-family: 'Poiret One', cursive;
     color: white;
     padding-bottom: 50%;
     font-size: 500%;
@@ -77,7 +79,7 @@
     margin: auto;
     padding: 2%;
     border-style: dotted;
-    border-color: white;
+    border-color: rgb(150, 150, 150);
     width: 80vw;
     display: flex;
     max-width: 1000px;

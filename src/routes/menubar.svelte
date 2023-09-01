@@ -5,8 +5,7 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { sfxController } from "./globals";
-  import { musicController } from "./globals";
+  import { sfxController, musicController } from "./globals";
 
   function dayToName(d: any) {
     switch (d) {
@@ -71,7 +70,7 @@
 
   <div id="bar-div">
     <p id="clock">
-      {hour > 12 ? hour-12: hour}:{min.toString.length > 1 ? min: "0"+min}
+      {hour > 12 ? hour-12: hour}:{min > 9 ? min: "0"+min}
       {dayOrNight} | {day}
       {date}/{month}
     </p>
@@ -117,6 +116,7 @@
     z-index: 2;
     bottom: 20%;
     text-align: center;
+    max-width: 150px;
   }
 
   .bar-button:hover {
@@ -147,8 +147,11 @@
   }
 
   .music-option-buttons{
-    width: 10%;
-    height: 10%;
+    width: 15%;
+    height: 15%;
+    margin: auto;
+    padding: 2%;
+    transform: translateY(100%);
   }
 
   #top-text {

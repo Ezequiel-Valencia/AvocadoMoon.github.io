@@ -83,7 +83,7 @@
       <button id="sfx" class="music-option-buttons" on:click={(e) => {sfxController.toggle_sfx()}}>
         SFX {$sfxController ? "On" : "Off"}
       </button>
-      <button id="music" class="music-option-buttons" on:click={(e) => {musicController.update((bool) => !bool)}}>
+      <button id="music" class="music-option-buttons" on:click={(e) => {musicController.toggle_music()}}>
         Music {$musicController ? "On" : "Off"}
       </button>
   </div>

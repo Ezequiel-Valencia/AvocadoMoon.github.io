@@ -22,6 +22,8 @@
     menuNode ? menuNode.style.zIndex = "-20": null;
   }
 
+  let musicClipDir = "/Audio/Intro-Clips"
+
   // Needs to be initalized with some form of variables or else compiler throws fit
   let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean, redirect: string, musicClip:string }[] = [
     {
@@ -31,7 +33,7 @@
       focused: false,
       hover: false,
       redirect: '/about_me',
-      musicClip: ''
+      musicClip: musicClipDir + '/About_Me_Intro.mp3'
     },
     {
       coverImage: "/Channel Covers/work experience.jpg",
@@ -40,7 +42,7 @@
       focused: false,
       hover: false,
       redirect: '/work_experience',
-      musicClip: ''
+      musicClip: musicClipDir + '/Work_Exp_Intro.mp3'
     },
     {
       coverImage: "/Channel Covers/Zine_Cover.png",
@@ -82,16 +84,18 @@
 
     playMusic(id: number, typeOfMusic: number){
       if ($musicController){
+        let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
+        let musicClip = document.getElementById("music-clip-" + id) as HTMLAudioElement;
         switch (typeOfMusic){
           case this.musicClip:
-            let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
             bgMusic.pause();
-            channels[id]
+            musicClip.currentTime = 0;
+            musicClip.play();
             break;
           
           case this.backgroundMusic:
-            let bgm = document.getElementById("bgm") as HTMLAudioElement;
-            bgm.play()
+            musicClip.pause();
+            bgMusic.play()
             break
         }
       }

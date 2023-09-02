@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 
 
+
 function createSfxController(){
     const {subscribe, set, update} = writable(true);
     return {
@@ -12,7 +13,8 @@ function createSfxController(){
 }
 
 function createMusicController(){
-    const {subscribe, set, update} = writable(true);
+    const {subscribe, set, update} = writable(localStorage.getItem("musicStore") || true);
+    subscribe(val => localStorage.setItem("musicStore", val.toString()))
     return {
         subscribe,
         allow_music: () => set(true),

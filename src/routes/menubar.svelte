@@ -99,6 +99,9 @@
 
     <h4>Email:</h4>
     <p>jfkd;la</p>
+
+    <h4>Linkdin</h4>
+    <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a>
     
   </div>
 {/if}

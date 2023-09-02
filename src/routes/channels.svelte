@@ -51,7 +51,7 @@
       focused: false,
       hover: false,
       redirect: "/zines",
-      musicClip: ''
+      musicClip: musicClipDir + '/Zine_Intro.mp3'
     }
   ];
   const channelPriorLength = channels.length

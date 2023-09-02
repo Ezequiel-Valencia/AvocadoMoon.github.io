@@ -2,6 +2,7 @@
   import Me from "./me.svelte";
   import Hobbies from "./hobbies.svelte";
   import Menu from "../menu.svelte";
+  import { musicController } from "../globals";
 </script>
 
 <span id="main-div">
@@ -9,6 +10,11 @@
   <Me />
 
   <Hobbies />
+
+  {#if $musicController}
+    <audio src="/Audio/Channel-Songs/Samurai Champloo Aruarian Dance.mp3" autoplay loop></audio>
+  {/if}
+
 </span>
 
 <!-- https://www.youtube.com/watch?v=vJNVramny9k -->

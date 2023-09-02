@@ -4,6 +4,7 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
+  import { musicController, sfxController } from "./globals";
     const nRows = 4;
   const nCols = 3;
   
@@ -21,15 +22,18 @@
     menuNode ? menuNode.style.zIndex = "-20": null;
   }
 
+  let musicClipDir = "/Audio/Intro-Clips"
+
   // Needs to be initalized with some form of variables or else compiler throws fit
-  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean, redirect: string }[] = [
+  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean, redirect: string, musicClip:string }[] = [
     {
       coverImage: '/Channel Covers/about me cover.png',
       gifImage: '/Channel Covers/about me cover.png',
       currentImage: '',
       focused: false,
       hover: false,
-      redirect: '/about_me'
+      redirect: '/about_me',
+      musicClip: musicClipDir + '/About_Me_Intro.mp3'
     },
     {
       coverImage: "/Channel Covers/work experience.jpg",
@@ -37,7 +41,8 @@
       currentImage: '',
       focused: false,
       hover: false,
-      redirect: '/work_experience'
+      redirect: '/work_experience',
+      musicClip: musicClipDir + '/Work_Exp_Intro.mp3'
     },
     {
       coverImage: "/Channel Covers/Zine_Cover.png",
@@ -45,7 +50,8 @@
       currentImage: '',
       focused: false,
       hover: false,
-      redirect: "/zines"
+      redirect: "/zines",
+      musicClip: musicClipDir + '/Zine_Intro.mp3'
     }
   ];
   const channelPriorLength = channels.length
@@ -53,12 +59,17 @@
   // Fill channels with default if still space
   for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false, redirect:''})
+      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false, redirect:'', musicClip: ''})
       : null;
     channels[index].currentImage = channels[index].coverImage
   };
 
     class ChannelFunctions {
+      hoverSound = 1;
+      clickSound = 2;
+      musicClip = 3;
+      backgroundMusic = 4;
+
     staticImage(event: PointerEvent, id: number) {
       channels[id].currentImage = channels[id].coverImage;
       channels[id].hover = false;
@@ -71,14 +82,38 @@
       channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
     }
 
-    playHoverSound(event: MouseEvent){
-      let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
-      audio.play();
+    playMusic(id: number, typeOfMusic: number){
+      if ($musicController){
+        let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
+        let musicClip = document.getElementById("music-clip-" + id) as HTMLAudioElement;
+        switch (typeOfMusic){
+          case this.musicClip:
+            bgMusic.pause();
+            musicClip.currentTime = 0;
+            musicClip.play();
+            break;
+          
+          case this.backgroundMusic:
+            musicClip.pause();
+            bgMusic.play()
+            break
+        }
+      }
     }
 
-    playClickSound(even: MouseEvent){
-      let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
-      clickAudio.play();
+    playSfx(typeOfSound:number){
+      if($sfxController){
+        switch (typeOfSound){
+          case this.hoverSound:
+            let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
+            audio.play();
+            break
+          case this.clickSound:
+            let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
+            clickAudio.play();
+            break;
+      }
+      }
     }
 
     redirect(id:number){
@@ -102,8 +137,10 @@
 <div id="grid-container">
 {#each channels as currentChannel, index}
     <div 
-    on:mousedown={(e) => {currentChannel.focused = true; channelFunctions.playClickSound(e);}}
-    on:mouseenter={(e) => {channelFunctions.playHoverSound(e)}}
+    on:mousedown={(e) => {currentChannel.focused = true; 
+      channelFunctions.playMusic(index, channelFunctions.musicClip)}}
+
+    on:mouseenter={(e) => {channelFunctions.playSfx(channelFunctions.hoverSound)}}
     role="tab"
     aria-controls="tabpanel-{index}"
     tabindex="{index}"
@@ -130,11 +167,14 @@
         class="channel-bar">
 
         <button 
-        on:click={(e) => {currentChannel.focused = false;}}
+        on:click={(e) => {currentChannel.focused = false; 
+          channelFunctions.playSfx(channelFunctions.clickSound)
+          channelFunctions.playMusic(index, channelFunctions.backgroundMusic)
+          }}
         class="menu-button channel-buttons"
         id="mbutton-{index}">Menu</button>
 
-        <button on:click={(e) => {channelFunctions.redirect(index)}}
+        <button on:click={(e) => {channelFunctions.playSfx(channelFunctions.clickSound); channelFunctions.redirect(index)}}
         class="play-button channel-buttons" 
         id="pbutton-{index}">Start</button>
         
@@ -143,6 +183,8 @@
     </div>
 
     </div>
+
+    <audio src="{currentChannel.musicClip}" id="music-clip-{index}"></audio>
 
 {/each}
 </div>

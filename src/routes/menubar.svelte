@@ -5,6 +5,7 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
+  import { sfxController, musicController } from "./globals";
 
   function dayToName(d: any) {
     switch (d) {
@@ -39,21 +40,25 @@
       dayOrNight = hour >= 12 ? "PM" : "AM";
     }, 1000);
   });
+
+  let music_options = false;
+  let contact_info = false;
+
 </script>
 
-<head>
-  <link
-    rel="stylesheet"
-    href="https://github.com/danintosh/Wii-Menu-HTML/blob/main/clock.ttf"
-  />
-</head>
+
+
 
 <div id="menu-bar">
-  <button id="left-bar-button" class="bar-button" />
+  <button id="left-bar-button" class="bar-button" on:click={(e) => {music_options = !music_options}}> 
+    <img class="menu-icon" src="musical-note.png" alt="music"> 
+  </button>
 
   <img id="menu-svg" src="wii bar final.png" alt="wii bar" />
 
-  <button id="right-bar-button" class="bar-button" />
+  <button id="right-bar-button" class="bar-button" on:click={(e) => {contact_info = !contact_info}}> 
+    <img class="menu-icon" src="mail.png" alt="mail"> 
+  </button>
 
   <div id="top-text">
     <h3 id="name" class="text">Ezequiel Valencia</h3>
@@ -65,12 +70,41 @@
 
   <div id="bar-div">
     <p id="clock">
-      {hour}:{min}
+      {hour > 12 ? hour-12: hour}:{min > 9 ? min: "0"+min}
       {dayOrNight} | {day}
       {date}/{month}
     </p>
   </div>
 </div>
+
+{#if music_options}
+  <div id="music-options" class="menu-popup">
+      <h2>Audio Options</h2>
+      <button id="sfx" class="music-option-buttons" on:click={(e) => {sfxController.toggle_sfx()}}>
+        SFX {$sfxController ? "On" : "Off"}
+      </button>
+      <button id="music" class="music-option-buttons" on:click={(e) => {musicController.toggle_music()}}>
+        Music {$musicController ? "On" : "Off"}
+      </button>
+  </div>
+{/if}
+
+{#if contact_info}
+  <div id="contact" class="menu-popup">
+    <h2>Contact Info</h2>
+    <p>Each channel has its own email assosated with it for that 
+      specific topic and can be found by pressing the menu button at the top of that channel, 
+      but my general contact info is:
+    </p>
+
+    <h4>Email:</h4>
+    <p>jfkd;la</p>
+
+    <h4>Linkdin</h4>
+    <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a>
+    
+  </div>
+{/if}
 
 <style lang="scss">
   $button-horizontal-offset: 2%;
@@ -84,6 +118,8 @@
     width: 10%;
     z-index: 2;
     bottom: 20%;
+    text-align: center;
+    max-width: 150px;
   }
 
   .bar-button:hover {
@@ -93,6 +129,32 @@
   .text {
     text-align: center;
     // font-family:'Times New Roman', Times, serif;
+  }
+
+  .menu-icon{
+    max-width: 50%;
+    max-height: 50%;
+  }
+
+  .menu-popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
+    border-radius: 15px;
+    z-index: 9999;
+    background-color: gray;
+    text-align: center;
+  }
+
+  .music-option-buttons{
+    width: 15%;
+    height: 15%;
+    margin: auto;
+    padding: 2%;
+    transform: translateY(100%);
   }
 
   #top-text {
@@ -114,13 +176,6 @@
     text-align: center;
     width: 30vw;
     bottom: 0%;
-  }
-
-  #description {
-    // position: absolute;
-    // font: size 100vw;
-    // font-size: large;
-    // top: 25%;
   }
 
   #name {

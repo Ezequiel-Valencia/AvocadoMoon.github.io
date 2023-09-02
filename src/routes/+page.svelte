@@ -2,6 +2,7 @@
   import {fade} from 'svelte/transition'
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
+  import { musicController, sfxController } from './globals';
 
 </script>
 
@@ -16,13 +17,19 @@
   <Menubar></Menubar>
 
 
-  <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
+  {#if $sfxController}
+    <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
+    <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
+  {/if}
+  
 
-  <!-- https://github.com/danintosh/Wii-Menu-HTML/blob/main/bgm2.wav -->
-  <!-- https://archive.org/details/all-wii-sounds/Click.wav -->
-  <audio src="/Audio/bgm.wav" autoplay loop></audio>
+  
 
-  <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
+  {#if $musicController}
+    <audio src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
+  {/if}
+
+  
 
 </div>
 

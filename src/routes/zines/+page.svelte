@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { musicController } from "../globals";
     import Menu from "../menu.svelte";
 import Intro from "./intro.svelte";
   import Zines from "./zines.svelte";
@@ -10,6 +11,10 @@ import Intro from "./intro.svelte";
     <Menu email="zines.zlfwo@slmails.com"></Menu>
     <Intro></Intro>
     <Zines></Zines>
+
+    {#if $musicController}
+        <audio src="/Audio/Channel-Songs/Sonic Unleashed Windmill Isle Night Acid Jazz.mp3" autoplay loop></audio>
+    {/if}
 </div>
 
 

@@ -1,19 +1,11 @@
 
-<!-- TODO: Add music to different channels -->
+
 <!-- TODO: Add work experience, school education, personal code projects, art projects, and other cool websites -->
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
   import { musicController, musicTime, sfxController } from "../myLocalStorage.ts";
-    const nRows = 4;
-  const nCols = 3;
-  
-    
-    /*
-  Trying to create reactive elements using classes is to much of a pain.
-  Svelte only seems to recognize top level abstraction elements, and does not bother with 
-  reactivity of nested class objects
-  */
+  import { channels } from "./channelObject.js";
   
   function focus(index: number, zIndex: string){
     let node = document.getElementById("channelBox-" + index);
@@ -24,109 +16,69 @@
 
   musicTime.reset();
 
-  let musicClipDir = "/Audio/Intro-Clips"
-
-  // Needs to be initalized with some form of variables or else compiler throws fit
-  let channels: { coverImage: string; gifImage: string, currentImage: string, focused:boolean , hover: boolean, redirect: string, musicClip:string }[] = [
-    {
-      coverImage: '/Channel Covers/about me cover.png',
-      gifImage: '/Channel Covers/about me cover.png',
-      currentImage: '',
-      focused: false,
-      hover: false,
-      redirect: '/about_me',
-      musicClip: musicClipDir + '/About_Me_Intro.mp3'
-    },
-    {
-      coverImage: "/Channel Covers/work experience.jpg",
-      gifImage: "/Channel Covers/work experience.jpg",
-      currentImage: '',
-      focused: false,
-      hover: false,
-      redirect: '/work_experience',
-      musicClip: musicClipDir + '/Work_Exp_Intro.mp3'
-    },
-    {
-      coverImage: "/Channel Covers/Zine_Cover.png",
-      gifImage: "Channel Covers/Zine_Cover.png",
-      currentImage: '',
-      focused: false,
-      hover: false,
-      redirect: "/zines",
-      musicClip: musicClipDir + '/Zine_Intro.mp3'
-    }
-  ];
-  const channelPriorLength = channels.length
-
-  // Fill channels with default if still space
-  for (let index = 0; index < nRows * nCols; index++) {
-    index < ((nRows * nCols) - channelPriorLength)
-      ? channels.push({coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover:false, focused:false, redirect:'', musicClip: ''})
-      : null;
-    channels[index].currentImage = channels[index].coverImage
-  };
-
-    class ChannelFunctions {
-      hoverSound = 1;
-      clickSound = 2;
-      musicClip = 3;
-      backgroundMusic = 4;
+  export class ChannelFunctions {
+    hoverSound = 1;
+    clickSound = 2;
+    musicClip = 3;
+    backgroundMusic = 4;
 
     staticImage(event: PointerEvent, id: number) {
-      channels[id].currentImage = channels[id].coverImage;
-      channels[id].hover = false;
+        channels[id].currentImage = channels[id].coverImage;
+        channels[id].hover = false;
     }
-    
+
     async playgif(event: PointerEvent, id: number) {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-      channels[id].hover = true;
-      await sleep(1000);
-      channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        channels[id].hover = true;
+        await sleep(1000);
+        channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
     }
 
-    playMusic(id: number, typeOfMusic: number){
-      if ($musicController){
-        let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
-        let musicClip = document.getElementById("music-clip-" + id) as HTMLAudioElement;
-        switch (typeOfMusic){
-          case this.musicClip:
-            bgMusic.pause();
-            musicClip.currentTime = 0;
-            musicClip.play();
-            break;
-          
-          case this.backgroundMusic:
-            musicClip.pause();
-            bgMusic.play()
-            break
+    playMusic(id: number, typeOfMusic: number) {
+        if ($musicController) {
+            let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
+            let musicClip = document.getElementById("music-clip-" + id) as HTMLAudioElement;
+            switch (typeOfMusic) {
+                case this.musicClip:
+                    bgMusic.pause();
+                    musicClip.currentTime = 0;
+                    musicClip.play();
+                    break;
+
+                case this.backgroundMusic:
+                    musicClip.pause();
+                    bgMusic.play()
+                    break
+            }
         }
-      }
     }
 
-    playSfx(typeOfSound:number){
-      if($sfxController){
-        switch (typeOfSound){
-          case this.hoverSound:
-            let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
-            audio.play();
-            break
-          case this.clickSound:
-            let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
-            clickAudio.play();
-            break;
-      }
-      }
+    playSfx(typeOfSound: number) {
+        if ($sfxController) {
+            switch (typeOfSound) {
+                case this.hoverSound:
+                    let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
+                    audio.play();
+                    break
+                case this.clickSound:
+                    let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
+                    clickAudio.play();
+                    break;
+            }
+        }
     }
 
-    redirect(id:number){
-      if(channels[id].redirect == '') return;
-      location.href = channels[id].redirect;
+    redirect(id: number) {
+        if (channels[id].redirect == '') return;
+        location.href = channels[id].redirect;
     }
 
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 
-  };
+};
+
+  
   const channelFunctions = new ChannelFunctions();
 
   // https://www.w3schools.com/howto/howto_css_zoom_hover.asp

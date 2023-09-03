@@ -1,17 +1,30 @@
 <script lang="ts">
   import type { WorkExperience } from "./experiences";
+  import {experiencesSong} from "./experiences"
+  import { musicController, musicTime } from "../../myLocalStorage";
   import Menu from "../menu.svelte";
+  import { onMount } from "svelte";
   export var experience: WorkExperience;
   export var description: string[];
   export var imgSrc: string;
   export var prefix: string;
   export let takeaway: string;
+
+  onMount(() => {
+    if($musicController){
+      musicTime.setAudioTagTime()
+    }
+  })
 </script>
 
 <div id="wrapper">
   <nav>
     <h2>
-      <a href="{prefix}#world"> Return </a>
+      <a on:click={(e) => {
+        if($musicController){
+          musicTime.updateTimeStamp()
+        }
+      }} href="{prefix}#world"> Return </a>
     </h2>
   </nav>
   <div id="right-wrapper">
@@ -27,6 +40,10 @@
      
     </div>
   </div>
+
+  {#if $musicController}
+    <audio id="song" src="{experiencesSong}" autoplay loop></audio>
+  {/if}
   
 </div>
 

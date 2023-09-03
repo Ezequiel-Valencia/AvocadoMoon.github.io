@@ -2,7 +2,15 @@
   import Menu from "../menu.svelte";
 import Experience from "./experience.svelte";
 import Intro from "./intro.svelte";
-import { musicController, sfxController } from "../../globals";
+import { experiencesSong } from "./experiences";
+import { musicController, musicTime, sfxController } from "../../myLocalStorage.ts";
+import { onMount } from "svelte";
+
+    onMount(() => {
+        if($musicController){
+            musicTime.setAudioTagTime()
+        }
+    })
 
 </script>
 
@@ -16,7 +24,7 @@ import { musicController, sfxController } from "../../globals";
 
 
     {#if $musicController}
-        <audio src="/Audio/Channel-Songs/SABBATH.mp3" autoplay loop></audio>
+        <audio id="song" src={experiencesSong} autoplay loop></audio>
     {/if}
     
 </div>

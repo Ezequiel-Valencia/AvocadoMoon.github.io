@@ -1,5 +1,6 @@
 <script lang="ts">
   import { experiences } from "./experiences";
+  import { musicTime, musicController } from "../../myLocalStorage";
 </script>
 
 <div id="wrapper-div">
@@ -7,10 +8,18 @@
   <h2>My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
     <div class="spacer">
-      <div class="experience-div" on:mousedown={(e) => {location.href = experience.redirect}}
+      <div
+        class="experience-div"
+        on:mousedown={(e) => {
+          if($musicController){
+            musicTime.updateTimeStamp()
+          }
+          location.href = experience.redirect;
+        }}
         aria-controls="tab-index-{index}"
         role="tab"
-        tabindex="{index}">
+        tabindex={index}
+      >
         <p class="job-time">{experience.time}</p>
         <div class="text-div">
           <h3 class="company-name text">{experience.company}</h3>
@@ -23,7 +32,7 @@
 </div>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
   #wrapper-div {
     margin: 0;
     padding: 0;
@@ -34,7 +43,7 @@
   }
 
   #world {
-    font-family: 'Poiret One', cursive;
+    font-family: "Poiret One", cursive;
     color: white;
     padding-bottom: 50%;
     font-size: 500%;
@@ -57,7 +66,7 @@
     max-width: 1000px;
   }
 
-  .text-div{
+  .text-div {
     text-align: center;
     width: 100%;
   }

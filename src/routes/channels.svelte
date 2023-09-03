@@ -4,7 +4,7 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
-  import { musicController, sfxController } from "../globals";
+  import { musicController, musicTime, sfxController } from "../myLocalStorage.ts";
     const nRows = 4;
   const nCols = 3;
   
@@ -21,6 +21,8 @@
     let menuNode = document.getElementById("menu-bar");
     menuNode ? menuNode.style.zIndex = "-20": null;
   }
+
+  musicTime.reset();
 
   let musicClipDir = "/Audio/Intro-Clips"
 

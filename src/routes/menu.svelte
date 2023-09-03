@@ -89,10 +89,10 @@
     border-color: white;
     z-index: 999;
     background-color: rgba(0, 0, 0, 0.164);
+    max-width: 200px;
+    max-height: 100px;
     width: 20%;
     height: 2%;
-    max-width: 200px;
-    max-height: 150px;
     text-align: center;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;

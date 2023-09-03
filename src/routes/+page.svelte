@@ -2,7 +2,7 @@
   import {fade} from 'svelte/transition'
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
-  import { musicController, sfxController } from './globals';
+  import { musicController, sfxController } from '../globals';
 
 </script>
 

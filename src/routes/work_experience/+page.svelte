@@ -2,7 +2,7 @@
   import Menu from "../menu.svelte";
 import Experience from "./experience.svelte";
 import Intro from "./intro.svelte";
-import { musicController, sfxController } from "../globals";
+import { musicController, sfxController } from "../../globals";
 
 </script>
 

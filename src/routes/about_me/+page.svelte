@@ -2,7 +2,7 @@
   import Me from "./me.svelte";
   import Hobbies from "./hobbies.svelte";
   import Menu from "../menu.svelte";
-  import { musicController } from "../globals";
+  import { musicController } from "../../globals";
 </script>
 
 <span id="main-div">

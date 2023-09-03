@@ -4,7 +4,7 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
-  import { musicController, sfxController } from "./globals";
+  import { musicController, sfxController } from "../globals";
     const nRows = 4;
   const nCols = 3;
   

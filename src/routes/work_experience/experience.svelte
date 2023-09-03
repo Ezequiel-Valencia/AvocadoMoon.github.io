@@ -7,7 +7,10 @@
   <h2>My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
     <div class="spacer">
-      <div class="experience-div">
+      <div class="experience-div" on:mousedown={(e) => {location.href = experience.redirect}}
+        aria-controls="tab-index-{index}"
+        role="tab"
+        tabindex="{index}">
         <p class="job-time">{experience.time}</p>
         <div class="text-div">
           <h3 class="company-name text">{experience.company}</h3>

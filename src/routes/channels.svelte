@@ -174,7 +174,8 @@
         class="menu-button channel-buttons"
         id="mbutton-{index}">Menu</button>
 
-        <button on:click={(e) => {channelFunctions.playSfx(channelFunctions.clickSound); channelFunctions.redirect(index)}}
+        <button on:click={(e) => {channelFunctions.playSfx(channelFunctions.clickSound);
+           channelFunctions.redirect(index)}}
         class="play-button channel-buttons" 
         id="pbutton-{index}">Start</button>
         

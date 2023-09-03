@@ -64,7 +64,7 @@
     color: rgb(190, 190, 190);
   }
 
-  h1, h2, h3, h4, h5, p{
+  h1, h2, h3, h5, p{
     background-color: black;
   }
 

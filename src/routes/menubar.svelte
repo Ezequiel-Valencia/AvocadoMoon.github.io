@@ -80,6 +80,7 @@
 {#if music_options}
   <div id="music-options" class="menu-popup">
       <h2>Audio Options</h2>
+      <p>If you want to hear the music that this website has turn on autoplay in your browsers settings and reload the site.</p>
       <button id="sfx" class="music-option-buttons" on:click={(e) => {sfxController.toggle_sfx()}}>
         SFX {$sfxController ? "On" : "Off"}
       </button>

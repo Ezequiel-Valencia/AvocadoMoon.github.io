@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { musicController } from "../../myLocalStorage.ts";
+  import { musicController } from "../../myLocalStorage";
     import Menu from "../menu.svelte";
 import Intro from "./intro.svelte";
   import Zines from "./zines.svelte";

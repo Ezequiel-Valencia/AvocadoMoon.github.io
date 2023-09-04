@@ -50,9 +50,26 @@ function createMusicController() {
 function musicPlaybackTime(){
     const key = 'songPlayBackTime';
     if (checkLocalstorage(key)) {safeLocalStorage?.setItem(key, '0')}
+    const songTimeStamp = Number(safeLocalStorage?.getItem(key))
+    const {subscribe, set, update} = writable(songTimeStamp);
+
+    return {
+        subscribe,
+        setAudioTagTime: () => {
+            let audio = document.getElementById("song") as HTMLAudioElement;
+            subscribe((num) => {audio.currentTime = num})
+     },
+        reset: () => {set(0); safeLocalStorage?.setItem(key, '0')},
+        updateTimeStamp: () => {
+            let audio = document.getElementById("song") as HTMLAudioElement;
+            set(audio.currentTime); 
+            safeLocalStorage?.setItem(key, String(audio.currentTime))
+        }
+    }
 }
 
 
 export const musicController = createMusicController();
 export const sfxController = createSfxController();
+export const musicTime = musicPlaybackTime();
 

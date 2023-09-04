@@ -3,7 +3,7 @@
 import Experience from "./experience.svelte";
 import Intro from "./intro.svelte";
 import { experiencesSong } from "./experiences";
-import { musicController, musicTime, sfxController } from "../../myLocalStorage.ts";
+import { musicController, musicTime, sfxController } from "../../myLocalStorage";
 import { onMount } from "svelte";
 
     onMount(() => {

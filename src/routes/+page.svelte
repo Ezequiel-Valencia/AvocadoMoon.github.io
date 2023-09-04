@@ -2,7 +2,7 @@
   import {fade} from 'svelte/transition'
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
-  import { musicController, sfxController } from "../myLocalStorage.ts";
+  import { musicController, sfxController } from "../myLocalStorage";
 
 </script>
 

@@ -5,7 +5,7 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { sfxController, musicController } from "../myLocalStorage.ts";
+  import { sfxController, musicController } from "../myLocalStorage";
 
   function dayToName(d: any) {
     switch (d) {

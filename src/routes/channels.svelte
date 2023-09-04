@@ -4,7 +4,7 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
-  import { musicController, musicTime, sfxController } from "../myLocalStorage.ts";
+  import { musicController, musicTime, sfxController } from "../myLocalStorage";
   import { channels } from "./channelObject.js";
   
   function focus(index: number, zIndex: string){

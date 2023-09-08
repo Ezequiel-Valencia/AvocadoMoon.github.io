@@ -99,7 +99,7 @@
     </p>
 
     <h4>Email:</h4>
-    <p>jfkd;la</p>
+    <p>general@relaxed.slmail.me</p>
 
     <h4>Linkdin</h4>
     <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a>

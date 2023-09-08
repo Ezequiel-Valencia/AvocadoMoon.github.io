@@ -6,7 +6,7 @@
 </script>
 
 <span id="main-div">
-  <Menu email="" />
+  <Menu email="general@relaxed.slmail.me" />
   <Me />
 
   <Hobbies />

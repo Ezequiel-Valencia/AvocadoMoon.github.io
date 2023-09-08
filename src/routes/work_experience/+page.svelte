@@ -18,7 +18,7 @@ import { onMount } from "svelte";
 
 
 <div id="main-div">
-    <Menu email=""></Menu>
+    <Menu email="website@worker.slmail.me"></Menu>
     <Intro></Intro>
     <Experience></Experience>
 

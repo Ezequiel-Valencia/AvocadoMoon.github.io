@@ -49,7 +49,7 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         focused: false,
         hover: false,
         redirect: "/personal_projects",
-        musicClip: musicClipDir + '/Work_Exp_Intro.mp3'
+        musicClip: musicClipDir + '/Personal_Projects_Intro.mp3'
     },
 ];
 const channelPriorLength = channels.length

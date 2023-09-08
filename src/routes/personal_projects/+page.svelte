@@ -2,6 +2,7 @@
   import Menu from "../menu.svelte";
 import Intro from "./intro.svelte";
   import Projects from "./projects.svelte";
+  import { musicController } from "../../myLocalStorage";
 
 </script>
 
@@ -10,6 +11,12 @@ import Intro from "./intro.svelte";
     <Menu email=""></Menu>
     <Intro></Intro>
     <Projects></Projects>
+
+
+    {#if $musicController}
+        <audio id="song" src="/Audio/Channel-Songs/Zora's Domain - Day (Breath of the Wild).mp3" autoplay loop></audio>
+    {/if}
+    
 </div>
 
 

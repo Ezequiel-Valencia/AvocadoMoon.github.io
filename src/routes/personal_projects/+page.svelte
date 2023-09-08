@@ -1,6 +1,7 @@
 <script lang="ts">
   import Menu from "../menu.svelte";
 import Intro from "./intro.svelte";
+  import Projects from "./projects.svelte";
 
 </script>
 
@@ -8,6 +9,7 @@ import Intro from "./intro.svelte";
 <div id="main-div">
     <Menu email=""></Menu>
     <Intro></Intro>
+    <Projects></Projects>
 </div>
 
 
@@ -37,6 +39,8 @@ import Intro from "./intro.svelte";
         left: 0;
         height: 100%;
         width: 100%;
+        background-color: #151f2b;
+        overflow: auto;
     }
 
 </style>

@@ -39,6 +39,8 @@
 <style lang="scss">
     #projects-wrapper{
         width: 100%;
+        min-height: 100%;
+        height: fit-content;
         background-image: linear-gradient(#151f2b, rgb(46, 68, 112));
         display: flex;
     }

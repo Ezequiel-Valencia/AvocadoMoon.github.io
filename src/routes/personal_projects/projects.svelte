@@ -52,7 +52,7 @@
 
     .side-image{
         width: 10vw;
-        background-image: url("personal_projects/animal star blue.png");
+        background-image: url("/personal_projects/animal star blue.png");
         background-repeat: repeat;
         background-size:contain;
         object-fit:cover;

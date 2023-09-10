@@ -51,6 +51,15 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         redirect: "/personal_projects",
         musicClip: musicClipDir + '/Personal_Projects_Intro.mp3'
     },
+    {
+        coverImage: "/Channel Covers/open book.png",
+        gifImage: "Channel Covers/open book.png",
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/education",
+        musicClip: musicClipDir + '/Personal_Projects_Intro.mp3'
+    },
 ];
 const channelPriorLength = channels.length
 

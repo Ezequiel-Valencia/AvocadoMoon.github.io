@@ -1,7 +1,6 @@
 <script lang="ts">
   import { musicController } from "../../myLocalStorage";
   import Menu from "../menu.svelte";
-  import Edu from "./edu.svelte";
   import Intro from "./intro.svelte";
 
 </script>

@@ -39,6 +39,18 @@
       time = new Date();
       dayOrNight = hour >= 12 ? "PM" : "AM";
     }, 1000);
+
+    document.addEventListener("click", (event) => {
+    let contact = document.getElementById("contact");
+    let contact_button = document.getElementById("right-bar-button");
+    let check = (object: any) => {return (object !== event.target && !object?.contains(event.target))};
+    if (check(contact) && check(contact_button)){
+      contact_info = false
+    }
+    if (check(document.getElementById("left-bar-button")) && check(document.getElementById("music-options"))){
+      music_options = false;
+    }
+  })
   });
 
   let music_options = false;

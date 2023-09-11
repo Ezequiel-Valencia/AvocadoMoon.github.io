@@ -24,6 +24,9 @@
         position: absolute;
         top: 0;
         left: 0;
+        background-color: #d1b698;
+        overflow: auto;
+        height: auto;
     }
     
 </style>

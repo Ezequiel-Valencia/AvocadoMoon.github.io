@@ -13,7 +13,6 @@
 <div id="main-div">
     <Menu email=""></Menu>
     <Intro></Intro>
-    <Edu></Edu>
 </div>
 
 

@@ -1,4 +1,3 @@
-
 <!-- TODO: Make the center text formated more appropeatly -->
 <!-- TODO: Make left button themes, right ? -->
 <!-- TODO: Instead of auto play make a button to play the music -->
@@ -41,79 +40,121 @@
     }, 1000);
 
     document.addEventListener("click", (event) => {
-    let contact = document.getElementById("contact");
-    let contact_button = document.getElementById("right-bar-button");
-    let check = (object: any) => {return (object !== event.target && !object?.contains(event.target))};
-    if (check(contact) && check(contact_button)){
-      contact_info = false
-    }
-    if (check(document.getElementById("left-bar-button")) && check(document.getElementById("music-options"))){
-      music_options = false;
-    }
-  })
+      let contact = document.getElementById("contact");
+      let contact_button = document.getElementById("right-bar-button");
+      let check = (object: any) => {
+        return object !== event.target && !object?.contains(event.target);
+      };
+      if (check(contact) && check(contact_button)) {
+        contact_info = false;
+      }
+      if (
+        check(document.getElementById("left-bar-button")) &&
+        check(document.getElementById("music-options"))
+      ) {
+        music_options = false;
+      }
+    });
   });
 
   let music_options = false;
   let contact_info = false;
-
 </script>
 
-
-
-
 <div id="menu-bar">
-  <button id="left-bar-button" class="bar-button" on:click={(e) => {music_options = !music_options}}> 
-    <img class="menu-icon" src="musical-note.png" alt="music"> 
-  </button>
-
   <img id="menu-svg" src="wii bar final.png" alt="wii bar" />
+  <div>
+    <button
+      id="left-bar-button"
+      class="bar-button"
+      on:click={(e) => {
+        music_options = !music_options;
+      }}
+    >
+      <img class="menu-icon" src="musical-note.png" alt="music" />
+    </button>
+  </div>
 
-  <button id="right-bar-button" class="bar-button" on:click={(e) => {contact_info = !contact_info}}> 
-    <img class="menu-icon" src="mail.png" alt="mail"> 
+
+
+
+  <div style="text-align: center;">
+    <div
+      style="text-align: center;
+  top: 75vh;"
+      id="top-text"
+    >
+      <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">Ezequiel Valencia</h3>
+
+      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
+        Uconn CS graduate who also does creative work.
+      </p>
+    </div>
+
+    <div style="text-align: center; width:fit-content; transform:translateX(-50%); left:50%;" id="bar-div">
+      <p style="text-align: center;" id="clock">
+        {hour > 12 ? hour - 12 : hour}:{min > 9 ? min : "0" + min}
+        {dayOrNight} | {day}
+        {date}/{month}
+      </p>
+    </div>
+  </div>
+
+
+
+  <div>
+    <button
+    id="right-bar-button"
+    class="bar-button"
+    on:click={(e) => {
+      contact_info = !contact_info;
+    }}
+  >
+    <img class="menu-icon" src="mail.png" alt="mail" />
   </button>
-
-  <div id="top-text">
-    <h3 id="name" class="text">Ezequiel Valencia</h3>
-
-    <p id="description" class="text">
-      Uconn CS graduate who also does creative work.
-    </p>
   </div>
-
-  <div id="bar-div">
-    <p id="clock">
-      {hour > 12 ? hour-12: hour}:{min > 9 ? min: "0"+min}
-      {dayOrNight} | {day}
-      {date}/{month}
-    </p>
-  </div>
+  
 </div>
 
 {#if music_options}
   <div id="music-options" class="menu-popup">
-      <h2>Audio Options</h2>
-      <p style="margin: 5%;">If you can't hear the music that this site has there are some
-        trouble shooting methods:
-      </p>
-      <ol style="margin: 5%;">
-        <li>Use the Music button here, turining it on and off.</li>
-        <li>Go to site settings and enable audio for this website.</li>
-        <li>Unmute the tab</li>
-      </ol>
-      <button id="sfx" class="music-option-buttons" on:click={(e) => {sfxController.toggle_sfx()}}>
-        SFX {$sfxController ? "On" : "Off"}
-      </button>
-      <button id="music" class="music-option-buttons" on:click={(e) => {musicController.toggle_music()}}>
-        Music {$musicController ? "On" : "Off"}
-      </button>
+    <h2>Audio Options</h2>
+    <p style="margin: 5%;">
+      If you can't hear the music that this site has there are some trouble
+      shooting methods:
+    </p>
+    <ol style="margin: 5%;">
+      <li>Use the Music button here, turining it on and off.</li>
+      <li>Go to site settings and enable audio for this website.</li>
+      <li>Unmute the tab</li>
+    </ol>
+    <button
+      id="sfx"
+      class="music-option-buttons"
+      on:click={(e) => {
+        sfxController.toggle_sfx();
+      }}
+    >
+      SFX {$sfxController ? "On" : "Off"}
+    </button>
+    <button
+      id="music"
+      class="music-option-buttons"
+      on:click={(e) => {
+        musicController.toggle_music();
+      }}
+    >
+      Music {$musicController ? "On" : "Off"}
+    </button>
   </div>
 {/if}
 
 {#if contact_info}
   <div id="contact" class="menu-popup">
     <h2>Contact Info</h2>
-    <p>Each channel has its own email assosated with it for that 
-      specific topic and can be found by pressing the menu button at the top of that channel, 
+    <p>
+      Each channel has its own email assosated with it for that specific topic
+      and can be found by pressing the menu button at the top of that channel,
       but my general contact info is:
     </p>
 
@@ -121,8 +162,8 @@
     <p>general@relaxed.slmail.me</p>
 
     <h4>Linkdin</h4>
-    <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a>
-    
+    <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
+    >
   </div>
 {/if}
 
@@ -151,12 +192,12 @@
     // font-family:'Times New Roman', Times, serif;
   }
 
-  .menu-icon{
+  .menu-icon {
     max-width: 50%;
     max-height: 50%;
   }
 
-  .menu-popup{
+  .menu-popup {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -169,7 +210,7 @@
     text-align: center;
   }
 
-  .music-option-buttons{
+  .music-option-buttons {
     width: 15%;
     height: 15%;
     margin: auto;
@@ -177,17 +218,9 @@
     transform: translateY(100%);
   }
 
-  #top-text {
-    position: fixed;
-    text-align: center;
-    top: 75vh;
-    // left: 50%;
-    width: 100%;
-    // height: 50%;
-  }
-
   #clock {
-    font-size: 150%;
+    font-size: 2.5vmin;
+    text-align: center;
     font-family: "IBM Plex Mono", monospace;
   }
 
@@ -196,12 +229,6 @@
     text-align: center;
     width: 30vw;
     bottom: 0%;
-  }
-
-  #name {
-    // position: absolute;
-
-    font-size: xx-large;
   }
 
   #left-bar-button {

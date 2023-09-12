@@ -6,19 +6,21 @@
 
   <div id="squircle" />
 
-  <div id="description">
-    <p id="description-text">
-      I'm a Cybersecurity graduate from UConn. 
-      I apply my knowledge to differing fields of computer science, 
-      such as bio-informatics, IT, full-end development, and of course cybersecurity. 
-      Although computer science helps me feel a sense of Ikigai, work is not life, 
-      so I try to spend my free time exploring life to its fullest.
-    </p>
-  </div>
-
-  <h2>
-    Free time spent <br> ▼ 
-  </h2>
+  <article>
+    <div id="description">
+      <p id="description-text">
+        I'm a Cybersecurity graduate from UConn. 
+        I apply my knowledge to differing fields of computer science, 
+        such as bio-informatics, IT, full-end development, and of course cybersecurity. 
+        Although computer science helps me feel a sense of Ikigai, work is not life, 
+        so I try to spend my free time exploring life to its fullest.
+      </p>
+    </div>
+  
+    <h2>
+      Free time spent <br> ▼ 
+    </h2>
+  </article>
 </div>
 
 <style lang="scss">
@@ -26,16 +28,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
 
   #intro {
-    height: 100vh;
+    height: auto;
     width: 100vw;
     background-color: #339996;
     text-align: center;
-    overflow:visible;
+    overflow:auto;
   }
   #squircle {
     height: 40%;
     aspect-ratio: 1/1;
     border-radius: 5%;
+    max-width: 80vw;
+    max-height: 40vh;
     overflow: auto;
     margin: auto;
 

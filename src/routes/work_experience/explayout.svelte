@@ -50,7 +50,8 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
   #wrapper {
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
     width: 100vw;
     position: absolute;
     top: 0;
@@ -62,6 +63,7 @@
   #right-wrapper{
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     background-size: 40px 40px;
     background-image: radial-gradient(circle, #ffffff 1px, rgba(0, 0, 0, 0) 1px);
   }

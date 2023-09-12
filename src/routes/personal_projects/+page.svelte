@@ -8,7 +8,7 @@ import Intro from "./intro.svelte";
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me"></Menu>
+    <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
     <Intro></Intro>
     <Projects></Projects>
 

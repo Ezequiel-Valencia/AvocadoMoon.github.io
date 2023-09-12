@@ -23,6 +23,7 @@
         <div>
           <h3 class="degree">Bachelors Degree In Cybersecurity</h3>
           <h2 class="institution">University of Connecticut</h2>
+          <h5>GPA: 3.7</h5>
           <p style="margin: 4%;">
             Getting my education in Cybersecurity was one of the best decisions
             I've made. The subject requires a grasp on all CS subjects for

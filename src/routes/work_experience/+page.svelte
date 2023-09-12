@@ -18,7 +18,7 @@ import { onMount } from "svelte";
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me"></Menu>
+    <Menu email="website@worker.slmail.me" songName="Sabbath - Various Artists"></Menu>
     <Intro></Intro>
     <Experience></Experience>
 

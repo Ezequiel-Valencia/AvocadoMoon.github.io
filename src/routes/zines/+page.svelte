@@ -8,7 +8,7 @@ import Intro from "./intro.svelte";
 
 
 <div id="main-div">
-    <Menu email="zines.zlfwo@slmails.com"></Menu>
+    <Menu email="zines.zlfwo@slmails.com" songName="Sonic Unleashed Windmill Isle Night Acid Jazz"></Menu>
     <Intro></Intro>
     <Zines></Zines>
 

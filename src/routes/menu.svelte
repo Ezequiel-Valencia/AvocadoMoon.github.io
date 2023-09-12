@@ -131,7 +131,7 @@
     height: 10vh;
     width: 20vw;
     margin-left: 5%;
-    margin-top: 20%;
+    margin-top: 20vh;
   }
 
   #contact-me {
@@ -141,7 +141,7 @@
   }
 
   #contact-me h1 {
-    padding-top: 10%;
+    padding-top: 2vh;
     bottom: 0;
     color: white;
   }

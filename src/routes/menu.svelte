@@ -56,7 +56,12 @@
 
 {#if home_menu}
   <div id="home-menu-nav">
-    <div id="big-button-div">
+
+    <div style="height:40vh">
+      <h1 style="color: white; text-align:center; padding:5%;">Song Playing:</h1>
+    </div>
+
+    <div style="height:40vh; text-align:center;" id="big-button-div">
       <button
         on:click={(e) => {
           location.href = "/";
@@ -69,6 +74,7 @@
         }}>Return</button
       >
     </div>
+
     <div id="contact-me">
       <h1>Contact Me</h1>
       <p>Email: {email}</p>
@@ -99,7 +105,8 @@
   }
 
   #home-menu-nav {
-    top: 0;
+    // top: 0;
+    bottom: 0;
     position: fixed;
     height: 100vh;
     width: 100vw;
@@ -122,18 +129,7 @@
     text-decoration: underline;
   }
 
-  #big-button-div {
-    position: relative;
-    height: 60vh;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-  }
-
   #big-button-div button {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     background: grey;
     border-radius: 40px;
     height: 10vh;
@@ -145,7 +141,6 @@
     position: relative;
     background-color: rgba(0, 0, 0, 0.137);
     height: 20vh;
-    bottom: -20%;
     text-align: center;
   }
 

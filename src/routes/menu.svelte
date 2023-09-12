@@ -45,14 +45,16 @@
 </script>
 
 {#if !home_menu}
-  <nav id="menu-nav">
-    <button
+<div>
+  <nav>
+    <button id="menu-nav"
       on:click={(e) => {
         home_menu = !home_menu;
         // scroll = false;
       }}>Menu</button
     >
   </nav>
+</div>
 {/if}
 
 {#if home_menu}
@@ -85,27 +87,6 @@
 {/if}
 
 <style lang="scss">
-  $height-nav: 2%;
-  #menu-nav {
-    position: fixed;
-    top: 0;
-    padding: 1%;
-    left: 50%;
-    transform: translate(-50%);
-    border-bottom-style: solid;
-    border-width: 1px;
-    border-color: white;
-    z-index: 999;
-    background-color: rgba(0, 0, 0, 0.164);
-    max-width: 200px;
-    max-height: 100px;
-    width: 20%;
-    height: $height-nav;
-    text-align: center;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
-
   #home-menu-nav {
     display:grid;
     bottom: 0;
@@ -116,18 +97,31 @@
     background: rgba(0, 0, 0, 0.85);
   }
 
-  #menu-nav button {
-    background: none;
+  #menu-nav {
     border: none;
-    font-size: large;
     color: white;
-    width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
+    font-size: 3vmin;
+    position: fixed;
+    padding: 1vmin;
+    left: 50%;
+    transform: translate(-50%);
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: white;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.164);
+    max-width: 200px;
+    max-height: 55px;
+    width: 20vmin;
+    height: auto;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 
-  #menu-nav button:hover {
+  #menu-nav:hover {
     text-decoration: underline;
   }
 

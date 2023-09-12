@@ -118,19 +118,19 @@
 
 {#if music_options}
   <div id="music-options" class="menu-popup">
-    <h2>Audio Options</h2>
-    <p style="margin: 5%;">
+    <h2 class="menu-large-text">Audio Options</h2>
+    <p class="menu-med-text" style="margin: 5%;">
       If you can't hear the music that this site has there are some trouble
       shooting methods:
     </p>
-    <ol style="margin: 5%;">
-      <li>Use the Music button here, turining it on and off.</li>
-      <li>Go to site settings and enable audio for this website.</li>
-      <li>Unmute the tab</li>
+    <ol class="menu-med-text" style="margin: 5%;">
+      <li class="menu-med-text">Use the Music button here, turining it on and off.</li>
+      <li class="menu-med-text">Go to site settings and enable audio for this website.</li>
+      <li class="menu-med-text">Unmute the tab</li>
     </ol>
     <button
       id="sfx"
-      class="music-option-buttons"
+      class="music-option-buttons menu-med-text"
       on:click={(e) => {
         sfxController.toggle_sfx();
       }}
@@ -139,7 +139,7 @@
     </button>
     <button
       id="music"
-      class="music-option-buttons"
+      class="music-option-buttons menu-med-text"
       on:click={(e) => {
         musicController.toggle_music();
       }}
@@ -151,18 +151,18 @@
 
 {#if contact_info}
   <div id="contact" class="menu-popup">
-    <h2>Contact Info</h2>
-    <p>
+    <h2 class="menu-large-text">Contact Info</h2>
+    <p class="menu-med-text">
       Each channel has its own email assosated with it for that specific topic
       and can be found by pressing the menu button at the top of that channel,
       but my general contact info is:
     </p>
 
-    <h4>Email:</h4>
-    <p>general@relaxed.slmail.me</p>
+    <h4 class="menu-med-text">Email:</h4>
+    <p class="menu-med-text">general@relaxed.slmail.me</p>
 
-    <h4>Linkdin</h4>
-    <a href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
+    <h4 class="menu-med-text">Linkdin</h4>
+    <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
     >
   </div>
 {/if}
@@ -216,6 +216,14 @@
     margin: auto;
     padding: 2%;
     transform: translateY(100%);
+  }
+
+  .menu-large-text{
+    font-size: 2vmin;
+  }
+
+  .menu-med-text{
+    font-size: 2vmin;
   }
 
   #clock {

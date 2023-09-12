@@ -8,10 +8,6 @@
 
 <div id="mainDiv">
 
-  <head>
-    <meta name="viewport" content="width=1024">
-  </head>
-
   <Channels></Channels>
   
   <Menubar></Menubar>

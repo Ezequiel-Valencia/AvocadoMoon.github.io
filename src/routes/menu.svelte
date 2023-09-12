@@ -35,6 +35,7 @@
   let home_menu = false;
 //   let contact_me = false;
   export let email: string;
+  export let songName: string;
 
 //   onMount(() => {
 //     gsap.registerPlugin(ScrollTrigger);
@@ -57,8 +58,9 @@
 {#if home_menu}
   <div id="home-menu-nav">
 
-    <div style="height:40vh">
-      <h1 style="color: white; text-align:center; padding:5%;">Song Playing:</h1>
+    <div style="height:auto">
+      <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Song Playing:</h1>
+      <h4 style="color: white; text-align:center; margin-top:0%; padding-top:0%;">{songName}</h4>
     </div>
 
     <div style="height:40vh; text-align:center;" id="big-button-div">
@@ -83,14 +85,14 @@
 {/if}
 
 <style lang="scss">
+  $height-nav: 2%;
   #menu-nav {
-    $border-style: solid;
     position: fixed;
     top: 0;
     padding: 1%;
     left: 50%;
     transform: translate(-50%);
-    border-bottom-style: $border-style;
+    border-bottom-style: solid;
     border-width: 1px;
     border-color: white;
     z-index: 999;
@@ -98,20 +100,20 @@
     max-width: 200px;
     max-height: 100px;
     width: 20%;
-    height: 2%;
+    height: $height-nav;
     text-align: center;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   }
 
   #home-menu-nav {
-    // top: 0;
+    display:grid;
     bottom: 0;
     position: fixed;
     height: 100vh;
     width: 100vw;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.75);
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.85);
   }
 
   #menu-nav button {
@@ -135,26 +137,25 @@
     height: 10vh;
     width: 20vw;
     margin-left: 5%;
+    margin-top: 20%;
   }
 
   #contact-me {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.137);
-    height: 20vh;
     text-align: center;
+    max-height: 20vh;
   }
 
   #contact-me h1 {
-    transform: translateY(100%);
+    padding-top: 10%;
+    bottom: 0;
     color: white;
   }
 
   #contact-me p {
-    transform: translateY(200%);
+    bottom: 0;
     color: white;
   }
 
-  #contact-me:hover {
-    background-image: linear-gradient(rgb(0, 183, 255), black);
-  }
+  
 </style>

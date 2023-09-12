@@ -6,7 +6,7 @@
 </script>
 
 <span id="main-div">
-  <Menu email="general@relaxed.slmail.me" />
+  <Menu email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
   <Me />
 
   <Hobbies />

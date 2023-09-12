@@ -11,7 +11,7 @@
 
 
 <div id="main-div">
-    <Menu email=""></Menu>
+    <Menu email="website@worker.slmail.me" songName="Mozart Symphony 40"></Menu>
     <Intro></Intro>
 
     {#if $musicController}

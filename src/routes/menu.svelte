@@ -1,47 +1,8 @@
 <script lang="ts">
-//   import { onMount } from "svelte";
-//   import { browser } from "$app/environment";
-//   import { gsap } from "gsap";
-//   import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-
-//   let scroll: any = true;
-
-//   let scrollTop: any = null;
-//   let scrollLeft: any = null;
-
-//   function disableScroll() {
-//     if (browser) {
-//       scrollTop = window.scrollY || window.document.documentElement.scrollTop;
-//       (scrollLeft =
-//         window.scrollX || window.document.documentElement.scrollLeft),
-//         (window.onscroll = function () {
-//           window.scrollTo(scrollLeft, scrollTop);
-//         });
-//     }
-//   }
-
-//   function enableScroll() {
-//     if (browser) {
-//       window.onscroll = function () {};
-//     }
-//   }
-
-//   $: if (!scroll) {
-//     disableScroll();
-//   } else {
-//     enableScroll();
-//   }
 
   let home_menu = false;
-//   let contact_me = false;
   export let email: string;
   export let songName: string;
-
-//   onMount(() => {
-//     gsap.registerPlugin(ScrollTrigger);
-//     gsap.from(".nav", {scrollTrigger: {pin: "#home-menu-nav"}})
-//   })
-
 </script>
 
 {#if !home_menu}

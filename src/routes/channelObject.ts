@@ -60,6 +60,15 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         redirect: "/education",
         musicClip: musicClipDir + '/Education.mp3'
     },
+    {
+        coverImage: "/Channel Covers/zekeanimsmall.gif",
+        gifImage: "Channel Covers/zekeanimsmall.gif",
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/web_ring",
+        musicClip: musicClipDir + '/Education.mp3'
+    },
 ];
 const channelPriorLength = channels.length
 

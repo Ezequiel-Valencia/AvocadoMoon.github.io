@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { musicController } from "../../myLocalStorage";
   import Menu from "../menu.svelte";
 
 </script>
@@ -9,12 +10,16 @@
 
 
 <div id="main-div">
-    <Menu email="" songName=""></Menu>
+    <Menu email="zines.zlfwo@slmails.com" songName="Anodyne 2 - Center City Cenote"></Menu>
     <div style="height: 100vh; text-align:center;">
         <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring">
     
-    <h2>Portal to find interesting Websites</h2>
+    <h2>Portal for Interesting Websites</h2>
     </div>
+
+    {#if $musicController}
+        <audio id="song" src="/Audio/Channel-Songs/Center City Cenote.mp3" autoplay loop></audio>
+    {/if}
 
 </div>
 

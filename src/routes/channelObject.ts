@@ -67,7 +67,7 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         focused: false,
         hover: false,
         redirect: "/web_ring",
-        musicClip: musicClipDir + '/Education.mp3'
+        musicClip: musicClipDir + '/Web_Ring.mp3'
     },
 ];
 const channelPriorLength = channels.length

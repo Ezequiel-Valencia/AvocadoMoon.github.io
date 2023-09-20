@@ -10,9 +10,9 @@
 
 
 
-<div id="main-div">
+<div style="height: auto;" id="main-div">
     <Menu email="zines.zlfwo@slmails.com" songName="Anodyne 2 - Center City Cenote"></Menu>
-    <div style="height: 100vh; text-align:center;">
+    <div style="height: auto; min-height:100vh; text-align:center;">
         <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring">
     
     <h2>Portal for Interesting Websites</h2>

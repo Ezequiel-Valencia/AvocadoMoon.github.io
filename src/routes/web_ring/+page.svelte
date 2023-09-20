@@ -1,6 +1,7 @@
 <script lang="ts">
   import { musicController } from "../../myLocalStorage";
   import Menu from "../menu.svelte";
+  import Websites from "./websites.svelte";
 
 </script>
 
@@ -16,6 +17,8 @@
     
     <h2>Portal for Interesting Websites</h2>
     </div>
+
+    <Websites></Websites>
 
     {#if $musicController}
         <audio id="song" src="/Audio/Channel-Songs/Center City Cenote.mp3" autoplay loop></audio>

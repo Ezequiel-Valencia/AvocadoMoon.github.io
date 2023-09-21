@@ -16,10 +16,10 @@ export const projects: { [key: string]: Projects[] } = {
         {
             name: "Home Server",
             year: "Current",
-            description: `Multiple Proxmox nodes connected to each other servering as one large graph of computational devices.
+            description: `Multiple Proxmox nodes connected to each other severing as one large graph of computational devices.
             Each node has multiple VM's or containers all using Ubuntu or TrueNas, and have docker containers running within them to 
             perform different tasks. Currently my home lab is used to serve media, keep track my bills, DNS server, and Nextcloud instance.
-            I plan on making it accessable outside of my home network and to use SDN instead of my current router that also serves as my access point.`
+            I plan on making it accessible outside of my home network and to use SDN instead of my current router that also serves as my access point.`
         }
 
     ],
@@ -37,7 +37,7 @@ export const projects: { [key: string]: Projects[] } = {
             knowledge one has in technology.`
         },
         {
-            name: "Network of Deciet",
+            name: "Network of Deceit",
             year: "2022",
             description: `Automatic detection of stereotypes within Twitter, using interdisciplinary tactics incorporating sociology, psychology, and computer science.
             NLP utilizing Google's pre-trained word embedding model BERT, and a Feed Forward Neural Network layer for classification, all done with PyTorch.

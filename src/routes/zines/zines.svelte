@@ -7,7 +7,7 @@
         },
         {
             zineCover: dirPrefix + "/Pandora_Poster.png",
-            description: "Current Zine I'm working on focused upon tech and it's affects on different communitys."
+            description: "Current Zine I'm working on focused upon tech and it's affects on different community's."
         }
     ]
 

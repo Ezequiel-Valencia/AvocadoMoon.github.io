@@ -8,7 +8,7 @@
 
   const hobbies: { category: string; activites: Activites[] }[] = [
     {
-      category: "Atheletic",
+      category: "Athletic",
       activites: [
         {
           name: "Biking",
@@ -70,7 +70,7 @@
           image: dirPrefix + "/swing-dancing.jpg",
         },
         {
-          name: "Saxaphone",
+          name: "Saxophone",
           description:
             "Played saxophone since elementary school and enjoy it. I don't play as much as I used to.",
           image: dirPrefix + "/sax.jpg",
@@ -78,7 +78,7 @@
       ],
     },
     {
-      category: "Enviroment/Agriculture",
+      category: "Environment/Agriculture",
       activites: [
         {
           name: "Beekeeping",

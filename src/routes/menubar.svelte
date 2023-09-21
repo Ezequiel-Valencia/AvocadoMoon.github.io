@@ -124,7 +124,7 @@
       shooting methods:
     </p>
     <ol class="menu-med-text" style="margin: 5%;">
-      <li class="menu-med-text">Use the Music button here, turining it on and off.</li>
+      <li class="menu-med-text">Use the Music button here, turning it on and off.</li>
       <li class="menu-med-text">Go to site settings and enable audio for this website.</li>
       <li class="menu-med-text">Unmute the tab</li>
     </ol>
@@ -153,7 +153,7 @@
   <div id="contact" class="menu-popup">
     <h2 class="menu-large-text">Contact Info</h2>
     <p class="menu-med-text">
-      Each channel has its own email assosated with it for that specific topic
+      Each channel has its own email associated with it for that specific topic
       and can be found by pressing the menu button at the top of that channel,
       but my general contact info is:
     </p>
@@ -161,7 +161,7 @@
     <h4 class="menu-med-text">Email:</h4>
     <p class="menu-med-text">general@relaxed.slmail.me</p>
 
-    <h4 class="menu-med-text">Linkdin</h4>
+    <h4 class="menu-med-text">Linkedin</h4>
     <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
     >
   </div>

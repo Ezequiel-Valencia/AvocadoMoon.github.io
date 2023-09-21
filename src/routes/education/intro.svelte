@@ -27,7 +27,7 @@
           <p style="margin: 4%;">
             Getting my education in Cybersecurity was one of the best decisions
             I've made. The subject requires a grasp on all CS subjects for
-            setting a secure entripise system. That is network, OS, hardware, front-end,
+            setting a secure enterprise system. That is network, OS, hardware, front-end,
             back-end, and CI/CD security. With this knowledge I can both excel in personal projects
             and in the work field.
           </p>

@@ -12,15 +12,14 @@
 
 <div style="height: auto;" id="main-div">
     <Menu email="zines.zlfwo@slmails.com" songName="Anodyne 2 - Center City Cenote"></Menu>
-    <div style="height: auto; min-height:100vh; text-align:center;">
+    <div style="height: auto; min-height:100vh; text-align:center; margin:auto;">
         <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring">
     
-        <h2>Portal for Interesting Websites</h2>
 
-        <div>
+        <div style="display: flex; margin:auto; text-align:center; width:fit-content; height:auto;">
             <img style="height: 10vh;" src="/web_ring/www.gif" alt="WWW">
+            <h2 style="font-size: 5vmin;">Portal for Interesting Websites</h2>
             <img style="height: 10vh;" src="/web_ring/computer_surfing.gif" alt="Computer Surfing">
-            <img style="height: 10vh;" src="/web_ring/penguin_surf.gif" alt="Penguin Surfing">
         </div>
 
     </div>
@@ -51,6 +50,15 @@
         border-style: groove;
         border-color: goldenrod;
         border-width: 5px;
+        height: 40vmin;
+        width: 50vmin;
+
+        max-height: 800px;
+        max-width: 900px;
+    }
+
+    h2{
+        color: white;
     }
 
 

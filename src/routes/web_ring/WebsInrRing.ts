@@ -15,7 +15,7 @@ export const webRing: { [key: string]: WebRing[] } =
         {
             imgLocation: imgLocalPrefix + "/eff_cover_tracks.png",
             webTitle: "Cover Your Tracks EFF",
-            description: `A website that lets you determine how trackers view your browser
+            description: `Determine how trackers view your browser
             and gives you information on how to mitigate being tracked.`,
             opinion: `Useful tool for wheneve I download a new browser.`,
             url: "https://coveryourtracks.eff.org/"

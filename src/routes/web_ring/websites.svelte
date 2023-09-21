@@ -18,8 +18,8 @@
   {#each Object.entries(webRing) as [key, webList], index}
 
   <div style="padding-bottom:5vh;">
-    <div style="width: 35vw; margin:auto; border-bottom-style:solid;">
-      <h3 style="font-size: 2em;">{key}</h3>
+    <div style="width: 35vw; margin:auto; border-bottom-style:solid; border-bottom-color:white;">
+      <h3 style="font-size: 4vmin;">{key}</h3>
     </div>
   </div>
 
@@ -31,12 +31,12 @@
       tabindex="{index}"
     >
       <div style="padding-left:2vw; padding-right: 2vw; margin-top: auto; margin-bottom:auto;">
-        <img style="border-style:ridge; width: 10vw; height:10vw; max-height:150px; max-width:150px;" src={web.imgLocation} alt="Website Cover" />
+        <img class="web-image" src={web.imgLocation} alt="Website Cover" />
       </div>
       <div style="text-align: left;">
-        <h2 style="font-size: 2em;">{web.webTitle}</h2>
-        <h5 style="font-size: 1em;">{web.description}</h5>
-        <p style="font-size: .9em;">Opinion: {web.opinion}</p>
+        <h2 style="font-size: 3.5vmin; padding-right:2vw;">{web.webTitle}</h2>
+        <h5 style="font-size: 2.7vmin; padding-right:2vw;">{web.description}</h5>
+        <p style="font-size: 2.5vmin; padding-right:2vw;">Thoughts: {web.opinion}</p>
       </div>
     </div>
   </div>
@@ -58,6 +58,31 @@
     text-align:center; 
     margin:auto;
     max-width: 800px;
+  }
+
+  .web-image{
+    border-style:ridge; 
+    width: 10vw; 
+    height: 15vh; 
+    max-height:150px; 
+    max-width:150px;
+    border-color:white;
+  }
+
+  h3{
+    color: white;
+  }
+
+  h2{
+    color: white;
+  }
+
+  h5{
+    color: white;
+  }
+
+  p{
+    color: white;
   }
 
 </style>

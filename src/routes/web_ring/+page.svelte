@@ -15,7 +15,14 @@
     <div style="height: auto; min-height:100vh; text-align:center;">
         <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring">
     
-    <h2>Portal for Interesting Websites</h2>
+        <h2>Portal for Interesting Websites</h2>
+
+        <div>
+            <img style="height: 10vh;" src="/web_ring/www.gif" alt="WWW">
+            <img style="height: 10vh;" src="/web_ring/computer_surfing.gif" alt="Computer Surfing">
+            <img style="height: 10vh;" src="/web_ring/penguin_surf.gif" alt="Penguin Surfing">
+        </div>
+
     </div>
 
     <Websites></Websites>

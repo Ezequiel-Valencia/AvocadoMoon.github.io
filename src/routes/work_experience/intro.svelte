@@ -15,7 +15,7 @@
     const frameCount = 200;
 
     const currentFrame = (index: any) =>
-      `/work_experience/intro/${(index + 1).toString()}.jpg`;
+      `/work_experience/intro/${(index + 1).toString()}.webp`;
 
     const images: any = [];
     let galaxy = { frame: 0 };

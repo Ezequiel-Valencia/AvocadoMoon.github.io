@@ -2,11 +2,11 @@
     const dirPrefix = "/zines"
     const zines = [
         {
-            zineCover: dirPrefix + "/Expressionless Cover.png",
+            zineCover: dirPrefix + "/Expressionless Cover.webp",
             description: "My first ever self made Zine. It's unstructured and has a loose theme of expressing emotions and growth. It's too personal to have on this website but there will soon be physical copies."
         },
         {
-            zineCover: dirPrefix + "/Pandora_Poster.png",
+            zineCover: dirPrefix + "/Pandora_Poster.webp",
             description: "Current Zine I'm working on focused upon tech and it's affects on different community's."
         }
     ]

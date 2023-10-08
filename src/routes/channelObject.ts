@@ -16,8 +16,8 @@ let musicClipDir = "/Audio/Intro-Clips"
 // Needs to be initalized with some form of variables or else compiler throws fit
 export let channels: { coverImage: string; gifImage: string, currentImage: string, focused: boolean, hover: boolean, redirect: string, musicClip: string }[] = [
     {
-        coverImage: '/Channel Covers/about me cover.png',
-        gifImage: '/Channel Covers/about me cover.png',
+        coverImage: '/Channel Covers/about me cover.webp',
+        gifImage: '/Channel Covers/about me cover.webp',
         currentImage: '',
         focused: false,
         hover: false,

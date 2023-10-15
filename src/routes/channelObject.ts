@@ -25,8 +25,8 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         musicClip: musicClipDir + '/About_Me_Intro.mp3'
     },
     {
-        coverImage: "/Channel Covers/Work_Exp.gif",
-        gifImage: "/Channel Covers/Work_Exp.gif",
+        coverImage: "/Channel Covers/Work_Exp.webp",
+        gifImage: "/Channel Covers/Work_Exp.webp",
         currentImage: '',
         focused: false,
         hover: false,
@@ -34,8 +34,8 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         musicClip: musicClipDir + '/Work_Exp_Intro.mp3'
     },
     {
-        coverImage: "/Channel Covers/Zine_Cover.png",
-        gifImage: "Channel Covers/Zine_Cover.png",
+        coverImage: "/Channel Covers/Zine_Cover.webp",
+        gifImage: "Channel Covers/Zine_Cover.webp",
         currentImage: '',
         focused: false,
         hover: false,

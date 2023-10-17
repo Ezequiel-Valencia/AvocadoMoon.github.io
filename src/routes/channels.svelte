@@ -91,8 +91,14 @@
 <div id="grid-container">
 {#each channels as currentChannel, index}
     <div 
-    on:mousedown={(e) => {currentChannel.focused = true; 
-      channelFunctions.playMusic(index, channelFunctions.musicClip)}}
+    on:mousedown={(e) => {
+      if (!currentChannel.focused){
+        console.log("Its false")
+        channelFunctions.playMusic(index, channelFunctions.musicClip);
+      }
+      currentChannel.focused = true;
+    }
+  }
 
     on:mouseenter={(e) => {channelFunctions.playSfx(channelFunctions.hoverSound)}}
     role="tab"

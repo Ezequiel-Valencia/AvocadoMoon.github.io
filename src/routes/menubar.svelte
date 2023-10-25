@@ -161,9 +161,12 @@
     <h4 class="menu-med-text">Email:</h4>
     <p class="menu-med-text">general@relaxed.slmail.me</p>
 
-    <h4 class="menu-med-text">Linkedin</h4>
+    <h4 class="menu-med-text">Linkedin:</h4>
     <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
     >
+
+    <h4 class="menu-med-text">Github:</h4>
+    <a class="menu-med-text" href="https://github.com/AvocadoMoon">AvocadoMoon</a>
   </div>
 {/if}
 

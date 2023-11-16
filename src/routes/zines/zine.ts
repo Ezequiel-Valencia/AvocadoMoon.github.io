@@ -4,9 +4,10 @@ export const zines = [
     {
         zineCover: dirPrefix + "/Expressionless Cover.webp",
         title: "Expressionless",
-        description: "My first ever self made Zine. It's unstructured and has a loose theme of expressing emotions and growth. It's too personal to have on this website but there will soon be physical copies.",
-        redirect: "",
-        backgroundImage: ""
+        name: "emotionless",
+        description: "My first ever self made Zine. It's unstructured and has a loose theme of expressing emotions and growth. Deals with the problems that arise after graduation.",
+        redirect: dirPrefix + "/emotionless",
+        backgroundImage: "/zines/emotionless/back.jpg"
     },
     {
         zineCover: dirPrefix + "/pandora/Pandora_Poster.webp",

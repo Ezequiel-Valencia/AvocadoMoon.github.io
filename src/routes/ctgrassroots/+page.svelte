@@ -9,15 +9,21 @@
   <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
 
   <div id="intro">
-    <div style="margin: auto;">
+    <!-- <div style="margin: auto;">
       <img class="side-image"  src="/ctgrassroots/grass_roots.png" alt="Img"/>
-    </div>
-    <h1 id="ctheader">
+    </div> -->
+    <!-- <h1 id="ctheader">
       CTGrassRoots
-    </h1>
+    </h1> -->
     <div style="margin: auto;">
-      <img class="side-image"  src="/ctgrassroots/paths_of_life.png" alt="Img"/>
+      <img class="side-image" src="/ctgrassroots/7upup.png" alt="Img"/>
     </div>
+    <!-- <div style="margin: auto;">
+      <img class="side-image"  src="/ctgrassroots/paths_of_life.png" alt="Img"/>
+    </div> -->
+  </div>
+  <div style="text-align: center;">
+    <h1 style="color: black;">FAQ:</h1>
   </div>
 
   <Faq></Faq>
@@ -36,8 +42,8 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #145e0e;
-    background-image: radial-gradient(rgb(0, 99, 21), rgb(0, 56, 9));
+    background-color: #087575;
+    // background-image: radial-gradient(rgb(1, 73, 17), rgb(0, 56, 9));
     overflow: auto;
   }
   #intro{
@@ -48,24 +54,24 @@
     // background-color: rgb(15, 34, 139);
   }
 
-  #ctheader{
-    font-family: 'Playfair Display', serif;
+  // #ctheader{
+  //   font-family: 'Playfair Display', serif;
         
-    text-align: center;
-    color: goldenrod;
-    position: relative;
-    height: auto;
-    display: flex;
+  //   text-align: center;
+  //   color: rgb(1, 114, 134);
+  //   position: relative;
+  //   height: auto;
+  //   display: flex;
 
-    margin: auto;
-  }
+  //   margin: auto;
+  // }
 
   .side-image{
     text-align: center;
     background-size: contain;
     background-repeat: no-repeat;
     margin: auto;
-    width: 15vw;
+    width: 30dvh;
     height:auto;
   }
 

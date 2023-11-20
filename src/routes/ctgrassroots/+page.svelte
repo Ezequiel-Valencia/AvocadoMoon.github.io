@@ -9,9 +9,15 @@
   <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
 
   <div id="intro">
+    <div style="margin: auto;">
+      <img class="side-image"  src="/ctgrassroots/grass_roots.png" alt="Img"/>
+    </div>
     <h1 id="ctheader">
       CTGrassRoots
     </h1>
+    <div style="margin: auto;">
+      <img class="side-image"  src="/ctgrassroots/paths_of_life.png" alt="Img"/>
+    </div>
   </div>
 
   <Faq></Faq>
@@ -31,11 +37,14 @@
     height: 100%;
     width: 100%;
     background-color: #145e0e;
+    background-image: radial-gradient(rgb(0, 99, 21), rgb(0, 56, 9));
     overflow: auto;
   }
   #intro{
-    height: 80vh;
+    height: 50vh;
     width: 100vw;
+    text-align: center;
+    display: flex;
     // background-color: rgb(15, 34, 139);
   }
 
@@ -44,11 +53,20 @@
         
     text-align: center;
     color: goldenrod;
-    top: 50%;
-    transform: translateY(-50%);
     position: relative;
-    margin: 0%;
-    padding: 0%;
+    height: auto;
+    display: flex;
+
+    margin: auto;
+  }
+
+  .side-image{
+    text-align: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+    width: 15vw;
+    height:auto;
   }
 
 </style>

@@ -4,9 +4,11 @@
   import { musicController } from "../../myLocalStorage";
 </script>
 
-<div id="main-div">
+<div style="background-image: url('/ctgrassroots/back.jpg'); 
+  background-size: 100% 100%; 
+  background-repeat:no-repeat;" id="main-div">
 
-  <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
+  <Menu email="website@worker.slmail.me" songName="It's Just Begun (2002 Remastered)"></Menu>
 
   <div id="intro">
     <!-- <div style="margin: auto;">
@@ -29,8 +31,9 @@
   <Faq></Faq>
 
 
-  <!-- {#if $musicController}
-  {/if} -->
+  {#if $musicController}
+    <audio id="song" src="/Audio/Channel-Songs/It's Just Begun.mp3" autoplay loop></audio>
+  {/if}
   
 </div>
 

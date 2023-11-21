@@ -35,6 +35,7 @@
     margin-right: auto;
     width: 80vw;
     max-width: 1000px;
+    background-color: gray;
   }
 
   .explanation {

@@ -11,18 +11,9 @@
   <Menu email="website@worker.slmail.me" songName="It's Just Begun (2002 Remastered)"></Menu>
 
   <div id="intro">
-    <!-- <div style="margin: auto;">
-      <img class="side-image"  src="/ctgrassroots/grass_roots.png" alt="Img"/>
-    </div> -->
-    <!-- <h1 id="ctheader">
-      CTGrassRoots
-    </h1> -->
     <div style="margin: auto;">
       <img class="side-image" src="/ctgrassroots/7upup.png" alt="Img"/>
     </div>
-    <!-- <div style="margin: auto;">
-      <img class="side-image"  src="/ctgrassroots/paths_of_life.png" alt="Img"/>
-    </div> -->
   </div>
   <div style="text-align: center;">
     <h1 style="color: black;">FAQ:</h1>

@@ -10,6 +10,13 @@ export const zines = [
         backgroundImage: "/zines/emotionless/back.jpg"
     },
     {
+        zineCover: dirPrefix + "/Third Space/Third Space.webp",
+        name: "Third Space",
+        description: "Another Zine I'm working on that discusses the current loneliness epidemic within America and how third spaces come into play alongside technology.",
+        redirect: dirPrefix + "/Third Space",
+        backgroundImage: "/zines/pandora/back.jpg"
+    },
+    {
         zineCover: dirPrefix + "/pandora/Pandora_Poster.webp",
         name: "pandora",
         description: "Current Zine I'm working on focused upon tech and it's affects on different community's.",

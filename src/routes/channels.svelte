@@ -70,7 +70,10 @@
 
     redirect(id: number) {
         if (channels[id].redirect == '') return;
-        location.href = channels[id].redirect;
+        if (channels[id].redirect == '/ctgrassroots') window.open("https://ctgrassroots.org");
+        else{
+          location.href = channels[id].redirect;
+        }
     }
 
 

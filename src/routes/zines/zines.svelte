@@ -1,13 +1,13 @@
 <script lang="ts">
     import { zines } from "./zine";
-
+    let zinesKeyValueArray = Object.entries(zines);
 </script>
 
 
 <div id="zines">
-    {#each zines as zine, index}
+    {#each zinesKeyValueArray as [key, zine], index}
         <div class="zine-container" id="{
-            zines.length === (1 + index) ? "last-zine" : "zine-" + index
+            zinesKeyValueArray.length === (1 + index) ? "last-zine" : "zine-" + index
         }"
         on:mousedown={(e) => {
             location.href = zine.redirect

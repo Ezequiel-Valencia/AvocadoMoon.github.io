@@ -13,7 +13,7 @@
  height:100%; width: 100%;
  ">
     <Menu email="" songName=""></Menu>
-    <DisplayZine zineIndex={0}></DisplayZine>
+    <DisplayZine zine={zines.emotionless}></DisplayZine>
 </div>
 
 

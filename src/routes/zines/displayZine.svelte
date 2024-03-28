@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { zines } from "./zine";
-    export let zineIndex: number;
+    import type { zineMetaData } from "./zine";
+    export let zine: zineMetaData;
 </script>
 
 
 
 <div style="text-align: center; margin-left:auto; margin-right:auto; padding-top: 7%;
-background-image:url('/zines/{zines[zineIndex].name}/back.jpg');
+background-image:url('{zine.redirect}/back.jpg');
 ">
     <object
         class="pdf-object"
         type="application/pdf"
-        data="/zines/{zines[zineIndex].name}/{zines[zineIndex].name}.pdf"
+        data="{zine.pdfPath}"
         aria-label="Zine"
     >
     </object>

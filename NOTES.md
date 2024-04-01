@@ -2,6 +2,9 @@ Tech Stack
 
 For dealing with JS and HTML svelte will be used.
 
+- [Smelte](https://smeltejs.com/)
+    Smelte is a way to use Tailwind with svelte allowing for basic UI elements to be implemented more easily. Not easy to implement, and I've already got tailwind.
+
 - Vite
     - Used for bundling the different svelte and other files together
     - When needed, "npm run build" allows for the code to be processed for production, serving native HTML, CSS, and Javascript.

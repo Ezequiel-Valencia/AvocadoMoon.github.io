@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Tabs } from 'flowbite';
   const dirPrefix = "/about_me";
   type Activites = {
     name: string;

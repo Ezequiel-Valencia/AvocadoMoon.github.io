@@ -1,12 +1,63 @@
 <script lang="ts">
   import { Tabs } from 'flowbite';
-  import { hobbies } from './activites.ts';
+  import type { TabsOptions, TabsInterface, TabItem } from 'flowbite';
+  import { onMount } from 'svelte';
+  import { hobbies } from './activites';
+
+  // https://flowbite.com/docs/components/tabs/#typescript
+
+  const tabCSSClass = "inline-block p-5 border-b-2 rounded-t-lg"
+  const tabContainerCSSClass = "flex flex-wrap -mb-px text-sm font-medium text-center"
+  const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
+  const dynamicContent = "hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+  
+  function showDivContent(){
+    
+  }
+
+  onMount(() => {
+    const tabContainer: HTMLElement = document.getElementById("tabs") as HTMLElement;
+    const tabElements: TabItem[] = []
+    const options: TabsOptions = {
+      defaultTabId: 'Athletic',
+      activeClasses:
+        'text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-400 border-blue-600 dark:border-blue-500',
+      inactiveClasses:
+        'text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300',
+      onShow: () => {
+        console.log('tab is shown');
+    }
+    }
+
+    var tabs = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
+    for (var element of tabs){
+      tabElements.push({
+        id: element.id,
+        triggerEl: element,
+        targetEl: element
+      })
+    }
+    
+    // Initialize the tabs
+    
+  });
 </script>
 
 <div id="hobbies">
+  <div id="tabs" class="{tabContainerCSSClass}" style="text-align: center;" role="tablist">
+    <ul class="{listClass}" data-tabs-toggle="#stuffs" style="margin: auto; text-align:center; padding:0%;" role="tablist">
+      <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
+        <button class="tab {tabCSSClass}" role="tab" id="Athletic">Text</button>
+      </li>
+      <li style="margin: auto; list-style-type:none;" role="presentation"> 
+        <button class="tab {tabCSSClass}" role="tab" id="Hello">Hello</button>
+      </li>
+    </ul>
+  </div>
   <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
-    <div id={hob.category} class="category">
+    <div id={hob.category} class="{hob.active ? "category":""}">
+      {#if hob.active}
       <h2>{hob.category}</h2>
       {#each hob.activites as activity, index}
         <div id={activity.name} class="activity">
@@ -35,6 +86,7 @@
           
         </div>
       {/each}
+      {/if}
     </div>
   {/each}
 </div>
@@ -57,6 +109,7 @@
     margin-left: auto; //aligns div in the center by auto making margins
     margin-right: auto;
     padding-left: 5%;
+    margin-bottom: 10%;
     margin-top: 10%;
     padding: 0%;
     border-style: solid;
@@ -95,6 +148,17 @@
     float: right;
     max-width: 150px;
     
+  }
+
+  .tab{
+    background-color: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-top: transparent;
+  }
+
+  .tab:hover{
+    background-color: #12693b;
   }
 
 </style>

@@ -7,9 +7,10 @@ type Activites = {
     image: string;
   };
 
-export const hobbies: { category: string; activites: Activites[] }[] = [
+export const hobbies: { category: string; active: boolean; activites: Activites[] }[] = [
     {
       category: "Athletic",
+      active: true,
       activites: [
         {
           name: "Biking",
@@ -45,6 +46,7 @@ export const hobbies: { category: string; activites: Activites[] }[] = [
     },
     {
       category: "Art",
+      active: false,
       activites: [
         {
           name: "Zine",
@@ -80,6 +82,7 @@ export const hobbies: { category: string; activites: Activites[] }[] = [
     },
     {
       category: "Environment/Agriculture",
+      active: false,
       activites: [
         {
           name: "Beekeeping",

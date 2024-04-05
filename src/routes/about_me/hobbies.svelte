@@ -10,6 +10,8 @@
   const tabContainerCSSClass = "flex flex-wrap -mb-px text-sm font-medium text-center"
   const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
   const dynamicContent = "hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+
+  $: activeIndex = 0;
   
   function showDivContent(){
     
@@ -46,18 +48,19 @@
 <div id="hobbies">
   <div id="tabs" class="{tabContainerCSSClass}" style="text-align: center;" role="tablist">
     <ul class="{listClass}" data-tabs-toggle="#stuffs" style="margin: auto; text-align:center; padding:0%;" role="tablist">
-      <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
-        <button class="tab {tabCSSClass}" role="tab" id="Athletic">Text</button>
-      </li>
-      <li style="margin: auto; list-style-type:none;" role="presentation"> 
-        <button class="tab {tabCSSClass}" role="tab" id="Hello">Hello</button>
-      </li>
+      {#each hobbies as hob, index}
+        <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
+          <button on:click={
+            (e) => {activeIndex = index}
+          } class="tab {tabCSSClass}" role="tab" id="{hob.category}">{hob.category}</button>
+        </li>
+      {/each}
     </ul>
   </div>
   <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
-    <div id={hob.category} class="{hob.active ? "category":""}">
-      {#if hob.active}
+    {#if activeIndex == index}
+     <div id={hob.category} class="category">
       <h2>{hob.category}</h2>
       {#each hob.activites as activity, index}
         <div id={activity.name} class="activity">
@@ -86,8 +89,9 @@
           
         </div>
       {/each}
-      {/if}
+      
     </div>
+    {/if}
   {/each}
 </div>
 

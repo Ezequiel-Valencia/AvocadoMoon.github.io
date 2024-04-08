@@ -3,19 +3,26 @@
   import Tabs from '../tabs.svelte';
 
   let activeIndex = 0;
+  let icons = [["material-symbols-outlined", "fitness_center"],
+  ["material-symbols-outlined", "brush"], ["material-symbols-outlined", "forest"]]
   
 </script>
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
 
 <div id="hobbies">
   <Tabs iterable={hobbies} bind:activeIndex={activeIndex} 
   tabSCSSFileLocation="./about_me/tabs.scss"
-  getTabNameFunction={(e) => {return e.category}}>
+  getTabNameFunction={(e) => {return e.category}} icons={icons}>
 
   </Tabs>
   <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
     {#if activeIndex == index}
      <div id={hob.category} class="category">
+      <h2>{hob.category}</h2>
       {#each hob.activity as activity, index}
         <div id={activity.name} class="activity">
           <table>

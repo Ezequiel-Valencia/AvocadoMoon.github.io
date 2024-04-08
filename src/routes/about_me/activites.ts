@@ -1,17 +1,16 @@
 const dirPrefix = "/about_me";
 
-
-type Activites = {
+type Activity = {
     name: string;
     description: string;
     image: string;
   };
 
-export const hobbies: { category: string; active: boolean; activites: Activites[] }[] = [
+export const hobbies: { category: string; active: boolean; activity: Activity[] }[] = [
     {
       category: "Athletic",
       active: true,
-      activites: [
+      activity: [
         {
           name: "Biking",
           description:
@@ -47,7 +46,7 @@ export const hobbies: { category: string; active: boolean; activites: Activites[
     {
       category: "Art",
       active: false,
-      activites: [
+      activity: [
         {
           name: "Zine",
           description:
@@ -83,7 +82,7 @@ export const hobbies: { category: string; active: boolean; activites: Activites[
     {
       category: "Environment/Agriculture",
       active: false,
-      activites: [
+      activity: [
         {
           name: "Beekeeping",
           description:

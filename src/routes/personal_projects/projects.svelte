@@ -5,9 +5,15 @@
     const sideImageLocation = "/personal_projects/animal star blue.png";
     const projectIterator = Object.entries(projects);
     let activeIndex = 0;
+
+    const iconClass = "material-symbols-outlined"
+    let icons = [[iconClass, "stat_3"], [iconClass, "stat_2"], [iconClass, "stat_1"]]
+
 </script>
 
-
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
 
 
 <div id="projects-wrapper">
@@ -15,7 +21,8 @@
     <!-- <img class="side-image" src="{sideImageLocation}" alt="Sea animal images"> -->
     <div id="project-article">
         <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
-        tabSCSSFileLocation="./personal_projects/tabs.scss" getTabNameFunction={(e) => {return e[0]}}>
+        tabSCSSFileLocation="./personal_projects/tabs.scss" getTabNameFunction={(e) => {return e[0]}}
+        icons={icons}>
 
         </Tabs>
         {#each projectIterator as [key, category], index}

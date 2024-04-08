@@ -7,6 +7,17 @@ export type Projects = {
 export const projects: { [key: string]: Projects[] } = {
     "Post Grad": [
         {
+            name: "CTGrassRoots",
+            year: "Current",
+            description: `An instance of the decentralized software Mobilizon which is used to 
+            display local events within CT. I currently manage my own DB and Mailserver to have 
+            the Mobilizon instance function, in addition to specialized logging. Everything is setup
+            using Ansible and Bash scripts allowing for myself to quickly construct and maintain any 
+            new instances I choose to create. In addition to the Mobilizon instance there is a magazine
+            I created with thorough research about third spaces, and the loneliness epidemic within America.
+            All of the art, writing, and research was done by wih editorial help from friends.`
+        },
+        {
             name: "Personal Website",
             year: "Current",
             description: `My personal website where I experiment with different front end development techniques. 

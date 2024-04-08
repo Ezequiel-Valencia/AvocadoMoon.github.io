@@ -24,7 +24,7 @@ import { webRing } from "./WebsInrRing";
 
 <article style="text-align: center; height:auto;">
   <Tabs iterable={webRingIterable} bind:activeIndex={activeIndex} 
-  tabSCSSFileLocation="./web_ring/tabs.scss" getTabNameFunction={(e) => {return e[0]}}
+  tabSCSSFileLocation="web_ring" getTabNameFunction={(e) => {return e[0]}}
   icons={icons}>
   </Tabs>
   

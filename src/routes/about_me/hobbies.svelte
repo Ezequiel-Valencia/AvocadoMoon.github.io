@@ -14,7 +14,7 @@
 
 <div id="hobbies">
   <Tabs iterable={hobbies} bind:activeIndex={activeIndex} 
-  tabSCSSFileLocation="./about_me/tabs.scss"
+  tabSCSSFileLocation="about_me"
   getTabNameFunction={(e) => {return e.category}} icons={icons}>
 
   </Tabs>

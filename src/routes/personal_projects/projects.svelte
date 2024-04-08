@@ -21,7 +21,7 @@
     <!-- <img class="side-image" src="{sideImageLocation}" alt="Sea animal images"> -->
     <div id="project-article">
         <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
-        tabSCSSFileLocation="./personal_projects/tabs.scss" getTabNameFunction={(e) => {return e[0]}}
+        tabSCSSFileLocation="personal_projects" getTabNameFunction={(e) => {return e[0]}}
         icons={icons}>
 
         </Tabs>

@@ -6,7 +6,7 @@
   const tabCSSClass = "inline-block p-5 border-b-2 rounded-t-lg"
   const tabContainerCSSClass = "flex flex-wrap -mb-px text-sm font-medium text-center"
   const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
-  
+
   $: activeIndex = 0;
   
 </script>
@@ -18,7 +18,10 @@
         <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
           <button on:click={
             (e) => {activeIndex = index}
-          } class="tab {tabCSSClass}" role="tab" id="{hob.category}">{hob.category}</button>
+          } 
+          class="{tabCSSClass} {activeIndex == index ? "selected_tab" : "tab"}" 
+          role="tab" id="{hob.category}">{hob.category}
+        </button>
         </li>
       {/each}
     </ul>
@@ -121,14 +124,19 @@
   }
 
   .tab{
-    background-color: transparent;
-    border-left: transparent;
-    border-right: transparent;
-    border-top: transparent;
+    background-color:cadetblue;
+    // border-left: transparent;
+    // border-right: transparent;
+    // border-top: transparent;
   }
 
   .tab:hover{
     background-color: #12693b;
+  }
+
+  .selected_tab{
+    background-color: transparent;
+    border-bottom:white;
   }
 
 </style>

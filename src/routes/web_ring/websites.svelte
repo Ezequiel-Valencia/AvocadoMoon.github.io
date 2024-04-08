@@ -1,8 +1,13 @@
 <script lang="ts">
-  import { webRing } from "./WebsInrRing";
+  import Tabs from "../tabs.svelte";
+import { webRing } from "./WebsInrRing";
   import type { WebRing } from "./WebsInrRing";
 
-  webRing;
+  const webRingIterable = Object.entries(webRing);
+  let activeIndex = 0;
+  const icons= [["material-symbols-outlined", "construction"],
+    ["material-symbols-outlined", "palette"]
+  ]
 
 
   function redirctNewTab(e: any, url: string){
@@ -11,12 +16,20 @@
 
 </script>
 
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
 
 
 
 <article style="text-align: center; height:auto;">
-  {#each Object.entries(webRing) as [key, webList], index}
-
+  <Tabs iterable={webRingIterable} bind:activeIndex={activeIndex} 
+  tabSCSSFileLocation="./web_ring/tabs.scss" getTabNameFunction={(e) => {return e[0]}}
+  icons={icons}>
+  </Tabs>
+  
+  {#each webRingIterable as [key, webList], index}
+  {#if activeIndex == index}
   <div style="padding-bottom:5vh;">
     <div style="width: 35vw; margin:auto; border-bottom-style:solid; border-bottom-color:white;">
       <h3 style="font-size: 4vmin;">{key}</h3>
@@ -41,6 +54,7 @@
     </div>
   </div>
   {/each}
+  {/if}
   {/each}
 </article>
 

@@ -14,9 +14,11 @@
     const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
 
     //comment vite-ignore is used to suppress dynamic import warnings
-    onMount(() => {
-        import(/* @vite-ignore */ tabSCSSFileLocation /* @vite-ignore */)
+
+    onMount(() =>{
+      import(`./${tabSCSSFileLocation}/tabs.scss`)
     })
+    
 
 </script>
 

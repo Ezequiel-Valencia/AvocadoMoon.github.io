@@ -18,7 +18,7 @@
     </div>
   
     <h2>
-      Free time spent <br> ▼ 
+      Free time spent <br> 
     </h2>
   </article>
 </div>

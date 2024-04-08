@@ -1,7 +1,10 @@
 <script lang="ts">
     // import type Projects from "./project_object";
+    import Tabs from "../tabs.svelte";
     import { projects } from "./project_object";
     const sideImageLocation = "/personal_projects/animal star blue.png";
+    const projectIterator = Object.entries(projects);
+    let activeIndex = 0;
 </script>
 
 
@@ -10,8 +13,13 @@
 <div id="projects-wrapper">
     <div class="side-image"></div>
     <!-- <img class="side-image" src="{sideImageLocation}" alt="Sea animal images"> -->
-    <article id="project-article">
-        {#each Object.entries(projects) as [key, category], index}
+    <div id="project-article">
+        <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
+        tabSCSSFileLocation="./personal_projects/tabs.scss" getTabNameFunction={(e) => {return e[0]}}>
+
+        </Tabs>
+        {#each projectIterator as [key, category], index}
+            {#if activeIndex == index}
             <div class="category">
                 <h2 class="category-title">{key}</h2>
                 {#each category as project, index}
@@ -22,8 +30,9 @@
                     </div>
                 {/each}
             </div>
+            {/if}
         {/each}
-    </article>
+    </div>
     <!-- <img class="side-image" src="{sideImageLocation}" alt="Sea animal images"> -->
     <div class="side-image"></div>
 </div>
@@ -40,7 +49,7 @@
     #projects-wrapper{
         width: 100%;
         min-height: 100%;
-        height: fit-content;
+        height:max-content;
         background-image: linear-gradient(#151f2b, rgb(46, 68, 112));
         display: flex;
     }

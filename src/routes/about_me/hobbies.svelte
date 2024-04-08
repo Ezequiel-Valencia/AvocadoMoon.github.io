@@ -1,37 +1,22 @@
 <script lang="ts">
   import { hobbies } from './activites';
+  import Tabs from '../tabs.svelte';
 
-  // https://flowbite.com/docs/components/tabs/#typescript
-
-  const tabCSSClass = "inline-block p-5 border-b-2 rounded-t-lg"
-  const tabContainerCSSClass = "flex flex-wrap -mb-px text-sm font-medium text-center"
-  const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
-
-  $: activeIndex = 0;
+  let activeIndex = 0;
   
 </script>
 
 <div id="hobbies">
-  <div id="tabs" class="{tabContainerCSSClass}" style="text-align: center;" role="tablist">
-    <ul class="{listClass}" data-tabs-toggle="#stuffs" style="margin: auto; text-align:center; padding:0%;" role="tablist">
-      {#each hobbies as hob, index}
-        <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
-          <button on:click={
-            (e) => {activeIndex = index}
-          } 
-          class="{tabCSSClass} {activeIndex == index ? "selected_tab" : "tab"}" 
-          role="tab" id="{hob.category}">{hob.category}
-        </button>
-        </li>
-      {/each}
-    </ul>
-  </div>
+  <Tabs iterable={hobbies} bind:activeIndex={activeIndex} 
+  tabSCSSFileLocation="./about_me/tabs.scss"
+  getTabNameFunction={(e) => {return e.category}}>
+
+  </Tabs>
   <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
     {#if activeIndex == index}
      <div id={hob.category} class="category">
-      <h2>{hob.category}</h2>
-      {#each hob.activites as activity, index}
+      {#each hob.activity as activity, index}
         <div id={activity.name} class="activity">
           <table>
             <tr>
@@ -121,22 +106,6 @@
     float: right;
     max-width: 150px;
     
-  }
-
-  .tab{
-    background-color:cadetblue;
-    // border-left: transparent;
-    // border-right: transparent;
-    // border-top: transparent;
-  }
-
-  .tab:hover{
-    background-color: #12693b;
-  }
-
-  .selected_tab{
-    background-color: transparent;
-    border-bottom:white;
   }
 
 </style>

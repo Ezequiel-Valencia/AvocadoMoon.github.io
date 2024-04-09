@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { importSCSSOptions } from "../globals"
 
     export let iterable: Iterable<any>;
     export let activeIndex: number;
-    export let tabSCSSFileLocation: string;
+    export let tabSCSSFileLocation: importSCSSOptions;
     export let getTabNameFunction: (para: any) => string;
     export let icons: Array<any> = [];
 
@@ -16,7 +17,13 @@
     //comment vite-ignore is used to suppress dynamic import warnings
 
     onMount(() =>{
-      import(`./${tabSCSSFileLocation}/tabs.scss`)
+      if(tabSCSSFileLocation === importSCSSOptions.about_me){
+        import(`./about_me/tabs.scss`)
+      } else if(tabSCSSFileLocation === importSCSSOptions.personal_projects){
+        import(`./personal_projects/tabs.scss`)
+      } else{
+        import(`./web_ring/tabs.scss`)
+      }
     })
     
 

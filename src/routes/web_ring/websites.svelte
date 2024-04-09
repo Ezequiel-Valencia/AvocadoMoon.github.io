@@ -1,6 +1,7 @@
 <script lang="ts">
   import Tabs from "../tabs.svelte";
-import { webRing } from "./WebsInrRing";
+  import { webRing } from "./WebsInrRing";
+  import { importSCSSOptions } from "../../globals"
   import type { WebRing } from "./WebsInrRing";
 
   const webRingIterable = Object.entries(webRing);
@@ -24,7 +25,7 @@ import { webRing } from "./WebsInrRing";
 
 <article style="text-align: center; height:auto;">
   <Tabs iterable={webRingIterable} bind:activeIndex={activeIndex} 
-  tabSCSSFileLocation="web_ring" getTabNameFunction={(e) => {return e[0]}}
+  tabSCSSFileLocation={importSCSSOptions.web_ring} getTabNameFunction={(e) => {return e[0]}}
   icons={icons}>
   </Tabs>
   

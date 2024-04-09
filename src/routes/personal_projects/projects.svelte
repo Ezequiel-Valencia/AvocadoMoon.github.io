@@ -2,6 +2,7 @@
     // import type Projects from "./project_object";
     import Tabs from "../tabs.svelte";
     import { projects } from "./project_object";
+    import { importSCSSOptions } from "../../globals"
     const sideImageLocation = "/personal_projects/animal star blue.png";
     const projectIterator = Object.entries(projects);
     let activeIndex = 0;
@@ -21,7 +22,7 @@
     <!-- <img class="side-image" src="{sideImageLocation}" alt="Sea animal images"> -->
     <div id="project-article">
         <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
-        tabSCSSFileLocation="personal_projects" getTabNameFunction={(e) => {return e[0]}}
+        tabSCSSFileLocation={importSCSSOptions.personal_projects} getTabNameFunction={(e) => {return e[0]}}
         icons={icons}>
 
         </Tabs>

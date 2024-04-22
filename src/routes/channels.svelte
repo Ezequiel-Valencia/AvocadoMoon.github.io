@@ -42,11 +42,13 @@
                 case this.musicClip:
                     bgMusic.pause();
                     musicClip.currentTime = 0;
+                    musicClip.volume = 0.5;
                     musicClip.play();
                     break;
 
                 case this.backgroundMusic:
                     musicClip.pause();
+                    bgMusic.volume = 0.5
                     bgMusic.play()
                     break
             }

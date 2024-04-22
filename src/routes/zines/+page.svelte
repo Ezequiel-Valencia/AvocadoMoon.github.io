@@ -13,7 +13,11 @@ import Intro from "./intro.svelte";
     <Zines></Zines>
 
     {#if $musicController}
-        <audio src="/Audio/Channel-Songs/Sonic Unleashed Windmill Isle Night Acid Jazz.mp3" autoplay loop></audio>
+        <audio id="bg-song" volume=0.1 src="/Audio/Channel-Songs/Sonic Unleashed Windmill Isle Night Acid Jazz.mp3" autoplay loop></audio>
+        <script lang="ts">
+            var audio = document.getElementById("bg-song");
+            audio.volume = 0.4;
+        </script>
     {/if}
 </div>
 

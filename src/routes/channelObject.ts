@@ -25,8 +25,8 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         musicClip: musicClipDir + '/About_Me_Intro.mp3'
     },
     {
-        coverImage: "/Channel Covers/Work_Exp.webp",
-        gifImage: "/Channel Covers/Work_Exp.webp",
+        coverImage: "/Channel Covers/Work_Exp.gif",
+        gifImage: "/Channel Covers/Work_Exp.gif",
         currentImage: '',
         focused: false,
         hover: false,

@@ -5,6 +5,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { sfxController, musicController } from "../myLocalStorage";
+  import {clickedOff} from "../globals";
 
   function dayToName(d: any) {
     switch (d) {
@@ -39,19 +40,11 @@
       dayOrNight = hour >= 12 ? "PM" : "AM";
     }, 1000);
 
-    document.addEventListener("click", (event) => {
-      let contact = document.getElementById("contact");
-      let contact_button = document.getElementById("right-bar-button");
-      let check = (object: any) => {
-        return object !== event.target && !object?.contains(event.target);
-      };
-      if (check(contact) && check(contact_button)) {
+    document.addEventListener("click", (event) : void => {
+      if (clickedOff("contact", event) && clickedOff("right-bar-button", event)) {
         contact_info = false;
       }
-      if (
-        check(document.getElementById("left-bar-button")) &&
-        check(document.getElementById("music-options"))
-      ) {
+      if (clickedOff("left-bar-button", event) && clickedOff("music-options", event)) {
         music_options = false;
       }
     });
@@ -172,7 +165,7 @@
 
 <style lang="scss">
   $button-horizontal-offset: 2%;
-
+  @use 'homeMenu';
   @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
 
   .bar-button {
@@ -200,33 +193,12 @@
     max-height: 50%;
   }
 
-  .menu-popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 50%;
-    width: 50%;
-    border-radius: 15px;
-    z-index: 9999;
-    background-color: gray;
-    text-align: center;
-  }
-
   .music-option-buttons {
     width: 15%;
     height: 15%;
     margin: auto;
     padding: 2%;
     transform: translateY(100%);
-  }
-
-  .menu-large-text{
-    font-size: 2vmin;
-  }
-
-  .menu-med-text{
-    font-size: 2vmin;
   }
 
   #clock {

@@ -1,0 +1,22 @@
+
+
+.menu-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  width: 50%;
+  border-radius: 15px;
+  z-index: 9999;
+  background-color: gray;
+  text-align: center;
+}
+
+.menu-large-text{
+  font-size: 2vmin;
+}
+
+.menu-med-text{
+  font-size: 2vmin;
+}

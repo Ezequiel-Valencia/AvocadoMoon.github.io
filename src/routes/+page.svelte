@@ -2,7 +2,17 @@
   import {fade} from 'svelte/transition'
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
-  import { musicController, sfxController } from "../myLocalStorage";
+  import { musicController, sfxController, hasVisited } from "../myLocalStorage";
+  import { onMount } from 'svelte';
+  import { clickedOff } from '../globals'
+
+  onMount(async () => {
+    document.addEventListener("click", (event) : void => {
+      if (clickedOff("allowAudio", event)) {
+        hasVisited.hasVisited();
+      }
+    });
+  })
 
 </script>
 
@@ -13,13 +23,33 @@
   <Menubar></Menubar>
 
 
+
   {#if $sfxController}
     <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
     <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
   {/if}
   
 
-  
+  {#if !$hasVisited}
+    <div id="allowAudio" class="menu-popup">
+      <h2 class="menu-large-text">Allow Audio</h2>
+      <p class="menu-med-text" style="margin: 5%;">
+        This website plays different background music and sound effects for each channel. 
+        Do you want to allow this audio?
+        <br> <br> <br> <br> <br> <br>
+      </p>
+      <button
+        id="music"
+        class="music-option-buttons menu-med-text"
+        on:click={(e) => {
+          sfxController.toggle_sfx();
+          musicController.toggle_music();
+        }}
+      >
+        Audio {$musicController ? "On" : "Off"}
+      </button>
+    </div>
+  {/if}
 
   {#if $musicController}
     <audio src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
@@ -30,6 +60,7 @@
 </div>
 
 <style lang="scss">
+  @use 'homeMenu';
   #mainDiv {
     height: 100vh;
     width: 100vw;

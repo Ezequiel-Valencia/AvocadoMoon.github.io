@@ -6,7 +6,7 @@ import { onMount } from "svelte";
 
 // Safe method version of local storage since it doesn't throw errors when doing SSR
 const safeLocalStorage = globalThis.localStorage;
-const checkLocalstorage = (key:string) => safeLocalStorage?.getItem(key) === null;
+const isLocalStorageItemNull = (key:string) => safeLocalStorage?.getItem(key) === null;
 
 function convertToBoolean(input: string): boolean {
     try {
@@ -19,7 +19,7 @@ function convertToBoolean(input: string): boolean {
 
 function createSfxController() {
     const key = 'sfxBool';
-    if (checkLocalstorage(key)) { safeLocalStorage?.setItem(key, 'true') }
+    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
     const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
     const { subscribe, set, update } = writable(bool)
 
@@ -32,9 +32,21 @@ function createSfxController() {
     }
 }
 
+function firstTimeVisit(){
+    const key = 'visitedSite';
+    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
+    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
+    const { subscribe, set, update } = writable(bool)
+
+    return {
+        subscribe,
+        hasVisited: () => {set(true); safeLocalStorage?.setItem(key, 'true')}
+    }
+}
+
 function createMusicController() {
     const key = 'musicBool';
-    if (checkLocalstorage(key)) { safeLocalStorage?.setItem(key, 'true') }
+    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
     const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
     const { subscribe, set, update } = writable(bool)
 
@@ -49,7 +61,7 @@ function createMusicController() {
 
 function musicPlaybackTime(){
     const key = 'songPlayBackTime';
-    if (checkLocalstorage(key)) {safeLocalStorage?.setItem(key, '0')}
+    if (isLocalStorageItemNull(key)) {safeLocalStorage?.setItem(key, '0')}
     const songTimeStamp = Number(safeLocalStorage?.getItem(key))
     const {subscribe, set, update} = writable(songTimeStamp);
 
@@ -68,7 +80,7 @@ function musicPlaybackTime(){
     }
 }
 
-
+export const hasVisited = firstTimeVisit()
 export const musicController = createMusicController();
 export const sfxController = createSfxController();
 export const musicTime = musicPlaybackTime();

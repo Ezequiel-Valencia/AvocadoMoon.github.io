@@ -78,15 +78,15 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
         redirect: "/ctgrassroots",
         musicClip: musicClipDir + "/It's Just Begun.mp3"
     },
-    {
-        coverImage: "/Channel Covers/music_player.png",
-        gifImage: "Channel Covers/music_player.png",
-        currentImage: '',
-        focused: false,
-        hover: false,
-        redirect: "/music_player",
-        musicClip: ""
-    },
+    // {
+    //     coverImage: "/Channel Covers/music_player.png",
+    //     gifImage: "Channel Covers/music_player.png",
+    //     currentImage: '',
+    //     focused: false,
+    //     hover: false,
+    //     redirect: "/music_player",
+    //     musicClip: ""
+    // },
 ];
 const channelPriorLength = channels.length
 

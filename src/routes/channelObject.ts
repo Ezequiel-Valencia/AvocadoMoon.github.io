@@ -87,6 +87,15 @@ export let channels: { coverImage: string; gifImage: string, currentImage: strin
     //     redirect: "/music_player",
     //     musicClip: ""
     // },
+    {
+        coverImage: "/Channel Covers/cat-encryption.webp",
+        gifImage: "Channel Covers/cat-encryption.webp",
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/cat_encryption",
+        musicClip: musicClipDir + "/meow.mp3"
+    },
 ];
 const channelPriorLength = channels.length
 

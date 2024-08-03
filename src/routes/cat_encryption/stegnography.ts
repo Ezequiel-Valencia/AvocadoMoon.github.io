@@ -53,7 +53,7 @@ export function decodeImage(arrayImage: any, width: number, height: number){
     let messageLength: number = getChar(indices, arrayImage)
     console.log("Message Length: " + messageLength)
 
-    let message = new String()
+    let message = ""
 
     
     for(let i = 0; i < width; i++){
@@ -70,7 +70,6 @@ export function decodeImage(arrayImage: any, width: number, height: number){
             
         }
     }
-
     console.log("Resulting Message: " + JSON.stringify(message))
     return message
 }

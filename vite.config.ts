@@ -9,8 +9,8 @@ export default defineConfig({
     include: ["src/**/*.{test,spec}.{js,ts}"],
     reporters: ['verbose'],
     silent: false,
-    threads: true,
-    
+    globals: true,
+    environment: "jsdom",
   },
 
   css: {

@@ -21,7 +21,10 @@
         import(`./about_me/tabs.scss`)
       } else if(tabSCSSFileLocation === importSCSSOptions.personal_projects){
         import(`./personal_projects/tabs.scss`)
-      } else{
+      } else if (tabSCSSFileLocation === importSCSSOptions.cat_encryption){
+        import(`./cat_encryption/tabs.scss`)
+      }
+       else{
         import(`./web_ring/tabs.scss`)
       }
     })

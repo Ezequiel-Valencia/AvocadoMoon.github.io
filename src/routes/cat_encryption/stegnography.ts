@@ -9,7 +9,7 @@ export function getImageData(imageURL: string){
     shadowCtx?.drawImage(image, 0, 0);
     var imageDataObject = shadowCtx?.getImageData(0, 0, shadowCanvas.width, shadowCanvas.height)
 
-    return imageDataObject?.data;
+    return {data: imageDataObject?.data, width: shadowCanvas.width, height: shadowCanvas.height};
 }
 
 export function encodeImage(message: string, arrayImage: any, width: number, height: number){

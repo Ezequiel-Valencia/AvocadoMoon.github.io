@@ -1,17 +1,29 @@
 
 // https://www.jiit.ac.in/jiit/ic3/IC3_2008/IC3-2008/APP2_21.pdf
+// https://github.com/thavixt/steganography-svelte/blob/master/src/components/ImageSection.svelte
 
-export function getImageData(imageURL: string){
-    let shadowCanvas = document.createElement('canvas');
-    let shadowCtx = shadowCanvas.getContext('2d')
-    let image = new Image()
-    image.src = imageURL;
-    shadowCanvas.height = image.height
-    shadowCanvas.width = image.width
-    shadowCtx?.drawImage(image, 0, 0);
-    var imageDataObject = shadowCtx?.getImageData(0, 0, image.width, image.height)
+export function getImageData(imageURL: string, afterImageDataGotten: (para: any) => void){
+    const image = new Image()
+    image.onload = async () =>{
+        // console.log(imageURL)
+        let canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+        let ctx = canvas.getContext("2d")
+        ctx?.drawImage(image, 0, 0);
+        var imageDataObject = ctx?.getImageData(0, 0, image.width, image.height) as ImageData
 
-    return {data: imageDataObject?.data, width: image.width, height: image.height};
+        // console.log(imageDataObject.data)
+        let infoObject = {data: imageDataObject.data, width: image.width, height: image.height};
+        afterImageDataGotten(infoObject)
+    }
+    image.src = imageURL
+    // var reader = new FileReader()
+    // reader.onload = () => {
+    //     let dataURL = reader.result as string
+    //     image.src = dataURL
+    // }
+    // fetch(imageURL).then((res) => {res.blob().then((blob) => {reader.readAsDataURL(blob)})})
 }
 
 export function encodeImage(message: string, arrayImage: any, width: number, height: number): Uint8ClampedArray{

@@ -6,13 +6,15 @@ export function getImageData(imageURL: string){
     let shadowCtx = shadowCanvas.getContext('2d')
     let image = new Image()
     image.src = imageURL;
+    shadowCanvas.height = image.height
+    shadowCanvas.width = image.width
     shadowCtx?.drawImage(image, 0, 0);
-    var imageDataObject = shadowCtx?.getImageData(0, 0, shadowCanvas.width, shadowCanvas.height)
+    var imageDataObject = shadowCtx?.getImageData(0, 0, image.width, image.height)
 
-    return {data: imageDataObject?.data, width: shadowCanvas.width, height: shadowCanvas.height};
+    return {data: imageDataObject?.data, width: image.width, height: image.height};
 }
 
-export function encodeImage(message: string, arrayImage: any, width: number, height: number){
+export function encodeImage(message: string, arrayImage: any, width: number, height: number): Uint8ClampedArray{
     var focusedChar = 0;
 
     // first byte encoded within the Image is used for holding length of the message
@@ -26,7 +28,6 @@ export function encodeImage(message: string, arrayImage: any, width: number, hei
             }
             let indices = getColorIndicesForCord(i, j, width)
             var c1: number = message.charCodeAt(focusedChar);
-            console.log(c1)
             let currentRGBA = 0;
             for(var bitIndex = 0; bitIndex < 8; bitIndex+=2){
 

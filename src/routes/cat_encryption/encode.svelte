@@ -1,14 +1,36 @@
 <script lang="ts">
-    import { encodeImage, getImageData } from "./stegnography"
+    import { decodeImage, encodeImage, getImageData } from "./stegnography"
     const images = ["/cat_encryption/doge-cat.jpg", "/cat_encryption/stanced.jpg", 
     "/cat_encryption/demon-cat.jpg"]
     let chosenImage = 0;
+
+    let dataURL = ""
 
     function encode(){
         let imageInfo = getImageData(images[chosenImage])
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
         const message = textArea.value
-        encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
+        let data = encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
+
+        let canvas: HTMLCanvasElement = document.getElementById("cav") as HTMLCanvasElement
+        canvas.height = imageInfo.height
+        canvas.width = imageInfo.width
+        let ctx = canvas.getContext('2d')
+        let imageData = new ImageData(data, imageInfo.width, imageInfo.height)
+        console.log(decodeImage(imageData.data, imageInfo.width, imageInfo.height))
+        ctx?.putImageData(imageData, 0, 0)
+        decodeImage(ctx?.getImageData(0, 0, imageInfo.width, imageInfo.width), imageInfo.width, imageInfo.height)
+        
+        dataURL = canvas.toDataURL('image/jpeg')
+
+        let image = new Image()
+        image.src = dataURL
+        // console.log(decodeImage(getImageData(image.src), imageInfo.width, imageInfo.height))
+
+        let a = document.createElement('a')
+        a.href = dataURL
+        a.download = images[chosenImage].split("/")[2];
+        a.click()
     }
 </script>
 
@@ -53,6 +75,7 @@
             </button>
         </div>
     </div>
+    <canvas id="cav"></canvas>
 
     <form id="input-text">
         <textarea id="textArea" placeholder="Encode Message"></textarea>
@@ -60,8 +83,7 @@
             (e) => {
                 encode()
             }
-        } >
-        <a href="#f" download={images[chosenImage].split("/")[1]}>Download Encoded Message</a>
+        } >Download Encoded Image
     </button>
 
         

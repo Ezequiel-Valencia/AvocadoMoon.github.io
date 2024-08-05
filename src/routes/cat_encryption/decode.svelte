@@ -11,8 +11,9 @@
         reader.readAsDataURL(file)
         reader.onload = () => {
             let src = reader.result as string
-            let imageInfo = getImageData(src)
-            message = decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
+            let imageInfo = getImageData(src, (imageInfo) =>{
+                message = decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
+            })
         }
     }
 
@@ -38,14 +39,16 @@
         <input bind:files  type="file" name="file" accept="image/*">
     </form>
 
-    <p>{message}</p>
+    <p class="text">{message}</p>
 
 
 </div>
 
 
 <style lang="scss">
-
+    .text{
+        color: white;
+    }
     
 </style>
 

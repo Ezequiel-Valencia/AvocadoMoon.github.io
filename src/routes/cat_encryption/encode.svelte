@@ -1,30 +1,41 @@
 <script lang="ts">
     import { decodeImage, encodeImage, getImageData } from "./stegnography"
-    const images = ["/cat_encryption/doge-cat.jpg", "/cat_encryption/stanced.jpg", 
-    "/cat_encryption/demon-cat.jpg"]
+    const images = ["/cat_encryption/doge-cat.png", "/cat_encryption/stanced.jpg", 
+    "/cat_encryption/demon-cat.jpg", "/cat_encryption/test.png"]
     let chosenImage = 0;
 
-    let dataURL = ""
+    function encode(imageInfo: any){
 
-    function encode(){
-        let imageInfo = getImageData(images[chosenImage])
+        // https://www.mdpi.com/2073-8994/13/2/165
+        // https://incoherency.co.uk/image-steganography/
+        // Potential solution is to make a blob URL 
+
+        
+        // console.log(imageInfo.data)
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
         const message = textArea.value
         let data = encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
+        // console.log(data)
 
         let canvas: HTMLCanvasElement = document.getElementById("cav") as HTMLCanvasElement
         canvas.height = imageInfo.height
         canvas.width = imageInfo.width
-        let ctx = canvas.getContext('2d')
-        let imageData = new ImageData(data, imageInfo.width, imageInfo.height)
-        console.log(decodeImage(imageData.data, imageInfo.width, imageInfo.height))
-        ctx?.putImageData(imageData, 0, 0)
-        decodeImage(ctx?.getImageData(0, 0, imageInfo.width, imageInfo.width), imageInfo.width, imageInfo.height)
-        
-        dataURL = canvas.toDataURL('image/jpeg')
+        let ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+        const imageData = new ImageData(data, imageInfo.width, imageInfo.height)
+        ctx.globalCompositeOperation = "copy"
+        // console.log(decodeImage(imageData.data, imageInfo.width, imageInfo.height))
+        // console.log(imageData)
+        ctx.putImageData(imageData, 0, 0)
+        ctx.imageSmoothingEnabled = false;
 
-        let image = new Image()
-        image.src = dataURL
+        // decodeImage(, imageInfo.width, imageInfo.height)
+        
+        
+        // let image = new Image()
+        // ctx.drawImage(image, 0, 0)
+        let dataURL = canvas.toDataURL()
+        // console.log(dataURL)
+
         // console.log(decodeImage(getImageData(image.src), imageInfo.width, imageInfo.height))
 
         let a = document.createElement('a')
@@ -40,7 +51,7 @@
     <div id="carousel">
         
         <div style="text-align: center;">
-            <img class="cat-images" src={images[chosenImage]} alt="catImage">
+            <img id="cat-image" class="cat-images" src={images[chosenImage]} alt="catImage">
         </div>
 
         <div>
@@ -81,7 +92,7 @@
         <textarea id="textArea" placeholder="Encode Message"></textarea>
         <button on:click={
             (e) => {
-                encode()
+                getImageData(images[chosenImage], encode)
             }
         } >Download Encoded Image
     </button>

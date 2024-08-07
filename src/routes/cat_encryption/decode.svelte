@@ -33,9 +33,9 @@
 
 
 
-<div id="decode-div">
+<div id="decode-div" style="text-align: center;">
 
-    <form>
+    <form style="text-align: center;">
         <input bind:files  type="file" name="file" accept="image/*">
     </form>
 

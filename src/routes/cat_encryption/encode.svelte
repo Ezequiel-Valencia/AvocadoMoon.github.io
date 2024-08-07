@@ -1,7 +1,13 @@
 <script lang="ts">
     import { decodeImage, encodeImage, getImageData } from "./stegnography"
-    const images = ["/cat_encryption/doge-cat.png", "/cat_encryption/stanced.jpg", 
-    "/cat_encryption/demon-cat.jpg", "/cat_encryption/test.png"]
+
+    type CatImages = {
+        file: string,
+        name: string
+    }
+    const images: CatImages[] = [{file:"/cat_encryption/doge-cat.png", name: "Doge"}, 
+    {file: "/cat_encryption/stanced.jpg", name: "Stanced"}, 
+    {file: "/cat_encryption/demon-cat.jpg", name: "Demon"}]
     let chosenImage = 0;
 
     function encode(imageInfo: any){
@@ -11,20 +17,18 @@
         // Potential solution is to make a blob URL 
 
         
-        // console.log(imageInfo.data)
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
         const message = textArea.value
         let data = encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
-        // console.log(data)
 
-        let canvas: HTMLCanvasElement = document.getElementById("cav") as HTMLCanvasElement
+        let canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement
         canvas.height = imageInfo.height
         canvas.width = imageInfo.width
         let ctx = canvas.getContext('2d') as CanvasRenderingContext2D
         const imageData = new ImageData(data, imageInfo.width, imageInfo.height)
         ctx.globalCompositeOperation = "copy"
-        // console.log(decodeImage(imageData.data, imageInfo.width, imageInfo.height))
-        // console.log(imageData)
+        
+
         ctx.putImageData(imageData, 0, 0)
         ctx.imageSmoothingEnabled = false;
 
@@ -34,65 +38,63 @@
         // let image = new Image()
         // ctx.drawImage(image, 0, 0)
         let dataURL = canvas.toDataURL()
-        // console.log(dataURL)
-
-        // console.log(decodeImage(getImageData(image.src), imageInfo.width, imageInfo.height))
-
+        
         let a = document.createElement('a')
         a.href = dataURL
-        a.download = images[chosenImage].split("/")[2];
+        a.download = images[chosenImage].file.split("/")[2];
         a.click()
     }
 </script>
 
 
 
-<article id="encode-div">
+<article id="encode-div" style="height: 100%">
     <div id="carousel">
-        
-        <div style="text-align: center;">
-            <img id="cat-image" class="cat-images" src={images[chosenImage]} alt="catImage">
-        </div>
-
-        <div>
-            <!-- Slider controls -->
-            <button on:click={
-                (e) => {
-                    if(chosenImage == 0){
+        <span class="slider-control" style="left: 0; margin-left: 5vw">
+            <svg style="z-index: 3;"  tabindex="0" aria-roledescription="Select Left" role="button" on:keypress={(e) => {}} on:click={(e) => {
+                console.log(chosenImage)
+                if(chosenImage == 0){
                         chosenImage = images.length - 1
                     } else{
                         chosenImage -= 1
                     }
-                }
-            } type="button" class="slider-control absolute top-0 start-0 z-30 flex items-center justify-center px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                    </svg>
-                    <span class="sr-only">Previous</span>
-                </span>
-            </button>
-            <button on:click={
-                (e) => {
-                    chosenImage = (chosenImage + 1) % images.length
-                }
-            } type="button" class="slider-control absolute top-0 end-0 z-30 flex items-center justify-center px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <span class="sr-only">Next</span>
-                </span>
-            </button>
+                }} 
+                version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                <style type="text/css">
+                    .st0{fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                </style>
+                <!-- <circle class="st0" cx="16" cy="16" r="13" fill-opacity=.5 /> -->
+                <polyline class="st0" points="18,20.2 13.8,16 18,11.8 "/>
+            </svg>
+        </span>
+        
+        <div id="image-and-text">
+            <img id="cat-image" class="cat-images" src={images[chosenImage].file} alt="catImage">
+            <h4 class="text" style="font-size:xx-large; padding-bottom:0; margin-bottom:0;">Chosen:</h4>
+            <p class="text" style="font-size: xx-large; margin-top:0; font-style:italic;">{images[chosenImage].name}</p>
         </div>
-    </div>
-    <canvas id="cav"></canvas>
 
-    <form id="input-text">
-        <textarea id="textArea" placeholder="Encode Message"></textarea>
-        <button on:click={
+        
+        <span class="slider-control" style="margin-right: 5vw; right:0; rotate: 10">
+            <svg style="rotate: 10;" tabindex="0" aria-roledescription="Select Right" role="button" on:keypress={(e) => {}} on:click={(e) => {
+                    chosenImage = (chosenImage + 1) % images.length
+                }} 
+                version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                <style type="text/css">
+                    .st0{fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                </style>
+                <!-- <circle class="st0" cx="16" cy="16" r="13" fill-opacity=.5 /> -->
+                <polyline transform="rotate(180, 16, 16)" class="st0" points="18,20.2 13.8,16 18,11.8 "/>
+            </svg>
+        </span>
+        
+    </div>
+
+    <form id="input-text" style="display: grid; text-align:center;">
+        <textarea style="width: 60vw; height: 6vh; margin-left:auto; margin-right:auto;" id="textArea" placeholder="Encode Message"></textarea>
+        <button style="width: 15vw; margin-left:auto; margin-right:auto; height: 3vh; margin-top: 2vh;" on:click={
             (e) => {
-                getImageData(images[chosenImage], encode)
+                getImageData(images[chosenImage].file, encode)
             }
         } >Download Encoded Image
     </button>
@@ -105,22 +107,44 @@
 
 <style lang="scss">
 
+    .text{
+        color: white;
+    }
+
+    #image-and-text{
+        position: relative;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    svg:focus{
+        border: none;
+        outline: none;
+    }
+    
+    
+
     .slider-control{
-        background-color: black;
-        height: 30vh;
-        margin-top: 30%;
-        margin-left: 10%;
-        margin-right: 10%;
+        position: absolute;
+        text-align: center;
+        width: 10vw;
+        height: 10vh;
+        display: flex;
+        // height: 30vh;
+        margin-top: 25vh;
     }
 
     #carousel{
         height: auto;
+        display: flex;
+        text-align: center;
     }
 
     .cat-images{
-        margin: 10vh;
+        margin-top: 5vh;
         aspect-ratio: 1/1;
-        border-style: groove;
+        border-style:solid;
         border-color: white;
         border-width: 5px;
         height: 40vmin;

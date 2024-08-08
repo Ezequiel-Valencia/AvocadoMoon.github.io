@@ -1,5 +1,6 @@
 <script lang="ts">
     import { decodeImage, encodeImage, getImageData } from "./stegnography"
+    import { encryptMessage, arrayBufferToString } from "./encryption"
 
     type CatImages = {
         file: string,
@@ -9,8 +10,10 @@
     {file: "/cat_encryption/stanced.jpg", name: "Stanced"}, 
     {file: "/cat_encryption/demon-cat.jpg", name: "Demon"}]
     let chosenImage = 0;
+    let encrypt = false;
+    let key = ""
 
-    function encode(imageInfo: any){
+    async function encode(imageInfo: any){
 
         // https://www.mdpi.com/2073-8994/13/2/165
         // https://incoherency.co.uk/image-steganography/
@@ -18,7 +21,16 @@
 
         
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
-        const message = textArea.value
+        
+        let message;
+        if (encrypt){
+            let encryptResult = await encryptMessage(textArea.value)
+            let rawKey =  await crypto.subtle.exportKey("raw", encryptResult.key)
+            key = arrayBufferToString(rawKey)
+            message = encryptResult.encrypted;
+        } else{
+            message = textArea.value;
+        }
         let data = encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
 
         let canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement
@@ -90,9 +102,18 @@
         
     </div>
 
-    <form id="input-text" style="display: grid; text-align:center;">
+    <form id="input-text" style=" text-align:center;">
         <textarea style="width: 60vw; height: 6vh; margin-left:auto; margin-right:auto;" id="textArea" placeholder="Encode Message"></textarea>
-        <button style="width: 15vw; margin-left:auto; margin-right:auto; height: 3vh; margin-top: 2vh;" on:click={
+        <br>
+        <br>
+        <input bind:checked={encrypt} id="checkEncrypt" name="checkEncrypt" style="display:inline-block; margin-left:auto; margin-right:auto;" type="checkbox"> 
+        <label for="checkEncrypt" class="text" style="margin-left:auto; margin-right:auto; width:fit-content; display:inline-block;">Encrypt Message As Well?</label>
+        {#if encrypt}
+            <br>
+            <p class="text">The Key To Decrypt This Message Is: {key}</p>
+        {/if}
+        <br>
+        <button style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 3vh; margin-top: 2vh;" on:click={
             (e) => {
                 getImageData(images[chosenImage].file, encode)
             }

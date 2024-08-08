@@ -50,7 +50,8 @@
         top: 0;
         left: 0;
         position: absolute;
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
         width: 100vw;
         z-index: -100;
         background-color: black;

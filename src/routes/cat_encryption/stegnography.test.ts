@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from "vitest";
 import { encodeImage, decodeImage } from "./stegnography";
-import { decryptMessage, encryptMessage } from "./encryption";
+import { decryptMessage, encryptMessage, arrayBufferToString, stringToArrayBuffer, encryptMethod } from "./encryption";
 
 
 function getRandomInt(max: number){
@@ -71,6 +71,19 @@ test("Encrypt and Decrypt", async () => {
 
     let cipher = await encryptMessage(unencryptedMessage)
     let plainText = await decryptMessage(cipher.key, cipher.encrypted)
+
+    expect(plainText).toBe(unencryptedMessage)
+})
+
+test("Encrypt and Decrypt with String Key", async () =>{
+    let unencryptedMessage = "Hello World jjjj"
+
+    let cipher = await encryptMessage(unencryptedMessage)
+    let rawKey = await crypto.subtle.exportKey("raw", cipher.key)
+    let key = arrayBufferToString(rawKey)
+    rawKey = stringToArrayBuffer(key);
+    let cipherKey = await crypto.subtle.importKey("raw", rawKey, {name: encryptMethod}, true, ["decrypt", "encrypt"])
+    let plainText = await decryptMessage(cipherKey, cipher.encrypted)
 
     expect(plainText).toBe(unencryptedMessage)
 })

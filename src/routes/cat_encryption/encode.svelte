@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { decodeImage, encodeImage, getImageData } from "./stegnography"
-    import { encryptMessage, arrayBufferToString } from "./encryption"
+    import { encodeImage, getImageData } from "./stegnography"
+    import { encryptMessage } from "./encryption"
 
     type CatImages = {
         file: string,
@@ -11,7 +11,6 @@
     {file: "/cat_encryption/demon-cat.jpg", name: "Demon"}]
     let chosenImage = 0;
     let encrypt = false;
-    let key = ""
 
     async function encode(imageInfo: any){
 
@@ -26,7 +25,12 @@
         if (encrypt){
             let encryptResult = await encryptMessage(textArea.value)
             let rawKey =  await crypto.subtle.exportKey("raw", encryptResult.key)
-            key = arrayBufferToString(rawKey)
+            const keyDownload = document.createElement("a");
+            const file = new Blob([rawKey])
+            keyDownload.href = URL.createObjectURL(file)
+            keyDownload.download = "key"
+            keyDownload.click()
+            URL.revokeObjectURL(keyDownload.href)
             message = encryptResult.encrypted;
         } else{
             message = textArea.value;
@@ -44,11 +48,7 @@
         ctx.putImageData(imageData, 0, 0)
         ctx.imageSmoothingEnabled = false;
 
-        // decodeImage(, imageInfo.width, imageInfo.height)
-        
-        
-        // let image = new Image()
-        // ctx.drawImage(image, 0, 0)
+
         let dataURL = canvas.toDataURL()
         
         let a = document.createElement('a')
@@ -108,10 +108,7 @@
         <br>
         <input bind:checked={encrypt} id="checkEncrypt" name="checkEncrypt" style="display:inline-block; margin-left:auto; margin-right:auto;" type="checkbox"> 
         <label for="checkEncrypt" class="text" style="margin-left:auto; margin-right:auto; width:fit-content; display:inline-block;">Encrypt Message As Well?</label>
-        {#if encrypt}
-            <br>
-            <p class="text">The Key To Decrypt This Message Is: {key}</p>
-        {/if}
+        
         <br>
         <button style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 3vh; margin-top: 2vh;" on:click={
             (e) => {

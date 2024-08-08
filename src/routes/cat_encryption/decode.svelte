@@ -1,17 +1,22 @@
 <script lang="ts">
     import { decodeImage, getImageData } from "./stegnography"
-    import { decryptMessage, stringToArrayBuffer, encryptMethod } from "./encryption"
+    import { decryptMessage, encryptMethod } from "./encryption"
 
-    let files: FileList;
+    let imageFiles: FileList;
     let isCanvasEmpty = true;
     let isEncrypted = false;
-    let key = ""
     var file: File;
+
+    let keyFiles: FileList;
+    let keyFile: File | null;
+    let rawKey: ArrayBuffer;
+
+    var message = ""
 
     async function whenImageLoaded(imageInfo: any){
         if (isEncrypted){
             let encryptedMessage = decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
-            let cryptoKey = await crypto.subtle.importKey("raw", stringToArrayBuffer(key), {"name" : encryptMethod},
+            let cryptoKey = await crypto.subtle.importKey("raw", rawKey, {"name" : encryptMethod},
                                 true, ["encrypt", "decrypt"]);
             
             console.log("Decoded and created key")
@@ -23,20 +28,33 @@
         }
     }
 
-    $: if(files) {
-        
-        console.log(files)
-        file = files.item(0) as File
+    function imageFileHasBeenInput(){
+        let input = document.getElementById("imageFileInput") as HTMLInputElement
+        imageFiles = input.files as FileList;
+        file = imageFiles.item(0) as File
         const reader: FileReader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = async () => {
             let src = reader.result as string
-            let imageInfo = getImageData(src, whenImageLoaded)
-        }
-    }
 
-    var message = ""
-    
+            if(isEncrypted){
+                const keyReader: FileReader = new FileReader()
+                keyFile = keyFiles.item(0)
+                if (keyFile == null){
+                    window.alert("A key is required to decode an encrypted message.")
+                    return;
+                }
+                keyReader.readAsArrayBuffer(keyFile)
+                keyReader.onload = () =>{
+                    rawKey = keyReader.result as ArrayBuffer
+                    getImageData(src, whenImageLoaded)
+                }
+            } else{
+                getImageData(src, whenImageLoaded)
+            }
+
+        }
+    }    
 
 </script>
 
@@ -54,11 +72,19 @@
         
         {#if isEncrypted}
             <br>
-            <input bind:value={key} type="text" placeholder="Paste Key Here">
+            <b><label for="keyFileInput" class="text">Key Input: </label></b> 
+            <input id="keyFileInput" class="text" style="margin-left: auto; padding-top:3vh; text-align:center;" bind:files={keyFiles} type="file">
         {/if}
 
         <br>
-        <input class="text" style="margin-left: auto; padding-top:3vh; text-align:center;" bind:files  type="file" name="file" accept="image/*">
+        <b><label style="padding-top: 40vh;" for="keyFileInput" class="text">Cat Image Input: </label></b> 
+        <input id="imageFileInput" class="text" 
+        style="margin-left: auto; padding-top:3vh; text-align:center;" 
+        bind:files={imageFiles}   type="file" name="file" accept="image/*">
+
+        <br>
+        <button style="margin-left: auto; margin-top:3vh; text-align:center;" on:click={imageFileHasBeenInput}>
+            Decode Cat Image</button>
     </form>
 
     <canvas class={isCanvasEmpty ? "" : "cat-images"} id="decodedImage"></canvas>

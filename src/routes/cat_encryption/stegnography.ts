@@ -6,7 +6,8 @@ export function getImageData(imageURL: string, afterImageDataGotten: (para: any)
     const image = new Image()
     image.onload = async () =>{
         // console.log(imageURL)
-        let canvas = document.createElement('canvas')
+        let canvas = document.getElementById("decodedImage") == null ?  
+            document.createElement('canvas') : document.getElementById("decodedImage") as HTMLCanvasElement;
         canvas.width = image.width
         canvas.height = image.height
         let ctx = canvas.getContext("2d")
@@ -18,12 +19,6 @@ export function getImageData(imageURL: string, afterImageDataGotten: (para: any)
         afterImageDataGotten(infoObject)
     }
     image.src = imageURL
-    // var reader = new FileReader()
-    // reader.onload = () => {
-    //     let dataURL = reader.result as string
-    //     image.src = dataURL
-    // }
-    // fetch(imageURL).then((res) => {res.blob().then((blob) => {reader.readAsDataURL(blob)})})
 }
 
 export function encodeImage(message: string, arrayImage: any, width: number, height: number): Uint8ClampedArray{

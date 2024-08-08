@@ -1,6 +1,6 @@
 
 
-const encryptMethod = "AES-CBC"
+export const encryptMethod = "AES-CBC"
 
 export async function decryptMessage(key: CryptoKey, base64String: string){
     const combinedBuffer = stringToArrayBuffer(base64String);
@@ -42,9 +42,8 @@ export async function encryptMessage(message: string) {
 
 }
 
-function arrayBufferToString(arrayBuffer: ArrayBuffer) {
+export function arrayBufferToString(arrayBuffer: ArrayBuffer) {
     let resultString = "";
-    process.stdout.write(arrayBuffer.byteLength + "")
     const bytes = new Uint8Array(arrayBuffer);
     const len = bytes.length;
     for (let i = 0; i < len; i++) {
@@ -53,7 +52,7 @@ function arrayBufferToString(arrayBuffer: ArrayBuffer) {
     return resultString;
 }
 
-function stringToArrayBuffer(message: string) {
+export function stringToArrayBuffer(message: string) {
     const len = message.length;
     const bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {

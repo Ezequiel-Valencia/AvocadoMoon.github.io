@@ -6,7 +6,7 @@
         file: string,
         name: string
     }
-    const images: CatImages[] = [{file:"/cat_encryption/doge-cat.png", name: "Doge"}, 
+    const images: CatImages[] = [{file:"/cat_encryption/doge-cat.jpg", name: "Doge"}, 
     {file: "/cat_encryption/stanced.jpg", name: "Stanced"}, 
     {file: "/cat_encryption/demon-cat.jpg", name: "Demon"}]
     let chosenImage = 0;
@@ -110,13 +110,15 @@
         <label for="checkEncrypt" class="text" style="margin-left:auto; margin-right:auto; width:fit-content; display:inline-block;">Encrypt Message As Well?</label>
         
         <br>
-        <button style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 3vh; margin-top: 2vh;" on:click={
+        <button style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 4vh; max-height:max-content; margin-top: 2vh;" on:click={
             (e) => {
                 getImageData(images[chosenImage].file, encode)
             }
         } >Download Encoded Image
     </button>
-
+    
+    <br>
+    <br>
         
     </form>
 

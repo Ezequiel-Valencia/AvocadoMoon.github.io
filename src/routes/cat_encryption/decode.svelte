@@ -63,7 +63,7 @@
 <div id="decode-div" style="text-align: center;">
 
     <h3 class="text" style="">
-        <u>Input Encoded Image</u>
+        Input Encoded Image
     </h3>
     
     <form style="text-align: center;">
@@ -77,13 +77,13 @@
         {/if}
 
         <br>
-        <b><label style="padding-top: 40vh;" for="keyFileInput" class="text">Cat Image Input: </label></b> 
+        <b><label style="" for="keyFileInput" class="text">Cat Input: </label></b> 
         <input id="imageFileInput" class="text" 
         style="margin-left: auto; padding-top:3vh; text-align:center;" 
         bind:files={imageFiles}   type="file" name="file" accept="image/*">
 
         <br>
-        <button style="margin-left: auto; margin-top:3vh; text-align:center;" on:click={imageFileHasBeenInput}>
+        <button style="width: 15vw; min-width:fit-content; height: 4vh; max-height:max-content; margin-left: auto; margin-top:3vh; text-align:center;" on:click={imageFileHasBeenInput}>
             Decode Cat Image</button>
     </form>
 
@@ -95,6 +95,8 @@
         <br>
         <h4 style="display: inline; padding-top:5vh;" class="text">Decoded Message: </h4> 
         <p style="display: inline;" class="text">{message}</p>
+        <br>
+        <br>
     </span>
 
 

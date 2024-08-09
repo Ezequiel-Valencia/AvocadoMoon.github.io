@@ -38,6 +38,9 @@
         Do you want to allow this audio?
         <br> <br> <br> <br> <br> <br>
       </p>
+      {#if $musicController}
+        <u><p>Even if audio is turned on, autoplay needs to enabled in the browser.</p></u>
+      {/if}
       <button
         id="music"
         class="music-option-buttons menu-med-text"

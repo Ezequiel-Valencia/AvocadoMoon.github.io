@@ -6,6 +6,8 @@
     import Encode from "./encode.svelte"
     import { onMount } from "svelte"
     import { matrixDisplay } from "./matrixBG"
+    import { musicController } from "../../myLocalStorage";
+
 
     onMount(() => {
         matrixDisplay()
@@ -18,7 +20,7 @@
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me" songName="Meow - Ivusm"></Menu>
+    <Menu email="website@worker.slmail.me" songName="Intense - Only You (Cat Breakdance Section)"></Menu>
 
     <div id="title" style="">
         <h1 id="title-text" class="text">Cat Communication</h1>
@@ -39,6 +41,10 @@
             <Decode></Decode>
         {/if}
     </article>
+
+    {#if $musicController}
+        <audio id="song" src="/Audio/Channel-Songs/Cat Dance.mp3" autoplay loop></audio>
+    {/if}
     
     
 </div>

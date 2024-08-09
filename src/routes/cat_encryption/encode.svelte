@@ -35,7 +35,7 @@
         } else{
             message = textArea.value;
         }
-        let data = encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
+        let data = await encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
 
         let canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement
         canvas.height = imageInfo.height

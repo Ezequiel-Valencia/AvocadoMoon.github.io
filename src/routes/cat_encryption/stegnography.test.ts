@@ -16,7 +16,7 @@ function getRandomString(stringLen: number){
     return resultString;
 }
 
-test("Encode and Decode Message", () => {
+test("Encode and Decode Message", async () => {
     let width = 10
     let height = 10
 
@@ -26,8 +26,8 @@ test("Encode and Decode Message", () => {
     // process.stdout.write("Going to encode \n")
     let originalArrayImage = new Array(width * height * 4).fill(255)
 
-    let encodedImage = encodeImage(message, originalArrayImage, width, height);
-    let decodedMessage = decodeImage(encodedImage, width, height)
+    let encodedImage = await encodeImage(message, originalArrayImage, width, height);
+    let decodedMessage = await decodeImage(encodedImage, width, height)
 
     expect(decodedMessage).toBe(message)
 
@@ -36,13 +36,13 @@ test("Encode and Decode Message", () => {
 
     message = getRandomString(getRandomInt((width * height) / 4))
     originalArrayImage = new Array(width * height * 4).fill(getRandomInt(255))
-    encodedImage = encodeImage(message, originalArrayImage, width, height)
-    decodedMessage = decodeImage(encodedImage, width, height)
+    encodedImage = await encodeImage(message, originalArrayImage, width, height)
+    decodedMessage = await decodeImage(encodedImage, width, height)
 
     expect(decodedMessage).toBe(message)
 })
 
-test("Max Message Length", () => {
+test("Max Message Length", async () => {
     let width = 2
     let height = 2
 
@@ -52,15 +52,15 @@ test("Max Message Length", () => {
     // process.stdout.write("Going to encode \n")
     let originalArrayImage = new Array(width * height * 4).fill(255)
 
-    let encodedImage = encodeImage(message, originalArrayImage, width, height);
-    let decodedMessage = decodeImage(encodedImage, width, height)
+    let encodedImage = await encodeImage(message, originalArrayImage, width, height);
+    let decodedMessage = await decodeImage(encodedImage, width, height)
 
     expect(decodedMessage).toBe(message)
 
     let beyondMax = message + "jj"
 
-    encodedImage = encodeImage(beyondMax, originalArrayImage, width, height)
-    decodedMessage = decodeImage(encodedImage, width, height)
+    encodedImage = await encodeImage(beyondMax, originalArrayImage, width, height)
+    decodedMessage = await decodeImage(encodedImage, width, height)
 
     expect(decodedMessage).toBe(message)
 })
@@ -100,9 +100,9 @@ test("Encrypt-Encode and Decrypt-Decode", async () =>{
     let encryptedMessage = await encryptMessage(unencryptedMessage)
 
     // let stringEncryptedMessage = new TextDecoder().decode(new Uint8Array(encryptedMessage.encrypted))
-    let encodedImage = encodeImage(encryptedMessage.encrypted, originalArrayImage, width, height);
+    let encodedImage = await encodeImage(encryptedMessage.encrypted, originalArrayImage, width, height);
 
-    let decodedMessage = decodeImage(encodedImage, width, height)
+    let decodedMessage = await decodeImage(encodedImage, width, height)
     // let arrayBufferEncryptedMessage = new TextEncoder().encode(decodedMessage).buffer
     let decryptedMessage = await decryptMessage(encryptedMessage.key, decodedMessage)
 

@@ -21,65 +21,74 @@ export function getImageData(imageURL: string, afterImageDataGotten: (para: any)
     image.src = imageURL
 }
 
-export function encodeImage(message: string, arrayImage: any, width: number, height: number): Uint8ClampedArray{
-    var focusedChar = 0;
+export function encodeImage(message: string, arrayImage: any, width: number, height: number){
+    
+    let promise = new Promise<Uint8ClampedArray>((resolve, reject) => {
+        var focusedChar = 0;
 
-    // first byte encoded within the Image is used for holding length of the message
-    let pastMessageLength: number = message.length
-    message = String.fromCharCode(pastMessageLength) + message;
+        // first byte encoded within the Image is used for holding length of the message
+        let pastMessageLength: number = message.length
+        message = String.fromCharCode(pastMessageLength) + message;
 
-    for(var i = 0; i < width; i++){
-        for(var j = 0; j < height; j++){
-            if (focusedChar == message.length){
-                break
+        for(var i = 0; i < width; i++){
+            for(var j = 0; j < height; j++){
+                if (focusedChar == message.length){
+                    break
+                }
+                let indices = getColorIndicesForCord(i, j, width)
+                var c1: number = message.charCodeAt(focusedChar);
+                let currentRGBA = 0;
+                for(var bitIndex = 0; bitIndex < 8; bitIndex+=2){
+
+                    let blankSlate = 3; // 3 is 0000 0011
+                    // console.log("Current c1: " + c1.toString(2))
+                    let result = blankSlate & c1; // either 0000 0011, 0000 0010, 0000 0001, or 0000 0000
+                    // console.log("Result: " + result.toString(2))
+                    let newPixelValue = ((255 - 3) & arrayImage[indices[currentRGBA]]) | result
+                    arrayImage[indices[currentRGBA]] = newPixelValue;
+                    currentRGBA += 1;
+
+                    c1 = c1 >>> 2; //bit shift by two
+                }
+                focusedChar++;
             }
-            let indices = getColorIndicesForCord(i, j, width)
-            var c1: number = message.charCodeAt(focusedChar);
-            let currentRGBA = 0;
-            for(var bitIndex = 0; bitIndex < 8; bitIndex+=2){
-
-                let blankSlate = 3; // 3 is 0000 0011
-                // console.log("Current c1: " + c1.toString(2))
-                let result = blankSlate & c1; // either 0000 0011, 0000 0010, 0000 0001, or 0000 0000
-                // console.log("Result: " + result.toString(2))
-                let newPixelValue = ((255 - 3) & arrayImage[indices[currentRGBA]]) | result
-                arrayImage[indices[currentRGBA]] = newPixelValue;
-                currentRGBA += 1;
-
-                c1 = c1 >>> 2; //bit shift by two
-            }
-            focusedChar++;
         }
-    }
-    return arrayImage;
+        resolve(arrayImage)
+    })
+    
+    return promise;
+
+    
 }
 
 
 
 export function decodeImage(arrayImage: any, width: number, height: number){
-    let indices = getColorIndicesForCord(0, 0, width)
-    let messageLength: number = getChar(indices, arrayImage)
-    console.log("Message Length: " + messageLength)
+    return new Promise<string>((resolve, reject) => {
+        let indices = getColorIndicesForCord(0, 0, width)
+        let messageLength: number = getChar(indices, arrayImage)
+        console.log("Message Length: " + messageLength)
 
-    let message = ""
+        let message = ""
 
-    
-    for(let i = 0; i < width; i++){
-        for (let j = 0; j < height; j++){
-            if (message.length == messageLength){
-                break
+        
+        for(let i = 0; i < width; i++){
+            for (let j = 0; j < height; j++){
+                if (message.length == messageLength){
+                    break
+                }
+                let intHeader = i == 0 && j == 0
+                if (!intHeader){
+                    indices = getColorIndicesForCord(i, j, width)
+                    let char = getChar(indices, arrayImage)
+                    message += String.fromCharCode(char)
+                }
+                
             }
-            let intHeader = i == 0 && j == 0
-            if (!intHeader){
-                indices = getColorIndicesForCord(i, j, width)
-                let char = getChar(indices, arrayImage)
-                message += String.fromCharCode(char)
-            }
-            
         }
-    }
-    console.log("Resulting Message: " + JSON.stringify(message))
-    return message
+        console.log("Resulting Message: " + JSON.stringify(message))
+        resolve(message)
+    })
 }
 
 function getChar(indices: number[], arrayImage: any[]){

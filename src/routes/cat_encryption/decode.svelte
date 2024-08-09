@@ -15,7 +15,7 @@
 
     async function whenImageLoaded(imageInfo: any){
         if (isEncrypted){
-            let encryptedMessage = decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
+            let encryptedMessage = await decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
             let cryptoKey = await crypto.subtle.importKey("raw", rawKey, {"name" : encryptMethod},
                                 true, ["encrypt", "decrypt"]);
             
@@ -23,7 +23,7 @@
             message = await decryptMessage(cryptoKey, encryptedMessage);
             isCanvasEmpty = false;
         } else{
-            message = decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
+            message = await decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
             isCanvasEmpty = false;
         }
     }

@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { decodeImage, getImageData } from "./stegnography"
+    import { getImageData, isAlphaNumeric, StenographyWorkerPayload } from "./common"
     import { decryptMessage, encryptMethod } from "./encryption"
+    import StenographyWorker from "./stenography.worker?worker"
 
     let imageFiles: FileList;
     let isCanvasEmpty = true;
@@ -13,19 +14,23 @@
 
     var message = ""
 
-    async function whenImageLoaded(imageInfo: any){
-        if (isEncrypted){
-            let encryptedMessage = await decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
-            let cryptoKey = await crypto.subtle.importKey("raw", rawKey, {"name" : encryptMethod},
+    function whenImageLoaded(imageInfo: any){
+        const decoderWorker = new StenographyWorker()
+        decoderWorker.postMessage(new StenographyWorkerPayload("", imageInfo.data, imageInfo.width, imageInfo.height, false))
+
+        decoderWorker.onmessage = async (e: MessageEvent<StenographyWorkerPayload>) => {
+            let decodedMessage = e.data.message;
+            if (isEncrypted){
+                let cryptoKey = await crypto.subtle.importKey("raw", rawKey, {"name" : encryptMethod},
                                 true, ["encrypt", "decrypt"]);
-            
-            console.log("Decoded and created key")
-            message = await decryptMessage(cryptoKey, encryptedMessage);
-            isCanvasEmpty = false;
-        } else{
-            message = await decodeImage(imageInfo.data, imageInfo.width, imageInfo.height)
-            isCanvasEmpty = false;
+                decodedMessage = await decryptMessage(cryptoKey, decodedMessage);
+            }
+            message = isAlphaNumeric(decodedMessage) ? decodedMessage : 
+            "It seems that either this image has no hidden message, or that the message got corrupted in transit."
+        
+            isCanvasEmpty = false
         }
+        
     }
 
     function imageFileHasBeenInput(){

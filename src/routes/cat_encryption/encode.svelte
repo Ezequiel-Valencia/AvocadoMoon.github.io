@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { encodeImage, getImageData } from "./stegnography"
+    import { StenographyWorkerPayload , getImageData, isAlphaNumeric } from "./common"
     import { encryptMessage } from "./encryption"
+    import StenographyWorker from './stenography.worker?worker'
 
     type CatImages = {
         file: string,
@@ -20,6 +21,10 @@
 
         
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
+        if (!isAlphaNumeric(textArea.value)){
+            window.alert("Can not encode message. Please use Alpha-numeric characters only.")
+            return;
+        }
         
         let message;
         if (encrypt){
@@ -35,26 +40,31 @@
         } else{
             message = textArea.value;
         }
-        let data = await encodeImage(message, imageInfo.data, imageInfo.width, imageInfo.height)
+        const encodeWorker = new StenographyWorker()
+        let encodeMessage : StenographyWorkerPayload = new StenographyWorkerPayload(message, imageInfo.data, imageInfo.width, imageInfo.height, true)
+        encodeWorker.postMessage(encodeMessage)
 
-        let canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement
-        canvas.height = imageInfo.height
-        canvas.width = imageInfo.width
-        let ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-        const imageData = new ImageData(data, imageInfo.width, imageInfo.height)
-        ctx.globalCompositeOperation = "copy"
+        encodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
+            let canvas: HTMLCanvasElement = document.createElement("canvas") as HTMLCanvasElement
+            canvas.height = imageInfo.height
+            canvas.width = imageInfo.width
+            let ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+            const imageData = new ImageData(e.data.arrayImage, imageInfo.width, imageInfo.height)
+            ctx.globalCompositeOperation = "copy"
+            
+
+            ctx.putImageData(imageData, 0, 0)
+            ctx.imageSmoothingEnabled = false;
+
+
+            let dataURL = canvas.toDataURL()
+            
+            let a = document.createElement('a')
+            a.href = dataURL
+            a.download = images[chosenImage].file.split("/")[2];
+            a.click()
+        }
         
-
-        ctx.putImageData(imageData, 0, 0)
-        ctx.imageSmoothingEnabled = false;
-
-
-        let dataURL = canvas.toDataURL()
-        
-        let a = document.createElement('a')
-        a.href = dataURL
-        a.download = images[chosenImage].file.split("/")[2];
-        a.click()
     }
 </script>
 

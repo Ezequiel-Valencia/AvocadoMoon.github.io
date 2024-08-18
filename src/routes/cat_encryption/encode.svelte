@@ -57,14 +57,26 @@
             ctx.imageSmoothingEnabled = false;
 
 
-            let dataURL = canvas.toDataURL()
+            canvas.toBlob((blob) => {
+                let castedBlob: Blob = blob as Blob
+                const dataURL = URL.createObjectURL(castedBlob)
+                let a = document.createElement('a')
+                a.href = dataURL
+                a.download = images[chosenImage].file.split("/")[2];
+                a.click()
+            }, 'image/png', 1)
+
+            // let dataURL = canvas.toDataURL()
             
-            let a = document.createElement('a')
-            a.href = dataURL
-            a.download = images[chosenImage].file.split("/")[2];
-            a.click()
+            
         }
         
+    }
+
+    function isTextToLarge(image: HTMLImageElement): boolean{
+        let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
+        let message = textArea.value
+        return message.length > ((image.width * image.height) / 4) || message.length > 255
     }
 </script>
 
@@ -122,7 +134,16 @@
         <br>
         <button style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 4vh; max-height:max-content; margin-top: 2vh;" on:click={
             (e) => {
-                getImageData(images[chosenImage].file, encode)
+                const image = new Image()
+                image.onload = (j) => {
+
+                    if (isTextToLarge(image)) {
+                        window.alert("The message you are trying to encode is to large")
+                    } else{
+                        getImageData(image, encode)
+                    }
+                }
+                image.src = images[chosenImage].file
             }
         } >Download Encoded Image
     </button>

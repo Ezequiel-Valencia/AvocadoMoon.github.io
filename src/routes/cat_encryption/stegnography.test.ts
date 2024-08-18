@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from "vitest";
 import { StenographyWorkerPayload } from "./common";
-import StenographyWorker from "./stenography.worker?worker"
+import { exportedForTesting } from "./stenography.worker"
 import { decryptMessage, encryptMessage, arrayBufferToString, stringToArrayBuffer, encryptMethod } from "./encryption";
 
 
@@ -27,17 +27,9 @@ test("Encode and Decode Message", async () => {
     // process.stdout.write("Going to encode \n")
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(255))
 
-    const encodeWorker = new StenographyWorker()
-    const decodeWorker = new StenographyWorker()
-    encodeWorker.postMessage(new StenographyWorkerPayload(message, originalArrayImage, width, height, true))
-
-    encodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
-        decodeWorker.postMessage(new StenographyWorkerPayload(e.data.message, e.data.arrayImage, e.data.width, e.data.height, false))
-    }
-
-    decodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
-        expect(e.data.message).toBe(message)
-    }
+    const encodeWorker = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
+    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
+    expect(decodeWorker).toBe(message)
 })
 
 test("Random Message Encode Decode", () => {
@@ -47,19 +39,9 @@ test("Random Message Encode Decode", () => {
     let message = getRandomString(getRandomInt((width * height) / 4))
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(getRandomInt(255)))
 
-    const encodeWorker = new StenographyWorker()
-    const decodeWorker = new StenographyWorker()
-
-
-    encodeWorker.postMessage(new StenographyWorkerPayload(message, originalArrayImage, width, height, true))
-
-    encodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
-        decodeWorker.postMessage(new StenographyWorkerPayload(e.data.message, e.data.arrayImage, e.data.width, e.data.height, false))
-    }
-
-    decodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
-        expect(e.data.message).toBe(message)
-    }
+    const encodeWorker = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
+    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
+    expect(decodeWorker).toBe(message)
 })
 
 // test("Max Message Length", async () => {
@@ -119,17 +101,10 @@ test("Encrypt-Encode and Decrypt-Decode", async () =>{
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(0))
     let encryptedMessage = await encryptMessage(unencryptedMessage)
 
-    const encodeWorker = new StenographyWorker()
-    const decodeWorker = new StenographyWorker()
-    encodeWorker.postMessage(new StenographyWorkerPayload(encryptedMessage.encrypted, originalArrayImage, width, height, true))
+    const encodeWorker = exportedForTesting.encodeImage(encryptedMessage.encrypted, originalArrayImage, width, height)
+    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
 
-    encodeWorker.onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
-        decodeWorker.postMessage(new StenographyWorkerPayload(e.data.message, e.data.arrayImage, e.data.width, e.data.height, false))
-    }
+    let decryptedMessage = await decryptMessage(encryptedMessage.key, decodeWorker)
+    expect(decryptedMessage).toBe(unencryptedMessage)
 
-    decodeWorker.onmessage = async (e: MessageEvent<StenographyWorkerPayload>) => {
-        let decryptedMessage = await decryptMessage(encryptedMessage.key, e.data.message)
-        expect(decryptedMessage).toBe(unencryptedMessage)
-
-    }
 })

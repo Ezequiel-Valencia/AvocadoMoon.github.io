@@ -1,6 +1,6 @@
 import { StenographyWorkerPayload } from "./common"
 
-function encodeImage(message: string, arrayImage: any, width: number, height: number){
+function encodeImage(message: string, arrayImage: any, width: number, height: number): Uint8ClampedArray{
     console.log("Encoding")
     var focusedChar = 0;
 
@@ -101,5 +101,11 @@ onmessage = (e: MessageEvent<StenographyWorkerPayload>) => {
         postMessage(e.data)
     }
 }
+
+export const exportedForTesting = {
+    encodeImage,
+    decodeImage
+}
+
 export {}
 

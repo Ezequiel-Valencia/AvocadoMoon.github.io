@@ -49,7 +49,7 @@
           musicController.toggle_music();
         }}
       >
-        Audio {$musicController ? "On" : "Off"}
+        Turn Audio {$musicController ? "Off" : "On"}
       </button>
     </div>
   {/if}

@@ -27,9 +27,9 @@ test("Encode and Decode Message", async () => {
     // process.stdout.write("Going to encode \n")
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(255))
 
-    const encodeWorker = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
-    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
-    expect(decodeWorker).toBe(message)
+    const encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
+    const decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height)
+    expect(decodedMessage).toBe(message)
 })
 
 test("Random Message Encode Decode", () => {
@@ -39,33 +39,38 @@ test("Random Message Encode Decode", () => {
     let message = getRandomString(getRandomInt((width * height) / 4))
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(getRandomInt(255)))
 
-    const encodeWorker = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
-    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
-    expect(decodeWorker).toBe(message)
+    const encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
+    const decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height)
+    expect(decodedMessage).toBe(message)
 })
 
-// test("Max Message Length", async () => {
-//     let width = 2
-//     let height = 2
+test("Max Message Length", async () => {
+    let width = 2
+    let height = 2
 
-//     let message = "Max" //one less than message length because of header
+    let message = "Ma" //two less than message length because of header
 
 
-//     // process.stdout.write("Going to encode \n")
-//     let originalArrayImage = new Array(width * height * 4).fill(255)
+    // process.stdout.write("Going to encode \n")
+    let originalArrayImage = new Array(width * height * 4).fill(255)
 
-//     let encodedImage = await encodeImage(message, originalArrayImage, width, height);
-//     let decodedMessage = await decodeImage(encodedImage, width, height)
+    let encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height)
+    let decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height)
+    expect(decodedMessage).toBe(message)
 
-//     expect(decodedMessage).toBe(message)
+    let beyondMax = message + "jj"
 
-//     let beyondMax = message + "jj"
+    encodedImage = exportedForTesting.encodeImage(beyondMax, originalArrayImage, width, height)
+    decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height)
+    expect(decodedMessage).toBe(message)
 
-//     encodedImage = await encodeImage(beyondMax, originalArrayImage, width, height)
-//     decodedMessage = await decodeImage(encodedImage, width, height)
 
-//     expect(decodedMessage).toBe(message)
-// })
+    originalArrayImage = new Array(200 * 200 * 4).fill(0)
+    message = getRandomString(400)
+    encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, 200, 200)
+    decodedMessage = exportedForTesting.decodeImage(encodedImage, 200, 200)
+    expect(decodedMessage).toBe(message)
+})
 
 
 test("Encrypt and Decrypt", async () => {
@@ -101,10 +106,10 @@ test("Encrypt-Encode and Decrypt-Decode", async () =>{
     let originalArrayImage = new Uint8ClampedArray(new Array(width * height * 4).fill(0))
     let encryptedMessage = await encryptMessage(unencryptedMessage)
 
-    const encodeWorker = exportedForTesting.encodeImage(encryptedMessage.encrypted, originalArrayImage, width, height)
-    const decodeWorker = exportedForTesting.decodeImage(encodeWorker, width, height)
+    const encodedImage = exportedForTesting.encodeImage(encryptedMessage.encrypted, originalArrayImage, width, height)
+    const decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height)
 
-    let decryptedMessage = await decryptMessage(encryptedMessage.key, decodeWorker)
+    let decryptedMessage = await decryptMessage(encryptedMessage.key, decodedMessage)
     expect(decryptedMessage).toBe(unencryptedMessage)
 
 })

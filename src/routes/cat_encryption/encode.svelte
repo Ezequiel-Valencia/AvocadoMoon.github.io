@@ -76,7 +76,7 @@
     function isTextToLarge(image: HTMLImageElement): boolean{
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
         let message = textArea.value
-        return message.length > ((image.width * image.height) / 4) || message.length > 255
+        return message.length > ((image.width * image.height) / 4) || message.length > 65530
     }
 </script>
 

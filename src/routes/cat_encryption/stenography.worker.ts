@@ -5,8 +5,10 @@ function encodeImage(message: string, arrayImage: any, width: number, height: nu
     var focusedChar = 0;
 
     // first byte encoded within the Image is used for holding length of the message
-    let pastMessageLength: number = message.length
-    message = String.fromCharCode(pastMessageLength) + message;
+    let firstHalfMessageLength: number = Math.ceil(message.length / 2)
+    let latterHalfMessageLength: number = Math.floor(message.length / 2)
+    message = String.fromCharCode(latterHalfMessageLength) + 
+    String.fromCharCode(firstHalfMessageLength) + message;
 
     for(var i = 0; i < width; i++){
         if (focusedChar == message.length){
@@ -40,7 +42,8 @@ function encodeImage(message: string, arrayImage: any, width: number, height: nu
 
 function decodeImage(arrayImage: any, width: number, height: number){
     let indices = getColorIndicesForCord(0, 0, width)
-    let messageLength: number = getChar(indices, arrayImage)
+    let indices2 = getColorIndicesForCord(0, 1, width)
+    let messageLength: number = getChar(indices, arrayImage) + getChar(indices2, arrayImage)
     console.log("Message Length: " + messageLength)
 
     let message = ""
@@ -54,7 +57,7 @@ function decodeImage(arrayImage: any, width: number, height: number){
             if (message.length == messageLength){
                 break
             }
-            let intHeader = i == 0 && j == 0
+            let intHeader = (i == 0 && j == 0) || (i == 0 && j == 1)
             if (!intHeader){
                 indices = getColorIndicesForCord(i, j, width)
                 let char = getChar(indices, arrayImage)

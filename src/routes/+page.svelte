@@ -36,7 +36,7 @@
       <p class="menu-med-text" style="margin: 5%;">
         This website plays different background music and sound effects for each channel. 
         Do you want to allow this audio?
-        <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br>
       </p>
       {#if $musicController}
         <u><p>Even if audio is turned on, autoplay needs to enabled in the browser.</p></u>
@@ -51,6 +51,9 @@
       >
         Turn Audio {$musicController ? "Off" : "On"}
       </button>
+      <br>
+      <br>
+      <button class="music-option-buttons menu-med-text" on:click={(e) => {hasVisited.hasVisited()}}>Close</button>
     </div>
   {/if}
 

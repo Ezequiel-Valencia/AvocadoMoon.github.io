@@ -7,11 +7,14 @@
         file: string,
         name: string
     }
-    const images: CatImages[] = [{file:"/cat_encryption/doge-cat.jpg", name: "Doge"}, 
-    {file: "/cat_encryption/stanced.jpg", name: "Stanced"}, 
+    const images: CatImages[] = [{file:"/cat_encryption/question_cat.png", name: "Custom Upload"}, 
+    {file: "/cat_encryption/stanced.jpg", name: "Stanced"},
+    {file:"/cat_encryption/doge-cat.jpg", name: "Doge"},  
     {file: "/cat_encryption/demon-cat.jpg", name: "Demon"}]
     let chosenImage = 0;
     let encrypt = false;
+    let uploadedImage: FileList;
+
 
     async function encode(imageInfo: any){
 
@@ -62,7 +65,7 @@
                 const dataURL = URL.createObjectURL(castedBlob)
                 let a = document.createElement('a')
                 a.href = dataURL
-                a.download = images[chosenImage].file.split("/")[2];
+                a.download = images[chosenImage].name;
                 a.click()
             }, 'image/png', 1)
 
@@ -72,6 +75,20 @@
         }
         
     }
+
+    function imageFileHasBeenInput(){
+        var file: File;
+        let input = document.getElementById("imageFileInput") as HTMLInputElement
+        uploadedImage = input.files as FileList;
+        file = uploadedImage.item(0) as File
+        const reader: FileReader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = async () => {
+            console.log("Image Has Been Input")
+            let src = reader.result as string
+            images[0].file = src
+        }
+    }  
 
     function isTextToLarge(image: HTMLImageElement): boolean{
         let textArea: HTMLTextAreaElement = document.getElementById("textArea") as HTMLTextAreaElement
@@ -97,7 +114,7 @@
                 <style type="text/css">
                     .st0{fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
                 </style>
-                <!-- <circle class="st0" cx="16" cy="16" r="13" fill-opacity=.5 /> -->
+                <circle style="opacity: .5;" class="st0" cx="16" cy="16" r="13" fill-opacity=0 />
                 <polyline class="st0" points="18,20.2 13.8,16 18,11.8 "/>
             </svg>
         </span>
@@ -105,7 +122,13 @@
         <div id="image-and-text">
             <img id="cat-image" class="cat-images" src={images[chosenImage].file} alt="catImage">
             <h4 class="text" style="font-size:xx-large; padding-bottom:0; margin-bottom:0;">Chosen:</h4>
-            <p class="text" style="font-size: xx-large; margin-top:0; font-style:italic;">{images[chosenImage].name}</p>
+            <p class="text" style="font-size: xx-large; margin-top:0; font-style:italic; padding-bottom:0; margin-bottom:0;">{images[chosenImage].name}</p>
+
+            {#if chosenImage == 0}
+                <input id="imageFileInput" class="text" style="margin-left: auto; padding-top:3vh; text-align:center;" 
+                bind:files={uploadedImage} type="file" accept="image/*" on:input={imageFileHasBeenInput}>
+
+            {/if}
         </div>
 
         
@@ -117,12 +140,14 @@
                 <style type="text/css">
                     .st0{fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
                 </style>
-                <!-- <circle class="st0" cx="16" cy="16" r="13" fill-opacity=.5 /> -->
+                <circle style="opacity: .5;" class="st0" cx="16" cy="16" r="13" fill-opacity=0 />
                 <polyline transform="rotate(180, 16, 16)" class="st0" points="18,20.2 13.8,16 18,11.8 "/>
             </svg>
         </span>
         
     </div>
+
+    <br>
 
     <form id="input-text" style=" text-align:center;">
         <textarea style="width: 60vw; height: 6vh; margin-left:auto; margin-right:auto;" id="textArea" placeholder="Encode Message"></textarea>

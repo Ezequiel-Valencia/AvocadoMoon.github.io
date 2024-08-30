@@ -24,7 +24,7 @@
 
     <div id="title" style="">
         <h1 id="title-text" class="text">Cat Communication</h1>
-        <p class="text">A communication scheme built around sharing cat images.</p>
+        <p class="text">Hiding your message in cat images using <a href="https://en.wikipedia.org/wiki/Steganography">Stenography</a>.</p>
     </div>
 
     <canvas id="matrixCanvas"></canvas>

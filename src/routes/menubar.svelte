@@ -113,12 +113,12 @@
   <div id="music-options" class="menu-popup">
     <h2 class="menu-large-text">Audio Options</h2>
     <p class="menu-med-text" style="margin: 5%;">
-      If you can't hear the music that this site has there are some trouble
+      If you can't hear this sites music here are some trouble
       shooting methods:
     </p>
     <ol class="menu-med-text" style="margin: 5%;">
-      <li class="menu-med-text">Use the Music button here, turning it on and off.</li>
-      <li class="menu-med-text">Go to site settings and enable audio for this website.</li>
+      <li class="menu-med-text">Turn on and off the audio.</li>
+      <li class="menu-med-text">Go to site settings in your browser, and enable autoplay.</li>
       <li class="menu-med-text">Unmute the tab</li>
     </ol>
     <button
@@ -145,11 +145,6 @@
 {#if contact_info}
   <div id="contact" class="menu-popup">
     <h2 class="menu-large-text">Contact Info</h2>
-    <p class="menu-med-text">
-      Each channel has its own email associated with it for that specific topic
-      and can be found by pressing the menu button at the top of that channel,
-      but my general contact info is:
-    </p>
 
     <h4 class="menu-med-text">Email:</h4>
     <p class="menu-med-text">general@relaxed.slmail.me</p>

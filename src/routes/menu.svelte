@@ -1,16 +1,16 @@
 <script lang="ts">
 
-  let home_menu = false;
+  let display_entire_menu = false;
   export let email: string;
   export let songName: string;
 </script>
 
-{#if !home_menu}
+{#if !display_entire_menu}
 <div>
   <nav>
     <button id="menu-nav"
       on:click={(e) => {
-        home_menu = !home_menu;
+        display_entire_menu = !display_entire_menu;
         // scroll = false;
       }}>Menu</button
     >
@@ -18,7 +18,7 @@
 </div>
 {/if}
 
-{#if home_menu}
+{#if display_entire_menu}
   <div id="home-menu-nav">
 
     <div style="height:auto">
@@ -34,7 +34,7 @@
       >
       <button
         on:click={(e) => {
-          home_menu = !home_menu;
+          display_entire_menu = !display_entire_menu;
         //   scroll = true;
         }}>Return</button
       >

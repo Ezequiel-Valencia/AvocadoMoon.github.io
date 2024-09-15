@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Menu from "../menu.svelte";
-    import Tabs from "../tabs.svelte";
+    import Menu from "../../common/menu.svelte";
+    import Tabs from "../../common/tabs.svelte";
     import { importSCSSOptions } from "../../globals"
     import Decode from "./decode.svelte"
     import Encode from "./encode.svelte"

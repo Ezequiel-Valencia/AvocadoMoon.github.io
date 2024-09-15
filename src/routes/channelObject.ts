@@ -6,7 +6,7 @@
 
 
 import { SvelteComponent } from "svelte";
-import { sfxController, musicController } from "../myLocalStorage";
+import { sfxController, musicController } from "../common/myLocalStorage";
 
 const nRows = 4;
 const nCols = 3;

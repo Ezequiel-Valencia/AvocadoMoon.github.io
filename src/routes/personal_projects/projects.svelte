@@ -1,6 +1,6 @@
 <script lang="ts">
     // import type Projects from "./project_object";
-    import Tabs from "../tabs.svelte";
+    import Tabs from "../../common/tabs.svelte";
     import { projects } from "./project_object";
     import { importSCSSOptions } from "../../globals"
     const sideImageLocation = "/personal_projects/animal star blue.png";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tabs from "../tabs.svelte";
+  import Tabs from "../../common/tabs.svelte";
   import { webRing } from "./WebsInrRing";
   import { importSCSSOptions } from "../../globals"
   import type { WebRing } from "./WebsInrRing";

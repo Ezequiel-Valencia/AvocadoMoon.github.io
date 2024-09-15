@@ -3,7 +3,7 @@
 </head>
 <script lang="ts">
   import { Marquee, Hr } from "flowbite-svelte";
-  import { musicController } from "../myLocalStorage";
+  import { musicController } from "./myLocalStorage";
 
 
   let display_entire_menu = false;

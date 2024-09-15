@@ -18,14 +18,14 @@
 
     onMount(() =>{
       if(tabSCSSFileLocation === importSCSSOptions.about_me){
-        import(`./about_me/tabs.scss`)
+        import(`../routes/about_me/tabs.scss`)
       } else if(tabSCSSFileLocation === importSCSSOptions.personal_projects){
-        import(`./personal_projects/tabs.scss`)
+        import(`../routes/personal_projects/tabs.scss`)
       } else if (tabSCSSFileLocation === importSCSSOptions.cat_encryption){
-        import(`./cat_encryption/tabs.scss`)
+        import(`../routes/cat_encryption/tabs.scss`)
       }
        else{
-        import(`./web_ring/tabs.scss`)
+        import(`../routes/web_ring/tabs.scss`)
       }
     })
     

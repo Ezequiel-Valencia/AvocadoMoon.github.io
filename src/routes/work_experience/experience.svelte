@@ -1,6 +1,6 @@
 <script lang="ts">
   import { experiences } from "./experiences";
-  import { musicTime, musicController } from "../../myLocalStorage";
+  import { musicTime, musicController } from "../../common/myLocalStorage";
 </script>
 
 <div id="wrapper-div">

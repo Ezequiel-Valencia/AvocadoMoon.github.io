@@ -1,7 +1,7 @@
 <script lang="ts">
   import Me from "./me.svelte";
   import Hobbies from "./hobbies.svelte";
-  import Menu from "../menu.svelte";
+  import Menu from "../../common/menu.svelte";
 </script>
 
 <span id="main-div">

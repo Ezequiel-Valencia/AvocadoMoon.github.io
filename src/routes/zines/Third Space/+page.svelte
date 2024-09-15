@@ -1,7 +1,7 @@
 <script lang="ts">
   import { zines } from "../zine";
   import DisplayZine from "../displayZine.svelte";
-  import Menu from "../../menu.svelte";
+  import Menu from "../../../common/menu.svelte";
 
 </script>
 

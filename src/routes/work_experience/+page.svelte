@@ -1,9 +1,9 @@
 <script lang="ts">
-    import Menu from "../menu.svelte";
+    import Menu from "../../common/menu.svelte";
     import Experience from "./experience.svelte";
     import Intro from "./intro.svelte";
     import { experiencesSong } from "./experiences";
-    import { musicController, musicTime, sfxController } from "../../myLocalStorage";
+    import { musicController, musicTime, sfxController } from "../../common/myLocalStorage";
     import { onMount } from "svelte";
 
     onMount(() => {

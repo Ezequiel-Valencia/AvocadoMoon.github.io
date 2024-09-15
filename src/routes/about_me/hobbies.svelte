@@ -1,6 +1,6 @@
 <script lang="ts">
   import { hobbies } from './activites';
-  import Tabs from '../tabs.svelte';
+  import Tabs from '../../common/tabs.svelte';
   import { importSCSSOptions } from "../../globals"
 
   let activeIndex = 0;

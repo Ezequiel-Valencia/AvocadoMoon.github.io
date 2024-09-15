@@ -4,6 +4,7 @@
 <script lang="ts">
   import { Marquee, Hr } from "flowbite-svelte";
   import { musicController } from "./myLocalStorage";
+  import { onMount } from "svelte";
 
 
   let display_entire_menu = false;
@@ -11,18 +12,46 @@
   export let songName: string;
   export let songPath: string = "";
 
-  let playing = $musicController
+  var paused = true
+  var audioLength: any;
+  var currentAudioTime: any;
+
+  onMount(() => {
+    let audio = document.getElementById("bg-song") as HTMLAudioElement;
+    audio.volume = 0.1
+    paused = !$musicController
+    if (paused){
+      audio.pause()
+    }
+  })
+
+  function formatAudioTime(time: number){
+    let mins = Math.floor(time / 60)
+    let secs: any = Math.floor(time % 60)
+    console.log(secs)
+    if (secs < 10){
+      secs = "0" + secs
+    }
+    if (Number.isNaN(mins)){
+      return "0:00"
+    }
+    return mins + ":" + secs
+  }
 
 </script>
 
 {#if $musicController}
-  <audio id="bg-song" volume=0.5 src={songPath} autoplay loop></audio>
-  <script lang="ts">
-    var audio = document.getElementById("bg-song");
-    audio.volume = 0.1;
-  </script>
+  <audio id="bg-song" src={songPath} autoplay loop
+  bind:paused
+  bind:duration={audioLength}
+  bind:currentTime={currentAudioTime}
+  ></audio>
 {:else}
-  <audio id="bg-song" volume=0.1 src={songPath} loop></audio>
+  <audio id="bg-song" src={songPath} loop
+  bind:paused
+  bind:duration={audioLength}
+  bind:currentTime={currentAudioTime}
+  ></audio>
 {/if}
 
 
@@ -53,20 +82,22 @@
       <Marquee speed={0.3} hoverSpeed={0.2}>
         <h5>{songName}</h5>
       </Marquee>
-      {#if playing}
-        <span id="play-button" on:click={(e) => {playing = false}} on:keydown={(e) => {}} role="button" tabindex="0">
+      {#if paused != true}
+        <span id="play-button" on:click={(e) => {paused = true}} on:keydown={(e) => {}} role="button" tabindex="0">
           <i style="font-size: x-large;" class="fas fa-pause"></i>
         </span>
       {:else}
-        <span id="play-button" on:click={(e) => {playing = true}} on:keydown={(e) => {}} role="button" tabindex="0">
+        <span id="play-button" on:click={(e) => {paused = false}} on:keydown={(e) => {}} role="button" tabindex="0">
           <i style="font-size: x-large;" class="fas fa-play"></i>
         </span>
       {/if}
       <span id="seeking" style="">
         <span>
-          <input id="seeker" type="range" min="1" max="100" value="0">
+          <input id="seeker" type="range" min="1" max={audioLength} value={currentAudioTime}
+          on:input={(e) => {currentAudioTime = e.currentTarget.value}}
+          >
         </span>
-        <span class="text">0:00/2:56</span>
+        <span class="text">{formatAudioTime(currentAudioTime)}/{formatAudioTime(audioLength)}</span>
       </span>
       <Hr classHr="my-8" />
     </span>

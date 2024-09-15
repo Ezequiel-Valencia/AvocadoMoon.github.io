@@ -42,13 +42,13 @@
                 case this.musicClip:
                     bgMusic.pause();
                     musicClip.currentTime = 0;
-                    musicClip.volume = 0.5;
+                    musicClip.volume = channels[id].volumeLevel;
                     musicClip.play();
                     break;
 
                 case this.backgroundMusic:
                     musicClip.pause();
-                    bgMusic.volume = 0.5
+                    bgMusic.volume = 0.2
                     bgMusic.play()
                     break
             }
@@ -98,7 +98,6 @@
     <div 
     on:mousedown={(e) => {
       if (!currentChannel.focused){
-        console.log("Its false")
         channelFunctions.playMusic(index, channelFunctions.musicClip);
       }
       currentChannel.focused = true;

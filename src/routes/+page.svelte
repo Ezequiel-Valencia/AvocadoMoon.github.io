@@ -1,5 +1,4 @@
 <script lang="ts">
-  import {fade} from 'svelte/transition'
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
   import { musicController, sfxController, hasVisited } from "../myLocalStorage";
@@ -26,6 +25,10 @@
 
   {#if $sfxController}
     <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
+    <script lang="ts">
+      var audio = document.getElementById("channel-hover-audio");
+      audio.volume = 0.1;
+    </script>
     <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
   {/if}
   
@@ -59,6 +62,10 @@
 
   {#if $musicController}
     <audio src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
+    <script lang="ts">
+      var audio = document.getElementById("bgm");
+      audio.volume = 0.2;
+    </script>
   {/if}
 
   

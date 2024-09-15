@@ -1,32 +1,25 @@
 <script lang="ts">
-  import Menu from "../menu.svelte";
-import Experience from "./experience.svelte";
-import Intro from "./intro.svelte";
-import { experiencesSong } from "./experiences";
-import { musicController, musicTime, sfxController } from "../../myLocalStorage";
-import { onMount } from "svelte";
+    import Menu from "../menu.svelte";
+    import Experience from "./experience.svelte";
+    import Intro from "./intro.svelte";
+    import { experiencesSong } from "./experiences";
+    import { musicController, musicTime, sfxController } from "../../myLocalStorage";
+    import { onMount } from "svelte";
 
     onMount(() => {
         if($musicController){
             musicTime.setAudioTagTime()
         }
     })
-
 </script>
 
 
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me" songName="Sabbath - Various Artists"></Menu>
+    <Menu songPath={experiencesSong} email="website@worker.slmail.me" songName="Sabbath - Various Artists"></Menu>
     <Intro></Intro>
     <Experience></Experience>
-
-
-    {#if $musicController}
-        <audio id="song" src={experiencesSong} autoplay loop></audio>
-    {/if}
-    
 </div>
 
 <style lang="scss">

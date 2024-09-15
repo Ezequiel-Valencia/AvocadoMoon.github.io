@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Menu from "../menu.svelte";
-  import { musicController } from "../../myLocalStorage";
+  import Menu from "../../common/menu.svelte";
+  import { musicController } from "../../common/myLocalStorage";
 </script>
 
 <span id="main-div">

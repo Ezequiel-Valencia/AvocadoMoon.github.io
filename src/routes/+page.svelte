@@ -1,7 +1,7 @@
 <script lang="ts">
   import Channels from './channels.svelte';
   import Menubar from './menubar.svelte';
-  import { musicController, sfxController, hasVisited } from "../myLocalStorage";
+  import { musicController, sfxController, hasVisited } from "../common/myLocalStorage";
   import { onMount } from 'svelte';
   import { clickedOff } from '../globals'
 

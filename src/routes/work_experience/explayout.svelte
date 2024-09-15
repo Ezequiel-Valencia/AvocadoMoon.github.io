@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { WorkExperience } from "./experiences";
   import {experiencesSong} from "./experiences"
-  import { musicController, musicTime } from "../../myLocalStorage";
-  import Menu from "../menu.svelte";
+  import { musicController, musicTime } from "../../common/myLocalStorage";
+  import Menu from "../../common/menu.svelte";
   import { onMount } from "svelte";
   export var experience: WorkExperience;
   export var description: string[];

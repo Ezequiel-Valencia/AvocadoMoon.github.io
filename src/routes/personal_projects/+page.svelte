@@ -1,22 +1,14 @@
 <script lang="ts">
   import Menu from "../menu.svelte";
-import Intro from "./intro.svelte";
+  import Intro from "./intro.svelte";
   import Projects from "./projects.svelte";
-  import { musicController } from "../../myLocalStorage";
-
 </script>
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
+    <Menu songPath="/Audio/Channel-Songs/Zora's Domain - Day (Breath of the Wild).mp3" email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
     <Intro></Intro>
     <Projects></Projects>
-
-
-    {#if $musicController}
-        <audio id="song" src="/Audio/Channel-Songs/Zora's Domain - Day (Breath of the Wild).mp3" autoplay loop></audio>
-    {/if}
-    
 </div>
 
 

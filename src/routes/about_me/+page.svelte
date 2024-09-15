@@ -2,18 +2,12 @@
   import Me from "./me.svelte";
   import Hobbies from "./hobbies.svelte";
   import Menu from "../menu.svelte";
-  import { musicController } from "../../myLocalStorage";
 </script>
 
 <span id="main-div">
-  <Menu email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
+  <Menu songPath="/Audio/Channel-Songs/Samurai Champloo Aruarian Dance.mp3" email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
   <Me />
-
   <Hobbies />
-
-  {#if $musicController}
-    <audio src="/Audio/Channel-Songs/Samurai Champloo Aruarian Dance.mp3" autoplay loop></audio>
-  {/if}
 
 </span>
 

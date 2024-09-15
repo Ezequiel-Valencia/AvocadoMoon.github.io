@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { musicController } from "../../myLocalStorage";
   import Menu from "../menu.svelte";
   import Intro from "./intro.svelte";
 
@@ -11,12 +10,8 @@
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me" songName="Mozart Symphony 40"></Menu>
+    <Menu songPath="/Audio/Channel-Songs/Mozart Symphony 40.mp3" email="website@worker.slmail.me" songName="Mozart Symphony 40"></Menu>
     <Intro></Intro>
-
-    {#if $musicController}
-    <audio id="song" src="/Audio/Channel-Songs/Mozart Symphony 40.mp3" autoplay loop></audio>
-    {/if}
 </div>
 
 

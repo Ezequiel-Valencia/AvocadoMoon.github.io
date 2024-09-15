@@ -28,7 +28,6 @@
   function formatAudioTime(time: number){
     let mins = Math.floor(time / 60)
     let secs: any = Math.floor(time % 60)
-    console.log(secs)
     if (secs < 10){
       secs = "0" + secs
     }

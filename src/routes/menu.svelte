@@ -1,10 +1,18 @@
 <script lang="ts">
+  import { Marquee, Hr, Range } from "flowbite-svelte";
+  import { musicController } from "../myLocalStorage";
+
 
   let display_entire_menu = false;
   export let email: string;
   export let songName: string;
-</script>
 
+  let playing = $musicController
+
+</script>
+<head>
+  <script src="https://kit.fontawesome.com/6a3a94789b.js" crossorigin="anonymous"></script>
+</head>
 {#if !display_entire_menu}
 <div>
   <nav>
@@ -21,10 +29,30 @@
 {#if display_entire_menu}
   <div id="home-menu-nav">
 
-    <div style="height:auto">
-      <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Song Playing:</h1>
-      <h4 style="color: white; text-align:center; margin-top:0%; padding-top:0%;">{songName}</h4>
-    </div>
+    <span class="box" id="music-player" style="width:fit-content; text-align: center; margin-left:auto; margin-right:auto; height:fit-content;">
+      <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Music Player:</h1>
+      <Marquee speed={0.4} hoverSpeed={0.2} reverse={true}>
+        <h5>{songName}</h5>
+      </Marquee>
+      <Hr classHr="my-8" />
+      {#if playing}
+        <div id="play-button">
+          <i class="fas fa-pause"></i>
+        </div>
+      {:else}
+        <span id="play-button">
+          <i style="font-size: xx-large;" class="fas fa-play"></i>
+        </span>
+      {/if}
+      <br>
+      <span id="seeking" style="">
+        <span class="text">0:00</span>
+        <span>
+          <input id="seeker" type="range" min="1" max="100" value="0">
+        </span>
+        <span class="text">2:56</span>
+      </span>
+    </span>
 
     <div style="height:40vh; text-align:center;" id="big-button-div">
       <button
@@ -48,6 +76,16 @@
 {/if}
 
 <style lang="scss">
+  .text {
+    color: white;
+  }
+
+  .box {
+    border-radius: 5%;
+    overflow: auto;
+    color: white;
+  }
+
   #home-menu-nav {
     display:grid;
     bottom: 0;

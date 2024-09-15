@@ -1,3 +1,6 @@
+<head>
+  <script src="https://kit.fontawesome.com/6a3a94789b.js" crossorigin="anonymous"></script>
+</head>
 <script lang="ts">
   import { Marquee, Hr, Range } from "flowbite-svelte";
   import { musicController } from "../myLocalStorage";
@@ -10,9 +13,6 @@
   let playing = $musicController
 
 </script>
-<head>
-  <script src="https://kit.fontawesome.com/6a3a94789b.js" crossorigin="anonymous"></script>
-</head>
 {#if !display_entire_menu}
 <div>
   <nav>
@@ -31,30 +31,28 @@
 
     <span class="box" id="music-player" style="width:fit-content; text-align: center; margin-left:auto; margin-right:auto; height:fit-content;">
       <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Music Player:</h1>
-      <Marquee speed={0.4} hoverSpeed={0.2} reverse={true}>
+      <Marquee speed={0.3} hoverSpeed={0.2}>
         <h5>{songName}</h5>
       </Marquee>
-      <Hr classHr="my-8" />
       {#if playing}
-        <div id="play-button">
-          <i class="fas fa-pause"></i>
-        </div>
+        <span id="play-button" on:click={(e) => {playing = false}} on:keydown={(e) => {}} role="button" tabindex="0">
+          <i style="font-size: x-large;" class="fas fa-pause"></i>
+        </span>
       {:else}
-        <span id="play-button">
-          <i style="font-size: xx-large;" class="fas fa-play"></i>
+        <span id="play-button" on:click={(e) => {playing = true}} on:keydown={(e) => {}} role="button" tabindex="0">
+          <i style="font-size: x-large;" class="fas fa-play"></i>
         </span>
       {/if}
-      <br>
       <span id="seeking" style="">
-        <span class="text">0:00</span>
         <span>
           <input id="seeker" type="range" min="1" max="100" value="0">
         </span>
-        <span class="text">2:56</span>
+        <span class="text">0:00/2:56</span>
       </span>
+      <Hr classHr="my-8" />
     </span>
 
-    <div style="height:40vh; text-align:center;" id="big-button-div">
+    <div style="text-align:center;" id="big-button-div">
       <button
         on:click={(e) => {
           location.href = "/";
@@ -130,7 +128,6 @@
     height: 10vh;
     width: 20vw;
     margin-left: 5%;
-    margin-top: 20vh;
   }
 
   #contact-me {
@@ -148,6 +145,14 @@
   #contact-me p {
     bottom: 0;
     color: white;
+  }
+
+  input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 15rem;
   }
 
   

@@ -32,22 +32,22 @@
 
 <style lang="scss">
     #zines{
-        // background-color: rgba(0, 0, 0, 0.80);
+        background-color: rgba(0, 0, 0, 0.70);
         height: 80vh;
-        width: 80vw;
+        width: 90vw;
         text-align: center;
         margin: auto;
         margin-bottom: 5vh;
         display: grid;
         grid-template-columns: 50% 50%; // each 50% represents one column I want in the grid
         grid-auto-rows: 1fr; // Full row for height
-        // border-color: white;
         border-style: solid;
         max-height: 1000px;
-        // border-image-repeat: round;
-        border-image: url('zines/stars.png') 40 / 19px 19px 19px 19px / round;
-        border-image-outset: 10px;
-        // border-image-slice: 33;
+        border-image-source: url('zines/star-line.png');
+        border-image-repeat: round;
+        border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
+        border-image-width: 25px; //size of the border
+        border-image-outset: 20px; //how far out from the height/width of the element
     }
 
     .zine-cover{
@@ -60,18 +60,19 @@
     }
 
     .zine-container{
-        // border-style: inset;
-        border-radius: 4px;
-        // border-color: white; //flowing border of white and black potentially?
         width: 100%;
         height: 100%;
         margin: auto;
         transition: all 1s;
+        border-bottom-style: inset;
+        border-radius: 5px;
+        border-bottom-color: white;
     }
 
     .zine-container:hover{
         background-color: black;
         transition: all 1s;
+        border-bottom-color: transparent;
     }
 
     .title{

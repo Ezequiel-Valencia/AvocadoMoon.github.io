@@ -10,6 +10,9 @@
         <div on:mouseenter={(e) => {hoveredEntity = index}} 
             on:mouseleave={(e) => {hoveredEntity = -1}}
             on:mousedown={(e) => {window.open(zine.redirect)}}
+            id="{
+                zinesKeyValueArray.length === (1 + index) ? "last-zine" : "zine-" + index
+            }"
             role="tab"
             aria-controls="tabpanel-{index}"
             tabindex="{index}"
@@ -65,9 +68,7 @@
         height: 100%;
         margin: auto;
         transition: all 1s;
-        border-bottom-style: inset;
         border-radius: 5px;
-        border-bottom-color: white;
     }
 
     .zine-container:hover{
@@ -78,7 +79,7 @@
 
     .title{
         text-align: center;
-        color: white;
+        color: goldenrod;
         padding: 5%;
         font-size: medium;
         margin-top: auto;
@@ -117,8 +118,12 @@
             margin: auto;
             transition: all 1s;
             border-bottom-style: inset;
-            border-radius: 5px;
+            border-radius: 0px;
             border-bottom-color: white;
+        }
+
+        #last-zine {
+            border-bottom: transparent;
         }
     }
 

@@ -19,7 +19,7 @@ export const zines: {[key: string]: zineMetaData} = {
     thirdSpace:
     {
         zineCover: thirdSpaceDir + "/Third Space.webp",
-        title: "",
+        title: "Encounters of the Third Space",
         name: "Third Space",
         description: `My most recent and ambitious Zine that discusses the current loneliness epidemic 
         within America, land use, and predatory technology.`,
@@ -30,7 +30,7 @@ export const zines: {[key: string]: zineMetaData} = {
     pandora:
     {
         zineCover: pandoraDir + "/Pandora_Poster.webp",
-        title: "",
+        title: "Pandoras Deus Ex Machina",
         name: "pandora",
         description: "A Zine I started and may never finish focused upon tech and it's affects on different community's.",
         redirect: pandoraDir,

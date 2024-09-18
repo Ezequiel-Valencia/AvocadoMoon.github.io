@@ -27,7 +27,8 @@
         min-height: 100%;
         height:auto;
         width: 100%;
-        background-image: url('zines/night-city.jpg');
+        overflow-y: auto;
+        background-image: url('zines/night sky ny.webp');
         background-repeat: no-repeat;
         background-size: cover;
         overflow-y: auto;
@@ -37,35 +38,35 @@
         position: absolute;
         left: 0%;
         top: 0%;
-        height: 100%;
+        min-height: 100%;
+        height:auto;
         width: 100%;
-        
+        background-image: url('zines/night sky ny.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: saturate(0);
+        overflow-y: auto;
     }
     #gold-border{
         height: 10vh;
         width: 50vw;
+        max-width: 500px;
+        max-height: 60px;
         border-style:outset;
         border-color: rgb(255, 255, 255);
         border-radius: 20px;
         
-        // top: 20%;
-        // transform: translateY(-50%);
         margin: auto;
         margin-top: 8vh;
         margin-bottom: 2vh;
-        // position: relative;
         background-color: rgba(0, 0, 0, 0.801);
+        text-align: center;
     }
 
     #zine-intro{
-        position: relative;
-        margin: 0%;
-        padding: 0%;
+        margin: auto;
+        padding: auto;
         font-family: 'Playfair Display', serif;
-        
-        top: 50%;
-        transform: translateY(-50%);
-        text-align: center;
         color: rgb(255, 255, 255);
     }
 </style>

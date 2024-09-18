@@ -1,14 +1,28 @@
 <script lang="ts">
     import { zines } from "./zine";
     let zinesKeyValueArray = Object.entries(zines);
+    let hoveredEntity = -1;
 </script>
 
 
 <div id="zines">
     {#each zinesKeyValueArray as [key, zine], index }
-        <div style='display: flex; grid-row: 0; grid-column: {index % 1};' class="zine-container">
-            <img style="display: flex;" class="zine-cover" src="{zine.zineCover}" alt="Zine Cover">
-            <p style="display: flex;" class="description">{zine.description}</p>
+        <div on:mouseenter={(e) => {hoveredEntity = index}} 
+            on:mouseleave={(e) => {hoveredEntity = -1}}
+            role="tab"
+            aria-controls="tabpanel-{index}"
+            tabindex="{index}"
+            style='display: flex; grid-row: 0; grid-column: {index % 1};' 
+            class="zine-container">
+
+
+            {#if hoveredEntity != index}
+                <img style="display: flex;" class="zine-cover" src="{zine.zineCover}" alt="Zine Cover">
+                <p style="display: flex;" class="title">{zine.title}</p>
+            {/if}
+            {#if hoveredEntity == index}
+                <p class="description">{zine.description}</p>
+            {/if}
 
         </div>
     {/each}
@@ -18,44 +32,64 @@
 
 <style lang="scss">
     #zines{
-        background-color: rgba(0, 0, 0, 0.80);
+        // background-color: rgba(0, 0, 0, 0.80);
         height: 80vh;
         width: 80vw;
         text-align: center;
         margin: auto;
+        margin-bottom: 5vh;
         display: grid;
         grid-template-columns: 50% 50%; // each 50% represents one column I want in the grid
-        border-color: white;
+        grid-auto-rows: 1fr; // Full row for height
+        // border-color: white;
         border-style: solid;
+        max-height: 1000px;
+        // border-image-repeat: round;
+        border-image: url('zines/stars.png') 40 / 19px 19px 19px 19px / round;
+        border-image-outset: 10px;
+        // border-image-slice: 33;
     }
 
     .zine-cover{
         max-width: 300px;
         max-height: 500px;
-        height: 20vh;
-        width: 10vw;
+        height: 30vh;
         margin-top: auto;
         margin-bottom: auto;
+        padding-left: 5%;
     }
 
     .zine-container{
-        border-color: white;
+        // border-style: inset;
+        border-radius: 4px;
+        // border-color: white; //flowing border of white and black potentially?
         width: 100%;
+        height: 100%;
         margin: auto;
+        transition: all 1s;
     }
 
-    .description{
+    .zine-container:hover{
+        background-color: black;
+        transition: all 1s;
+    }
+
+    .title{
         text-align: center;
         color: goldenrod;
         padding: 5%;
-        font-size: small;
-        width: 10vw;
+        font-size: medium;
+        margin-top: auto;
+        margin-bottom: auto;
     }
-
-    #last-zine{
-        border-bottom-style: none;
+    .description{
+        color: white;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin: auto;
+        padding-left: 2%;
+        padding-right: 2%;
     }
-
 
 
 </style>

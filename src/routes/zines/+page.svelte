@@ -6,14 +6,15 @@
 
 
 
-<div id="bg"></div>
-<div id="main-div">
-    <Menu songPath="/Audio/Channel-Songs/Sonic Unleashed Windmill Isle Night Acid Jazz.mp3" email="zines.zlfwo@slmails.com" songName="Sonic Unleashed Windmill Isle Night Acid Jazz"></Menu>
-    <div id="gold-border">
-        <h1 id="zine-intro">My Zine's</h1>
+<div id="bg">
+    <div id="main-div">
+        <Menu songPath="/Audio/Channel-Songs/Sonic Unleashed Windmill Isle Night Acid Jazz.mp3" email="zines.zlfwo@slmails.com" songName="Sonic Unleashed Windmill Isle Night Acid Jazz"></Menu>
+        <div id="gold-border">
+            <h1 id="zine-intro">My Zine's</h1>
+        </div>
+        <!-- <Intro></Intro> -->
+        <Zines></Zines>
     </div>
-    <!-- <Intro></Intro> -->
-    <Zines></Zines>
 </div>
 
 
@@ -28,10 +29,7 @@
         height:auto;
         width: 100%;
         overflow-y: auto;
-        background-image: url('zines/night sky ny.webp');
-        background-repeat: no-repeat;
-        background-size: cover;
-        overflow-y: auto;
+        backdrop-filter: saturate(0) blur(3px); // applies filter to all background elements
     }
 
     #bg{
@@ -44,7 +42,6 @@
         background-image: url('zines/night sky ny.webp');
         background-repeat: no-repeat;
         background-size: cover;
-        filter: saturate(0);
         overflow-y: auto;
     }
     #gold-border{

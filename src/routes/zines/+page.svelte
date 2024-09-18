@@ -1,6 +1,5 @@
 <script lang="ts">
     import Menu from "../../common/menu.svelte";
-    import Intro from "./intro.svelte";
     import Zines from "./zines.svelte";
 </script>
 
@@ -12,7 +11,6 @@
         <div id="gold-border">
             <h1 id="zine-intro">My Zine's</h1>
         </div>
-        <!-- <Intro></Intro> -->
         <Zines></Zines>
     </div>
 </div>
@@ -39,7 +37,7 @@
         min-height: 100%;
         height:auto;
         width: 100%;
-        background-image: url('zines/night sky ny.webp');
+        background-image: url('/zines/night sky ny.webp');
         background-repeat: no-repeat;
         background-size: cover;
         overflow-y: auto;

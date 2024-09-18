@@ -47,7 +47,7 @@
         grid-auto-rows: 1fr; // Full row for height
         border-style: solid;
         max-height: 1000px;
-        border-image-source: url('zines/star-line.png');
+        border-image-source: url('/zines/star-line.png');
         border-image-repeat: round;
         border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
         border-image-width: 25px; //size of the border
@@ -106,7 +106,7 @@
             display: grid;
             grid-auto-rows: 1fr; // Full row for height
             border-style: solid;
-            border-image-source: url('zines/star-line.png');
+            border-image-source: url('/zines/star-line.png');
             border-image-repeat: round;
             border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
             border-image-width: 25px; //size of the border

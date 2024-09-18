@@ -62,7 +62,7 @@
 
     #zine-intro{
         margin: auto;
-        padding: auto;
+        transform: translateY(20%);
         font-family: 'Playfair Display', serif;
         color: rgb(255, 255, 255);
     }

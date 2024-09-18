@@ -9,6 +9,7 @@
     {#each zinesKeyValueArray as [key, zine], index }
         <div on:mouseenter={(e) => {hoveredEntity = index}} 
             on:mouseleave={(e) => {hoveredEntity = -1}}
+            on:mousedown={(e) => {window.open(zine.redirect)}}
             role="tab"
             aria-controls="tabpanel-{index}"
             tabindex="{index}"
@@ -77,7 +78,7 @@
 
     .title{
         text-align: center;
-        color: goldenrod;
+        color: white;
         padding: 5%;
         font-size: medium;
         margin-top: auto;
@@ -90,6 +91,35 @@
         margin: auto;
         padding-left: 2%;
         padding-right: 2%;
+    }
+
+    @media screen and (max-width: 768px) {
+        #zines {
+            grid-template-columns: 1fr;
+            background-color: rgba(0, 0, 0, 0.70);
+            height: 100%;
+            width: 80vw;
+            text-align: center;
+            margin: auto;
+            margin-bottom: 5vh;
+            display: grid;
+            grid-auto-rows: 1fr; // Full row for height
+            border-style: solid;
+            border-image-source: url('zines/star-line.png');
+            border-image-repeat: round;
+            border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
+            border-image-width: 25px; //size of the border
+            border-image-outset: 20px; //how far out from the height/width of the element
+        }
+        .zine-container{
+            width: 100%;
+            height: 35vh;
+            margin: auto;
+            transition: all 1s;
+            border-bottom-style: inset;
+            border-radius: 5px;
+            border-bottom-color: white;
+        }
     }
 
 

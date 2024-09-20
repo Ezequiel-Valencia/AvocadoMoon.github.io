@@ -2,7 +2,6 @@
   import type { WorkExperience } from "./experiences";
   import {experiencesSong} from "./experiences"
   import { musicController, musicTime } from "../../common/myLocalStorage";
-  import Menu from "../../common/menu.svelte";
   import { onMount } from "svelte";
   export var experience: WorkExperience;
   export var description: string[];
@@ -24,7 +23,7 @@
         if($musicController){
           musicTime.updateTimeStamp()
         }
-      }} href="{prefix}#world"> Return </a>
+      }} href="{prefix}#myExperience"> Return </a>
     </h2>
   </nav>
   <div id="right-wrapper">

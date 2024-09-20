@@ -5,7 +5,7 @@
 
 <div id="wrapper-div">
   <h1 id="world">World</h1>
-  <h2>My Work Experience</h2>
+  <h2 id="myExperience">My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
     <div class="spacer">
       <div

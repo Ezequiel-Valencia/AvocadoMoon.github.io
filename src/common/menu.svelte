@@ -82,12 +82,12 @@
         <h5>{songName}</h5>
       </Marquee>
       {#if paused != true}
-        <span id="play-button" on:click={(e) => {paused = true}} on:keydown={(e) => {}} role="button" tabindex="0">
-          <i style="font-size: x-large;" class="fas fa-pause"></i>
+        <span id="play-button" class="music-buttons" on:click={(e) => {paused = true}} on:keydown={(e) => {}} role="button" tabindex="0">
+          <i style="font-size: x-large;" class="fas fa-pause music-buttons"></i>
         </span>
       {:else}
-        <span id="play-button" on:click={(e) => {paused = false}} on:keydown={(e) => {}} role="button" tabindex="0">
-          <i style="font-size: x-large;" class="fas fa-play"></i>
+        <span id="play-button" class="music-buttons" on:click={(e) => {paused = false}} on:keydown={(e) => {}} role="button" tabindex="0">
+          <i style="font-size: x-large;" class="fas fa-play music-buttons"></i>
         </span>
       {/if}
       <span id="seeking" style="">
@@ -125,6 +125,11 @@
 <style lang="scss">
   .text {
     color: white;
+  }
+
+  .music-buttons{
+    min-height: 1vh;
+    min-width: 2vw;
   }
 
   .box {

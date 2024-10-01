@@ -74,7 +74,4 @@
     font-size: x-large;
   }
 
-  h2{
-    color: white;
-  }
 </style>

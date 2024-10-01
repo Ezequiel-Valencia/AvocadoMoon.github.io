@@ -23,7 +23,6 @@
   {#each hobbies as hob, index}
     {#if activeIndex == index}
      <div id={hob.category} class="category">
-      <h2>{hob.category}</h2>
       {#each hob.activity as activity, index}
         <div id={activity.name} class="activity">
           <table>

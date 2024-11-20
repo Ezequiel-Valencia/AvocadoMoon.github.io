@@ -7,7 +7,7 @@
   background-size: 100% 100%; 
   background-repeat:no-repeat;" id="main-div">
 
-  <Menu songPath="/Audio/Channel-Songs/It's Just Begun.mp3" email="website@worker.slmail.me" songName="It's Just Begun (2002 Remastered)"></Menu>
+  <Menu songPath="https://files.catbox.moe/kaznbt.mp3" email="website@worker.slmail.me" songName="It's Just Begun (2002 Remastered)"></Menu>
 
   <div id="intro">
     <div style="margin: auto;">

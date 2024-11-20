@@ -6,7 +6,7 @@ export type WorkExperience = {
     redirect: string;
 }
 
-export const experiencesSong = "/Audio/Channel-Songs/SABBATH.mp3"
+export const experiencesSong = "https://files.catbox.moe/iclebz.mp3"
 
 export const prefix = "/work_experience"
 

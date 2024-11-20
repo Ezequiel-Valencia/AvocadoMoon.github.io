@@ -5,7 +5,7 @@
 </script>
 
 <span id="main-div">
-  <Menu songPath="/Audio/Channel-Songs/Samurai Champloo Aruarian Dance.mp3" email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
+  <Menu songPath="https://files.catbox.moe/ll8iaa.mp3" email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
   <Me />
   <Hobbies />
 

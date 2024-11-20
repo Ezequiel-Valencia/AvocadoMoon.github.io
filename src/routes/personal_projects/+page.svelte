@@ -6,7 +6,7 @@
 
 
 <div id="main-div">
-    <Menu songPath="/Audio/Channel-Songs/Zora's Domain - Day (Breath of the Wild).mp3" email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
+    <Menu songPath="https://files.catbox.moe/way98y.mp3" email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
     <Intro></Intro>
     <Projects></Projects>
 </div>

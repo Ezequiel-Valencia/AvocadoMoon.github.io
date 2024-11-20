@@ -11,7 +11,6 @@ import { sfxController, musicController } from "../common/myLocalStorage";
 const nRows = 4;
 const nCols = 3;
 
-let musicClipDir = "/Audio/Intro-Clips"
 
 // Needs to be initalized with some form of variables or else compiler throws fit
 export let channels: { coverImage: string; 
@@ -26,7 +25,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: '/about_me',
-        musicClip: musicClipDir + '/About_Me_Intro.mp3',
+        musicClip: 'https://files.catbox.moe/fw5j3q.mp3',
         volumeLevel: .4
     },
     {
@@ -36,7 +35,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: '/work_experience',
-        musicClip: musicClipDir + '/Work_Exp_Intro.mp3',
+        musicClip: 'https://files.catbox.moe/o9ja1i.mp3',
         volumeLevel: .5
     },
     {
@@ -46,7 +45,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/zines",
-        musicClip: musicClipDir + '/Zine_Intro.mp3',
+        musicClip: 'https://files.catbox.moe/tlb833.mp3',
         volumeLevel: .2
     },
     {
@@ -56,7 +55,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/personal_projects",
-        musicClip: musicClipDir + '/Personal_Projects_Intro.mp3',
+        musicClip: 'https://files.catbox.moe/b63jos.mp3',
         volumeLevel: .3
     },
     {
@@ -66,7 +65,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/education",
-        musicClip: musicClipDir + '/Education.mp3',
+        musicClip: 'https://files.catbox.moe/bb5qbv.mp3',
         volumeLevel: .3
     },
     {
@@ -76,7 +75,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/web_ring",
-        musicClip: musicClipDir + '/Web_Ring.mp3',
+        musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
         volumeLevel: .3
     },
     {
@@ -86,7 +85,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/ctgrassroots",
-        musicClip: musicClipDir + "/It's Just Begun.mp3",
+        musicClip: 'https://files.catbox.moe/cc55u4.mp3',
         volumeLevel: .3
     },
     // {
@@ -105,7 +104,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/cat_encryption",
-        musicClip: musicClipDir + "/meow.mp3",
+        musicClip: 'https://files.catbox.moe/g8n27k.mp3',
         volumeLevel: .3
     },
 ];

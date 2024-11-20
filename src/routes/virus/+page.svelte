@@ -11,7 +11,7 @@
   </div>
 
   {#if $musicController}
-    <audio src="/Audio/Channel-Songs/Samurai Champloo Aruarian Dance.mp3" autoplay loop></audio>
+    <audio src="https://files.catbox.moe/ll8iaa.mp3" autoplay loop></audio>
   {/if}
 
 </span>

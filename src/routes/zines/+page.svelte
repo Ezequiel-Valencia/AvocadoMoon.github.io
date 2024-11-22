@@ -6,8 +6,9 @@
 
 
 <div id="bg">
+    <Menu songPath="https://files.catbox.moe/0x0xh8.mp3" email="zines.zlfwo@slmails.com" songName="Sonic Unleashed Windmill Isle Night Acid Jazz"></Menu>
+
     <div id="main-div">
-        <Menu songPath="https://files.catbox.moe/0x0xh8.mp3" email="zines.zlfwo@slmails.com" songName="Sonic Unleashed Windmill Isle Night Acid Jazz"></Menu>
         <div id="gold-border">
             <h1 id="zine-intro">My Zine's</h1>
         </div>

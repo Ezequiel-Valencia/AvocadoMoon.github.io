@@ -4,9 +4,17 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
+  import { onMount } from "svelte";
   import { musicController, musicTime, sfxController } from "../common/myLocalStorage";
   import { channels } from "./channelObject.js";
-  
+
+  onMount(() => {
+    let video = document.querySelector('video');
+    if (video != null){
+      video.playbackRate = 0.5;
+    }
+  })
+
   function focus(index: number, zIndex: string){
     let node = document.getElementById("channelBox-" + index);
     node ? node.style.zIndex = zIndex: null;
@@ -119,12 +127,25 @@
         on:animationend={(e) => focus(index, "1")}
         
     >
-        <img
-        src={currentChannel.currentImage}
-        id="channel-image-{index}"
-        alt="Channel covers"
-        class="channel-image"
-        />
+        {#if currentChannel.currentImage.includes(".webm")}
+          <video autoplay loop muted playsinline
+            src={currentChannel.currentImage}
+            class="channel-image"
+            playbackRate={3}
+            >
+          
+          </video>
+        
+
+        {:else}
+          <img
+          src={currentChannel.currentImage}
+          id="channel-image-{index}"
+          alt="Channel covers"
+          class="channel-image"
+          />
+        {/if}
+        
         
         {#if currentChannel.focused}
         <div

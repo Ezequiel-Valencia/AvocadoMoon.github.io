@@ -17,16 +17,19 @@
 </script>
 
 <div id="wrapper">
-  <nav>
+  <nav
+  on:click={(e) => {
+    if($musicController){
+      musicTime.updateTimeStamp()
+    }
+    location.href = prefix + "#myExperience"
+  }}>
     <h2>
-      <a on:click={(e) => {
-        if($musicController){
-          musicTime.updateTimeStamp()
-        }
-      }} href="{prefix}#myExperience"> Return </a>
+      Return
     </h2>
   </nav>
   <div id="right-wrapper">
+    
     <div id="text-wrapper-div">
       <h1 class="text">{experience.company}</h1>
       <h2 class="text">{experience.jobTitle}</h2>
@@ -36,7 +39,6 @@
       {#each description as paragraph }
         <p class="text">{paragraph}</p>
       {/each}
-     
     </div>
   </div>
 
@@ -64,7 +66,6 @@
     height: 100%;
     min-height: 100vh;
     background-size: 40px 40px;
-    background-image: radial-gradient(circle, #ffffff 1px, rgba(0, 0, 0, 0) 1px);
   }
 
   .text {
@@ -120,7 +121,7 @@
     margin-right: 0;
   }
 
-  nav h2 a{
+  nav h2{
     text-decoration: none;
     color: white;
   }

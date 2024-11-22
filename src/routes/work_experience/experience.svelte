@@ -1,6 +1,24 @@
 <script lang="ts">
   import { experiences } from "./experiences";
   import { musicTime, musicController } from "../../common/myLocalStorage";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view')
+        }
+      })
+    })
+    
+    // Get all the elements with the .animate class applied
+    const allElementsToAnimate = document.querySelectorAll(".animate")
+
+    allElementsToAnimate.forEach((element) => {observer.observe(element)})
+  })
+
+
 </script>
 
 <div id="wrapper-div">
@@ -9,7 +27,7 @@
   {#each Object.entries(experiences) as [key, experience], index}
     <div class="spacer">
       <div
-        class="experience-div"
+        class={index % 2 == 0 ? "experience-div animate left": "experience-div animate right"}
         on:mousedown={(e) => {
           if($musicController){
             musicTime.updateTimeStamp()
@@ -29,6 +47,8 @@
       </div>
     </div>
   {/each}
+  <!-- Implemented so that in-view, right, and left class gets compiled -->
+  <div class="in-view left right"></div>
 </div>
 
 <style lang="scss">
@@ -42,6 +62,8 @@
     text-align: center;
   }
 
+  
+
   #world {
     font-family: "Poiret One", cursive;
     color: white;
@@ -54,16 +76,6 @@
   }
   .spacer {
     padding: 5%;
-  }
-
-  .experience-div {
-    margin: auto;
-    padding: 2%;
-    border-style: dotted;
-    border-color: rgb(150, 150, 150);
-    width: 80vw;
-    display: flex;
-    max-width: 1000px;
   }
 
   .text-div {
@@ -82,4 +94,51 @@
     color: white;
     writing-mode: vertical-lr;
   }
+
+  @keyframes rightToLeft{
+    from {
+      right: 100%;
+      opacity: 0%;
+    }
+    to {
+      right: 0%;
+    }
+  }
+
+  @keyframes leftToRight{
+    from {
+      left: 100%;
+      opacity: 0%;
+    }
+    to {
+      left: 0%;
+    }
+  }
+
+  .experience-div {
+    margin: auto;
+    padding: 2%;
+    border-style: dotted;
+    border-color: rgb(150, 150, 150);
+    width: 80vw;
+    display: flex;
+    max-width: 1000px;
+    right: 100%;
+    position: relative;
+    
+  }
+
+  .in-view.left{
+    animation: rightToLeft 5s ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+  .in-view.right{
+    animation: leftToRight 5s ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+
 </style>

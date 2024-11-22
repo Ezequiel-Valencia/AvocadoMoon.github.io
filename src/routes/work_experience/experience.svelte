@@ -125,7 +125,6 @@
     max-width: 1000px;
     right: 100%;
     position: relative;
-    
   }
 
   .in-view.left{

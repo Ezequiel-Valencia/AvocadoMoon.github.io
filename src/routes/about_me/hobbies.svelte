@@ -61,7 +61,6 @@
   #hobbies {
     overflow: auto; //make stuff that overflows to make the div expand
     width: 100%;
-    background: linear-gradient(to bottom, #339996, #329962, #12693b);
   }
 
   #hob-title {
@@ -87,11 +86,7 @@
     // float: inline-start;
   }
 
-  .category h2{
-    padding: 2%;
-    color: white;
-  }
-
+  
   .activity {
     // height: 100%;
     padding: 2%;

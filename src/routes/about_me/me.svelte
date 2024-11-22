@@ -30,7 +30,6 @@
   #intro {
     height: auto;
     width: 100vw;
-    background-color: #339996;
     text-align: center;
     overflow:auto;
   }

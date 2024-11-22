@@ -29,8 +29,8 @@ export let channels: { coverImage: string;
         volumeLevel: .4
     },
     {
-        coverImage: "/Channel Covers/Work_Exp.gif",
-        gifImage: "/Channel Covers/Work_Exp.gif",
+        coverImage: "/Channel Covers/Work_Exp.webm",
+        gifImage: "/Channel Covers/Work_Exp.webm",
         currentImage: '',
         focused: false,
         hover: false,

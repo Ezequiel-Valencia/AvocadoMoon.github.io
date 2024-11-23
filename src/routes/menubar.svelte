@@ -31,7 +31,7 @@
   $: min = time.getMinutes();
   $: dayOrNight = "AM";
   $: date = time.getDate();
-  $: month = time.getMonth();
+  $: month = time.getMonth() + 1; // Month is 0 indexed so January is 0
   $: day = dayToName(time.getDay());
 
   onMount(async () => {
@@ -72,15 +72,14 @@
 
 
   <div style="text-align: center;">
-    <div
-      style="text-align: center;
-  top: 75vh;"
-      id="top-text"
-    >
+    <div id="top-text">
       <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">Ezequiel Valencia</h3>
 
       <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
-        Uconn CS graduate who also does creative work.
+        Bio-Informatics innovator, Dev-Ops specialist, and Full-Stack developer
+      </p>
+      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
+        who also does creative work.
       </p>
     </div>
 
@@ -183,6 +182,13 @@
     // font-family:'Times New Roman', Times, serif;
   }
 
+  #top-text {
+    text-align: center;
+    top: 75vh;
+    height: fit-content;
+    line-height: 1;
+  }
+
   .menu-icon {
     max-width: 50%;
     max-height: 50%;
@@ -228,13 +234,11 @@
     position: fixed;
     height: 100vh - $channel-view-height;
     width: 100vw;
-    bottom: 100%;
-    bottom: 0;
+    bottom: 0%;
     display: flex;
     justify-content: center;
     align-content: center;
     overflow: hidden;
     text-align: center;
-    // background-color: white;
   }
 </style>

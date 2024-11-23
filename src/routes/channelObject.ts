@@ -79,8 +79,8 @@ export let channels: { coverImage: string;
         volumeLevel: .3
     },
     {
-        coverImage: "/Channel Covers/CTGrassRoots Cover.png",
-        gifImage: "Channel Covers/CTGrassRoots Cover.png",
+        coverImage: "/Channel Covers/CTGrassRoots Cover.jpg",
+        gifImage: "Channel Covers/CTGrassRoots Cover.jpg",
         currentImage: '',
         focused: false,
         hover: false,

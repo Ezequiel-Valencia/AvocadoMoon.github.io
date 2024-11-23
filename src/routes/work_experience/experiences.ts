@@ -8,7 +8,7 @@ export type WorkExperience = {
 
 export const experiencesSong = "https://files.catbox.moe/iclebz.mp3"
 
-export const prefix = "/work_experience"
+const prefix = "/work_experience"
 
 export const experiences: {[key: string]: WorkExperience} = {
     ccam: {

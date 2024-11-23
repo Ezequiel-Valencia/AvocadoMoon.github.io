@@ -6,7 +6,6 @@
   export var experience: WorkExperience;
   export var description: string[];
   export var imgSrc: string;
-  export var prefix: string;
   export let takeaway: string;
 
   onMount(() => {
@@ -22,7 +21,7 @@
     if($musicController){
       musicTime.updateTimeStamp()
     }
-    location.href = prefix + "#myExperience"
+    location.href = "/work_experience#myExperience"
   }}>
     <h2>
       Return

@@ -60,6 +60,7 @@
     background-color: black;
     width: 100vw;
     text-align: center;
+    overflow-x: hidden;
   }
 
   

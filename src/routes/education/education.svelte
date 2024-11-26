@@ -68,10 +68,10 @@
                     and in the work field.
                 </p>
             </div>
-            <img class="img" src="/Education/UConn.JPG" alt="Statue">
+            <img class="institute-img" src="/Education/UConn.JPG" alt="Statue">
         </article>
         <article class="education-article">
-            <img class="img" src="https://thesquare.gent/wp-content/uploads/2018/09/large_wIX3ZhzVucOdRFpxCgEU8IA_XviqoYYqm6sjdvaS0dM.jpeg" alt="Statue">
+            <img class="institute-img" src="https://thesquare.gent/wp-content/uploads/2018/09/large_wIX3ZhzVucOdRFpxCgEU8IA_XviqoYYqm6sjdvaS0dM.jpeg" alt="Statue">
             <div>
                 <h3 class="degree">Self Taught Expert</h3>
                 <h2 class="institution">The Internet</h2>
@@ -87,8 +87,8 @@
                             {#if index == iconIndex && updateMaskHeight()}
                               <div id={"description-" + index} class="tech description-holder">
                                 <div class="description">
-                                  <h3>{icon.iconName}</h3>
-                                  <ul>
+                                  <h3 style="font-family: 'Times New Roman', Times, serif;">{icon.iconName}</h3>
+                                  <ul style="text-align: left; font-family:'Times New Roman', Times, serif">
                                     {#each icon.projects as project}
                                       <li>{project}</li>
                                     {/each}
@@ -127,13 +127,13 @@
             circle at var(--mouse-x) var(--mouse-y),
              rgba(255, 255, 255, 0) 2vmax, rgb(255, 255, 255) 40vmax
         );
-        cursor: url("/Education/book-cursor.png"), auto;
-        // pointer-events: none;
+        cursor: url("/Education/book-cursor.png") 28 23, auto; //numbers tell where in image to center hot-spot of cursor
     }
 
     .degree {
     font-family: "Dancing Script", cursive;
     font-size: 2em;
+    color: white;
   }
 
     h2, p, h3, h5{
@@ -159,7 +159,7 @@
     margin-right: auto;
   }
 
-  .img {
+  .institute-img {
     max-height: 45vh;
     max-width: 35vw;
     border-style: solid;
@@ -185,26 +185,16 @@
     position: absolute;
     text-align: center;
     // color: black;
-    margin-left: auto;
+    margin: auto;
+    padding-right: 20%;
     opacity: 1;
     height: auto;
     width: auto;
     bottom: 100%;
-    // right: 15%;
+    // right: 5%;
     background-color: rgb(255, 220, 19);
-  }
-
-  .description::before {
-    position: absolute;
-    width: 2em;
-    height: 2em;
-    margin-top: -2em;
-    margin-left: -1em;
-    bottom: 0%;
-    background: rgb(255, 220, 19);
-    content: "";
-    transform: rotate(45deg);
-    z-index: -1;
+    border-style: solid;
+    border-color: rgb(134, 116, 10);
   }
 
   

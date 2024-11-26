@@ -7,14 +7,16 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting){
-          entry.target.classList.add('in-view')
+          let n = entry.target.id.split("-");
+          let r = "#entry-" + n[n.length - 1];
+          let exp: HTMLElement | null = document.querySelector(r);
+          exp?.classList.add('in-view')
         }
       })
     })
     
     // Get all the elements with the .animate class applied
-    const allElementsToAnimate = document.querySelectorAll(".animate")
-
+    const allElementsToAnimate = document.querySelectorAll(".watch")
     allElementsToAnimate.forEach((element) => {observer.observe(element)})
   })
 
@@ -25,9 +27,10 @@
   <h1 id="world">World</h1>
   <h2 id="myExperience">My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
-    <div class="spacer">
+    <div id={"entry-spacer-" + index} class="spacer watch">
       <div
-        class={index % 2 == 0 ? "experience-div animate left": "experience-div animate right"}
+        id={"entry-" + index}
+        class={index % 2 == 0 ? "experience-div left": "experience-div right"}
         on:mousedown={(e) => {
           if($musicController){
             musicTime.updateTimeStamp()

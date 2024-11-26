@@ -1,23 +1,52 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { technology_icons } from "./education";
+  import { technology_learned } from "./education";
 
+  let mask: HTMLElement | null;
+  $: iconIndex = -1;
+
+  function moveGradient(mask: HTMLElement, pos: MouseEvent){
+    let div = pos.target as HTMLDivElement;
+    let rect = div.getBoundingClientRect()
+    let x = pos.clientX - rect.left;
+    let y = pos.clientY - rect.top;
+    mask.style.setProperty('--mouse-x', x + 'px');
+    mask.style.setProperty('--mouse-y', y + 'px');
+  }
+
+  function displayIconsDescription(mask: HTMLElement, pos: MouseEvent){
+    mask.style.pointerEvents = 'none';
+
+    const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY)
+    if (hiddenElement != null && hiddenElement.classList.contains("tech")){
+      let n = hiddenElement.id.split("-");
+      iconIndex = Number(n[n.length - 1]);
+    } else {
+      iconIndex = -1;
+    }
+
+    mask.style.pointerEvents = 'auto';
+  }
+
+  function updateMaskHeight(){
+    const education_content: HTMLElement | null = document.querySelector(".education-content")
+    mask?.style.setProperty('--var-height', education_content?.clientHeight + "px")
+    return true
+  }
+
+  
     onMount(() => {
-        const mask: HTMLElement | null = document.querySelector(".black-over-top");
-        document.addEventListener('pointermove', (pos) => {
-            let div = pos.target as HTMLDivElement;
-            let rect = div.getBoundingClientRect()
-            let x = pos.clientX - rect.left;
-            let y = pos.clientY - rect.top;
-            if (0 <= rect.top){
-                mask?.style.setProperty('--mouse-x', x + 'px');
-                mask?.style.setProperty('--mouse-y', y + 'px');
-            } else{
-                mask?.style.setProperty('--mouse-x', 200 + '%');
-                mask?.style.setProperty('--mouse-y', 200 + '%');
-            }
-            
-            
+        mask = document.querySelector(".black-over-top");
+        mask?.addEventListener('mousemove', (pos) => {
+          if (mask != null){
+            displayIconsDescription(mask, pos)
+            moveGradient(mask, pos)
+          }
+        })
+
+        updateMaskHeight()
+        document.addEventListener('resize', (ev) => {
+          updateMaskHeight()
         })
     })
 </script>
@@ -53,8 +82,23 @@
                     vehicles to drive my motivation through rough patches of complicated technologies.
                 </p>
                 <div style="display: flex; height:auto; flex-wrap:wrap;">
-                    {#each technology_icons as icon}
-                        <img style="height: 5vmin; width: 5vmin;" src={icon} alt="Technology Icon">
+                    {#each technology_learned as icon, index}
+                          <div id={"holder-" + index} class="tech image-holder">
+                            {#if index == iconIndex && updateMaskHeight()}
+                              <div id={"description-" + index} class="tech description-holder">
+                                <div class="description">
+                                  <h3>{icon.iconName}</h3>
+                                  <ul>
+                                    {#each icon.projects as project}
+                                      <li>{project}</li>
+                                    {/each}
+                                  </ul>
+                                </div>
+                              </div>
+                            {/if}
+                            <img id={"tech-icon-" + index} class="tech tech-icons" style="height: 5vmin; width: 5vmin;" 
+                            src={icon.icon} alt="Technology Icon">
+                        </div>
                     {/each}
                 </div>
             </div>
@@ -73,16 +117,18 @@
     .black-over-top{
         --mouse-x: 150%;
         --mouse-y: 150%;
+        --var-height: 100%;
         background-color: rgb(0, 0, 0);
         position: absolute;
         width: 100vw;
-        height: 100%;
+        height: var(--var-height);
         z-index: 2;
         mask-image: radial-gradient(
             circle at var(--mouse-x) var(--mouse-y),
-             rgba(255, 255, 255, 0) 2vmin, rgb(255, 255, 255) 40vmin
+             rgba(255, 255, 255, 0) 2vmax, rgb(255, 255, 255) 40vmax
         );
         cursor: url("/Education/book-cursor.png"), auto;
+        // pointer-events: none;
     }
 
     .degree {
@@ -119,7 +165,49 @@
     border-style: solid;
     border-color: white;
     border-width: 2px;
+    z-index: 10;
   }
+
+  .image-holder {
+    z-index: 10;
+    padding: 2vmin;
+    position: relative;
+    display: table;
+    caption-side: top; //https://stackoverflow.com/questions/21240814/how-to-position-a-div-vertically-above-another-div-when-in-the-code-the-divs-are
+  }
+
+  .description, h3 {
+    color: black;
+  }
+
+  .description {
+    z-index: 3;
+    position: absolute;
+    text-align: center;
+    // color: black;
+    margin-left: auto;
+    opacity: 1;
+    height: auto;
+    width: auto;
+    bottom: 100%;
+    // right: 15%;
+    background-color: rgb(255, 220, 19);
+  }
+
+  .description::before {
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    margin-top: -2em;
+    margin-left: -1em;
+    bottom: 0%;
+    background: rgb(255, 220, 19);
+    content: "";
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+
+  
 
   article {
     height: auto;

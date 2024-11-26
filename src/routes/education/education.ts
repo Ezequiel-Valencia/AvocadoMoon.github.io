@@ -14,7 +14,7 @@ export const technology_learned = [
     {
         icon: "https://cdn-icons-png.flaticon.com/512/5968/5968381.png",
         iconName: "TypeScript",
-        projects: ["This Website", "Auto Grading Site"]
+        projects: ["This Website", "Auto Grading Site", "Best Buy Bot"]
     },
     {
         icon: "https://raw.githubusercontent.com/sveltejs/svelte/29052aba7d0b78316d3a52aef1d7ddd54fe6ca84/site/static/images/svelte-android-chrome-512.png",
@@ -24,12 +24,12 @@ export const technology_learned = [
     {
         icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png",
         iconName: "Python",
-        projects: ["Event Bot", "Auto Grader"]
+        projects: ["Event Bot", "Auto Grading Site", "Encrypted Cat Exchange"]
     },
     {
         icon: "https://cdn-icons-png.flaticon.com/512/226/226777.png",
         iconName: "Java",
-        projects: ["VCell Fiji", "VCell", ""]
+        projects: ["VCell Fiji", "VCell", "Cancer Cell Analyzer"]
     },
     {
         icon: "https://tools.jboss.org/features/images/quarkus_icon_rgb_256px_default.png",
@@ -44,7 +44,7 @@ export const technology_learned = [
     {
         icon: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png",
         iconName: "Docker",
-        projects: ["Homelab", "VCell"]
+        projects: ["Homelab", "VCell", "Event Bot", "Music Recommender", "CTGrassRoots"]
     },
     {
         icon: "https://cdn2.iconfinder.com/data/icons/mixd/512/20_kubernetes-512.png",
@@ -54,7 +54,7 @@ export const technology_learned = [
     {
         icon: "https://tobisyurt.net/assets/images/ansible-logo.png",
         iconName: "Ansible",
-        projects: ["Homelab"]
+        projects: ["Homelab", "CTGrassRoots"]
     },
     {
         icon: "https://seeklogo.com/images/I/istio-logo-92FF583709-seeklogo.com.png",
@@ -74,7 +74,7 @@ export const technology_learned = [
     {
         icon: "https://global.discourse-cdn.com/flex015/uploads/imagej/original/3X/f/4/f41e19741763edf6f79e98aaf9259c614ddec98d.png",
         iconName: "Fiji",
-        projects: ["VCell Fiji"]
+        projects: ["VCell Fiji", "Cancer Cell Analyzer"]
     },
     {
         icon: "https://www.scottbrady91.com/img/logos/openid-icon.png",

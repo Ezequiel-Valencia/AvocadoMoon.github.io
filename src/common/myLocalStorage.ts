@@ -5,10 +5,10 @@ import { onMount } from "svelte";
 // https://www.reddit.com/r/sveltejs/comments/p438og/how_to_access_localstorage_via_store_in_sveltekit/?rdt=60526
 
 // Safe method version of local storage since it doesn't throw errors when doing SSR
-const safeLocalStorage = globalThis.localStorage;
-const isLocalStorageItemNull = (key:string) => safeLocalStorage?.getItem(key) === null;
+export const safeLocalStorage = globalThis.localStorage;
+export const isLocalStorageItemNull = (key:string) => safeLocalStorage?.getItem(key) === null;
 
-function convertToBoolean(input: string): boolean {
+export function convertToBoolean(input: string): boolean {
     try {
         return JSON.parse(input.toLowerCase());
     }

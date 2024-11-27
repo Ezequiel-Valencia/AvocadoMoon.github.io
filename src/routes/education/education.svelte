@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { technology_learned } from "./education";
+  import { technology_learned, createBookCheckout } from "./education";
 
   let mask: HTMLElement | null;
   $: iconIndex = -1;
+  let bookCheckout = createBookCheckout()
 
   function moveGradient(mask: HTMLElement, pos: MouseEvent){
     let div = pos.target as HTMLDivElement;
@@ -12,6 +13,11 @@
     let y = pos.clientY - rect.top;
     mask.style.setProperty('--mouse-x', x + 'px');
     mask.style.setProperty('--mouse-y', y + 'px');
+  }
+
+  function hideGradient(mask: HTMLElement){
+    mask.style.setProperty('--mouse-x', '200%');
+    mask.style.setProperty('--mouse-y', '200%');
   }
 
   function displayIconsDescription(mask: HTMLElement, pos: MouseEvent){
@@ -37,11 +43,22 @@
   
     onMount(() => {
         mask = document.querySelector(".black-over-top");
-        mask?.addEventListener('mousemove', (pos) => {
-          if (mask != null){
+        let inMask = false;
+        document.addEventListener('mousemove', (pos) => {
+          if (mask != null && bookCheckout.read() && inMask){
             displayIconsDescription(mask, pos)
             moveGradient(mask, pos)
+          } else if (mask != null){
+            hideGradient(mask)
           }
+        })
+
+        mask?.addEventListener("mouseleave", (e) => {
+          inMask = false;
+        })
+
+        mask?.addEventListener("mouseenter", (e) => {
+          inMask = true;
         })
 
         updateMaskHeight()
@@ -127,7 +144,6 @@
             circle at var(--mouse-x) var(--mouse-y),
              rgba(255, 255, 255, 0) 2vmax, rgb(255, 255, 255) 40vmax
         );
-        cursor: url("/Education/book-cursor.png") 28 23, auto; //numbers tell where in image to center hot-spot of cursor
     }
 
     .degree {
@@ -192,9 +208,9 @@
     width: auto;
     bottom: 100%;
     // right: 5%;
-    background-color: rgb(255, 220, 19);
+    background-color: rgb(138, 98, 53);
     border-style: solid;
-    border-color: rgb(134, 116, 10);
+    border-color: rgb(41, 23, 0);
   }
 
   

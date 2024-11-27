@@ -1,4 +1,19 @@
 
+import { safeLocalStorage, convertToBoolean } from "../../common/myLocalStorage";
+import { writable } from "svelte/store";
+
+export function createBookCheckout() {
+    const key = 'bookCheckoutBool';
+    safeLocalStorage?.setItem(key, 'false')
+    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
+    const { subscribe, set, update } = writable(bool)
+
+    return {
+        subscribe,
+        read: () => {let v = safeLocalStorage.getItem(key); return v == null ? false : convertToBoolean(v)},
+        toggleBookStatus: () => update((bool) => { safeLocalStorage?.setItem(key, String(!bool)); return !bool })
+    }
+}
 
 export const technology_learned = [
     {

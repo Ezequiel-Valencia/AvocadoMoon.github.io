@@ -1,6 +1,19 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { createBookCheckout } from "./education";
+  
+  let bookCheckout = createBookCheckout()
 
+  function checkedOutBook(){
+    bookCheckout.toggleBookStatus()
+    let main = document.querySelector("#main-div") as HTMLElement
+    if (bookCheckout.read()){
+      main.style.cursor = 'url("/Education/book-cursor.png") 28 23, auto' //numbers tell where in image to center hot-spot of cursor
+    } else {
+      main.style.cursor = 'default'
+    }
+    
+  }
   
 </script>
 
@@ -10,9 +23,17 @@
     <div class="content-div" style="top: 25%; margin-bottom:25%">
       <article>
         <div>
-          <p class="right-side-text" style="margin-top:0; font-size:2.5em;">
+          <p class="text" style="margin-top:0; font-size:2.5em;">
             “Education is the movement from darkness to light.” – Allan Bloom
           </p>
+          <button on:click={(e) => {checkedOutBook()}} 
+            style="margin-top:0; font-size:2.5em; font-family: 'Times New Roman', Times, serif;">
+            {#if $bookCheckout}
+              Return Book
+            {:else}
+              Checkout Book
+            {/if}
+          </button>
         </div>
       </article>
     </div>
@@ -48,7 +69,7 @@
 
   
 
-  .right-side-text {
+  .text {
     margin-top: 10vh;
     margin-left: 5vw;
     text-align: left;

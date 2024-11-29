@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {setStarPositions, createReflections, moveMoonAndGradient, inBounds} from "./intro";
-  import Projects from "./projects.svelte";
+  import {setStarPositions, createReflections, moveMoonAndGradient, inBounds, moveAndShowDragMe} from "./intro";
   let holdingDownMoon = false;
   let transition = false;
 
@@ -25,11 +24,9 @@
 
     document.addEventListener("pointerup", () => {
       holdingDownMoon = false
-      let y = ogMoon.style.top.split("px")[0]
-      let yOffset = (Number(y) + ogMoon.getBoundingClientRect().height)
-      drag_me_text.style.top = yOffset + "px";
-      drag_me_text.style.left = ogMoon.style.left;
-      drag_me_text.style.opacity = "1";
+      if (!transition){
+        moveAndShowDragMe(ogMoon, drag_me_text)
+      }
     })
 
     sky.addEventListener("pointermove", (e) => {
@@ -38,48 +35,41 @@
         const hitBox = document.querySelector("#missing-piece")
         if (hitBox != null && inBounds(ogMoon.getBoundingClientRect(), hitBox.getBoundingClientRect())){
           transition = true
+          ogMoon.classList.add("slide-in-moon")
+          reflectedMoon.classList.add("slide-in-moon-reflected")
         }
       }
     })
 
-    
-
-
-
-
   })
 </script>
 
-{#if !transition}
-  <section id="intro-wrapper">
-    <div id="sky">
-        {#if holdingDownMoon}
-          <div id="missing-piece"></div>
-        {/if}
-        <figure>
-          <img class="moon to-be-reflected" id="og-moon"
-          draggable="false"
-          style="height: 10vmin; color:white; z-index:5; position:absolute;" 
-          src="./personal_projects/moon.svg" 
-          alt="Moon"
-          >
-          <figcaption id="drag-me-text" style="left:50%; top:65%;z-index: 10; color:white;position:absolute;">Drag Me</figcaption>
-        </figure>
-        
-      
-      {#each {length: 30} as _}
-        <div class="to-be-reflected star"></div>
-      {/each}
-    </div>
-    <div id="ocean">
-      
-    </div>
-    <div class="reflected"></div>
-  </section>
 
-{:else}
- <Projects></Projects>
-{/if}
+<section id="intro-wrapper">
+  <div id="sky">
+      {#if holdingDownMoon && !transition}
+        <div id="missing-piece"></div>
+      {/if}
+      <figure>
+        <img class="moon to-be-reflected" id="og-moon"
+        draggable="false"
+        style="height: 10vmin; color:white; z-index:5; position:absolute;" 
+        src="./personal_projects/moon.svg" 
+        alt="Moon"
+        >
+        <figcaption id="drag-me-text" style="left:50%; top:65%;z-index: 10; color:white;position:absolute;">Drag Me</figcaption>
+      </figure>
+      
+    
+    {#each {length: 30} as _}
+      <div class="to-be-reflected star"></div>
+    {/each}
+  </div>
+  <div id="ocean">
+    
+  </div>
+  <div class="reflected slide-in-moon slide-in-moon-reflected"></div>
+</section>
 
 
 <style lang="scss">
@@ -151,6 +141,28 @@
     mask-mode: auto;
     mask-image: url("./personal_projects/moon.svg");
     mask-size: 10vmin;
+  }
+
+  .slide-in-moon{
+    animation: slideMoonIn 0.3s linear(0, 1) forwards;
+  }
+
+  .slide-in-moon-reflected{
+    animation: slideMoonReflected 0.3s linear(0, 1) forwards;
+  }
+
+  @keyframes slideMoonIn{
+    100%{
+      left: 10%;
+      top: 10%;
+    }
+  }
+
+  @keyframes slideMoonReflected{
+    100%{
+      left: 10%;
+      bottom: 10%;
+    }
   }
 
 

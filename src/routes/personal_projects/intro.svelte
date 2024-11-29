@@ -1,34 +1,17 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import {setStarPositions, createReflections, moveMoonAndGradient, inBounds} from "./intro";
+  import Projects from "./projects.svelte";
   let holdingDownMoon = false;
-
-  function createReflections(ocean_reflection: HTMLElement){
-    let reflections = document.querySelectorAll(".to-be-reflected") as NodeListOf<HTMLElement>
-    reflections.forEach((el) => {
-      let copy = el.cloneNode(false) as HTMLElement      
-      let yOffset =  Number(el.style.top.split("%")[0])
-      copy.style.top = ""
-      copy.style.bottom = yOffset + "%"
-      copy.style.position = "absolute"
-      copy.classList.add("reflected")
-      copy.id = ""
-      ocean_reflection.appendChild(copy)
-    })
-  }
-
-  function setStarPositions(){
-    let stars = document.querySelectorAll(".star") as NodeListOf<HTMLElement>
-    stars.forEach((star) => {
-      console.log("Star")
-      star.style.top = "" + Math.floor(Math.random() * 100) + "%"
-      star.style.left = "" + Math.floor(Math.random() * 100) + "%"
-     })
-  }
+  let transition = false;
 
   onMount(() => {
     const ogMoon = document.querySelector("#og-moon") as HTMLElement;
     const sky = document.querySelector("#sky") as HTMLElement;
     const ocean_reflection = document.querySelector("#ocean") as HTMLElement
+    const drag_me_text = document.querySelector("#drag-me-text") as HTMLElement;
+
+    
     ogMoon.style.top = 45 + "%";
 
     setStarPositions()
@@ -37,30 +20,25 @@
     
     ogMoon.addEventListener("pointerdown", (e) => {
       holdingDownMoon = true
+      drag_me_text.style.opacity = "0";
     })
 
     document.addEventListener("pointerup", () => {
       holdingDownMoon = false
+      let y = ogMoon.style.top.split("px")[0]
+      let yOffset = (Number(y) + ogMoon.getBoundingClientRect().height)
+      drag_me_text.style.top = yOffset + "px";
+      drag_me_text.style.left = ogMoon.style.left;
+      drag_me_text.style.opacity = "1";
     })
 
     sky.addEventListener("pointermove", (e) => {
-      if (holdingDownMoon){
-        let rect = sky.getBoundingClientRect()
-        let xInt = e.clientX - rect.left - (innerWidth / 50);
-        let yInt = e.clientY - rect.top - (innerHeight / 50);
-        
-        let x = xInt + "px"
-        let y = yInt + "px"
-        ogMoon.style.top = y
-        ogMoon.style.left = x
-        sky.style.setProperty("--grad-y", y)
-        sky.style.setProperty("--grad-x", x)
-
-        console.log(y)
-        reflectedMoon.style.bottom = y
-        reflectedMoon.style.left = x
-        ocean_reflection.style.setProperty("--grad-y", ((innerHeight/ 2) - yInt) + "px")
-        ocean_reflection.style.setProperty("--grad-x", x)
+      if (holdingDownMoon && !transition){
+        moveMoonAndGradient(e, ogMoon, sky, reflectedMoon, ocean_reflection)
+        const hitBox = document.querySelector("#missing-piece")
+        if (hitBox != null && inBounds(ogMoon.getBoundingClientRect(), hitBox.getBoundingClientRect())){
+          transition = true
+        }
       }
     })
 
@@ -72,24 +50,37 @@
   })
 </script>
 
-<section id="intro-wrapper">
-  <div id="sky">
-      <img class="moon to-be-reflected" id="og-moon"
-        draggable="false"
-        style="height: 10vmin; color:white; z-index:5; position:absolute;" 
-        src="./personal_projects/moon.svg" 
-        alt="Moon"
-    >
-    
-    {#each {length: 30} as _}
-      <div class="to-be-reflected star"></div>
-    {/each}
-  </div>
-  <div id="ocean">
-    
-  </div>
-  <div class="reflected"></div>
-</section>
+{#if !transition}
+  <section id="intro-wrapper">
+    <div id="sky">
+        {#if holdingDownMoon}
+          <div id="missing-piece"></div>
+        {/if}
+        <figure>
+          <img class="moon to-be-reflected" id="og-moon"
+          draggable="false"
+          style="height: 10vmin; color:white; z-index:5; position:absolute;" 
+          src="./personal_projects/moon.svg" 
+          alt="Moon"
+          >
+          <figcaption id="drag-me-text" style="left:50%; top:65%;z-index: 10; color:white;position:absolute;">Drag Me</figcaption>
+        </figure>
+        
+      
+      {#each {length: 30} as _}
+        <div class="to-be-reflected star"></div>
+      {/each}
+    </div>
+    <div id="ocean">
+      
+    </div>
+    <div class="reflected"></div>
+  </section>
+
+{:else}
+ <Projects></Projects>
+{/if}
+
 
 <style lang="scss">
   #intro-wrapper {
@@ -148,6 +139,18 @@
     // border: 1px solid #000;
     
     opacity: 0.3;
+  }
+
+  #missing-piece{
+    position: absolute; 
+    left: 10%; 
+    top: 10%; 
+    height:10vmin; 
+    width:10vmin; 
+    background-color:white;
+    mask-mode: auto;
+    mask-image: url("./personal_projects/moon.svg");
+    mask-size: 10vmin;
   }
 
 

@@ -43,3 +43,11 @@ export function moveMoonAndGradient(e: MouseEvent, ogMoon: HTMLElement, sky:HTML
     ocean_reflection.style.setProperty("--grad-y", ((innerHeight/ 2) - yInt) + "px")
     ocean_reflection.style.setProperty("--grad-x", x)
 }
+
+export function moveAndShowDragMe(ogMoon: HTMLElement, drag_me_text: HTMLElement){
+    let y = ogMoon.style.top.split("px")[0]
+    let yOffset = (Number(y) + ogMoon.getBoundingClientRect().height)
+    drag_me_text.style.top = yOffset + "px";
+    drag_me_text.style.left = ogMoon.style.left;
+    drag_me_text.style.opacity = "1";
+}

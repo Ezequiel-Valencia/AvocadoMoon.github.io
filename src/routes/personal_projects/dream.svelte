@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {setStarPositions, createReflections, moveMoonAndGradient, checkAndPerformIfMoonIntersection
-    ,moveAndShowDragMe, setCircleTextStyle, createTransitionControl, transitionStates} from "./intro";
+    ,moveAndShowDragMe, setCircleTextStyle} from "./dream";
   
   let holdingDownMoon = false;
   let transition = false;
@@ -45,6 +45,7 @@
       }
     })
 
+    // Animate the transition to Personal Projects
     ogMoon.addEventListener("animationend", async () =>{
       intro_section.style.maskImage = 'url(./personal_projects/dream-transition.gif)';
       intro_section.style.maskSize = 'cover';
@@ -62,6 +63,8 @@
         transition = checkAndPerformIfMoonIntersection(ogMoon, reflectedMoon, invisibleMoon)
       }
     })
+
+    window.onresize = () => {setCircleTextStyle(missing_piece, dreamText, dreamTextSpans)}
 
   })
 </script>
@@ -90,15 +93,24 @@
       <div class="to-be-reflected star"></div>
     {/each}
   </div>
-  <div id="ocean">
-    
+  <div id="ocean"></div>
+
+  <div style="position: absolute; bottom: 5%; right: 15%; text-align:center; z-index:5;">
+    <button on:click={transControl.updateToTransitioned()} style="background-color: transparent; border-color: white; border-radius:20%;">
+      <u style="color: white;">
+        <i>
+          <h3 style="color: white; font-family: 'Times New Roman', Times, serif; font-size:x-large;">Skip Intro</h3>
+        </i>
+      </u>
+    </button>
   </div>
+
   <div style="opacity: 0;" class="remove-gradient reflected slide-in-moon slide-in-moon-reflected moon-to-sun"></div>
 </section>
 
 
 <style lang="scss">
-  @import "./intro_animation.scss";
+  @import "./dream_animation.scss";
   #intro-wrapper {
     height: 100vh;
     width: 100vw;

@@ -1,9 +1,9 @@
 <script lang="ts">
   import Menu from "../../common/menu.svelte";
-  import Intro from "./intro.svelte";
+  import Dream from "./dream.svelte";
   import Projects from "./projects.svelte";
 
-  import {createTransitionControl, transitionStates} from "./intro";
+  import {createTransitionControl, transitionStates} from "./common";
 
   const transControl = createTransitionControl()
 </script>
@@ -12,7 +12,7 @@
 <div id="main-div">
     <Menu songPath="https://files.catbox.moe/way98y.mp3" email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
     {#if $transControl === transitionStates.stillInDream}
-        <Intro transControl={transControl}></Intro>
+        <Dream transControl={transControl}></Dream>
     {:else}
         <Projects transControl={transControl}></Projects>
     {/if}

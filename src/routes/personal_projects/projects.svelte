@@ -35,11 +35,14 @@
                 gradPercent += 3
             } else{
                 bGradient.style.setProperty("--black-transparent", 0 + "")
+                bGradient.style.zIndex = "-1";
+                transControl.updateToTransitioned()
                 clearInterval(interval)
             }
         }, 40)
         } else{
             bGradient.style.opacity = "0";
+            bGradient.style.zIndex = "-1";
         }
     })
 
@@ -57,7 +60,7 @@
         <div id="headline-text" style="text-align: center; padding-top:5%; z-index: 3; position:relative;">
             <h1 style="font-size: xx-large;">Personal Projects</h1>
             <u style="color: rgb(154, 204, 248);">
-                <h3>Revealing an ocean of creativity from dreams</h3>
+                <h3 style="max-width:50%; margin:auto;">Revealing an ocean of creativity from dreams</h3>
             </u>
         </div>
         <div id="sun"></div>
@@ -82,31 +85,33 @@
             </svg>
         </div>
     </section>
-    <section id="projects-wrapper">
-        <div class="side-image"></div>
-        <div id="project-article">
-            <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
-            tabSCSSFileLocation={importSCSSOptions.personal_projects} getTabNameFunction={(e) => {return e[0]}}
-            icons={icons}>
+    {#if $transControl == transitionStates.showPersonalProjects}
+        <section id="projects-wrapper">
+            <div class="side-image"></div>
+            <div id="project-article">
+                <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
+                tabSCSSFileLocation={importSCSSOptions.personal_projects} getTabNameFunction={(e) => {return e[0]}}
+                icons={icons}>
 
-            </Tabs>
-            {#each projectIterator as [key, category], index}
-                {#if activeIndex == index}
-                <article class="category">
-                    <h2 class="category-title">{key}</h2>
-                    {#each category as project, index}
-                        <div class="project">
-                            <h3>{project.name}</h3>
-                            <h5>{project.year}</h5>
-                            <p>{project.description}</p>
-                        </div>
-                    {/each}
-                </article>
-                {/if}
-            {/each}
-        </div>
-        <div class="side-image"></div>
-    </section>
+                </Tabs>
+                {#each projectIterator as [key, category], index}
+                    {#if activeIndex == index}
+                    <article class="category">
+                        <h2 class="category-title">{key}</h2>
+                        {#each category as project, index}
+                            <div class="project">
+                                <h3>{project.name}</h3>
+                                <h5>{project.year}</h5>
+                                <p>{project.description}</p>
+                            </div>
+                        {/each}
+                    </article>
+                    {/if}
+                {/each}
+            </div>
+            <div class="side-image"></div>
+        </section>
+    {/if}
 </section>
 
 

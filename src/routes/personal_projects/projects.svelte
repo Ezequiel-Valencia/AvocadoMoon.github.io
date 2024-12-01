@@ -4,7 +4,7 @@
     import { projects } from "./project_object";
     import { importSCSSOptions } from "../../globals"
   import { onMount } from "svelte";
-    import {transitionStates} from "./intro"
+    import {transitionStates} from "./common"
     const sideImageLocation = "/personal_projects/animal star blue.png";
     const projectIterator = Object.entries(projects);
     let activeIndex = 0;
@@ -15,14 +15,17 @@
     let icons = [[iconClass, "stat_3"], [iconClass, "stat_2"], [iconClass, "stat_1"]]
 
     onMount(() => {
+        // Cloud Sway Time Difference
         const clouds = document.querySelectorAll(".cloud") as NodeListOf<HTMLElement>
         clouds.forEach((c) => {
             c.style.setProperty("--time-dif", Math.floor((Math.random() * 1)) + "s")
         })
-
+        
         const bGradient = document.querySelector("#sun-animation") as HTMLElement
         let gradPercent = 0
         let blackTransparent = 1;
+
+        // Expand black circle to transparent, or immediately show my projects
         if (transControl.read() == transitionStates.transitionToProjects){
             let interval = setInterval(() => {
             if (gradPercent <= 100){
@@ -47,7 +50,6 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-
 
 <section>
     <section id="sunny-ocean-intro">
@@ -109,19 +111,7 @@
 
 
 <style lang="scss">
-    #sun-animation{
-        --grad-size: 0%;
-        --black-transparent: 1;
-        position: absolute;
-        width: 110vw;
-        height: 110vh;
-        z-index: 5;
-        left: 0%;
-        top: 0%;
-        background-color: rgba(0, 0, 0, var(--black-transparent));
-        mask-image: radial-gradient(circle at 11% 14%, transparent, transparent, transparent, transparent, transparent, black var(--grad-size));
-    }
-
+    @import "./projects.scss";
     .cloud{
         top: 15%; 
         position:absolute; 
@@ -129,14 +119,6 @@
         opacity: 15%;
         left: var(--left-p);
         animation: swayClouds  calc(20s + var(--time-dif)) linear alternate-reverse infinite;
-    }
-
-    @keyframes swayClouds{
-        from {
-            transform: translate(0, 0);
-        } to {
-            transform: translate(calc(100% + var(--left-p)), 0);
-        }
     }
 
     #sun{
@@ -150,32 +132,11 @@
         z-index: 2;
     }
 
-    #sun::after{
-        content: '';
-        position: absolute;
-        background-image: radial-gradient(orange, rgba(255, 166, 0, 0.767), transparent, transparent);
-        width: 170%;
-        height: 170%;
-        border-radius: 50%;
-        bottom: -35%;
-        left: -35%;
-    }
-
     #sunny-ocean-intro{
         overflow: hidden;
         height: 100vh;
         width: 100vw;
         background-image: linear-gradient(rgb(71, 113, 252), rgb(71, 113, 252), rgb(71, 113, 252), rgb(96, 144, 240));
-    }
-
-    #sunny-ocean-intro::after{
-        content: '';
-        position: absolute;
-        height: 70vh;
-        width: 100vw;
-        top: 0vh;
-        // z-index: 1;
-        // background-image: linear-gradient(transparent, rgba(255, 255, 255, 0.322));
     }
 
     #projects-wrapper{
@@ -185,6 +146,7 @@
         background-image: linear-gradient(rgb(46, 68, 112), #151f2b);
         display: flex;
     }
+
     #project-article{
         position:relative;
         width: 100%;
@@ -215,62 +177,6 @@
     .project{
         padding-top: 2%;
         padding-bottom: 2%;
-    }
-
-    h3{
-        color: rgb(154, 204, 248);
-    }
-
-    h5 {
-        color: rgb(112, 188, 255);
-    }
-
-    p{
-        color: white;
-    }
-
-    h2, h1{
-        color: rgb(235, 245, 255);
-        margin-top: 0;
-    }
-
-    .waves {
-        position:absolute;
-        width: 100%;
-        height: 30vh;
-        margin-bottom:-7px; /*Fix for safari gap*/
-        min-height:100px;
-        top: 70vh;
-    }
-
-    /* Animation */
-
-    .parallax > use {
-        animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
-    }
-    .parallax > use:nth-child(1) {
-        animation-delay: -2s;
-        animation-duration: 7s;
-    }
-    .parallax > use:nth-child(2) {
-        animation-delay: -3s;
-        animation-duration: 10s;
-    }
-    .parallax > use:nth-child(3) {
-        animation-delay: -4s;
-        animation-duration: 13s;
-    }
-    .parallax > use:nth-child(4) {
-        animation-delay: -5s;
-        animation-duration: 20s;
-    }
-    @keyframes move-forever {
-        0% {
-            transform: translate3d(-90px,0,0);
-        }
-        100% { 
-            transform: translate3d(85px,0,0);
-        }
     }
 
 </style>

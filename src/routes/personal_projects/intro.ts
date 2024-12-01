@@ -51,3 +51,41 @@ export function moveAndShowDragMe(ogMoon: HTMLElement, drag_me_text: HTMLElement
     drag_me_text.style.left = ogMoon.style.left;
     drag_me_text.style.opacity = "1";
 }
+
+
+export function checkAndPerformIfMoonIntersection(ogMoon: HTMLElement, reflectedMoon: HTMLElement, hitBox: HTMLElement){
+  if (hitBox != null && inBounds(ogMoon.getBoundingClientRect(), hitBox.getBoundingClientRect())){
+    let l = hitBox.getBoundingClientRect().left + "px"
+    let t = hitBox.getBoundingClientRect().top + "px"
+    ogMoon.style.setProperty("--left-slide", l);
+    ogMoon.style.setProperty("--top-slide", t);
+
+    reflectedMoon.style.setProperty("--left-slide", l);
+    reflectedMoon.style.setProperty("--bottom-slide", t);
+    
+    ogMoon.classList.add("slide-in-moon")
+    reflectedMoon.classList.add("slide-in-moon-reflected")
+    return true
+  }
+  return false
+}
+
+export function setCircleTextStyle(circle: HTMLElement, dreamText: string, dreamTextSpans: NodeListOf<HTMLElement>){
+  const radius = circle.offsetWidth / 2; // Radius of the circle
+
+  dreamTextSpans.forEach((span, i) => {
+    const angle = (i / dreamText.length) * 2 * Math.PI; // Angle for each character
+    const x = radius + Math.cos(angle); // X position
+    const y = radius + Math.sin(angle);
+    const rotation = (angle * 180) / (Math.PI)
+
+    span.style.left = `${x}px`;
+    span.style.top = `-23%`;
+    span.style.fontSize = (radius * 2 * Math.PI) / dreamTextSpans.length + "px"
+    span.style.transform = 'rotate(' + rotation + "deg)"
+    span.style.setProperty('--end-pos', (rotation + 360) + 'deg')
+  })
+
+}
+
+

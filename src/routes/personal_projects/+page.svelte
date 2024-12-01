@@ -31,6 +31,7 @@
         // background-color: #151f2b;
         background-color: black;
         overflow: auto;
+        overflow-x: hidden;
     }
 
 </style>

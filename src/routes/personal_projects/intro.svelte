@@ -1,43 +1,57 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {setStarPositions, createReflections, moveMoonAndGradient, inBounds, moveAndShowDragMe} from "./intro";
+  import {setStarPositions, createReflections, moveMoonAndGradient, checkAndPerformIfMoonIntersection
+    ,moveAndShowDragMe, setCircleTextStyle} from "./intro";
+  
   let holdingDownMoon = false;
   let transition = false;
+  let dreamText = "End Dream? "
 
   onMount(() => {
     const ogMoon = document.querySelector("#og-moon") as HTMLElement;
     const sky = document.querySelector("#sky") as HTMLElement;
     const ocean_reflection = document.querySelector("#ocean") as HTMLElement
     const drag_me_text = document.querySelector("#drag-me-text") as HTMLElement;
-
-    
-    ogMoon.style.top = 45 + "%";
+    const missing_piece = document.querySelector("#circle-missing") as HTMLElement;
+    const intro_section = document.querySelector("#intro-wrapper") as HTMLElement;
+    const invisibleMoon = document.querySelector("#invisible-moon") as HTMLElement
+    const dreamTextSpans = document.querySelectorAll(".circle-text") as NodeListOf<HTMLElement>;
 
     setStarPositions()
     createReflections(ocean_reflection)
+    setCircleTextStyle(missing_piece, dreamText, dreamTextSpans)
+
     const reflectedMoon = document.getElementsByClassName("reflected moon")[0] as HTMLElement
     
     ogMoon.addEventListener("pointerdown", (e) => {
       holdingDownMoon = true
       drag_me_text.style.opacity = "0";
+      invisibleMoon.style.opacity = "1";
+      dreamTextSpans.forEach((e) => {
+        e.style.opacity = '1'
+      })
     })
 
     document.addEventListener("pointerup", () => {
       holdingDownMoon = false
       if (!transition){
         moveAndShowDragMe(ogMoon, drag_me_text)
+        invisibleMoon.style.opacity = "0";
+        dreamTextSpans.forEach((e) => {
+          e.style.opacity = '0'
+        })
       }
+    })
+
+    ogMoon.addEventListener("animationend", () =>{
+      intro_section.style.maskImage = 'url(./personal_projects/dream-transition.gif)';
+      intro_section.style.maskSize = 'cover';
     })
 
     sky.addEventListener("pointermove", (e) => {
       if (holdingDownMoon && !transition){
         moveMoonAndGradient(e, ogMoon, sky, reflectedMoon, ocean_reflection)
-        const hitBox = document.querySelector("#missing-piece")
-        if (hitBox != null && inBounds(ogMoon.getBoundingClientRect(), hitBox.getBoundingClientRect())){
-          transition = true
-          ogMoon.classList.add("slide-in-moon")
-          reflectedMoon.classList.add("slide-in-moon-reflected")
-        }
+        transition = checkAndPerformIfMoonIntersection(ogMoon, reflectedMoon, invisibleMoon)
       }
     })
 
@@ -45,15 +59,18 @@
 </script>
 
 
-<section id="intro-wrapper">
+<section id="intro-wrapper" style="">
   <div id="sky">
-      {#if holdingDownMoon && !transition}
-        <div id="missing-piece"></div>
-      {/if}
+      <div id="circle-missing">
+        {#each dreamText as char, i}
+          <span class="circle-text">{char}</span>
+        {/each}
+        <div id="invisible-moon"></div>
+      </div>
       <figure>
         <img class="moon to-be-reflected" id="og-moon"
         draggable="false"
-        style="height: 10vmin; color:white; z-index:5; position:absolute;" 
+        style="height: 10vmin; color:white; z-index:5; position:absolute; top:45%" 
         src="./personal_projects/moon.svg" 
         alt="Moon"
         >
@@ -68,11 +85,12 @@
   <div id="ocean">
     
   </div>
-  <div class="reflected slide-in-moon slide-in-moon-reflected"></div>
+  <div style="opacity: 0;" class="remove-gradient reflected slide-in-moon slide-in-moon-reflected moon-to-sun"></div>
 </section>
 
 
 <style lang="scss">
+  @import "./intro_animation.scss";
   #intro-wrapper {
     height: 100vh;
     width: 100vw;
@@ -105,10 +123,10 @@
     overflow: hidden;
 
     --grad-y: 50%;
-    --grad-x: 50%;
+    --grad-x: 50%;    
 
     background-color: rgb(0, 0, 0);
-    background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), 
+    background-image: radial-gradient(circle at var(--grad-x) var(--grad-y),
       rgba(180, 141, 216, 0.267), 
       rgba(0, 0, 54, 0.171));
     z-index: 1;
@@ -125,45 +143,39 @@
 
   .reflected{
     transform: scale(1, -1);
-    // background-color: lightblue;
-    // border: 1px solid #000;
-    
     opacity: 0.3;
   }
 
-  #missing-piece{
-    position: absolute; 
-    left: 10%; 
-    top: 10%; 
+  #invisible-moon{
     height:10vmin; 
-    width:10vmin; 
+    width:10vmin;
+    margin: auto;
     background-color:white;
     mask-mode: auto;
     mask-image: url("./personal_projects/moon.svg");
     mask-size: 10vmin;
+    opacity: 0;
   }
 
-  .slide-in-moon{
-    animation: slideMoonIn 0.3s linear(0, 1) forwards;
+  #circle-missing{
+    display: flex;
+    height: 15vmin; 
+    width: 15vmin; 
+    position: absolute; 
+    left: 10%; 
+    top: 10%;
+    border-radius: 50%;
+    align-items: center;
   }
 
-  .slide-in-moon-reflected{
-    animation: slideMoonReflected 0.3s linear(0, 1) forwards;
+  .circle-text{
+    position: absolute;
+    color: white;
+    animation: rotateDreamText 8s linear infinite;
+    opacity: 0;
+    transform-origin: 0 200%;
   }
 
-  @keyframes slideMoonIn{
-    100%{
-      left: 10%;
-      top: 10%;
-    }
-  }
-
-  @keyframes slideMoonReflected{
-    100%{
-      left: 10%;
-      bottom: 10%;
-    }
-  }
-
+  
 
 </style>

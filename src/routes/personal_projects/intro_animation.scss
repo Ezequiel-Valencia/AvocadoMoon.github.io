@@ -1,0 +1,50 @@
+.slide-in-moon {
+  animation: slideMoonIn 0.3s linear(0, 1) forwards;
+}
+
+.slide-in-moon-reflected {
+  animation: slideMoonReflected 0.3s linear(0, 1) forwards;
+}
+
+.remove-gradient {
+    animation: removeGradient 2s ease-in forwards;
+}
+
+@keyframes slideMoonIn {
+  100% {
+    left: var(--left-slide);
+    top: var(--top-slide);
+  }
+}
+
+@keyframes slideMoonReflected {
+  100% {
+    left: var(--left-slide);
+    bottom: var(--bottom-slide);
+  }
+}
+
+@keyframes fillInBlack {
+  100% {
+    background-color: black;
+  }
+}
+
+@keyframes removeGradient{
+    from{
+        background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), 
+    rgba(137, 43, 226, 0.397), rgba(6, 6, 109, 0.397), rgba(6, 6, 109, 0.185));
+    }
+    to{
+        background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), black);
+    }
+}
+
+@keyframes rotateDreamText {
+    
+     100% {
+        transform: rotate(var(--end-pos));
+    }
+}
+
+

@@ -4,9 +4,12 @@
     import { projects } from "./project_object";
     import { importSCSSOptions } from "../../globals"
   import { onMount } from "svelte";
+    import {transitionStates} from "./intro"
     const sideImageLocation = "/personal_projects/animal star blue.png";
     const projectIterator = Object.entries(projects);
     let activeIndex = 0;
+
+    export let transControl;
 
     const iconClass = "material-symbols-outlined"
     let icons = [[iconClass, "stat_3"], [iconClass, "stat_2"], [iconClass, "stat_1"]]
@@ -16,7 +19,28 @@
         clouds.forEach((c) => {
             c.style.setProperty("--time-dif", Math.floor((Math.random() * 1)) + "s")
         })
+
+        const bGradient = document.querySelector("#sun-animation") as HTMLElement
+        let gradPercent = 0
+        let blackTransparent = 1;
+        if (transControl.read() == transitionStates.transitionToProjects){
+            let interval = setInterval(() => {
+            if (gradPercent <= 100){
+                bGradient.style.setProperty("--grad-size", gradPercent + "%")
+                bGradient.style.setProperty("--black-transparent", blackTransparent + "")
+                blackTransparent -= .01
+                gradPercent += 3
+            } else{
+                bGradient.style.setProperty("--black-transparent", 0 + "")
+                clearInterval(interval)
+            }
+        }, 40)
+        } else{
+            bGradient.style.opacity = "0";
+        }
     })
+
+    
 
 </script>
 
@@ -27,12 +51,12 @@
 
 <section>
     <section id="sunny-ocean-intro">
+        <div id="sun-animation"></div>
         <div id="headline-text" style="text-align: center; padding-top:5%; z-index: 3; position:relative;">
             <h1 style="font-size: xx-large;">Personal Projects</h1>
             <u style="color: rgb(154, 204, 248);">
                 <h3>Revealing an ocean of creativity from dreams</h3>
             </u>
-            
         </div>
         <div id="sun"></div>
         {#each {length: 7} as _, i}
@@ -85,6 +109,19 @@
 
 
 <style lang="scss">
+    #sun-animation{
+        --grad-size: 0%;
+        --black-transparent: 1;
+        position: absolute;
+        width: 110vw;
+        height: 110vh;
+        z-index: 5;
+        left: 0%;
+        top: 0%;
+        background-color: rgba(0, 0, 0, var(--black-transparent));
+        mask-image: radial-gradient(circle at 11% 14%, transparent, transparent, transparent, transparent, transparent, black var(--grad-size));
+    }
+
     .cloud{
         top: 15%; 
         position:absolute; 

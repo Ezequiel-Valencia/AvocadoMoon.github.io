@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {setStarPositions, createReflections, moveMoonAndGradient, checkAndPerformIfMoonIntersection
-    ,moveAndShowDragMe, setCircleTextStyle} from "./intro";
+    ,moveAndShowDragMe, setCircleTextStyle, createTransitionControl, transitionStates} from "./intro";
   
   let holdingDownMoon = false;
   let transition = false;
   let dreamText = "End Dream? "
+
+  export let transControl;
 
   onMount(() => {
     const ogMoon = document.querySelector("#og-moon") as HTMLElement;
@@ -43,9 +45,15 @@
       }
     })
 
-    ogMoon.addEventListener("animationend", () =>{
+    ogMoon.addEventListener("animationend", async () =>{
       intro_section.style.maskImage = 'url(./personal_projects/dream-transition.gif)';
       intro_section.style.maskSize = 'cover';
+      let k = async () => {
+        return new Promise(() => {
+          setTimeout(() => {transControl.updateToTransitioning()}, 3000);
+        })
+      }
+      await k()
     })
 
     sky.addEventListener("pointermove", (e) => {

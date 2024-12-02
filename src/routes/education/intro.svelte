@@ -26,7 +26,7 @@
           <p class="text" style="margin-top:0; font-size:2.5em;">
             “Education is the movement from darkness to light.” – Allan Bloom
           </p>
-          <button on:click={(e) => {checkedOutBook()}} 
+          <button class="btn" on:click={(e) => {checkedOutBook()}} on:pointerenter={(e) => {}}
             style="margin-top:0; font-size:2.5em; font-family: 'Times New Roman', Times, serif;">
             {#if $bookCheckout}
               Return Book
@@ -76,5 +76,51 @@
     font-size: 5em;
     font-family: 'Times New Roman', Times, serif;
   }
+
+    /* 5 */
+  .btn {
+    background: white;
+    color: black;
+    line-height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 5%;
+    padding: 1%;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+  }
+  .btn:hover {
+    background: black;
+    color: white;
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+  }
+  .btn:before,
+  .btn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: white;
+    transition:400ms ease all;
+  }
+  .btn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .btn:hover:before,
+  .btn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
 
 </style>

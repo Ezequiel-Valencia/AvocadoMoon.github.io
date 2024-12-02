@@ -62,9 +62,7 @@
         })
 
         updateMaskHeight()
-        document.addEventListener('resize', (ev) => {
-          updateMaskHeight()
-        })
+        window.onresize = updateMaskHeight
     })
 </script>
 

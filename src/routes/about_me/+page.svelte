@@ -4,7 +4,7 @@
   import Menu from "../../common/menu.svelte";
 </script>
 
-<span id="main-div">
+<section id="main-div">
   <span id="background-gradient">
 
   </span>
@@ -12,7 +12,7 @@
   <Me />
   <Hobbies />
 
-</span>
+</section>
 
 
 

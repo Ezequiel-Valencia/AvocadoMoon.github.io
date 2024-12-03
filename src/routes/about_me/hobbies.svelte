@@ -13,13 +13,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
-<div id="hobbies">
+<section id="hobbies">
+  <u style="color: white;">
+    <i>
+      <h2 style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size:xx-large;">
+        Hobbies <br> 
+      </h2>
+    </i>
+  </u>
   <Tabs iterable={hobbies} bind:activeIndex={activeIndex} 
   tabSCSSFileLocation={importSCSSOptions.about_me}
   getTabNameFunction={(e) => {return e.category}} icons={icons}>
 
   </Tabs>
-  <!-- <h1 id="hob-title">Freetime spent</h1> -->
   {#each hobbies as hob, index}
     {#if activeIndex == index}
      <div id={hob.category} class="category">
@@ -54,12 +60,14 @@
     </div>
     {/if}
   {/each}
-</div>
+</section>
 
 <style lang="scss">
   // https://www.geeksforgeeks.org/how-to-wrap-the-text-around-an-image-using-html-and-css/#
   #hobbies {
-    overflow: auto; //make stuff that overflows to make the div expand
+    // overflow: auto; //make stuff that overflows to make the div expand
+    overflow-y: scroll;
+    height: auto;
     width: 100%;
   }
 

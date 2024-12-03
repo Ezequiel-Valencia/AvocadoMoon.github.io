@@ -60,7 +60,7 @@
         <div id="headline-text" style="text-align: center; padding-top:5%; z-index: 3; position:relative;">
             <h1 style="font-size: xx-large;">Personal Projects</h1>
             <u style="color: rgb(154, 204, 248);">
-                <h3 style="max-width:50%; margin:auto;">Revealing an ocean of creativity from dreams</h3>
+                <h3 style="max-width:50%; margin:auto;">Revealing an ocean of creativity from my dreams</h3>
             </u>
         </div>
         <div id="sun"></div>

@@ -1,11 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {setStarPositions, createReflections, moveMoonAndGradient, checkAndPerformIfMoonIntersection
-    ,moveAndShowDragMe, setCircleTextStyle} from "./dream";
+    ,moveAndShowDragMe, setCircleTextStyle, dreamThoughts} from "./dream";
   
   let holdingDownMoon = false;
   let transition = false;
   let dreamText = "End Dream? "
+  let fishHoverIndex = -1;
+  let numFishes = 5;
+  let startDreamThoughtsIndex = Math.floor(Math.random() * (dreamThoughts.length - numFishes - 1))
 
   export let transControl;
 
@@ -18,6 +21,7 @@
     const intro_section = document.querySelector("#intro-wrapper") as HTMLElement;
     const invisibleMoon = document.querySelector("#invisible-moon") as HTMLElement
     const dreamTextSpans = document.querySelectorAll(".circle-text") as NodeListOf<HTMLElement>;
+    const fishes = document.querySelectorAll(".fish-slide") as NodeListOf<HTMLElement>;
 
     setStarPositions()
     createReflections(ocean_reflection)
@@ -64,6 +68,15 @@
       }
     })
 
+    fishes.forEach((fish, i) => {
+      fish.addEventListener("pointerenter", (e) => {
+        fishHoverIndex = i
+      })
+      fish.addEventListener("pointerleave", (e) => {
+        fishHoverIndex = -1
+      })
+    })
+
     window.onresize = () => {setCircleTextStyle(missing_piece, dreamText, dreamTextSpans)}
 
   })
@@ -78,11 +91,20 @@
         {/each}
         <div id="invisible-moon"></div>
       </div>
-      {#each {length: 5} as _, i}
-          <img draggable="false" class="fish fish-slide"
+      {#each {length: numFishes} as _, i}
+      <figure class="fish-slide" style="--l-val: -{ (i * (Math.random() * 20)) + (i * 2)}%; 
+      left: var(--l-val); position:absolute; top: {i * 18}%;">
+        <img draggable="false" class="fish"
           src={i % 2 == 0 ? "./personal_projects/fish.svg": "./personal_projects/fish-2.svg"} 
-          alt="fish" style="transform: {i % 2 == 0 ? "scale(-1, 1)": ""}; 
-          --l-val: -{ (i * (Math.random() * 20)) + (i * 2)}%; left: var(--l-val); position:absolute; top: {i * 18}%;">
+          alt="fish" style="transform: {i % 2 == 0 ? "scale(-1, 1)": ""};">
+          {#if fishHoverIndex == i}
+            <figcaption class="fish-caption" style="opacity: 1; color:white;">
+              Fish Idea: <br>
+              {dreamThoughts[startDreamThoughtsIndex + i]}
+            </figcaption>
+          {/if}
+      </figure>
+          
       {/each}
       <figure>
         <img class="moon to-be-reflected" id="og-moon"
@@ -125,6 +147,7 @@
   .fish{
     color: white;
     height: 5vmin;
+    animation: fishStrobe 5s ease alternate-reverse infinite;
   }
 
   .fish-slide{

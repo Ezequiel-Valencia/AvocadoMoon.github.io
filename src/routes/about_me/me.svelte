@@ -16,10 +16,6 @@
         so I try to spend my free time exploring life to its fullest.
       </p>
     </div>
-  
-    <h2>
-      Free time spent <br> 
-    </h2>
   </article>
 </div>
 
@@ -28,10 +24,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
 
   #intro {
-    height: auto;
+    height: 100vh;
     width: 100vw;
     text-align: center;
-    overflow:auto;
+    overflow:visible;
   }
   #squircle {
     height: 40%;

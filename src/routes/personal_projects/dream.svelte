@@ -78,6 +78,12 @@
         {/each}
         <div id="invisible-moon"></div>
       </div>
+      {#each {length: 5} as _, i}
+          <img draggable="false" class="fish fish-slide"
+          src={i % 2 == 0 ? "./personal_projects/fish.svg": "./personal_projects/fish-2.svg"} 
+          alt="fish" style="transform: {i % 2 == 0 ? "scale(-1, 1)": ""}; 
+          --l-val: -{ (i * (Math.random() * 20)) + (i * 2)}%; left: var(--l-val); position:absolute; top: {i * 18}%;">
+      {/each}
       <figure>
         <img class="moon to-be-reflected" id="og-moon"
         draggable="false"
@@ -116,6 +122,25 @@
     width: 100vw;
   }
 
+  .fish{
+    color: white;
+    height: 5vmin;
+  }
+
+  .fish-slide{
+    animation: swim-right 40s linear infinite;
+  }
+
+  .fish-slide:hover{
+    animation-play-state: paused;
+  }
+
+  .fish:hover{
+    filter: invert(1);
+    animation: shake 0.5s infinite, swim-right 40s linear infinite;
+    cursor: grab;
+  }
+
   #sky{
     width: 100vw;
     height: 50vh;
@@ -150,6 +175,10 @@
       rgba(180, 141, 216, 0.267), 
       rgba(0, 0, 54, 0.171));
     z-index: 1;
+  }
+
+  #og-moon:hover{
+    cursor:grab;
   }
 
   .star{

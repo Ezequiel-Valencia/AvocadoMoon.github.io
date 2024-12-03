@@ -59,10 +59,10 @@
 
         mask?.addEventListener("mouseenter", (e) => {
           inMask = true;
+          updateMaskHeight()
         })
 
         updateMaskHeight()
-        window.onresize = updateMaskHeight
     })
 </script>
 

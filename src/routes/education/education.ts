@@ -1,6 +1,8 @@
 
 import { safeLocalStorage, convertToBoolean } from "../../common/myLocalStorage";
 import { writable } from "svelte/store";
+import { csWorkTechnologies } from "../../globals";
+
 
 export function createBookCheckout() {
     const key = 'bookCheckoutBool';
@@ -17,98 +19,118 @@ export function createBookCheckout() {
 
 export const technology_learned = [
     {
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png",
-        iconName: "HTML",
+        icon: csWorkTechnologies.HTML.icon,
+        iconName: csWorkTechnologies.HTML.name,
         projects: ["This Website", "Auto Grading Site"]
     },
     {
-        icon: "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/css3-512.png",
-        iconName: "CSS",
+        icon: csWorkTechnologies.CSS.icon,
+        iconName: csWorkTechnologies.CSS.name,
         projects: ["This Website", "Auto Grading Site"]
     },
     {
-        icon: "https://cdn-icons-png.flaticon.com/512/5968/5968381.png",
-        iconName: "TypeScript",
+        icon: csWorkTechnologies.TypeScript.icon,
+        iconName: csWorkTechnologies.TypeScript.name,
         projects: ["This Website", "Auto Grading Site", "Best Buy Bot"]
     },
     {
-        icon: "https://raw.githubusercontent.com/sveltejs/svelte/29052aba7d0b78316d3a52aef1d7ddd54fe6ca84/site/static/images/svelte-android-chrome-512.png",
-        iconName: "Svelte",
+        icon: csWorkTechnologies.Svelte.icon,
+        iconName: csWorkTechnologies.Svelte.name,
         projects: ["This Website"]
     },
     {
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png",
-        iconName: "Python",
+        icon: csWorkTechnologies.SQL.icon,
+        iconName: csWorkTechnologies.SQL.name,
+        projects: ["VCell", "Event Bot", "CTGrassRoots"]
+    },
+    {
+        icon: csWorkTechnologies.Python.icon,
+        iconName: csWorkTechnologies.Python.name,
         projects: ["Event Bot", "Auto Grading Site", "Encrypted Cat Exchange"]
     },
     {
-        icon: "https://cdn-icons-png.flaticon.com/512/226/226777.png",
-        iconName: "Java",
+        icon: csWorkTechnologies.Java.icon,
+        iconName: csWorkTechnologies.Java.name,
         projects: ["VCell Fiji", "VCell", "Cancer Cell Analyzer"]
     },
     {
-        icon: "https://tools.jboss.org/features/images/quarkus_icon_rgb_256px_default.png",
-        iconName: "Quarkus",
+        icon: csWorkTechnologies.Quarkus.icon,
+        iconName: csWorkTechnologies.Quarkus.name,
         projects: ["VCell"]
     },
     {
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png",
-        iconName: "GraphQL",
+        icon: csWorkTechnologies.GraphQL.icon,
+        iconName: csWorkTechnologies.GraphQL.name,
         projects: ["Event Bot"]
     },
     {
-        icon: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png",
-        iconName: "Docker",
+        icon: csWorkTechnologies.Docker.icon,
+        iconName: csWorkTechnologies.Docker.name,
         projects: ["Homelab", "VCell", "Event Bot", "Music Recommender", "CTGrassRoots"]
     },
     {
-        icon: "https://cdn2.iconfinder.com/data/icons/mixd/512/20_kubernetes-512.png",
-        iconName: "K8",
+        icon: csWorkTechnologies.K8.icon,
+        iconName: csWorkTechnologies.K8.name,
         projects: ["Homelab", "VCell"]
     },
     {
-        icon: "https://tobisyurt.net/assets/images/ansible-logo.png",
-        iconName: "Ansible",
+        icon: csWorkTechnologies.Ansible.icon,
+        iconName: csWorkTechnologies.Ansible.name,
         projects: ["Homelab", "CTGrassRoots"]
     },
     {
-        icon: "https://seeklogo.com/images/I/istio-logo-92FF583709-seeklogo.com.png",
-        iconName: "Istio",
+        icon: csWorkTechnologies.Istio.icon,
+        iconName: csWorkTechnologies.Istio.name,
         projects: ["Homelab"]
     },
     {
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Grafana_icon.svg/351px-Grafana_icon.svg.png?20230113182558",
-        iconName: "Grafana",
+        icon: csWorkTechnologies.Grafana.icon,
+        iconName: csWorkTechnologies.Grafana.name,
         projects: ["Homelab"]
     },
     {
-        icon: "https://grafana.com/media/docs/loki/logo-grafana-loki.png",
-        iconName: "Loki",
+        icon: csWorkTechnologies.Loki.icon,
+        iconName: csWorkTechnologies.Loki.name,
         projects: ["Homelab"]
     },
     {
-        icon: "https://global.discourse-cdn.com/flex015/uploads/imagej/original/3X/f/4/f41e19741763edf6f79e98aaf9259c614ddec98d.png",
-        iconName: "Fiji",
+        icon: csWorkTechnologies.Prometheus.icon,
+        iconName: csWorkTechnologies.Prometheus.name,
+        projects: ["Homelab"]
+    },
+    {
+        icon: csWorkTechnologies.Ubiquity.icon,
+        iconName: csWorkTechnologies.Ubiquity.name,
+        projects: ["Homelab"]
+    },
+    {
+        icon: csWorkTechnologies.TrueNas.icon,
+        iconName: csWorkTechnologies.TrueNas.name,
+        projects: ["Homelab"]
+    },
+    {
+        icon: csWorkTechnologies.Fiji.icon,
+        iconName: csWorkTechnologies.Fiji.name,
         projects: ["VCell Fiji", "Cancer Cell Analyzer"]
     },
     {
-        icon: "https://www.scottbrady91.com/img/logos/openid-icon.png",
-        iconName: "OpenID",
+        icon: csWorkTechnologies.OpenID.icon,
+        iconName: csWorkTechnologies.OpenID.name,
         projects: ["VCell"]
     },
     {
-        icon: "https://camo.githubusercontent.com/fdffb57ca7bf0ba2900bab738df7bf002dee35f15e55f2029a97de1d2bdc1e07/68747470733a2f2f7777772e70726f786d6f782e636f6d2f696d616765732f70726f786d6f782f50726f786d6f782d6c6f676f2d737461636b65642d38343070782e706e67",
-        iconName: "Proxmox",
+        icon: csWorkTechnologies.Proxmox.icon,
+        iconName: csWorkTechnologies.Proxmox.name,
         projects: ["Homelab"]
     },
     {
-        icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/go-programming-language-icon.png",
-        iconName: "Go",
+        icon: csWorkTechnologies.Go.icon,
+        iconName: csWorkTechnologies.Go.name,
         projects: ["Music Recommender"]
     },
     {
-        icon: "https://cdn.icon-icons.com/icons2/2415/PNG/512/django_line_logo_icon_146560.png",
-        iconName: "Django",
+        icon: csWorkTechnologies.Django.icon,
+        iconName: csWorkTechnologies.Django.name,
         projects: ["Auto Grader"]
     }
     

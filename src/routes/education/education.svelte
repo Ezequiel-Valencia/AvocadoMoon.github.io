@@ -5,6 +5,7 @@
   let mask: HTMLElement | null;
   $: iconIndex = -1;
   let bookCheckout = createBookCheckout()
+  let education_content: HTMLElement;
 
   function moveGradient(mask: HTMLElement, pos: MouseEvent){
     let div = pos.target as HTMLDivElement;
@@ -35,13 +36,14 @@
   }
 
   function updateMaskHeight(){
-    const education_content: HTMLElement | null = document.querySelector(".education-content")
-    mask?.style.setProperty('--var-height', education_content?.clientHeight + "px")
+    mask?.style.setProperty('--var-height', education_content.clientHeight + "px")
     return true
   }
 
   
     onMount(() => {
+      education_content = document.querySelector(".education-content") as HTMLElement
+      updateMaskHeight()
         mask = document.querySelector(".black-over-top");
         let inMask = false;
         document.addEventListener('mousemove', (pos) => {
@@ -51,6 +53,10 @@
           } else if (mask != null){
             hideGradient(mask)
           }
+        })
+
+        document.addEventListener("scroll", () => {
+          updateMaskHeight()
         })
 
         mask?.addEventListener("mouseleave", (e) => {

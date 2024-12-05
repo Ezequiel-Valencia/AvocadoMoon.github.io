@@ -8,10 +8,26 @@
   export var imgSrc: string;
   export let takeaway: string;
 
+  let hoveredTech = ''
+
+  function displayIconsDescription(pos: MouseEvent){
+        const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY)
+        if (hiddenElement != null && hiddenElement.classList.contains("tech")){
+        let n = hiddenElement.id.split("-");
+            hoveredTech = n[1];
+        } else {
+            hoveredTech = "";
+        }
+    }
+
+
   onMount(() => {
     if($musicController){
       musicTime.setAudioTagTime()
     }
+    document.addEventListener("pointermove", (e) => {
+            displayIconsDescription(e)
+        })
   })
 </script>
 
@@ -32,9 +48,22 @@
     <div id="text-wrapper-div">
       <h1 class="text">{experience.company}</h1>
       <h2 class="text">{experience.jobTitle}</h2>
+      <h2 class="text">Technologies: 
+        {#each experience.technologies as tech, index}
+          <span id={"description-" + tech.name} class="tech description-holder">
+              {#if tech.name == hoveredTech}
+                  <div style="z-index: 3;" class="description">
+                      <h3 style="text-align:center; font-family: 'Times New Roman', Times, serif;">{tech.name}</h3>
+                      <p style="text-align: center;">{tech.description}</p>
+                  </div>
+              {/if}
+              <img id="img-{tech.name}" class="tech" style="height: 2em; position:static; {tech.name == "SQL" ? "filter: invert(1);" : ""}" src={tech.icon} alt={tech.name}>
+          </span>
+        {/each}
+      </h2>
       <h3 class="text">{experience.time}</h3>
       <h5 class="text">Key Takeaway: {takeaway}</h5>
-      <img src={imgSrc} alt="Work Related" />
+      <img class="job-img" src={imgSrc} alt="Work Related" />
       {#each description as paragraph }
         <p class="text">{paragraph}</p>
       {/each}
@@ -125,11 +154,27 @@
     color: white;
   }
 
-  img {
+  .job-img {
     max-height: 15vw;
     max-width: 40%;
     float: right;
     padding-right: 5%;
+  }
+
+  .description {
+        z-index: 3;
+        position: absolute;
+        text-align: center;
+        margin: auto;
+        padding-right: 1.5%;
+        padding-left: 1.5%;
+        opacity: 1;
+        height: auto;
+        width: auto;
+
+        background-color: rgb(0, 0, 0);
+        border-style: solid;
+        border-color: rgb(255, 255, 255);
   }
 
   

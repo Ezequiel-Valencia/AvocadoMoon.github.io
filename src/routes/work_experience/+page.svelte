@@ -6,10 +6,12 @@
     import { musicController, musicTime, sfxController } from "../../common/myLocalStorage";
     import { onMount } from "svelte";
 
+    let introLoaded = false
     onMount(() => {
         if($musicController){
             musicTime.setAudioTagTime()
         }
+        introLoaded = true
     })
 </script>
 
@@ -19,7 +21,9 @@
 <div id="main-div">
     <Menu songPath={experiencesSong} email="website@worker.slmail.me" songName="Sabbath - Various Artists"></Menu>
     <Intro></Intro>
-    <Experience></Experience>
+    {#if introLoaded}
+        <Experience></Experience>
+    {/if}
 </div>
 
 <style lang="scss">

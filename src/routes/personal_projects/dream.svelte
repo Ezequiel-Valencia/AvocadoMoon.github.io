@@ -89,7 +89,7 @@
         {#each dreamText as char, i}
           <span class="circle-text">{char}</span>
         {/each}
-        <div id="invisible-moon"></div>
+        <img src='./personal_projects/moon.svg' alt="invisible-moon" id="invisible-moon">
       </div>
       {#each {length: numFishes} as _, i}
       <figure class="fish-slide" style="--l-val: -{ (i * (Math.random() * 20)) + (i * 2)}%; 
@@ -222,10 +222,11 @@
     height:10vmin; 
     width:10vmin;
     margin: auto;
-    background-color:white;
-    mask-image: url("./personal_projects/moon.svg");
-    mask-size: 10vmin;
-    opacity: 1;
+    // background-color:white;
+    // mask-image: url("./personal_projects/moon.svg");
+    // mask-size: 10vmin;
+    opacity: 0;
+    filter: invert(1);
   }
 
   #circle-missing{

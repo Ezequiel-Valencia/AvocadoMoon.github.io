@@ -11,8 +11,20 @@
 
     export let transControl;
 
+    let techIndexAndName = "-1"
+
+    function displayIconsDescription(pos: MouseEvent){
+        const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY)
+        if (hiddenElement != null && hiddenElement.classList.contains("tech")){
+        let n = hiddenElement.id.split("-");
+            techIndexAndName = n[1];
+        } else {
+            techIndexAndName = "";
+        }
+    }
+
     const iconClass = "material-symbols-outlined"
-    let icons = [[iconClass, "stat_3"], [iconClass, "stat_2"], [iconClass, "stat_1"]]
+    let icons = [["", "Full Stack"], ["", "DevOp/IT"], ["", "CyberSecurity"], ["", "Misc. Software"]]
 
     onMount(() => {
         // Cloud Sway Time Difference
@@ -44,6 +56,10 @@
             bGradient.style.opacity = "0";
             bGradient.style.zIndex = "-1";
         }
+
+        document.addEventListener("pointermove", (e) => {
+            displayIconsDescription(e)
+        })
     })
 
     
@@ -97,11 +113,26 @@
                 {#each projectIterator as [key, category], index}
                     {#if activeIndex == index}
                     <article class="category">
-                        <h2 class="category-title">{key}</h2>
-                        {#each category as project, index}
+                        <h2 class="category-title">{icons[index][1]} Description: <h5>{key}</h5></h2>
+                        
+                        {#each category as project, projectIndex}
                             <div class="project">
                                 <h3>{project.name}</h3>
-                                <h5>{project.year}</h5>
+                                <h5 style="margin-bottom: 0%;">{project.year}</h5>
+                                <h5 style="margin-top:0%;">Technologies: 
+                                    {#each project.technologies as tech, index}
+                                    <span id={"description-" + tech.name + projectIndex} class="tech description-holder">
+                                        
+                                        {#if (tech.name + projectIndex) == techIndexAndName}
+                                            <div style="z-index: 3;" class="description">
+                                                <h3 style="text-align:center; font-family: 'Times New Roman', Times, serif;">{tech.name}</h3>
+                                                <p style="text-align: center;">{tech.description}</p>
+                                            </div>
+                                        {/if}
+                                        <img id="img-{tech.name}{projectIndex}" class="tech" style="height: 3em; position:static;" src={tech.icon} alt={tech.name}>
+                                    </span>
+                                    {/each}
+                                </h5>
                                 <p>{project.description}</p>
                             </div>
                         {/each}
@@ -176,8 +207,24 @@
 
     .category-title{
         padding-top: 5%;
-        border-top-style: ridge;
+        border-bottom-style: ridge;
     }
+
+    .description {
+        z-index: 3;
+        position: absolute;
+        text-align: center;
+        margin: auto;
+        padding-right: 1.5%;
+        padding-left: 1.5%;
+        opacity: 1;
+        height: auto;
+        width: auto;
+
+        background-color: rgb(53, 83, 138);
+        border-style: solid;
+        border-color: rgb(1, 115, 150);
+  }
 
     .project{
         padding-top: 2%;

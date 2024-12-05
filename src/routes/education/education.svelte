@@ -74,7 +74,7 @@
             <div>
                 <h3 class="degree">Bachelors Degree In Cybersecurity</h3>
                 <h2 class="institution">University of Connecticut</h2>
-                <h5>GPA: 3.7</h5>
+                <h5>GPA: 3.77</h5>
                 <p style="margin: 4%;">
                     Getting my education in Cybersecurity was one of the best decisions
                     I've made. The subject requires a grasp on all CS subjects for
@@ -98,21 +98,21 @@
                 </p>
                 <div style="display: flex; height:auto; flex-wrap:wrap;">
                     {#each technology_learned as icon, index}
-                          <div id={"holder-" + index} class="tech image-holder">
-                            {#if index == iconIndex && updateMaskHeight()}
-                              <div id={"description-" + index} class="tech description-holder">
-                                <div class="description">
-                                  <h3 style="font-family: 'Times New Roman', Times, serif;">{icon.iconName}</h3>
-                                  <ul style="text-align: left; font-family:'Times New Roman', Times, serif">
-                                    {#each icon.projects as project}
-                                      <li>{project}</li>
-                                    {/each}
-                                  </ul>
-                                </div>
+                        <div id={"holder-" + index} class="tech image-holder">
+                          {#if index == iconIndex && updateMaskHeight()}
+                            <div id={"description-" + index} class="tech description-holder">
+                              <div class="description">
+                                <h3 style="font-family: 'Times New Roman', Times, serif;">{icon.iconName}</h3>
+                                <ul style="text-align: left; font-family:'Times New Roman', Times, serif">
+                                  {#each icon.projects as project}
+                                    <li>{project}</li>
+                                  {/each}
+                                </ul>
                               </div>
-                            {/if}
-                            <img id={"tech-icon-" + index} class="tech tech-icons" style="height: 5vmin; width: 5vmin;" 
-                            src={icon.icon} alt="Technology Icon">
+                            </div>
+                          {/if}
+                          <img id={"tech-icon-" + index} class="tech tech-icons" style="height: 5vmin; width: 5vmin;" 
+                          src={icon.icon} alt="Technology Icon">
                         </div>
                     {/each}
                 </div>

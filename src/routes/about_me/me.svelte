@@ -9,7 +9,7 @@
   <article>
     <div id="description">
       <p id="description-text">
-        I'm a Cybersecurity graduate from UConn. 
+        I'm a Cybersecurity graduate from UConn class 2023. 
         I apply my knowledge to differing fields of computer science, 
         such as bio-informatics, IT, full-end development, and of course cybersecurity. 
         Although computer science helps me feel a sense of Ikigai, work is not life, 
@@ -28,6 +28,8 @@
     width: 100vw;
     text-align: center;
     overflow:visible;
+    position: relative;
+    z-index: 10;
   }
   #squircle {
     height: 40%;

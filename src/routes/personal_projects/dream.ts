@@ -93,7 +93,7 @@ export const dreamThoughts = [
   'Bot that sends digits of pi',
   'A shaming computer trash bin',
   'mTLS with post-quantum encryption schemes',
-  'Geo-guesser for home items website',
+  'Geo-guesser website for home items',
   'Soundboard for smells',
   'Solution for NP=P',
   'Dr. Phil Message Sender',

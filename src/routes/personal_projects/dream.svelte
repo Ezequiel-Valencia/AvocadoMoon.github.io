@@ -223,10 +223,9 @@
     width:10vmin;
     margin: auto;
     background-color:white;
-    mask-mode: auto;
     mask-image: url("./personal_projects/moon.svg");
     mask-size: 10vmin;
-    opacity: 0;
+    opacity: 1;
   }
 
   #circle-missing{

@@ -62,6 +62,16 @@ export const csWorkTechnologies = {
 		name: "SQL",
 		description: "Structured Query Language which saves me from having to write a thread safe 'Writer' and 'Reader' for text."
 	},
+	C: {
+		icon: "https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png",
+		name: "C",
+		description: "Low level language that I love making very small gadgets in. Nightmare difficulty for large projects though."
+	},
+	Coq: {
+		icon: "https://static.macupdate.com/products/14843/m/coq-logo.png?v=1568296682",
+		name: "Coq",
+		description: "Formal proof management system."
+	},
 
 	///////////////
 	// DevOps/IT //
@@ -111,6 +121,11 @@ export const csWorkTechnologies = {
 		icon: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/refs/heads/main/svg/ubiquiti.svg",
 		name: "Ubiquity",
 		description: "The Apple of networking products. They are so extremely polished."
+	},
+	Linux: {
+		icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/265px-Tux.svg.png",
+		name: "Linux",
+		description: "My favorite kernel other than carmel."
 	},
 
 

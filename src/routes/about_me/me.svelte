@@ -24,7 +24,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
 
   #intro {
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
     width: 100vw;
     text-align: center;
     overflow:visible;

@@ -69,6 +69,8 @@
     overflow-y: scroll;
     height: auto;
     width: 100%;
+    position: relative;
+    z-index: 2;
   }
 
   #hob-title {

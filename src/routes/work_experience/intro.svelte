@@ -2,6 +2,9 @@
   import { gsap } from "gsap";
   import { onMount } from "svelte";
   import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+  export let loadingStatusManager;
+
+  const images: HTMLImageElement[] = [];
 
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -17,7 +20,7 @@
     const currentFrame = (index: any) =>
       `/work_experience/intro/${(index + 1).toString()}.webp`;
 
-    const images: any = [];
+    
     let galaxy = { frame: 0 };
 
     for (let i = 0; i < frameCount; i++) {
@@ -40,7 +43,12 @@
 
     
 
-    images[0].onload = render;
+    images[frameCount - 1].onload = async () => {
+      loadingStatusManager.turnToLoaded();
+      render()
+      
+    }
+
 
     function render() {
       context.canvas.width = images[0].width;
@@ -52,12 +60,14 @@
 
     // Wait until all items are loaded in the DOM, then apply the anchor
     if (window.location.href.includes("#myExperience")){
-      console.log("Anchor")
       var url = location.href;
       url = url.replace("#myExperience", "#myExperience")
       location.href = url
-      history.replaceState(null, "", url)
     }
+
+    
+
+    
 
   });
 </script>

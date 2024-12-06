@@ -72,6 +72,11 @@ export const csWorkTechnologies = {
 		name: "Coq",
 		description: "Formal proof management system."
 	},
+	S3: {
+		icon: "https://static-00.iconduck.com/assets.00/aws-s3-simple-storage-service-icon-1694x2048-ygs8j98c.png",
+		name: "S3",
+		description: "Cold storage object stores are such cool concepts."
+	},
 
 	///////////////
 	// DevOps/IT //

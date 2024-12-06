@@ -8,7 +8,6 @@
 
 
   let display_entire_menu = false;
-  export let email: string;
   export let songName: string;
   export let songPath: string = "";
 
@@ -115,10 +114,16 @@
       >
     </div>
 
-    <div id="contact-me">
+    <span id="contact-me">
       <h1>Contact Me</h1>
-      <p>Email: {email}</p>
-    </div>
+      <p>
+        Email: <a style="color: white;" href="mailto:wzeke123@gmail.com">wzeke123@gmail.com</a> |
+        Github: <a style="color: white;" href="https://github.com/AvocadoMoon">AvocadoMoon</a> |
+        Linkedin: <a style="color: white;" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a> |
+        Resume: <a style="color: white;" href="https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub">
+          Personal Resume</a>
+      </p>
+    </span>
   </div>
 {/if}
 
@@ -196,7 +201,7 @@
     color: white;
   }
 
-  #contact-me p {
+  #contact-me p{
     bottom: 0;
     color: white;
   }

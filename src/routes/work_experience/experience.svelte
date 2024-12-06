@@ -132,13 +132,13 @@
   }
 
   .in-view.left{
-    animation: rightToLeft 5s ease;
+    animation: rightToLeft 2.5s ease;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
 
   .in-view.right{
-    animation: leftToRight 5s ease;
+    animation: leftToRight 2.5s ease;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }

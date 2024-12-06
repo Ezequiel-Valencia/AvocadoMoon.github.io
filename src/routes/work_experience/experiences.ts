@@ -35,7 +35,7 @@ export const experiences: {[key: string]: WorkExperience} = {
         technologies: [csWorkTechnologies.Java, csWorkTechnologies.Quarkus,
         csWorkTechnologies.K8, csWorkTechnologies.OpenID, csWorkTechnologies.Docker,
         csWorkTechnologies.Python, csWorkTechnologies.SQL, csWorkTechnologies.Fiji,
-        csWorkTechnologies.Linux],
+        csWorkTechnologies.Linux, csWorkTechnologies.S3],
         jobTitle: "Research Assistance",
         description: "I help lead the integration of VCell sim data with ImageJ. Developing plugins for ImageJ, setting up tech infrastructure, and devlop additional software.",
         time: "July 2023 - Now",

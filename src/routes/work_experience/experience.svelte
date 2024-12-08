@@ -31,7 +31,7 @@
 
 </script>
 
-<div id="wrapper-div">
+<section style="" id="wrapper-div">
   <h1 id="world">World</h1>
   <h2 id="myExperience">My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
@@ -60,7 +60,7 @@
   {/each}
   <!-- Implemented so that in-view, right, and left class gets compiled -->
   <div class="in-view left right"></div>
-</div>
+</section>
 
 <style lang="scss">
   @import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");

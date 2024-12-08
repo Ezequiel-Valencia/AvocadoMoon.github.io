@@ -44,8 +44,8 @@
 
     
 
-    images[frameCount - 1].onload = async () => {
-      percentLoaded.set(100)
+    images[frameCount - 1].onload = () => {
+      percentLoaded.update(percent => percent + ((1 / frameCount) * 100))
       render()
     }
 

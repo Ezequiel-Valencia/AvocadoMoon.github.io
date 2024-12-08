@@ -35,17 +35,19 @@
 </script>
 
 <div id="wrapper">
-  <nav
-  on:click={(e) => {
+  <button style="" on:click={(e) => {
     if($musicController){
       musicTime.updateTimeStamp()
     }
     location.href = "/work_experience#myExperience"
-  }}>
-    <h2>
-      Return
-    </h2>
-  </nav>
+  }}> 
+    <nav>
+        <h2>
+          Return
+        </h2>
+      </nav>
+  </button>
+  
   <div id="right-wrapper">
     
     <div id="text-wrapper-div">
@@ -142,7 +144,6 @@
     width: 2em;
     padding: .2em;
     border-bottom: unset;
-    border-right: 1px solid #535353;
     font-size: 1.4em;
   }
 
@@ -150,11 +151,25 @@
     margin-top: 5%;
     margin-left: 0;
     margin-right: 0;
+    background-color: transparent;
   }
 
   nav h2{
     text-decoration: none;
     color: white;
+  }
+
+  button{
+    border-right: #535353;
+    border-right-style:ridge;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: transparent;
+  }
+
+  button:hover{
+    background: #53535375;
   }
 
   .job-img {

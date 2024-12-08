@@ -34,7 +34,7 @@
   })
 </script>
 
-<div id="wrapper">
+<section id="wrapper">
   <button style="" on:click={(e) => {
     if($musicController){
       musicTime.updateTimeStamp()
@@ -79,7 +79,7 @@
     <audio id="song" src="{experiencesSong}" autoplay loop></audio>
   {/if}
   
-</div>
+</section>
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');

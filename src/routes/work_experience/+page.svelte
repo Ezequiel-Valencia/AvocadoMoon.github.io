@@ -8,11 +8,11 @@
     import Loading from "./loading.svelte";
     import { percentLoaded } from "./experiences";
     
-    let fromUnderSite: boolean = false;
+    let fromExperiencePage: boolean = false;
 
     onMount(() => {
         if (window.location.href.includes("#myExperience")){
-            fromUnderSite = true;
+            fromExperiencePage = true;
         }
         if($musicController){
             musicTime.setAudioTagTime()
@@ -24,17 +24,17 @@
 
 <!-- https://www.twilio.com/en-us/blog/svelte-stores-share-data-between-components -->
 
-<div id="main-div" style="height: {$percentLoaded == 100 || fromUnderSite ? 'auto': '100vh'}; 
-    overflow: {$percentLoaded == 100 ? 'visible': 'hidden'};">
+<div id="main-div" style="height: {$percentLoaded == 100 || fromExperiencePage ? 'auto': '100vh'}; 
+    overflow: {$percentLoaded == 100 || fromExperiencePage ? 'visible': 'hidden'};">
     <Menu songPath={experiencesSong} songName="Sabbath - Various Artists"></Menu>
-    {#if !fromUnderSite}
+    {#if !fromExperiencePage}
         <div style="opacity: {$percentLoaded == 100 ? 1: 0};">
             <Intro></Intro>
         </div>
     {/if}
     <Experience></Experience>
     
-    {#if $percentLoaded != 100}
+    {#if $percentLoaded != 100 && !fromExperiencePage}
         <Loading></Loading>
     {/if}
 </div>
@@ -46,6 +46,7 @@
         left: 0;
         background-color: black;
         height: 100vh;
+        min-height: 100vh;
         width: 100vw;
     }
 

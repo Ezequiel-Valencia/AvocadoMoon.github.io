@@ -62,9 +62,9 @@
   });
 </script>
 
-<div>
+<section>
   <canvas class="canvas" />
-</div>
+</section>
 
 <style lang="scss">
   canvas {

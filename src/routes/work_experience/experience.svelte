@@ -149,6 +149,11 @@
     z-index: 2;
   }
 
+  .experience-div:hover{
+    background-color: #2e2e2e;
+    cursor:pointer;
+  }
+
   .in-view.left{
     animation: rightToLeft 2.5s ease;
     animation-iteration-count: 1;

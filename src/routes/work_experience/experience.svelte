@@ -14,6 +14,11 @@
         }
       })
     })
+    let stars = document.querySelectorAll(".star") as NodeListOf<HTMLElement>
+    stars.forEach((star) => {
+        star.style.top = "" + Math.floor(Math.random() * 100) + "%"
+        star.style.left = "" + Math.floor(Math.random() * 100) + "%"
+    })
     
     // Get all the elements with the .animate class applied
     const allElementsToAnimate = document.querySelectorAll(".watch")
@@ -32,6 +37,9 @@
 </script>
 
 <section style="" id="wrapper-div">
+  {#each {length: 60} as _, i}
+    <div style="--fade-time: {Math.max((i * Math.random()) % 5, 2 + Math.random())}s;" class="star"></div>
+  {/each}
   <h1 id="world">World</h1>
   <h2 id="myExperience">My Work Experience</h2>
   {#each Object.entries(experiences) as [key, experience], index}
@@ -137,6 +145,8 @@
     max-width: 1000px;
     right: 100%;
     position: relative;
+    background-color: black;
+    z-index: 2;
   }
 
   .in-view.left{
@@ -150,6 +160,25 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
+
+  .star{
+        --fade-time: 2s;
+        width: 0.3em;
+        height: 0.3em;
+        background-color: white;
+        z-index: 1;
+        border-radius: 50%;
+        position: absolute;
+        animation: fadeInAndOut var(--fade-time) infinite alternate;
+    }
+
+    @keyframes fadeInAndOut{
+        from{
+            opacity: 0;
+        } to {
+            opacity: 1;
+        }
+    }
 
 
 </style>

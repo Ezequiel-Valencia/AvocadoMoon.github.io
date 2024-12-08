@@ -2,7 +2,7 @@
   import { gsap } from "gsap";
   import { onMount } from "svelte";
   import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-  export let loadingStatusManager;
+  import { percentLoaded } from "./experiences"
 
   const images: HTMLImageElement[] = [];
 
@@ -26,6 +26,7 @@
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = currentFrame(i);
+      img.onload = () => percentLoaded.update(percent => percent + ((1 / frameCount) * 100))
       images.push(img);
     }
 
@@ -44,9 +45,8 @@
     
 
     images[frameCount - 1].onload = async () => {
-      loadingStatusManager.turnToLoaded();
+      percentLoaded.set(100)
       render()
-      
     }
 
 

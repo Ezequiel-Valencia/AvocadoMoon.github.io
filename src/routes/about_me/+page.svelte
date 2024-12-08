@@ -25,9 +25,9 @@
         });
     }
 
-    window.addEventListener('mousemove', (event) => {
-        tgX = event.clientX;
-        tgY = event.clientY;
+    document.addEventListener('mousemove', (event) => {
+        tgX = event.pageX;
+        tgY = event.pageY;
     });
 
     move();
@@ -44,6 +44,7 @@
       </filter>
     </defs>
   </svg>
+  
   <div class="gradients-container">
     <div class="g3"></div>
     <div class="g4"></div>
@@ -53,7 +54,7 @@
     {/if}
   </div>
     
-  <Menu songPath="https://files.catbox.moe/ll8iaa.mp3" email="general@relaxed.slmail.me" songName="Samurai Champloo Aruarian Dance"/>
+  <Menu songPath="https://files.catbox.moe/ll8iaa.mp3" songName="Samurai Champloo Aruarian Dance"/>
   <Me />
   <Hobbies />
 

@@ -1,20 +1,9 @@
 import { csWorkTechnologies } from "../../globals";
-import { safeLocalStorage, convertToBoolean } from "../../common/myLocalStorage";
 import { writable } from "svelte/store";
 
+export const percentLoaded = writable(0) // -1 means skip
 
-export function createIntroLoadStatus() {
-    const key = 'workExpLoadStatus';
-    safeLocalStorage?.setItem(key, 'false')
-    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
-    const { subscribe, set, update } = writable(bool)
 
-    return {
-        subscribe,
-        getStatus: () => {let v = safeLocalStorage.getItem(key); return v == null ? false : convertToBoolean(v)},
-        turnToLoaded: () => update(() => { safeLocalStorage?.setItem(key, String(true)); return true })
-    }
-}
 
 export type WorkExperience = {
     company: string;

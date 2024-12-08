@@ -3,10 +3,13 @@
   import {experiencesSong} from "./experiences"
   import { musicController, musicTime } from "../../common/myLocalStorage";
   import { onMount } from "svelte";
+  import { percentLoaded } from "./experiences";
+
   export var experience: WorkExperience;
   export var description: string[];
   export var imgSrc: string;
   export let takeaway: string;
+
 
   let hoveredTech = ''
 

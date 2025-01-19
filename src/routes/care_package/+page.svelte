@@ -3,7 +3,7 @@
 
 <section id="main-div">
   <div id="text-div" style="">
-    <h1>Hidden amongst the starts:</h1>
+    <h1>Hidden amongst the stars:</h1>
     <div style="width: 20vw; margin:auto;">
       <ul style="text-align: center;">
         <li>
@@ -16,7 +16,7 @@
           <a href="https://kry.pt/">Terminal Site</a>
         </li>
         <li>
-          <a href="https://juneish.neocities.org/">Freak world</a>
+          <a href="https://juneish.neocities.org/">Strange world</a>
         </li>
         <li>
           <a href="https://youtu.be/ET2JmjbjE68">Ambient Music Mix :)</a>
@@ -41,6 +41,9 @@
         </li>
         <li>
           <a href="https://en.wikipedia.org/wiki/Kiki%27s_Delivery_Service">Flying animation</a>
+        </li>
+        <li>
+          <a href="https://neal.fun/">Interesting Games</a>
         </li>
       </ul>
     </div>
@@ -68,7 +71,8 @@
     margin: auto;
     border-radius: 5px;
     position: relative;
-    // top: 5vh;
+    margin-top: 1%;
+    margin-bottom: 1%;
     padding: 1%;
   }
 
@@ -76,11 +80,27 @@
     color: rgb(0, 0, 0);
   }
 
+ 
+
   li{
     text-indent: -5%;
     padding-top: 2vh;
     padding-bottom: 2vh;
-    list-style-type: upper-roman;
+    list-style: none;
   }
+   ul li{
+    display: flex;
+    align-items: center; /* Align items vertically in the middle */
+   }
+
+  ul li::before {
+  content: "";
+  display: block;
+  width: 20px; /* Set the size of the list item marker */
+  height: 20px; /* Set the size of the list item marker */
+  background-image: url('/personal_projects/moon.svg'); /* Your custom image */
+  background-size: cover; /* Resize the image to cover the size set */
+  margin-right: 15px; /* Space between the marker and the list item text */
+}
 
 </style>

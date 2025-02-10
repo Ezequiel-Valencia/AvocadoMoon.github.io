@@ -7,12 +7,26 @@
   import { onMount } from "svelte";
   import { musicController, musicTime, sfxController } from "../common/myLocalStorage";
   import { channels } from "./channelObject.js";
+  import { ChannelFunctions } from "./channelFunctions";
+
+  let bgMusic: HTMLAudioElement
+  let songElements: HTMLAudioElement[] = []
+  let hoverAudio: HTMLAudioElement
+  let clickAudio: HTMLAudioElement
+  let focusedChannel = -1
 
   onMount(() => {
     let video = document.querySelector('video');
     if (video != null){
       video.playbackRate = 0.5;
     }
+    bgMusic = document.querySelector("bgm") as HTMLAudioElement
+    for (let i = 0; i < channels.length; i++){
+      let s = document.getElementById("music-clip-" + i) as HTMLAudioElement
+      songElements.push(s)
+    }
+    hoverAudio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
+    clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
   })
 
   function focus(index: number, zIndex: string){
@@ -23,73 +37,6 @@
   }
 
   musicTime.reset();
-
-  export class ChannelFunctions {
-    hoverSound = 1;
-    clickSound = 2;
-    musicClip = 3;
-    backgroundMusic = 4;
-
-    staticImage(event: PointerEvent, id: number) {
-        channels[id].currentImage = channels[id].coverImage;
-        channels[id].hover = false;
-    }
-
-    async playgif(event: PointerEvent, id: number) {
-        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-        channels[id].hover = true;
-        await sleep(1000);
-        channels[id].hover ? channels[id].currentImage = channels[id].gifImage : null;
-    }
-
-    playMusic(id: number, typeOfMusic: number) {
-        if ($musicController) {
-            let bgMusic = document.getElementById("bgm") as HTMLAudioElement;
-            let musicClip = document.getElementById("music-clip-" + id) as HTMLAudioElement;
-            switch (typeOfMusic) {
-                case this.musicClip:
-                    bgMusic.pause();
-                    musicClip.currentTime = 0;
-                    musicClip.volume = channels[id].volumeLevel;
-                    musicClip.play();
-                    break;
-
-                case this.backgroundMusic:
-                    musicClip.pause();
-                    bgMusic.volume = 0.2
-                    bgMusic.play()
-                    break
-            }
-        }
-    }
-
-    playSfx(typeOfSound: number) {
-        if ($sfxController) {
-            switch (typeOfSound) {
-                case this.hoverSound:
-                    let audio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
-                    audio.play();
-                    break
-                case this.clickSound:
-                    let clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
-                    clickAudio.play();
-                    break;
-            }
-        }
-    }
-
-    redirect(id: number) {
-        if (channels[id].redirect == '') return;
-        if (channels[id].redirect == '/ctgrassroots') window.open("https://ctgrassroots.org");
-        else{
-          location.href = channels[id].redirect;
-        }
-    }
-
-
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/animation
-
-};
 
   
   const channelFunctions = new ChannelFunctions();
@@ -104,67 +51,55 @@
 <div id="grid-container">
 {#each channels as currentChannel, index}
     <div 
-    on:mousedown={(e) => {
-      if (!currentChannel.focused){
-        channelFunctions.playMusic(index, channelFunctions.musicClip);
-      }
-      currentChannel.focused = true;
-    }
-  }
-
-    on:mouseenter={(e) => {channelFunctions.playSfx(channelFunctions.hoverSound)}}
-    role="tab"
-    aria-controls="tabpanel-{index}"
-    tabindex="{index}"
-    class="channel-container">
+      on:mousedown={(e) => {
+        if (!currentChannel.focused && $musicController){
+          channelFunctions.playMusic(index, bgMusic, songElements[index], false);
+        }
+        focusedChannel = index;
+      }}
+      on:mouseenter={(e) => {
+        if($sfxController){
+          hoverAudio.play()
+        }
+      }}
+    role="tab" aria-controls="tabpanel-{index}" tabindex="{index}" class="channel-container">
     <div
-        on:pointerenter={(e) => channelFunctions.playgif(e, index)}
-        on:pointerleave={(e) => channelFunctions.staticImage(e, index)}
-        class={currentChannel.focused ? "big-channel-container": "channel-box"}
+        class={focusedChannel == index ? "big-channel-container": "channel-box"}
         id="channelBox-{index}"
-        
         on:animationstart={(e) => focus(index, "50")}
-        on:animationend={(e) => focus(index, "1")}
-        
-    >
-        {#if currentChannel.currentImage.includes(".webm")}
-          <video autoplay loop muted playsinline
-            src={currentChannel.currentImage}
-            class="channel-image"
-            playbackRate={3}
-            >
-          
-          </video>
-        
+        on:animationend={(e) => focus(index, "1")}>
 
+        {#if currentChannel.currentImage.includes(".webm")}
+          <video autoplay loop muted playsinline src={currentChannel.currentImage}
+            class="channel-image" playbackRate={3}>
+          </video>
         {:else}
-          <img
-          src={currentChannel.currentImage}
-          id="channel-image-{index}"
-          alt="Channel covers"
-          class="channel-image"
-          />
+            <img src={currentChannel.currentImage} id="channel-image-{index}"
+            alt="Channel covers"class="channel-image"/>
         {/if}
         
         
-        {#if currentChannel.focused}
-        <div
-        class="channel-bar">
+        {#if focusedChannel == index}
+          <script>console.log("focused")</script>
+          <div class="channel-bar">
+            <button on:click={(e) => {
+              focusedChannel = -1
+              if ($sfxController){
+                clickAudio.play()
+              }
+              if ($musicController){
+                channelFunctions.playMusic(index, bgMusic,  songElements[index], true)
+              }}
+            }
+            class="menu-button channel-buttons"
+            id="mbutton-{index}">Menu</button>
 
-        <button 
-        on:click={(e) => {currentChannel.focused = false; 
-          channelFunctions.playSfx(channelFunctions.clickSound)
-          channelFunctions.playMusic(index, channelFunctions.backgroundMusic)
-          }}
-        class="menu-button channel-buttons"
-        id="mbutton-{index}">Menu</button>
-
-        <button on:click={(e) => {channelFunctions.playSfx(channelFunctions.clickSound);
-           channelFunctions.redirect(index)}}
-        class="play-button channel-buttons" 
-        id="pbutton-{index}">Start</button>
-        
-        </div>
+            <button on:click={(e) => { if ($sfxController){clickAudio.play();}
+              channelFunctions.redirect(index)}} class="play-button channel-buttons" 
+            id="pbutton-{index}">
+              Start
+            </button>
+          </div>
         {/if}
     </div>
 

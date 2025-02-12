@@ -112,10 +112,7 @@
 
 
 <style lang="scss">
-    $channel-button-height: 40%;
-    $channel-button-width: 40%;
-    $channel-button-offset: -5%;
-    $border-radius: 40px;
+  @use "channel";
     #grid-container {
     display:grid;
     grid-template-columns: repeat(4, 0fr);
@@ -126,96 +123,5 @@
     max-height: $channel-view-height;
     max-width: 100vw;
     padding: 1.5%;
-  }
-
-  .play-button{
-    position: relative;
-    height: $channel-button-height;
-    width: $channel-button-width;
-    right: $channel-button-offset;
-    text-align: center;
-    top: 20%;
-  }
-
-  .big-channel-container{
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    max-width: 100vw;
-    max-height: 100vh;
-    transform: translate(-50%,-50%);
-    width: 100vw;
-    height: 100vh;
-    z-index: 50;
-    transition: all 1s;
-    border-radius: $border-radius;
-  }
-
-  .channel-container {
-    padding: 1px;
-    border-radius: $border-radius;
-    max-height: 25vh;
-    max-width: 20vw;
-    // text-align: center;
-  }
-
-  .channel-container:hover {
-    // background: linear-gradient(skyblue, blue);
-    box-shadow: 0px 0px 100px 100px lightblue inset;
-  }
-
-
-  .channel-box {
-    padding: 2px;
-    height: 20vh;
-    width: 19.85vw;
-    overflow: hidden;
-    border-radius: $border-radius;
-    transition: all 1s;
-    z-index: 1;
-    animation: z-high 1s linear;
-  }
-
-  @keyframes z-high{
-    0%{
-      z-index: 100;
-    }
-    100%{
-      z-index: 100;
-    }
-  }
-
-  .channel-box:hover{
-    box-shadow: 0px 0px 10px 10vh lightblue inset;
-  }
-
-
-  .channel-image {
-    object-fit: inherit;
-    height: 100%;
-    width: 100%;
-    border-radius: 40px;
-    text-align: center;
-  }
-
-  .menu-button{
-    position: relative;
-    height: $channel-button-height;
-    width: $channel-button-width;
-    left: $channel-button-offset;
-    text-align: center;
-    top: 20%;
-
-  }
-
-  .channel-bar{
-    position: relative;
-    overflow: hidden;
-    background-color: white;
-    height: 15%;
-    width: 100%;
-    bottom: 15%;
-    display:block;
-    border-radius: $border-radius;
   }
 </style>

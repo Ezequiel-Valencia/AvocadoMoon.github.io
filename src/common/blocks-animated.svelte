@@ -28,7 +28,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: -1;
+    z-index: -50;
 
 }
 
@@ -41,7 +41,7 @@
     background: rgba(111, 207, 252, 0.2);
     animation: animate 25s linear infinite;
     bottom: -150px;
-    z-index: -1;
+    z-index: -50;
 }
 
 .circles li:nth-child(1){

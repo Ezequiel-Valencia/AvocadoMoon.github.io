@@ -55,7 +55,6 @@
 </script>
 
 <div id="menu-bar">
-  <img id="menu-svg" src="wii bar final.png" alt="wii bar" />
   <div>
     <button
       id="left-bar-button"
@@ -167,6 +166,11 @@
   @use 'homeMenu';
   @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
 
+  @font-face{
+    src: url("/terminal-font.ttf");
+    font-family: 'Terminal Font';
+  }
+
   .bar-button {
     position: absolute;
     border-radius: 50%;
@@ -226,13 +230,6 @@
 
   #right-bar-button {
     right: $button-horizontal-offset;
-  }
-
-  #menu-svg {
-    position: fixed;
-    height: 20vh;
-    bottom: 0%;
-    width: 100%;
   }
 
   #menu-bar {

@@ -9,7 +9,8 @@
   width: 50%;
   border-radius: 15px;
   z-index: 9999;
-  background-color: gray;
+  background-color: rgba(105, 105, 105, 0.911);
+  backdrop-filter: blur(10px);
   text-align: center;
 }
 

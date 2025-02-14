@@ -81,11 +81,7 @@
 <section id="grid-container">
 {#each channels as currentChannel, index}
     <!-- Focus blur background -->
-    {#if focusedChannel != -1}
-      <div style="height: 100vh; width:100vw; 
-      position:absolute; background-color: rgba(255, 255, 255, 0.111);
-      backdrop-filter: blur(2px); top:0;left:0;"></div>
-    {/if}
+    
 
     <div 
       on:mousedown={(e) => {
@@ -152,6 +148,11 @@
     {/if}
 
     </div>
+    {#if focusedChannel != -1}
+      <div style="height: 100vh; width:100vw; 
+      position:absolute; background-color: rgba(255, 255, 255, 0.111);
+      backdrop-filter: blur(2px); top:0;left:0;"></div>
+    {/if}
 
     <audio src="{currentChannel.musicClip}" id="music-clip-{index}"></audio>
 

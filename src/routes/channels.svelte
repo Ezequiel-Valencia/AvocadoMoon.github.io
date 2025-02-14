@@ -20,13 +20,11 @@
     if (video != null){
       video.playbackRate = 0.5;
     }
-    bgMusic = document.querySelector("bgm") as HTMLAudioElement
     for (let i = 0; i < channels.length; i++){
       let s = document.getElementById("music-clip-" + i) as HTMLAudioElement
       songElements.push(s)
     }
-    hoverAudio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
-    clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
+    getAudioElements()
   })
 
   function focus(index: number, zIndex: string){
@@ -34,6 +32,13 @@
     node ? node.style.zIndex = zIndex: null;
     let menuNode = document.getElementById("menu-bar");
     menuNode ? menuNode.style.zIndex = "-20": null;
+  }
+
+
+  function getAudioElements(){
+    bgMusic = document.getElementById("bgm") as HTMLAudioElement
+    hoverAudio = document.getElementById("channel-hover-audio") as HTMLAudioElement;
+    clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
   }
 
   musicTime.reset();

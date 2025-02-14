@@ -105,23 +105,26 @@
       }}
     role="tab" aria-controls="tabpanel-{index}" tabindex="{index}" class="channel-container">
       <!-- Image Div -->
-      <div
-          class={focusedChannel == index ? "big-channel-container": "channel-box"}
-          id="channelBox-{index}"
-          on:animationstart={(e) => focus(index, "50")}
-          on:animationend={(e) => focus(index, "1")}>
+      {#if currentChannel.redirect != ''}
+        <div
+            class={focusedChannel == index ? "big-channel-container": "channel-box"}
+            id="channelBox-{index}"
+            on:animationstart={(e) => focus(index, "50")}
+            on:animationend={(e) => focus(index, "1")}>
 
-          {#if currentChannel.currentImage.includes(".webm")}
-            <video autoplay loop muted playsinline src={currentChannel.currentImage}
-              class="channel-image" playbackRate={3}>
-            </video>
-          {:else}
-              {#if currentChannel.redirect != ''}
-              <img src={currentChannel.currentImage} id="channel-image-{index}"
-              alt="Channel covers"class="channel-image"/>
-              {/if}
-          {/if}
-      </div>
+            {#if currentChannel.currentImage.includes(".webm")}
+              <video autoplay loop muted playsinline src={currentChannel.currentImage}
+                class="channel-image" playbackRate={3}>
+              </video>
+            {:else}
+                <img src={currentChannel.currentImage} id="channel-image-{index}"
+                alt="Channel covers"class="channel-image"/>
+            {/if}
+        </div>
+      {:else}
+        <div class="channel-box glass" id="channelBox-{index}">
+        </div>
+      {/if}
     {#if focusedChannel == index}
       <div class="channel-bar">
         <h2>Continue to {currentChannel.channelName} Page?</h2>
@@ -169,14 +172,5 @@
     max-width: 100vw;
     padding: 1.5%;
   }
-
-  // .glass{
-  //   /* From https://css.glass */
-  //   background: rgba(255, 255, 255, 0.9);
-  //   border-radius: 16px;
-  //   backdrop-filter: blur(5px);
-  //   -webkit-backdrop-filter: blur(5px);
-  //   border: 1px solid rgba(255, 255, 255, 0.3);
-  // }
 
 </style>

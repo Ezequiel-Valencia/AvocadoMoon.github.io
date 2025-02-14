@@ -15,12 +15,13 @@ const nCols = 3;
 // Needs to be initalized with some form of variables or else compiler throws fit
 export let channels: { coverImage: string; 
     gifImage: string, currentImage: string, 
-    focused: boolean, hover: boolean, redirect: string, 
+    focused: boolean, hover: boolean, redirect: string, channelName: string,
     musicClip: string,
     volumeLevel: number }[] = [
     {
         coverImage: '/Channel Covers/about me cover.webp',
         gifImage: '/Channel Covers/about me cover.webp',
+        channelName: 'About Me',
         currentImage: '',
         focused: false,
         hover: false,
@@ -31,6 +32,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/Work_Exp.webm",
         gifImage: "/Channel Covers/Work_Exp.webm",
+        channelName: 'Work Experience',
         currentImage: '',
         focused: false,
         hover: false,
@@ -41,6 +43,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/Zine_Cover.webp",
         gifImage: "Channel Covers/Zine_Cover.webp",
+        channelName: 'Zine',
         currentImage: '',
         focused: false,
         hover: false,
@@ -51,6 +54,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/personal_projects.jpg",
         gifImage: "Channel Covers/personal_projects.jpg",
+        channelName: 'Personal Projects',
         currentImage: '',
         focused: false,
         hover: false,
@@ -61,6 +65,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/open book.png",
         gifImage: "Channel Covers/open book.png",
+        channelName: 'Education',
         currentImage: '',
         focused: false,
         hover: false,
@@ -71,6 +76,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/zekeanimsmall.gif",
         gifImage: "Channel Covers/zekeanimsmall.gif",
+        channelName: 'Web Ring',
         currentImage: '',
         focused: false,
         hover: false,
@@ -81,6 +87,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/CTGrassRoots Cover.jpg",
         gifImage: "Channel Covers/CTGrassRoots Cover.jpg",
+        channelName: 'CTGrassRoots',
         currentImage: '',
         focused: false,
         hover: false,
@@ -100,6 +107,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/cat-encryption.webp",
         gifImage: "Channel Covers/cat-encryption.webp",
+        channelName: 'Cat Steganography',
         currentImage: '',
         focused: false,
         hover: false,
@@ -113,7 +121,7 @@ const channelPriorLength = channels.length
 // Fill channels with default if still space
 for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-        ? channels.push({ coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover: false, focused: false, redirect: '', musicClip: '', volumeLevel:.5 })
+        ? channels.push({ coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover: false, focused: false, redirect: '', musicClip: '', volumeLevel:.5, channelName: ''})
         : null;
     channels[index].currentImage = channels[index].coverImage
 };

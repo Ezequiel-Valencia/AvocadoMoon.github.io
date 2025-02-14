@@ -41,6 +41,31 @@
     clickAudio = document.getElementById("channel-click-audio") as HTMLAudioElement;
   }
 
+  function moveChannelToCenter(channelIndex: number){
+    let box = document.getElementById("channelBox-" + channelIndex) as HTMLElement;
+    const boxRect = box.getBoundingClientRect();
+
+    // Get viewport center
+    const centerX = window.innerWidth / 2 + boxRect.width / 4;
+    const centerY = window.innerHeight / 2 + boxRect.height / 4;
+
+    // Get the current center of the div
+    const boxCenterX = boxRect.left + boxRect.width;
+    const boxCenterY = boxRect.top + boxRect.height;
+
+    // Calculate distance to center
+    const deltaX = centerX - boxCenterX;
+    const deltaY = centerY - boxCenterY;
+
+    // Apply translation
+    box.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  }
+
+  function resetChannelPosition(channelIndex: number){
+    let box = document.getElementById("channelBox-" + channelIndex) as HTMLElement;
+    box.style.transform = ``
+  }
+
   musicTime.reset();
 
   
@@ -53,15 +78,24 @@
 </script>
 
 
-<div id="grid-container">
+<section id="grid-container">
 {#each channels as currentChannel, index}
+    <!-- Focus blur background -->
+    {#if focusedChannel != -1}
+      <div style="height: 100vh; width:100vw; 
+      position:absolute; background-color: rgba(255, 255, 255, 0.111);
+      backdrop-filter: blur(2px); top:0;left:0;"></div>
+    {/if}
+
     <div 
       on:mousedown={(e) => {
+        getAudioElements()
         if (!currentChannel.focused && $musicController){
           channelFunctions.playMusic(index, bgMusic, songElements[index], false);
         }
         if (currentChannel.redirect != ''){
           focusedChannel = index;
+          moveChannelToCenter(index)
         }
       }}
       on:mouseenter={(e) => {
@@ -70,54 +104,56 @@
         }
       }}
     role="tab" aria-controls="tabpanel-{index}" tabindex="{index}" class="channel-container">
-    <div
-        class={focusedChannel == index ? "big-channel-container": "channel-box"}
-        id="channelBox-{index}"
-        on:animationstart={(e) => focus(index, "50")}
-        on:animationend={(e) => focus(index, "1")}>
+      <!-- Image Div -->
+      <div
+          class={focusedChannel == index ? "big-channel-container": "channel-box"}
+          id="channelBox-{index}"
+          on:animationstart={(e) => focus(index, "50")}
+          on:animationend={(e) => focus(index, "1")}>
 
-        {#if currentChannel.currentImage.includes(".webm")}
-          <video autoplay loop muted playsinline src={currentChannel.currentImage}
-            class="channel-image" playbackRate={3}>
-          </video>
-        {:else}
-            {#if currentChannel.redirect != ''}
-            <img src={currentChannel.currentImage} id="channel-image-{index}"
-            alt="Channel covers"class="channel-image"/>
-            {/if}
-        {/if}
-        
-        
-        {#if focusedChannel == index}
-          <script>console.log("focused")</script>
-          <div class="channel-bar">
-            <button on:click={(e) => {
-              focusedChannel = -1
-              if ($sfxController){
-                clickAudio.play()
-              }
-              if ($musicController){
-                channelFunctions.playMusic(index, bgMusic,  songElements[index], true)
-              }}
-            }
-            class="menu-button channel-buttons"
-            id="mbutton-{index}">Menu</button>
+          {#if currentChannel.currentImage.includes(".webm")}
+            <video autoplay loop muted playsinline src={currentChannel.currentImage}
+              class="channel-image" playbackRate={3}>
+            </video>
+          {:else}
+              {#if currentChannel.redirect != ''}
+              <img src={currentChannel.currentImage} id="channel-image-{index}"
+              alt="Channel covers"class="channel-image"/>
+              {/if}
+          {/if}
+      </div>
+    {#if focusedChannel == index}
+      <div class="channel-bar">
+        <h2>Continue to {currentChannel.channelName} Page?</h2>
+        <button on:click={(e) => {
+          focusedChannel = -1
+          resetChannelPosition(index)
+          if ($sfxController){
+            clickAudio.play()
+          }
+          if ($musicController){
+            channelFunctions.playMusic(index, bgMusic,  songElements[index], true)
+          }}
+        }
+        class="menu-button channel-buttons"
+        id="mbutton-{index}">
+          Back
+        </button>
 
-            <button on:click={(e) => { if ($sfxController){clickAudio.play();}
-              channelFunctions.redirect(index)}} class="play-button channel-buttons" 
-            id="pbutton-{index}">
-              Start
-            </button>
-          </div>
-        {/if}
-    </div>
+        <button on:click={(e) => { if ($sfxController){clickAudio.play();}
+          channelFunctions.redirect(index)}} class="play-button channel-buttons" 
+        id="pbutton-{index}">
+          Continue
+        </button>
+      </div>
+    {/if}
 
     </div>
 
     <audio src="{currentChannel.musicClip}" id="music-clip-{index}"></audio>
 
 {/each}
-</div>
+</section>
 
 
 <style lang="scss">

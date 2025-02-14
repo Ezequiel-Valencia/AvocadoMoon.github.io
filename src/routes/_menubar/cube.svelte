@@ -20,6 +20,7 @@
 <style lang="scss">
  :root{
   --face-space:5vmin;
+  --face-color: skyblue;
  }
     @keyframes turn {
   from { transform: rotate3d(0, 0, 0, 0); }
@@ -47,12 +48,13 @@ section {
   transition: all 1s;
   animation: returnTo 1s linear;
   --face-space: 5vmin;
+  --face-color: rgb(33, 185, 255);
 }
 
 .face {
   width: 10vmin;
   height: 10vmin;
-  background: skyblue;
+  background: var(--face-color);
   border: 2px solid black;
   position: absolute;
   opacity: 0.5;

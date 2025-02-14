@@ -60,6 +60,7 @@
 
 <div id="menu-bar">
   <div>
+    <h4 class="text" style="position: absolute; left: 3%; bottom: 80%;">| Audio |</h4>
     <button
       id="left-bar-button"
       class="bar-button"
@@ -98,6 +99,7 @@
 
 
   <div>
+    <h4 class="text" style="position: absolute; right: 3%; bottom: 80%;">| Contact |</h4>
     <button
     id="right-bar-button"
     class="bar-button"
@@ -133,7 +135,7 @@
     border-radius: 50%;
     height: 50%;
     width: 10%;
-    z-index: 2;
+    z-index: 1;
     bottom: 20%;
     max-width: 150px;
     background: transparent;

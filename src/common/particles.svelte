@@ -32,7 +32,7 @@
 
 .circle-container {
   $particleNum: 200;
-  $particleColor: hsla(212, 100%, 67%, 0.671);
+  $particleColor: hsl(212, 100%, 67%);
 
   position: absolute;
   transform: translateY(-10vh);
@@ -81,7 +81,7 @@
     }
   }
 
-  $particleBaseSize: 8;
+  $particleBaseSize: 20;
 
   
   @for $i from 1 through $particleNum {

@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import { sfxController, musicController } from "../common/myLocalStorage";
   import {clickedOff} from "../globals";
+  import Cube from "./cube.svelte";
 
   function dayToName(d: any) {
     switch (d) {
@@ -63,7 +64,7 @@
         music_options = !music_options;
       }}
     >
-      <img class="menu-icon" src="musical-note.png" alt="music" />
+      <Cube cubeImage="musical-note.png"></Cube>
     </button>
   </div>
 
@@ -74,11 +75,11 @@
     <div id="top-text">
       <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">Ezequiel Valencia</h3>
 
-      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
-        Bio-Informatics innovator, Dev-Ops specialist, and Full-Stack developer
+      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
+        Cybersecurity graduate, Bio-Informatics innovator, Dev-Ops specialist, 
       </p>
-      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
-        who also does creative work.
+      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
+        and Full-Stack developer
       </p>
     </div>
 
@@ -101,7 +102,7 @@
       contact_info = !contact_info;
     }}
   >
-    <img class="menu-icon" src="mail.png" alt="mail" />
+    <Cube cubeImage="mail.png"></Cube>
   </button>
   </div>
   
@@ -178,12 +179,9 @@
     width: 10%;
     z-index: 2;
     bottom: 20%;
-    text-align: center;
     max-width: 150px;
-  }
-
-  .bar-button:hover {
-    cursor: url("/Cursors/Wii-Curso-plain.png") auto;
+    background: transparent;
+    border: none !important;
   }
 
   .text {
@@ -196,11 +194,6 @@
     top: 75vh;
     height: fit-content;
     line-height: 1;
-  }
-
-  .menu-icon {
-    max-width: 50%;
-    max-height: 50%;
   }
 
   .music-option-buttons {
@@ -240,7 +233,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    overflow: hidden;
+    // overflow: hidden;
     text-align: center;
   }
 </style>

@@ -5,6 +5,8 @@
   import { onMount } from 'svelte';
   import { clickedOff } from '../globals'
   import FirstVisit from './first-visit.svelte';
+  import BlocksAnimated from '../common/blocks-animated.svelte';
+  import Particles from '../common/particles.svelte';
 
   onMount(async () => {
     document.addEventListener("click", (event) : void => {
@@ -22,7 +24,8 @@
   
   <Menubar></Menubar>
 
-
+  <BlocksAnimated></BlocksAnimated>
+  <Particles></Particles>
 
   {#if $sfxController}
     <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
@@ -58,7 +61,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color: rgb(238, 236, 236);
+    background-color: rgb(245, 245, 245);
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor

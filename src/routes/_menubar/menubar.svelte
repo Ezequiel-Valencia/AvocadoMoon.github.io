@@ -4,8 +4,11 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { sfxController, musicController } from "../common/myLocalStorage";
-  import {clickedOff} from "../globals";
+  import { sfxController, musicController } from "../../common/myLocalStorage";
+  import {clickedOff} from "../../globals";
+  
+  import MusicOptions from "./musicOptions.svelte";
+  import ContactInfo from "./contactInfo.svelte";
   import Cube from "./cube.svelte";
 
   function dayToName(d: any) {
@@ -109,62 +112,15 @@
 </div>
 
 {#if music_options}
-  <div id="music-options" class="menu-popup">
-    <h2 class="menu-large-text">Audio Options</h2>
-    <p class="menu-med-text" style="margin: 5%;">
-      If you can't hear this sites music here are some trouble
-      shooting methods:
-    </p>
-    <ol class="menu-med-text" style="margin: 5%;">
-      <li class="menu-med-text">Turn on and off the audio.</li>
-      <li class="menu-med-text">Go to site settings in your browser, and enable autoplay.</li>
-      <li class="menu-med-text">Unmute the tab</li>
-    </ol>
-    <button
-      id="sfx"
-      class="music-option-buttons menu-med-text"
-      on:click={(e) => {
-        sfxController.toggle_sfx();
-      }}
-    >
-      SFX {$sfxController ? "On" : "Off"}
-    </button>
-    <button
-      id="music"
-      class="music-option-buttons menu-med-text"
-      on:click={(e) => {
-        musicController.toggle_music();
-      }}
-    >
-      Music {$musicController ? "On" : "Off"}
-    </button>
-  </div>
+  <MusicOptions></MusicOptions>
 {/if}
 
 {#if contact_info}
-  <div id="contact" class="menu-popup">
-    <h2 class="menu-large-text">Contact Info</h2>
-
-    <h4 class="menu-med-text">Email:</h4>
-    <a href="mailto:wzeke123@gmail.com" class="menu-med-text">wzeke123@gmail.com</a>
-
-    <h4 class="menu-med-text">Linkedin:</h4>
-    <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
-    >
-
-    <h4 class="menu-med-text">Github:</h4>
-    <a class="menu-med-text" href="https://github.com/AvocadoMoon">AvocadoMoon</a>
-
-    <h4 class="menu-med-text">Resume:</h4>
-    <a class="menu-med-text" href="https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub">
-    Personal Resume
-    </a>
-  </div>
+  <ContactInfo></ContactInfo>
 {/if}
 
 <style lang="scss">
   $button-horizontal-offset: 2%;
-  @use 'homeMenu';
   @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
 
   @font-face{
@@ -194,14 +150,6 @@
     top: 75vh;
     height: fit-content;
     line-height: 1;
-  }
-
-  .music-option-buttons {
-    width: 15%;
-    height: 15%;
-    margin: auto;
-    padding: 2%;
-    transform: translateY(100%);
   }
 
   #clock {

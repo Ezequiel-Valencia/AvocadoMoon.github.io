@@ -5,7 +5,7 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { musicController, musicTime, sfxController } from "../common/myLocalStorage";
+  import { musicController, musicTime, sfxController } from "../../common/myLocalStorage";
   import { channels } from "./channelObject.js";
   import { ChannelFunctions } from "./channelFunctions";
 
@@ -60,7 +60,9 @@
         if (!currentChannel.focused && $musicController){
           channelFunctions.playMusic(index, bgMusic, songElements[index], false);
         }
-        focusedChannel = index;
+        if (currentChannel.redirect != ''){
+          focusedChannel = index;
+        }
       }}
       on:mouseenter={(e) => {
         if($sfxController){
@@ -79,8 +81,10 @@
             class="channel-image" playbackRate={3}>
           </video>
         {:else}
+            {#if currentChannel.redirect != ''}
             <img src={currentChannel.currentImage} id="channel-image-{index}"
             alt="Channel covers"class="channel-image"/>
+            {/if}
         {/if}
         
         
@@ -129,4 +133,14 @@
     max-width: 100vw;
     padding: 1.5%;
   }
+
+  // .glass{
+  //   /* From https://css.glass */
+  //   background: rgba(255, 255, 255, 0.9);
+  //   border-radius: 16px;
+  //   backdrop-filter: blur(5px);
+  //   -webkit-backdrop-filter: blur(5px);
+  //   border: 1px solid rgba(255, 255, 255, 0.3);
+  // }
+
 </style>

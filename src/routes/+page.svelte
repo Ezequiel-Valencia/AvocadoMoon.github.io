@@ -19,14 +19,6 @@
 </script>
 
 <div id="mainDiv">
-
-  <Channels></Channels>
-  
-  <Menubar></Menubar>
-
-  <BlocksAnimated></BlocksAnimated>
-  <Particles></Particles>
-
   {#if $sfxController}
     <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
     <script lang="ts">
@@ -49,6 +41,12 @@
     </script>
   {/if}
 
+  <Channels></Channels>
+  
+  <Menubar></Menubar>
+
+  <BlocksAnimated></BlocksAnimated>
+  <Particles></Particles>
   
 
 </div>

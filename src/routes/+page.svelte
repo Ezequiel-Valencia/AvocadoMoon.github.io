@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Channels from './channels.svelte';
-  import Menubar from './menubar.svelte';
+  import Channels from './_channels/channels.svelte';
+  import Menubar from './_menubar/menubar.svelte';
   import { musicController, sfxController, hasVisited } from "../common/myLocalStorage";
   import { onMount } from 'svelte';
   import { clickedOff } from '../globals'
   import FirstVisit from './first-visit.svelte';
-  import BlocksAnimated from '../common/blocks-animated.svelte';
-  import Particles from '../common/particles.svelte';
+  import BlocksAnimated from './_decals/blocks-animated.svelte';
+  import Particles from './_decals/particles.svelte';
 
   onMount(async () => {
     document.addEventListener("click", (event) : void => {

@@ -47,7 +47,7 @@ section {
 .cube:hover{
   transition: all 1s;
   animation: returnTo 1s linear;
-  --face-space: 5vmin;
+  --face-space: 6vmin;
   --face-color: rgb(33, 185, 255);
 }
 

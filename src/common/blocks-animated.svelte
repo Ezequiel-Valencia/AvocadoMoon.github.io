@@ -38,7 +38,7 @@
     list-style: none;
     width: 20px;
     height: 20px;
-    background: rgba(111, 207, 252, 0.2);
+    background: rgba(111, 207, 252, 0.527);
     animation: animate 25s linear infinite;
     bottom: -150px;
     z-index: -50;

@@ -54,7 +54,7 @@
     {/if}
   </div>
     
-  <Menu songPath="https://files.catbox.moe/ll8iaa.mp3" songName="Samurai Champloo Aruarian Dance"/>
+  <Menu songVolumeLevel=.4 songPath="https://files.catbox.moe/ll8iaa.mp3" songName="Samurai Champloo Aruarian Dance"/>
   <Me />
   <Hobbies />
 

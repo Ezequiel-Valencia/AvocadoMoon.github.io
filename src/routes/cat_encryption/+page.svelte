@@ -18,7 +18,7 @@
 
 
 <div id="main-div">
-    <Menu songPath="https://files.catbox.moe/uc8nho.mp3" email="website@worker.slmail.me" songName="Intense - Only You (Cat Breakdance Section)"></Menu>
+    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/uc8nho.mp3" songName="Intense - Only You (Cat Breakdance Section)"></Menu>
 
     <div id="title" style="">
         <h1 id="title-text" class="text">Cat Communication</h1>

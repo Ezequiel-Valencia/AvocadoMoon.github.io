@@ -114,7 +114,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/threemix",
-        musicClip: "",
+        musicClip: "https://files.catbox.moe/x3l165.mp3",
         volumeLevel: 0.5
     }
 ];

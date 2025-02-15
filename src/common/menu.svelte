@@ -10,6 +10,7 @@
   let display_entire_menu = false;
   export let songName: string;
   export let songPath: string = "";
+  export let songVolumeLevel: string = "1";
 
   var paused = true
   var audioLength: any;
@@ -17,7 +18,7 @@
 
   onMount(() => {
     let audio = document.getElementById("bg-song") as HTMLAudioElement;
-    audio.volume = 0.1
+    audio.volume = Number(songVolumeLevel)
     paused = !$musicController
     if (paused){
       audio.pause()

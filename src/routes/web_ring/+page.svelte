@@ -10,7 +10,7 @@
 
 
 <div style="height: auto;" id="main-div">
-    <Menu songPath="https://files.catbox.moe/lgaw6k.mp3" email="zines.zlfwo@slmails.com" songName="Anodyne 2 - Center City Cenote"></Menu>
+    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/lgaw6k.mp3" songName="Anodyne 2 - Center City Cenote"></Menu>
     <div style="height: auto; min-height:100vh; text-align:center; margin:auto;">
         <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring">
     

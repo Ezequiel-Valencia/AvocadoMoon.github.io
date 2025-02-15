@@ -10,7 +10,7 @@
 
 
 <div id="main-div">
-    <Menu songPath="https://files.catbox.moe/way98y.mp3" email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
+    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/way98y.mp3" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
     {#if $transControl === transitionStates.stillInDream}
         <Dream transControl={transControl}></Dream>
     {:else}

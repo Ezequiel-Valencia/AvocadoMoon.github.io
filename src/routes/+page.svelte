@@ -29,9 +29,6 @@
   {/if}
   
 
-  {#if !$hasVisited}
-    <FirstVisit></FirstVisit>
-  {/if}
 
   {#if $musicController}
     <audio src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
@@ -47,6 +44,13 @@
 
   <BlocksAnimated></BlocksAnimated>
   <Particles></Particles>
+
+  {#if !$hasVisited}
+  <div style="height: 100vh; width:100vw; 
+  position:absolute; background-color: rgba(255, 255, 255, 0.81);
+  backdrop-filter: blur(2px); top:0;left:0;"></div>
+    <FirstVisit></FirstVisit>
+  {/if}
   
 
 </div>

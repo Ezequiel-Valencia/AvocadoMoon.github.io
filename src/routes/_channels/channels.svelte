@@ -30,8 +30,8 @@
   function focus(index: number, zIndex: string){
     let node = document.getElementById("channelBox-" + index);
     node ? node.style.zIndex = zIndex: null;
-    let menuNode = document.getElementById("menu-bar");
-    menuNode ? menuNode.style.zIndex = "-20": null;
+    let menuNode = document.getElementById("menu-bar") as HTMLElement;
+    menuNode.style.zIndex = "-20";
   }
 
 
@@ -89,7 +89,7 @@
         if (!currentChannel.focused && $musicController){
           channelFunctions.playMusic(index, bgMusic, songElements[index], false);
         }
-        if (currentChannel.redirect != ''){
+        if (currentChannel.redirect != '' && focusedChannel != index){
           focusedChannel = index;
           moveChannelToCenter(index)
         }

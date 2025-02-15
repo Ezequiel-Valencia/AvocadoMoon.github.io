@@ -85,8 +85,8 @@
 
     <div 
       on:mousedown={(e) => {
-        getAudioElements()
         if (!currentChannel.focused && $musicController){
+          getAudioElements()
           channelFunctions.playMusic(index, bgMusic, songElements[index], false);
         }
         if (currentChannel.redirect != '' && focusedChannel != index){
@@ -96,6 +96,7 @@
       }}
       on:mouseenter={(e) => {
         if($sfxController){
+          getAudioElements()
           hoverAudio.play()
         }
       }}

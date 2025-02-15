@@ -68,12 +68,12 @@ function musicPlaybackTime(){
     return {
         subscribe,
         setAudioTagTime: () => {
-            let audio = document.getElementById("song") as HTMLAudioElement;
+            let audio = document.getElementById("bg-song") as HTMLAudioElement;
             subscribe((num) => {audio.currentTime = num})
      },
         reset: () => {set(0); safeLocalStorage?.setItem(key, '0')},
         updateTimeStamp: () => {
-            let audio = document.getElementById("song") as HTMLAudioElement;
+            let audio = document.getElementById("bg-song") as HTMLAudioElement;
             set(audio.currentTime); 
             safeLocalStorage?.setItem(key, String(audio.currentTime))
         }

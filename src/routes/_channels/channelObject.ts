@@ -63,15 +63,15 @@ export let channels: { coverImage: string;
         volumeLevel: .3
     },
     {
-        coverImage: "/Channel Covers/zekeanimsmall.gif",
-        gifImage: "Channel Covers/zekeanimsmall.gif",
-        channelName: 'Web Ring',
+        coverImage: "/Channel Covers/threemix.png",
+        gifImage: "Channel Covers/threemix.png",
+        channelName: "Three Mix",
         currentImage: '',
         focused: false,
         hover: false,
-        redirect: "/web_ring",
-        musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
-        volumeLevel: .3
+        redirect: "/threemix",
+        musicClip: "https://files.catbox.moe/x3l165.mp3",
+        volumeLevel: 0.5
     },
     {
         coverImage: "/Channel Covers/CTGrassRoots Cover.jpg",
@@ -96,15 +96,15 @@ export let channels: { coverImage: string;
         volumeLevel: .3
     },
     {
-        coverImage: "/Channel Covers/threemix.png",
-        gifImage: "Channel Covers/threemix.png",
-        channelName: "Three Mix",
+        coverImage: "/Channel Covers/zekeanimsmall.gif",
+        gifImage: "Channel Covers/zekeanimsmall.gif",
+        channelName: 'Web Ring',
         currentImage: '',
         focused: false,
         hover: false,
-        redirect: "/threemix",
-        musicClip: "https://files.catbox.moe/x3l165.mp3",
-        volumeLevel: 0.5
+        redirect: "/web_ring",
+        musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
+        volumeLevel: .3
     },
     {
         coverImage: "/Channel Covers/Zine_Cover.webp",

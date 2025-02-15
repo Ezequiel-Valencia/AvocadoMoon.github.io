@@ -41,17 +41,6 @@ export let channels: { coverImage: string;
         volumeLevel: .5
     },
     {
-        coverImage: "/Channel Covers/Zine_Cover.webp",
-        gifImage: "Channel Covers/Zine_Cover.webp",
-        channelName: 'Zine',
-        currentImage: '',
-        focused: false,
-        hover: false,
-        redirect: "/zines",
-        musicClip: 'https://files.catbox.moe/tlb833.mp3',
-        volumeLevel: .2
-    },
-    {
         coverImage: "/Channel Covers/personal_projects.jpg",
         gifImage: "Channel Covers/personal_projects.jpg",
         channelName: 'Personal Projects',
@@ -116,7 +105,18 @@ export let channels: { coverImage: string;
         redirect: "/threemix",
         musicClip: "https://files.catbox.moe/x3l165.mp3",
         volumeLevel: 0.5
-    }
+    },
+    {
+        coverImage: "/Channel Covers/Zine_Cover.webp",
+        gifImage: "Channel Covers/Zine_Cover.webp",
+        channelName: 'Zine',
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/zines",
+        musicClip: 'https://files.catbox.moe/tlb833.mp3',
+        volumeLevel: .2
+    },
 ];
 const channelPriorLength = channels.length
 

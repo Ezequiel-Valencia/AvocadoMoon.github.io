@@ -4,8 +4,12 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { sfxController, musicController } from "../common/myLocalStorage";
-  import {clickedOff} from "../globals";
+  import { sfxController, musicController } from "../../common/myLocalStorage";
+  import {clickedOff} from "../../globals";
+  
+  import MusicOptions from "./musicOptions.svelte";
+  import ContactInfo from "./contactInfo.svelte";
+  import Cube from "./cube.svelte";
 
   function dayToName(d: any) {
     switch (d) {
@@ -55,8 +59,8 @@
 </script>
 
 <div id="menu-bar">
-  <img id="menu-svg" src="wii bar final.png" alt="wii bar" />
   <div>
+    <h4 class="text" style="position: absolute; left: 3%; bottom: 80%;font-size: 1.8vmin;">| Audio |</h4>
     <button
       id="left-bar-button"
       class="bar-button"
@@ -64,7 +68,7 @@
         music_options = !music_options;
       }}
     >
-      <img class="menu-icon" src="musical-note.png" alt="music" />
+      <Cube cubeImage="musical-note.png"></Cube>
     </button>
   </div>
 
@@ -75,11 +79,11 @@
     <div id="top-text">
       <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">Ezequiel Valencia</h3>
 
-      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
-        Bio-Informatics innovator, Dev-Ops specialist, and Full-Stack developer
+      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
+        Cybersecurity graduate, Bio-Informatics innovator, Dev-Ops specialist, 
       </p>
-      <p style="font-size: 1.5vmin; transform:translateY(-200%)" id="description" class="text">
-        who also does creative work.
+      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
+        and Full-Stack developer
       </p>
     </div>
 
@@ -95,6 +99,7 @@
 
 
   <div>
+    <h4 class="text" style="position: absolute; right: 3%; bottom: 80%;font-size: 1.8vmin;">| Contact |</h4>
     <button
     id="right-bar-button"
     class="bar-button"
@@ -102,84 +107,39 @@
       contact_info = !contact_info;
     }}
   >
-    <img class="menu-icon" src="mail.png" alt="mail" />
+    <Cube cubeImage="mail.png"></Cube>
   </button>
   </div>
   
 </div>
 
 {#if music_options}
-  <div id="music-options" class="menu-popup">
-    <h2 class="menu-large-text">Audio Options</h2>
-    <p class="menu-med-text" style="margin: 5%;">
-      If you can't hear this sites music here are some trouble
-      shooting methods:
-    </p>
-    <ol class="menu-med-text" style="margin: 5%;">
-      <li class="menu-med-text">Turn on and off the audio.</li>
-      <li class="menu-med-text">Go to site settings in your browser, and enable autoplay.</li>
-      <li class="menu-med-text">Unmute the tab</li>
-    </ol>
-    <button
-      id="sfx"
-      class="music-option-buttons menu-med-text"
-      on:click={(e) => {
-        sfxController.toggle_sfx();
-      }}
-    >
-      SFX {$sfxController ? "On" : "Off"}
-    </button>
-    <button
-      id="music"
-      class="music-option-buttons menu-med-text"
-      on:click={(e) => {
-        musicController.toggle_music();
-      }}
-    >
-      Music {$musicController ? "On" : "Off"}
-    </button>
-  </div>
+  <MusicOptions></MusicOptions>
 {/if}
 
 {#if contact_info}
-  <div id="contact" class="menu-popup">
-    <h2 class="menu-large-text">Contact Info</h2>
-
-    <h4 class="menu-med-text">Email:</h4>
-    <a href="mailto:wzeke123@gmail.com" class="menu-med-text">wzeke123@gmail.com</a>
-
-    <h4 class="menu-med-text">Linkedin:</h4>
-    <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
-    >
-
-    <h4 class="menu-med-text">Github:</h4>
-    <a class="menu-med-text" href="https://github.com/AvocadoMoon">AvocadoMoon</a>
-
-    <h4 class="menu-med-text">Resume:</h4>
-    <a class="menu-med-text" href="https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub">
-    Personal Resume
-    </a>
-  </div>
+  <ContactInfo></ContactInfo>
 {/if}
 
 <style lang="scss">
   $button-horizontal-offset: 2%;
-  @use 'homeMenu';
   @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
+
+  @font-face{
+    src: url("/terminal-font.ttf");
+    font-family: 'Terminal Font';
+  }
 
   .bar-button {
     position: absolute;
     border-radius: 50%;
     height: 50%;
     width: 10%;
-    z-index: 2;
+    z-index: 1;
     bottom: 20%;
-    text-align: center;
     max-width: 150px;
-  }
-
-  .bar-button:hover {
-    cursor: url("/Cursors/Wii-Curso-plain.png") auto;
+    background: transparent;
+    border: none !important;
   }
 
   .text {
@@ -192,19 +152,6 @@
     top: 75vh;
     height: fit-content;
     line-height: 1;
-  }
-
-  .menu-icon {
-    max-width: 50%;
-    max-height: 50%;
-  }
-
-  .music-option-buttons {
-    width: 15%;
-    height: 15%;
-    margin: auto;
-    padding: 2%;
-    transform: translateY(100%);
   }
 
   #clock {
@@ -228,13 +175,6 @@
     right: $button-horizontal-offset;
   }
 
-  #menu-svg {
-    position: fixed;
-    height: 20vh;
-    bottom: 0%;
-    width: 100%;
-  }
-
   #menu-bar {
     position: fixed;
     height: 100vh - $channel-view-height;
@@ -243,7 +183,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    overflow: hidden;
+    // overflow: hidden;
     text-align: center;
   }
 </style>

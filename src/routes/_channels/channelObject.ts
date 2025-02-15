@@ -6,7 +6,7 @@
 
 
 import { SvelteComponent } from "svelte";
-import { sfxController, musicController } from "../common/myLocalStorage";
+import { sfxController, musicController } from "../../common/myLocalStorage";
 
 const nRows = 4;
 const nCols = 3;
@@ -15,12 +15,13 @@ const nCols = 3;
 // Needs to be initalized with some form of variables or else compiler throws fit
 export let channels: { coverImage: string; 
     gifImage: string, currentImage: string, 
-    focused: boolean, hover: boolean, redirect: string, 
+    focused: boolean, hover: boolean, redirect: string, channelName: string,
     musicClip: string,
     volumeLevel: number }[] = [
     {
         coverImage: '/Channel Covers/about me cover.webp',
         gifImage: '/Channel Covers/about me cover.webp',
+        channelName: 'About Me',
         currentImage: '',
         focused: false,
         hover: false,
@@ -31,6 +32,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/Work_Exp.webm",
         gifImage: "/Channel Covers/Work_Exp.webm",
+        channelName: 'Work Experience',
         currentImage: '',
         focused: false,
         hover: false,
@@ -41,6 +43,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/Zine_Cover.webp",
         gifImage: "Channel Covers/Zine_Cover.webp",
+        channelName: 'Zine',
         currentImage: '',
         focused: false,
         hover: false,
@@ -51,6 +54,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/personal_projects.jpg",
         gifImage: "Channel Covers/personal_projects.jpg",
+        channelName: 'Personal Projects',
         currentImage: '',
         focused: false,
         hover: false,
@@ -61,6 +65,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/open book.png",
         gifImage: "Channel Covers/open book.png",
+        channelName: 'Education',
         currentImage: '',
         focused: false,
         hover: false,
@@ -71,6 +76,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/zekeanimsmall.gif",
         gifImage: "Channel Covers/zekeanimsmall.gif",
+        channelName: 'Web Ring',
         currentImage: '',
         focused: false,
         hover: false,
@@ -81,6 +87,7 @@ export let channels: { coverImage: string;
     {
         coverImage: "/Channel Covers/CTGrassRoots Cover.jpg",
         gifImage: "Channel Covers/CTGrassRoots Cover.jpg",
+        channelName: 'CTGrassRoots',
         currentImage: '',
         focused: false,
         hover: false,
@@ -88,18 +95,10 @@ export let channels: { coverImage: string;
         musicClip: 'https://files.catbox.moe/cc55u4.mp3',
         volumeLevel: .3
     },
-    // {
-    //     coverImage: "/Channel Covers/music_player.png",
-    //     gifImage: "Channel Covers/music_player.png",
-    //     currentImage: '',
-    //     focused: false,
-    //     hover: false,
-    //     redirect: "/music_player",
-    //     musicClip: ""
-    // },
     {
         coverImage: "/Channel Covers/cat-encryption.webp",
         gifImage: "Channel Covers/cat-encryption.webp",
+        channelName: 'Cat Steganography',
         currentImage: '',
         focused: false,
         hover: false,
@@ -107,13 +106,24 @@ export let channels: { coverImage: string;
         musicClip: 'https://files.catbox.moe/g8n27k.mp3',
         volumeLevel: .3
     },
+    {
+        coverImage: "/Channel Covers/threemix.png",
+        gifImage: "Channel Covers/threemix.png",
+        channelName: "Three Mix",
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/threemix",
+        musicClip: "https://files.catbox.moe/x3l165.mp3",
+        volumeLevel: 0.5
+    }
 ];
 const channelPriorLength = channels.length
 
 // Fill channels with default if still space
 for (let index = 0; index < nRows * nCols; index++) {
     index < ((nRows * nCols) - channelPriorLength)
-        ? channels.push({ coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover: false, focused: false, redirect: '', musicClip: '', volumeLevel:.5 })
+        ? channels.push({ coverImage: '/Channel Covers/no signal low con.gif', gifImage: '/Channel Covers/no signal low con.gif', currentImage: '', hover: false, focused: false, redirect: '', musicClip: '', volumeLevel:.5, channelName: ''})
         : null;
     channels[index].currentImage = channels[index].coverImage
 };

@@ -76,7 +76,7 @@
   </div>
 
   {#if $musicController}
-    <audio id="song" src="{experiencesSong}" autoplay loop></audio>
+    <audio id="bg-song" src="{experiencesSong}" autoplay loop></audio>
   {/if}
   
 </section>

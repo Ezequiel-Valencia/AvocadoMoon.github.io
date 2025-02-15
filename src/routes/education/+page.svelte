@@ -32,7 +32,7 @@
             <button on:click={(e) => {touchscreen = false}}>Continue</button>
         </div>
     {/if}
-    <Menu songPath="https://files.catbox.moe/p5bsgp.mp3" email="website@worker.slmail.me" songName="Mozart Symphony 40"></Menu>
+    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/p5bsgp.mp3" songName="Mozart Symphony 40"></Menu>
     <Intro></Intro>
     <Education></Education>
 </div>

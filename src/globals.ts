@@ -136,7 +136,7 @@ export const csWorkTechnologies = {
 
 
 	Fiji: {
-		icon: "https://global.discourse-cdn.com/flex015/uploads/imagej/original/3X/f/4/f41e19741763edf6f79e98aaf9259c614ddec98d.png",
+		icon: "https://imagej.net/imagej-wiki-static/images/a/ae/Fiji-icon.png",
 		name: "Fiji",
 		description: "Swiss army knife for microscopy. Made two professional plugins for the application so far."
 	},
@@ -174,7 +174,7 @@ export const csWorkTechnologies = {
 		description: "Backend framework for Java, accelerating the development of HTTP related API's."
 	},
 	Django: {
-		icon: "https://cdn.icon-icons.com/icons2/2415/PNG/512/django_line_logo_icon_146560.png",
+		icon: "https://static-00.iconduck.com/assets.00/django-icon-1606x2048-lwmw1z73.png",
 		name: "Django",
 		description: "A Python backend framework. Enjoyed it the only time I used it."
 	},

@@ -95,15 +95,6 @@ export let channels: { coverImage: string;
         musicClip: 'https://files.catbox.moe/cc55u4.mp3',
         volumeLevel: .3
     },
-    // {
-    //     coverImage: "/Channel Covers/music_player.png",
-    //     gifImage: "Channel Covers/music_player.png",
-    //     currentImage: '',
-    //     focused: false,
-    //     hover: false,
-    //     redirect: "/music_player",
-    //     musicClip: ""
-    // },
     {
         coverImage: "/Channel Covers/cat-encryption.webp",
         gifImage: "Channel Covers/cat-encryption.webp",
@@ -115,6 +106,17 @@ export let channels: { coverImage: string;
         musicClip: 'https://files.catbox.moe/g8n27k.mp3',
         volumeLevel: .3
     },
+    {
+        coverImage: "/Channel Covers/threemix.png",
+        gifImage: "Channel Covers/threemix.png",
+        channelName: "Three Mix",
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/threemix",
+        musicClip: "",
+        volumeLevel: 0.5
+    }
 ];
 const channelPriorLength = channels.length
 

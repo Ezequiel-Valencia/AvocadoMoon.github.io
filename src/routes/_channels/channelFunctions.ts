@@ -34,6 +34,7 @@ export class ChannelFunctions {
     redirect(id: number) {
         if (channels[id].redirect == '') return;
         if (channels[id].redirect == '/ctgrassroots') window.open("https://ctgrassroots.org");
+        if (channels[id].redirect == '/threemix') window.open("https://threemix.ezequielvalencia.com");
         else{
           location.href = channels[id].redirect;
         }

@@ -8,14 +8,6 @@
   import BlocksAnimated from './_decals/blocks-animated.svelte';
   import Particles from './_decals/particles.svelte';
 
-  onMount(async () => {
-    document.addEventListener("click", (event) : void => {
-      if (clickedOff("allowAudio", event)) {
-        hasVisited.hasVisited();
-      }
-    });
-  })
-
 </script>
 
 <div id="mainDiv">
@@ -46,9 +38,6 @@
   <Particles></Particles>
 
   {#if !$hasVisited}
-  <div style="height: 100vh; width:100vw; 
-  position:absolute; background-color: rgba(255, 255, 255, 0.81);
-  backdrop-filter: blur(2px); top:0;left:0;"></div>
     <FirstVisit></FirstVisit>
   {/if}
   

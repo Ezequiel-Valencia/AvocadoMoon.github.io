@@ -35,7 +35,7 @@
   <Menubar></Menubar>
 
   <BlocksAnimated></BlocksAnimated>
-  <Particles></Particles>
+  <!-- <Particles></Particles> -->
 
   {#if !$hasVisited}
     <FirstVisit></FirstVisit>

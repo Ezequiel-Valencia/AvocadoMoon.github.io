@@ -106,17 +106,17 @@ export let channels: { coverImage: string;
         musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
         volumeLevel: .3
     },
-    {
-        coverImage: "/Channel Covers/Zine_Cover.webp",
-        gifImage: "Channel Covers/Zine_Cover.webp",
-        channelName: 'Zine',
-        currentImage: '',
-        focused: false,
-        hover: false,
-        redirect: "/zines",
-        musicClip: 'https://files.catbox.moe/tlb833.mp3',
-        volumeLevel: .2
-    },
+    // {
+    //     coverImage: "/Channel Covers/Zine_Cover.webp",
+    //     gifImage: "Channel Covers/Zine_Cover.webp",
+    //     channelName: 'Zine',
+    //     currentImage: '',
+    //     focused: false,
+    //     hover: false,
+    //     redirect: "/zines",
+    //     musicClip: 'https://files.catbox.moe/tlb833.mp3',
+    //     volumeLevel: .2
+    // },
 ];
 const channelPriorLength = channels.length
 

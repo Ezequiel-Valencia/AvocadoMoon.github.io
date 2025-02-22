@@ -151,7 +151,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
   // }
 
   .gradient-bg{
-    background-image: url("clouds.jpg");
+    background-image: url("/clouds.jpg");
     height: 100vh;
     width: 100vw;
     background-position: 0% 0%;

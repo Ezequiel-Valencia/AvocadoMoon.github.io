@@ -88,11 +88,11 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
   }
 
   .fade-out{
-    animation: fadeOut 3s forwards;
+    animation: fadeOut 2s forwards;
   }
 
   .text-box{
-    animation: fadeIn 3s;
+    animation: fadeIn 2.5s;
     text-align: center;
   }
 

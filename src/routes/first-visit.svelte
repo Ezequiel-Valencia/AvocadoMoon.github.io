@@ -6,6 +6,7 @@
 
   $: showResumeBlock = false;
   $: finished = false;
+  $: selectedButton = -1;
 
 </script>
 
@@ -15,55 +16,57 @@
     hasVisited.hasVisited()
   }}
   } class="{finished ? "fade-out" : ""}"
-style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw; background: rgb(58, 169, 189, 1);">
+style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
 
-  <h1 style="text-align: center; margin-top:10%;">Welcome to EzequielOS</h1>
-  <p style="text-align: center;">The latest operating system all 
-    about Ezequiel Valencia, and his various projects.</p>
-  <div id="allowAudio" style="margin-top:5%;" class="text-box">
-      <h2 style="" class="menu-large-text terminal">Allow Audio</h2>
-      <p class="menu-med-text" style="margin-left: 2%; margin-right: 2%;">
-        This operating system plays different background music and sound effects for each program. 
-        Do you want this audio on?
-      </p>
-      {#if $musicController}
-        <u><p>Even if audio is turned on, autoplay needs to enabled in the browser.</p></u>
+  <div class="gradient-bg">
+    <div class="text-glass">
+      <h1 style="text-align: center; margin-top:10%; padding-top:2%;">Welcome to EzequielOS</h1>
+      <i><p>Before we continue please answer the following questions</p></i>
+
+      <hr>
+      <div id="allowAudio" class="text-box">
+          <h2>Allow Audio?</h2>
+          {#if $musicController}
+            <u><p>Even if audio is turned on, autoplay needs to enabled in the browser.</p></u>
+            <br>
+          {/if}
+          <button
+            class="{selectedButton == 1 ? "selected" : ""}"
+            on:click={(e) => {
+              sfxController.allow_sfx();
+              musicController.allow_music();
+              showResumeBlock = true;
+              selectedButton = 1;
+            }}
+          >
+            Yes
+          </button>
+          <button 
+          class="{selectedButton == 2 ? "selected" : ""}"
+          on:click={(e) => {
+            sfxController.disable_sfx();
+            musicController.disable_music();
+            showResumeBlock = true;
+            selectedButton = 2;
+          }}>
+            No
+          </button>
+      </div>
+
+      {#if showResumeBlock}
+        <div class="text-box" id="view-resume">
+          <h2>Resume</h2>
+            <p>
+              For people who want to see everything I've done in the quickest manner possible.</p>
+            <br>
+            <br>
+            <button on:click={(e) => {window.open("https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub")}}>
+              Open Resume</button>
+            <button on:click={(e) => {finished = true}}>Continue to OS</button>
+        </div>
       {/if}
-      <button
-        id="music"
-        class=""
-        on:click={(e) => {
-          sfxController.allow_sfx();
-          musicController.allow_music();
-          showResumeBlock = true;
-        }}
-      >
-        Yes
-      </button>
-      <button on:click={(e) => {
-        sfxController.disable_sfx();
-        musicController.disable_music();
-        showResumeBlock = true;
-      }}>
-        No
-      </button>
-  </div>
-
-  {#if showResumeBlock}
-    <div class="text-box" id="view-resume">
-      <h2 class="menu-large-text">Resume</h2>
-        <p style="margin-left: 2%; margin-right: 2%;" class="menu-med-text">
-          For people who want to see everything I've done in the quickest manner possible.</p>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub">
-        Link to Resume
-        </a>
-        <br>
-        <br>
-        <button class="music-option-buttons menu-med-text" 
-        on:click={(e) => {finished = true}}>Continue to OS</button>
+      </div>
     </div>
-  {/if}
-
 </section>
 
 
@@ -99,7 +102,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw; backgroun
     border-radius: 4px;
     height: 4vmin;
     width: 6vmin;
-    min-height: fit-content;
+    min-height: 4vh;
     min-width: fit-content;
     font-size: large;
     font-family: 'Times New Roman', Times, serif;
@@ -110,7 +113,74 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw; backgroun
     background-color: rgb(0, 12, 121);
   }
 
+  h1{
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+  }
 
+  h2{
+    font-size: x-large;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  p{
+    max-width: 60%;
+    margin: auto;
+    text-align: center;
+  }
+
+  hr{
+    max-width: 80%;
+    margin-top: 2%;
+    color: black;
+    border-color: black;
+  }
+
+  .selected{
+    background-color: rgb(0, 12, 121);
+  }
+
+  // .gradient-bg{
+  //   background: linear-gradient(-45deg, rgb(58, 169, 189, 1), rgb(44, 171, 255), rgb(20, 93, 252));
+  //   background-size: 400vw 400vh;
+  //   background-position: 0% 0%;
+  //   animation: gradient 5s ease infinite reverse;
+  //   height: 100vh;
+  //   width: 100vw;
+  //   position: absolute;
+  // }
+
+  .gradient-bg{
+    background-image: url("clouds.jpg");
+    height: 100vh;
+    width: 100vw;
+    background-position: 0% 0%;
+    position: absolute;
+  }
+
+  .text-glass{
+    background: rgba(255, 255, 255, 0.253);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    width: fit-content;
+    max-width: 90vw;
+    min-width: 72vw;
+    margin: auto;
+    height: 80vh;
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  @keyframes gradient{
+    0% {
+		background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
 </style>
 

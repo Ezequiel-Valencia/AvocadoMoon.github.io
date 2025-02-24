@@ -126,7 +126,7 @@ export const technology_learned = [
     {
         icon: csWorkTechnologies.Go.icon,
         iconName: csWorkTechnologies.Go.name,
-        projects: ["Music Recommender"]
+        projects: ["Three-mix"]
     },
     {
         icon: csWorkTechnologies.Django.icon,

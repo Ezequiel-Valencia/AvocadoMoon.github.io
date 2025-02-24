@@ -10,6 +10,16 @@ export type Projects = {
 export const projects: { [key: string]: Projects[] } = {
     "Projects Involving Frontend, BackEnd or Both": [
         {
+            name: "Three-mix",
+            year: "Current",
+            description: `Discover new music everyday. Curators submit a set of three songs, and from the entire set
+            of songs one submission is chosen randomly to be voted upon by everyone. 
+            User management system is hand made, with cybersecurity best practices for authentication
+            and session management
+            taken into account. Backend is running on my homelab within the K8 cluster.`,
+            technologies: [csWorkTechnologies.CSS, csWorkTechnologies.HTML, csWorkTechnologies.TypeScript, csWorkTechnologies.Svelte, csWorkTechnologies.Go, csWorkTechnologies.K8]
+        },
+        {
             name: "Personal Website",
             year: "Current",
             description: `My personal website where I experiment with different front end development techniques using typescript, HTML, CSS, 

@@ -54,6 +54,7 @@
       margin: auto;
       padding: 2%;
       transform: translateY(100%);
+      cursor: url("/Cursors/wii-open2.png") ,pointer;
     }
   </style>
 

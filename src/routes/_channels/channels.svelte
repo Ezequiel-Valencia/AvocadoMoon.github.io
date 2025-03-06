@@ -118,6 +118,8 @@
             on:animationend={(e) => focus(index, "1")}>
 
             <ChannelCube
+            cubeColor={currentChannel.cubeColor}
+            cubeColorHover={currentChannel.cubeHoverColor}
             id={index}
             focusedOn={focusedChannel == index} 
             gifImagePath={currentChannel.gifImage}
@@ -176,5 +178,5 @@
 
 
 <style lang="scss">
-  @use "channel";
+  @use "channel";  
 </style>

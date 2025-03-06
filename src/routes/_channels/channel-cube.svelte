@@ -5,6 +5,8 @@
   export let frontImagePath;
   export let gifImagePath;
   export let focusedOn: boolean;
+  export let cubeColor: string;
+  export let cubeColorHover: string;
   export let id;
   $: hover = false
   let touchscreen = false
@@ -47,27 +49,37 @@
 
 <section>
     <div role="gridcell" tabindex="0" on:mouseenter={(e) => {hover = true}}
+      style="--cube-color: {cubeColor}; --cube-hover-color: {cubeColorHover};"
       on:mousemove={(e) => {followMouse(e)}}
       on:mouseleave={() => {hover = false; resetMouse()}}
+      on:animationend={(e) => {}}
        id="cube-{id}"
        class="cube {focusedOn ? "rotating-cube" : "unfocused-cube"}">
         <div class="bottom face low-opacity"></div>
         <div class="left face low-opacity"></div>
         <div class="right face low-opacity"></div>
-        {#if gifImagePath.includes(".webm")}
-          {#if focusedOn}
+
+        <!-- Images -->
+        {#if focusedOn}
+          {#if gifImagePath.includes(".webm")}
             <video autoplay loop muted playsinline src={gifImagePath}
-              class="front face channel-image">
+              class="front face channel-image moving-image">
             </video>
           {:else}
-            <img class="front face channel-image" src={frontImagePath} alt="cube">
+            <img class="front face channel-image moving-image" src={gifImagePath} alt="cube">
           {/if}
+
+        <!-- Not focused on -->
         {:else}
-          <img class="front face channel-image" src={focusedOn ? gifImagePath : frontImagePath} alt="cube">
+          <img class="front face channel-image" src={frontImagePath} alt="cube">
         {/if}
+
+        <!-- Text on top of Image -->
         {#if !focusedOn}
           <div style="opacity: 1;" class="front face"><h1>{description}</h1></div>
         {/if}
+
+
         <div class="back face low-opacity"></div>
         <div class="top face low-opacity"></div>
     </div>
@@ -88,13 +100,21 @@
     }
   }
 
+  @keyframes fullOpacity {
+    from{
+      opacity: 0;
+    }
+    to{
+      opacity: 1;
+    }
+  }
+
   section {
     width: 100%;
     height: 100%;
     --channel-face-space-x: 11vmin;
     --channel-face-space-y: 11vmin;
     --channel-face-space-z: 11vmin;
-    --face-color: skyblue;
   }
 
   section:hover{
@@ -107,23 +127,30 @@
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
+    --face-color: var(--cube-color);
   }
   .cube:hover{
     transition: all 0.2s;
-    --face-color: rgb(33, 185, 255);
+    --face-color: var(--cube-hover-color);
   }
 
   .rotating-cube{
     transition: all 0.2s;
     animation-name: backToZero, turn;
-    animation-duration: 1s, 5s;
+    animation-duration: 0.3s, 5s;
     animation-timing-function: ease-in, ease-in-out;
     animation-iteration-count: 1, infinite;
     animation-fill-mode: forwards, forwards;
-    animation-delay: 0.5s, 2s;
+    animation-delay: 0.5s, 1s;
     --channel-face-space-x: 16vmin;
     --channel-face-space-y: 16vmin;
     --channel-face-space-z: 16vmin;
+  }
+
+  .moving-image{
+    animation: fullOpacity 1s ease-in;
+    animation-fill-mode: forwards;
+    opacity: 1;
   }
 
 
@@ -172,7 +199,7 @@
 
   h1{
     font-family:'Times New Roman', Times, serif;
-    font-size: 2vmin;
+    font-size: 2.5vmin;
     word-wrap: break-word;
     color: white;
   }

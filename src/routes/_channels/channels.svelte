@@ -8,12 +8,14 @@
   import { musicController, musicTime, sfxController } from "../../common/myLocalStorage";
   import { channels } from "./channelObject.js";
   import { ChannelFunctions } from "./channelFunctions";
+  import ChannelCube from "./channel-cube.svelte";
 
   let bgMusic: HTMLAudioElement
   let songElements: HTMLAudioElement[] = []
   let hoverAudio: HTMLAudioElement
   let clickAudio: HTMLAudioElement
   let focusedChannel = -1
+  $: windowWidth = 1000
 
   onMount(() => {
     let video = document.querySelector('video');
@@ -25,6 +27,12 @@
       songElements.push(s)
     }
     getAudioElements()
+    windowWidth = window.innerWidth
+
+    window.addEventListener('resize', () =>{
+      windowWidth = window.innerWidth
+    })
+
   })
 
   function focus(index: number, zIndex: string){
@@ -109,19 +117,22 @@
             on:animationstart={(e) => focus(index, "50")}
             on:animationend={(e) => focus(index, "1")}>
 
-            {#if currentChannel.currentImage.includes(".webm")}
-              <video autoplay loop muted playsinline src={currentChannel.currentImage}
-                class="channel-image" playbackRate={3}>
-              </video>
-            {:else}
-                <img src={currentChannel.currentImage} id="channel-image-{index}"
-                alt="Channel covers"class="channel-image"/>
-            {/if}
+            <ChannelCube
+            id={index}
+            focusedOn={focusedChannel == index} 
+            gifImagePath={currentChannel.gifImage}
+            frontImagePath={currentChannel.coverImage} 
+            description={currentChannel.channelName}></ChannelCube>
+            
         </div>
-      {:else}
+      {:else if windowWidth > 600}
         <div class="channel-box glass" id="channelBox-{index}">
         </div>
       {/if}
+
+
+      <!-- Button Section -->
+    
     {#if focusedChannel == index}
       <div class="channel-bar">
         <h2>Continue to {currentChannel.channelName} Page?</h2>
@@ -135,13 +146,14 @@
             channelFunctions.playMusic(index, bgMusic,  songElements[index], true)
           }}
         }
-        class="menu-button channel-buttons"
+        class="menu-button channel-buttons future-button"
         id="mbutton-{index}">
           Back
         </button>
 
         <button on:click={(e) => { if ($sfxController){clickAudio.play();}
-          channelFunctions.redirect(index)}} class="play-button channel-buttons" 
+          channelFunctions.redirect(index)}} 
+          class="play-button channel-buttons future-button" 
         id="pbutton-{index}">
           Continue
         </button>
@@ -149,6 +161,8 @@
     {/if}
 
     </div>
+
+    <!-- Blurred background when a channel is selected -->
     {#if focusedChannel != -1}
       <div style="height: 100vh; width:100vw; 
       position:absolute; background-color: rgba(255, 255, 255, 0.111);
@@ -163,16 +177,4 @@
 
 <style lang="scss">
   @use "channel";
-    #grid-container {
-    display:grid;
-    grid-template-columns: repeat(4, 0fr);
-    grid-template-rows: repeat(3, 1fr);
-    text-align: center;
-    justify-content: center;
-    gap: 1%;
-    max-height: $channel-view-height;
-    max-width: 100vw;
-    padding: 1.5%;
-  }
-
 </style>

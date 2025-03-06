@@ -107,6 +107,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
     font-size: large;
     font-family: 'Times New Roman', Times, serif;
     color: white;
+    cursor: url("/Cursors/wii-open2.png") ,pointer;
   }
 
   button:hover{

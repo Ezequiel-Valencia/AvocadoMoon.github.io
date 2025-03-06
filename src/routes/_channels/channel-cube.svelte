@@ -4,27 +4,42 @@
   export let description;
   export let frontImagePath;
   export let gifImagePath;
-  export let focusedOn;
+  export let focusedOn: boolean;
   export let id;
   $: hover = false
+  let touchscreen = false
 
   let cubeReference: HTMLElement
   onMount(() => {
     cubeReference = document.querySelector(`#cube-${id}`) as HTMLElement
+    if (('ontouchstart' in window)){
+        touchscreen = true
+    }
   })
 
   function followMouse(e: MouseEvent){
-    let rect = cubeReference.getBoundingClientRect()
-    let x = (e.clientX - rect.left) - (rect.width / 2)
-    let y = (e.clientY - rect.top) - (rect.height / 2)
-    
-    
-    let rotateString = `rotate3d(${y * -1}, ${x}, 0, 20deg)`;
-    cubeReference.style.transform = rotateString
+    if (!touchscreen && !focusedOn){
+      let rect = cubeReference.getBoundingClientRect()
+      let x = (e.clientX - rect.left) - (rect.width / 2)
+      let y = (e.clientY - rect.top) - (rect.height / 2)
+      
+      
+      let rotateString = `rotate3d(${y * -1}, ${x}, 0, 20deg)`;
+      cubeReference.style.transform = rotateString
+    }
   }
-  function resetMouse(){
-    cubeReference.style.transform = ""
+  async function resetMouse(){
+    let transformBack = () => {cubeReference.style.transform = ''}
+    let delayedTransform = () => {
+      setTimeout(transformBack, 2000)
+    }
+    if (!focusedOn){
+      transformBack()
+    } else{
+      await delayedTransform()
+    }
   }
+  
 
 </script>
 
@@ -41,14 +56,14 @@
         <div class="right face low-opacity"></div>
         {#if gifImagePath.includes(".webm")}
           {#if focusedOn}
-            <img class="front face channel-image" src={frontImagePath} alt="cube">
-          {:else}
             <video autoplay loop muted playsinline src={gifImagePath}
               class="front face channel-image">
             </video>
+          {:else}
+            <img class="front face channel-image" src={frontImagePath} alt="cube">
           {/if}
         {:else}
-          <img class="front face channel-image" src={focusedOn ? frontImagePath : gifImagePath} alt="cube">
+          <img class="front face channel-image" src={focusedOn ? gifImagePath : frontImagePath} alt="cube">
         {/if}
         {#if !focusedOn}
           <div style="opacity: 1;" class="front face"><h1>{description}</h1></div>
@@ -66,7 +81,13 @@
     from { transform: rotate3d(0, 0, 0, 0); }
     to { transform: rotate3d(0, 1, 0, 360deg); }
   }
-  
+
+  @keyframes backToZero {
+    to {
+      transform: rotate3d(0, 0, 0, 0deg);
+    }
+  }
+
   section {
     width: 100%;
     height: 100%;
@@ -81,6 +102,7 @@
   }
 
   .cube {
+    transition: all 0.2s;
     position: relative;
     width: 100%;
     height: 100%;
@@ -92,7 +114,16 @@
   }
 
   .rotating-cube{
-    animation: turn 5s linear infinite;
+    transition: all 0.2s;
+    animation-name: backToZero, turn;
+    animation-duration: 1s, 5s;
+    animation-timing-function: ease-in, ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: forwards, forwards;
+    animation-delay: 0.5s, 2s;
+    --channel-face-space-x: 16vmin;
+    --channel-face-space-y: 16vmin;
+    --channel-face-space-z: 16vmin;
   }
 
 
@@ -143,6 +174,7 @@
     font-family:'Times New Roman', Times, serif;
     font-size: 2vmin;
     word-wrap: break-word;
+    color: white;
   }
   @media (max-width: 500px){
     h1{
@@ -158,6 +190,13 @@
       --channel-face-space-y: 16vmin;
       --channel-face-space-z: 16vmin;
       --face-color: skyblue;
+    }
+
+    .rotating-cube{
+      animation: turn 5s linear infinite;
+      --channel-face-space-x: 25vmin;
+      --channel-face-space-y: 25vmin;
+      --channel-face-space-z: 25vmin;
     }
   }
 

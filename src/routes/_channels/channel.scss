@@ -14,8 +14,8 @@ $channel-button-height: 40%;
 
   .big-channel-container{
     position: fixed;
-    max-width: 30vw;
-    max-height: 30vh;
+    max-width: 30vmin;
+    max-height: 30vmin;
     width: 100vw;
     height: 100vh;
     z-index: 50;
@@ -30,8 +30,8 @@ $channel-button-height: 40%;
   .channel-container {
     padding: 1px;
     border-radius: $border-radius;
-    max-height: 25vh;
-    max-width: 20vw;
+    max-height: 400px;
+    max-width: 400px;
     // text-align: center;
   }
 
@@ -43,8 +43,10 @@ $channel-button-height: 40%;
 
   .channel-box {
     padding: 2px;
-    height: 20vh;
-    width: 19.85vw;
+    height: 22vmin;
+    width: 22vmin;
+    max-height: 400px;
+    max-width: 400px;
     // overflow: hidden;
     border-radius: $border-radius;
     transition: all 1s;
@@ -63,17 +65,6 @@ $channel-button-height: 40%;
 
   .channel-box:hover{
     box-shadow: 0px 0px 10px 10vh lightblue inset;
-  }
-
-
-  .channel-image {
-    object-fit: inherit;
-    height: 100%;
-    width: 100%;
-    max-height: 30vh;
-    max-width: 30vw;
-    border-radius: 40px;
-    text-align: center;
   }
 
   .menu-button{
@@ -103,4 +94,49 @@ $channel-button-height: 40%;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 2px solid rgba(15, 164, 250, 0.3);
+  }
+
+  #grid-container {
+    display:grid;
+    grid-template-columns: repeat(4, 0fr);
+    grid-template-rows: repeat(3, 1fr);
+    text-align: center;
+    justify-content: center;
+    gap: 1%;
+    max-width: 100vw;
+    padding: 1.5%;
+  }
+
+  .future-button{
+    background: rgba(44, 188, 255, 0.363);
+    border: 2px solid black;
+    justify-content: center;
+    transition: transform 500ms;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    cursor: url("/Cursors/wii-open2.png") ,pointer;
+  }
+
+  .future-button:hover{
+    background: rgba(24, 182, 255, 0.747);
+  }
+
+  @media (max-width: 600px){
+    .channel-box {
+      padding: 2px;
+      height: 35vmin;
+      width: 35vmin;
+      // overflow: hidden;
+      border-radius: $border-radius;
+      transition: all 1s;
+      z-index: 1;
+      animation: z-high 1s linear;
+    }
+    #grid-container {
+      display:grid;
+      grid-template-columns: repeat(2, 0fr);
+      grid-template-rows: repeat(4, 1fr);
+      text-align: center;
+      justify-content: center;
+    }
   }

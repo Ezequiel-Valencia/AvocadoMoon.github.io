@@ -8,6 +8,13 @@
   $: finished = false;
   $: selectedButton = -1;
 
+  let touchscreen = false
+  onMount(() => {
+    if (('ontouchstart' in window)){
+        touchscreen = true
+    }
+  })
+
 </script>
 
 
@@ -54,6 +61,12 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
       </div>
 
       {#if showResumeBlock}
+        {#if touchscreen}
+          <h1 style="font-size: x-large; color: red; padding:4%;">
+            This website is best viewed on a computer. It will function, but certain
+            features will be unavailable.
+          </h1>
+        {/if}
         <div class="text-box" id="view-resume">
           <h2>Resume</h2>
             <p>

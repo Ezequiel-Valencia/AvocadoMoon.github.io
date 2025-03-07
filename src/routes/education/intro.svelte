@@ -45,7 +45,7 @@
   #intro-div {
     height: auto;
     width: 100vw;
-    background-image: url("https://bh.novlr.org/wp-content/uploads/2023/11/jez-timms-vTKLujPJecw-unsplash-1536x1026.jpg");
+    background-image: url("/Education/bg.jpg");
     background-repeat:no-repeat;
     background-size:cover;
   }

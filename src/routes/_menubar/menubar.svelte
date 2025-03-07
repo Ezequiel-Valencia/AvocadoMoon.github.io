@@ -80,10 +80,10 @@
       <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">Ezequiel Valencia</h3>
 
       <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
-        Cybersecurity graduate, Bio-Informatics innovator, Dev-Ops specialist, 
+        University of Connecticut Cybersecurity graduate, Bio-Informatics innovator,
       </p>
       <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
-        and Full-Stack developer
+         Dev-Ops specialist, and Full-Stack developer
       </p>
     </div>
 

@@ -62,7 +62,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
 
       {#if showResumeBlock}
         {#if touchscreen}
-          <h1 style="font-size: x-large; color: red; padding:4%;">
+          <h1 style="text-align:center; font-size: large; margin:auto; color: red;">
             This website is best viewed on a computer. It will function, but certain
             features will be unavailable.
           </h1>
@@ -154,16 +154,6 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
     background-color: rgb(0, 12, 121);
   }
 
-  // .gradient-bg{
-  //   background: linear-gradient(-45deg, rgb(58, 169, 189, 1), rgb(44, 171, 255), rgb(20, 93, 252));
-  //   background-size: 400vw 400vh;
-  //   background-position: 0% 0%;
-  //   animation: gradient 5s ease infinite reverse;
-  //   height: 100vh;
-  //   width: 100vw;
-  //   position: absolute;
-  // }
-
   .gradient-bg{
     background-image: url("/clouds.jpg");
     height: 100vh;
@@ -193,6 +183,26 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
     }
     100% {
       background-position: 0% 50%;
+    }
+  }
+
+  @media (max-width: 500px){
+    h1{
+      font-size: 5vmin;
+    }
+    h2{
+      font-size: 4vmin;
+    }
+
+    p{
+      font-size: 3vmin;
+    }
+    button{
+      height: 2vmin;
+      width: 3vmin;
+      font-size: 4vmin;
+      // min-height: 4vh;
+      // min-width: fit-content;
     }
   }
 

@@ -77,27 +77,35 @@
   <div id="home-menu-nav">
 
     <span class="box" id="music-player" style="width:fit-content; text-align: center; margin-left:auto; margin-right:auto; height:fit-content;">
+      <!-- Song Name -->
       <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Music:</h1>
       <Marquee speed={0.3} hoverSpeed={0.2}>
         <h5>{songName}</h5>
       </Marquee>
-      {#if paused != true}
-        <span id="play-button" class="music-buttons" on:click={(e) => {paused = true}} on:keydown={(e) => {}} role="button" tabindex="0">
-          <i style="font-size: x-large;" class="fas fa-pause music-buttons"></i>
+
+      <div id="music-nav">
+        <!-- Play/Pause Button -->
+        {#if paused != true}
+          <span id="play-button" class="music-buttons" on:click={(e) => {paused = true}} on:keydown={(e) => {}} role="button" tabindex="0">
+            <i style="font-size: x-large;" class="fas fa-pause music-buttons"></i>
+          </span>
+        {:else}
+          <span id="play-button" class="music-buttons" on:click={(e) => {paused = false}} on:keydown={(e) => {}} role="button" tabindex="0">
+            <i style="font-size: x-large;" class="fas fa-play music-buttons"></i>
+          </span>
+        {/if}
+
+        <!-- Seeker -->
+        <span id="seeking" style="">
+          <span>
+            <input id="seeker" type="range" min="1" max={audioLength} value={currentAudioTime}
+            on:input={(e) => {currentAudioTime = e.currentTarget.value}}
+            >
+          </span>
+          <span class="text">{formatAudioTime(currentAudioTime)}/{formatAudioTime(audioLength)}</span>
         </span>
-      {:else}
-        <span id="play-button" class="music-buttons" on:click={(e) => {paused = false}} on:keydown={(e) => {}} role="button" tabindex="0">
-          <i style="font-size: x-large;" class="fas fa-play music-buttons"></i>
-        </span>
-      {/if}
-      <span id="seeking" style="">
-        <span>
-          <input id="seeker" type="range" min="1" max={audioLength} value={currentAudioTime}
-          on:input={(e) => {currentAudioTime = e.currentTarget.value}}
-          >
-        </span>
-        <span class="text">{formatAudioTime(currentAudioTime)}/{formatAudioTime(audioLength)}</span>
-      </span>
+      </div>
+      
       <Hr classHr="my-8" />
     </span>
 
@@ -213,6 +221,19 @@
     background: transparent;
     cursor: pointer;
     width: 15rem;
+  }
+
+  @media (max-width: 500px){
+    #menu-nav {
+      font-size: 5vmin;
+      padding: 1vmin;
+      width: 30vmin;
+      height: auto;
+    }
+    #music-nav{
+      padding-left: 8vw;
+      padding-right: 8vw;
+    }
   }
 
   

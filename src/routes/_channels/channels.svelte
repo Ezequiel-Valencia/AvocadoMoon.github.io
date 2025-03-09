@@ -137,7 +137,7 @@
     
     {#if focusedChannel == index}
       <div class="channel-bar">
-        <h2>Continue to {currentChannel.channelName} Page?</h2>
+        <h2>Continue to {currentChannel.channelName} Channel?</h2>
         <button on:click={(e) => {
           focusedChannel = -1
           resetChannelPosition(index)

@@ -84,6 +84,18 @@ export const hobbies: { category: string; active: boolean; activity: Activity[] 
       active: false,
       activity: [
         {
+          name: "Wood Cutting",
+          description:
+          `I have been helping my father cut wood for my fireplace since I was a child. I spent summers arriving at sites where large trees had recently been cut, taking the rolls of lumber into my family truck, and cutting them in my backyard to reduce the electric bill in the winter. Continuing the tradition as my father grows older.`,
+          image: dirPrefix + "/wood-cutting.webp",
+        },
+        {
+          name: "Hiking/Camping",
+          description:
+          "My first backpacking trip was at the age of 12 when I decided to hike 50 miles in one week with my scout troop, carrying a 30-pound pack—one-third of my body weight. On the first day, half of my fellow Boy Scouts left early, I rolled my ankle, and by day two, the trip was canceled. Despite this less-than-stellar first experience, I still enjoy camping and hiking today—though in moderation and with significantly more preparation.",
+          image: dirPrefix + "/camping.webp",
+        },
+        {
           name: "Beekeeping",
           description:
           "For a year I was attending bee club, just learning the theory of beekeeping, then in the last month I attended, I finally kept some bees. I love bees, and managing them is rewarding, but it takes too much time for me right now so I don't do it for now.",

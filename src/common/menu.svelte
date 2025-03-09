@@ -146,6 +146,10 @@
     min-width: 2vw;
   }
 
+  .music-buttons:hover{
+    cursor: url("/Cursors/wii-open2.png") ,pointer;
+  }
+
   .box {
     border-radius: 5%;
     overflow: auto;
@@ -160,6 +164,7 @@
     width: 100vw;
     z-index: 999;
     background: rgba(0, 0, 0, 0.85);
+    cursor: url("/Cursors/Wii-Curso-plain.png"), pointer;
   }
 
   #menu-nav {
@@ -196,6 +201,10 @@
     height: 10vh;
     width: 20vw;
     margin-left: 5%;
+  }
+
+  #big-button-div button:hover{
+    cursor: url("/Cursors/wii-open2.png") ,pointer;
   }
 
   #contact-me {

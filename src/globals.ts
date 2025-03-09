@@ -12,6 +12,8 @@ export function clickedOff(elementID: string ,event: MouseEvent): boolean {
 	return object !== event.target && !object?.contains(event.target);
 } 
 
+export const resumeURL = "https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub"
+
 export const csWorkTechnologies = {
 	///////////////
 	// Languages //

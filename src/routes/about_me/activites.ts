@@ -86,7 +86,7 @@ export const hobbies: { category: string; active: boolean; activity: Activity[] 
         {
           name: "Wood Cutting",
           description:
-          `I have been helping my father cut wood for my fireplace since I was a child. I spent summers arriving at sites where large trees had recently been cut, taking the rolls of lumber into my family truck, and cutting them in my backyard to reduce the electric bill in the winter. Continuing the tradition as my father grows older.`,
+          `I have been helping my father cut wood for my fireplace since I was a child. I spent summers arriving at sites where large trees had recently been cut, taking the rolls of lumber into my family truck, and cutting them in my backyard to *cut* the electric bill in the winter. Continuing the tradition as my father grows older.`,
           image: dirPrefix + "/wood-cutting.webp",
         },
         {

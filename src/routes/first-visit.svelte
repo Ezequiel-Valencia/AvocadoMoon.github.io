@@ -2,7 +2,7 @@
 <script lang="ts">
   import { musicController, sfxController, hasVisited } from "../common/myLocalStorage";
   import { onMount } from 'svelte';
-  import { clickedOff } from '../globals'
+  import { clickedOff, resumeURL } from '../globals'
 
   $: showResumeBlock = false;
   $: finished = false;
@@ -73,7 +73,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
               For people who want to see everything I've done in the quickest manner possible.</p>
             <br>
             <br>
-            <button on:click={(e) => {window.open("https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub")}}>
+            <button on:click={(e) => {window.open(resumeURL)}}>
               Open Resume</button>
             <button on:click={(e) => {finished = true}}>Continue to OS</button>
         </div>

@@ -20,13 +20,13 @@ const prefix = "/work_experience"
 
 export const experiences: {[key: string]: WorkExperience} = {
     ccam: {
-        company: "OnLine-Systems/CCAM",
+        company: "Center For Cell Analysis and Modeling (UConn Health)",
         technologies: [csWorkTechnologies.Java, csWorkTechnologies.Quarkus,
         csWorkTechnologies.K8, csWorkTechnologies.OpenID, csWorkTechnologies.Docker,
         csWorkTechnologies.Python, csWorkTechnologies.SQL, csWorkTechnologies.Fiji,
         csWorkTechnologies.Linux, csWorkTechnologies.S3],
-        jobTitle: "Research Assistance",
-        description: "I help lead the integration of VCell sim data with ImageJ. Developing plugins for ImageJ, setting up tech infrastructure, and devlop additional software.",
+        jobTitle: "Full Stack Software Developer",
+        description: "Custom frontend Java applications, backend to support Java applications, transfer of legacy object serialization to RESTful API's, test suites for business logic, and update the user management system used.",
         time: "July 2023 - Now",
         redirect: prefix + "/CCAM"
     },

@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { WorkExperience } from "./experiences";
-  import {experiencesSong} from "./experiences"
+  import {experiences, experiencesSong} from "./experiences"
   import { musicController, musicTime } from "../../common/myLocalStorage";
   import { onMount } from "svelte";
   import { percentLoaded } from "./experiences";
+  import { resumeURL } from "../../globals";
 
   export var experience: WorkExperience;
   export var description: string[];
@@ -70,7 +71,13 @@
       <h5 class="text">Key Takeaway: {takeaway}</h5>
       <img class="job-img" src={imgSrc} alt="Work Related" />
       {#each description as paragraph }
-        <p class="text">{paragraph}</p>
+         <p class="text">{paragraph}
+
+          <!-- Hack to include href to resume for CCAM experience -->
+          {#if paragraph.includes("With this mindset")}
+            <a href={resumeURL}>resume.</a> 
+          {/if}
+        </p>
       {/each}
     </div>
   </div>
@@ -110,6 +117,13 @@
   #text-wrapper-div{
     width: 100%;
     max-width: 1080px;
+  }
+
+  a{
+    color: rgb(88, 255, 255);
+  }
+  a:hover{
+    color: rgb(0, 156, 156);
   }
 
   #text-wrapper-div h2 {

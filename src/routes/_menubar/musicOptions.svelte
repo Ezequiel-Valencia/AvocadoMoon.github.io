@@ -19,21 +19,21 @@
     </ol>
     <button
       id="sfx"
-      class="music-option-buttons menu-med-text"
+      class="menu-med-text"
       on:click={(e) => {
         sfxController.toggle_sfx();
       }}
     >
-      SFX {$sfxController ? "On" : "Off"}
+      Turn SFX {$sfxController ? "Off" : "On"}
     </button>
     <button
       id="music"
-      class="music-option-buttons menu-med-text"
+      class="menu-med-text"
       on:click={(e) => {
         musicController.toggle_music();
       }}
     >
-      Music {$musicController ? "On" : "Off"}
+      Turn Music {$musicController ? "Off" : "On"}
     </button>
   </div>
 
@@ -48,9 +48,7 @@
       font-family: 'Terminal Font';
     }
   
-    .music-option-buttons {
-      width: 15%;
-      height: 15%;
+    button {
       margin: auto;
       padding: 2%;
       transform: translateY(100%);

@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
   import { percentLoaded } from "./experiences"
+  import ScrollDown from "../../common/scroll-down.svelte";
 
   const images: HTMLImageElement[] = [];
 
@@ -64,6 +65,7 @@
 
 <section>
   <canvas class="canvas" />
+  <ScrollDown></ScrollDown>
 </section>
 
 <style lang="scss">

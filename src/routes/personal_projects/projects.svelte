@@ -5,6 +5,7 @@
     import { importSCSSOptions } from "../../globals"
   import { onMount } from "svelte";
     import {transitionStates} from "./common"
+  import ScrollDown from "../../common/scroll-down.svelte";
     const sideImageLocation = "/personal_projects/animal star blue.png";
     const projectIterator = Object.entries(projects);
     let activeIndex = 0;
@@ -12,6 +13,7 @@
     export let transControl;
 
     let techIndexAndName = "-1"
+    $: showScrollIcon = true
 
     function displayIconsDescription(pos: MouseEvent){
         const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY)
@@ -60,6 +62,14 @@
         document.addEventListener("pointermove", (e) => {
             displayIconsDescription(e)
         })
+
+        const projectsWrapper = document.querySelector("#projects-wrapper") as HTMLElement
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                showScrollIcon = !entry.isIntersecting
+            })
+        })
+        observer.observe(projectsWrapper)
     })
 
     
@@ -86,7 +96,7 @@
             >
         {/each}
 
-        <div id="ocean">
+        <div id="ocean" style="position: absolute; top:1vh; width:100vw;">
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>
@@ -100,9 +110,11 @@
                 </g>
             </svg>
         </div>
+        <!-- <div style="height:1vh; color:blue; width:100vw; position:absolute; top:0;"></div> -->
     </section>
+    <section id="projects-wrapper">
     {#if $transControl == transitionStates.showPersonalProjects}
-        <section id="projects-wrapper">
+        
             <div class="side-image"></div>
             <div id="project-article">
                 <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
@@ -141,7 +153,10 @@
                 {/each}
             </div>
             <div class="side-image"></div>
-        </section>
+    {/if}
+    </section>
+    {#if showScrollIcon}
+        <ScrollDown></ScrollDown>
     {/if}
 </section>
 
@@ -169,8 +184,7 @@
     }
 
     #sunny-ocean-intro{
-        overflow: hidden;
-        height: 100vh;
+        height: 101vh;
         width: 100vw;
         background-image: linear-gradient(rgb(71, 113, 252), rgb(71, 113, 252), rgb(71, 113, 252), rgb(96, 144, 240));
     }

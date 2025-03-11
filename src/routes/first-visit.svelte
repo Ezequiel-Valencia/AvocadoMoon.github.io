@@ -75,7 +75,7 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
             <br>
             <button on:click={(e) => {window.open(resumeURL)}}>
               Open Resume</button>
-            <button on:click={(e) => {finished = true}}>Continue to OS</button>
+            <button on:click={(e) => {finished = true}}>Continue</button>
         </div>
       {/if}
       </div>

@@ -3,6 +3,7 @@
   import { createBookCheckout } from "./education";
   
   let bookCheckout = createBookCheckout()
+  $: showHint = false
 
   function checkedOutBook(){
     bookCheckout.toggleBookStatus()
@@ -27,13 +28,19 @@
             “Education is the movement from darkness to light.” – Allan Bloom
           </p>
           <button class="btn" on:click={(e) => {checkedOutBook()}} on:pointerenter={(e) => {}}
-            style="margin-top:0; font-size:2.5em; font-family: 'Times New Roman', Times, serif;">
+            style="margin-top:0; font-size:2.5em;">
             {#if $bookCheckout}
               Return Book
             {:else}
               Checkout Book
             {/if}
           </button>
+          <br>
+          <br>
+          <button on:click={() => {showHint = true}} style="height: fit-content; max-height:2vh;">Get hint</button>
+          {#if showHint}
+            <p>Hint: Checkout Book and Hover It In the Dark</p>
+          {/if}
         </div>
       </article>
     </div>
@@ -89,6 +96,7 @@
     transition: all 0.3s ease;
     display: inline-block;
     position: relative;
+    font-family: 'Times New Roman', Times, serif;
   }
   .btn:hover {
     background: black;

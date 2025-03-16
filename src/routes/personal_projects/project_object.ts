@@ -17,7 +17,7 @@ export const projects: { [key: string]: Projects[] } = {
             User management system is hand made, with cybersecurity best practices for authentication
             and session management
             taken into account. Backend is running on my homelab within the K8 cluster.`,
-            technologies: [csWorkTechnologies.CSS, csWorkTechnologies.HTML, csWorkTechnologies.TypeScript, csWorkTechnologies.Svelte, csWorkTechnologies.Go, csWorkTechnologies.K8]
+            technologies: [csWorkTechnologies.CSS, csWorkTechnologies.HTML, csWorkTechnologies.TypeScript, csWorkTechnologies.Svelte, csWorkTechnologies.SQL, csWorkTechnologies.Go, csWorkTechnologies.K8]
         },
         {
             name: "Personal Website",
@@ -37,10 +37,12 @@ export const projects: { [key: string]: Projects[] } = {
             For additional security zero trust tunnels, Istio service mesh for mTLS communication within the cluster, application level ACL for segmentation, and Cilium to monitor all service communication from its eBPF state is implemented.
             With this setup I host a public library, media center, and self-developed applications using a multi-node K8 cluster.
             To keep up-to-date with everything that I happens on my servers I use Grafana dashboards with metrics aggregator Prometheus and log scraper Loki with promtail.
-            And some other misc. implementations are the internal DNS, remote storage, virtualized central gaming system, router level firewall, intrusion detection system, and intrusion prevention system.
+            Storage solution is AWS S3 for cold storage, Longhorn for application storage, Minio S3 for application backups, and CIFS remote storage on TrueNas for VM backups.
+            And some other misc. implementations are the internal DNS, remote storage, router level firewall, intrusion detection system, and intrusion prevention system.
             `,
             technologies: [csWorkTechnologies.Proxmox, csWorkTechnologies.Ansible, csWorkTechnologies.Docker, csWorkTechnologies.Consul, csWorkTechnologies.Grafana, csWorkTechnologies.Istio,
-            csWorkTechnologies.K8, csWorkTechnologies.Loki, csWorkTechnologies.Prometheus, csWorkTechnologies.Proxmox, csWorkTechnologies.TrueNas, csWorkTechnologies.Ubiquity]
+            csWorkTechnologies.K8, csWorkTechnologies.Loki, csWorkTechnologies.Prometheus, csWorkTechnologies.TrueNas, csWorkTechnologies.Ubiquity, 
+            csWorkTechnologies.Terraform]
         },
         {
             name: "CTGrassRoots",

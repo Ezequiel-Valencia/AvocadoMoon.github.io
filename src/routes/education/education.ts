@@ -41,7 +41,7 @@ export const technology_learned = [
     {
         icon: csWorkTechnologies.SQL.icon,
         iconName: csWorkTechnologies.SQL.name,
-        projects: ["VCell", "Event Bot", "CTGrassRoots"]
+        projects: ["VCell", "Event Bot", "CTGrassRoots", "Three-mix"]
     },
     {
         icon: csWorkTechnologies.Python.icon,
@@ -66,7 +66,7 @@ export const technology_learned = [
     {
         icon: csWorkTechnologies.Docker.icon,
         iconName: csWorkTechnologies.Docker.name,
-        projects: ["Homelab", "VCell", "Event Bot", "Music Recommender", "CTGrassRoots"]
+        projects: ["Homelab", "VCell", "Event Bot", "Three-mix", "CTGrassRoots"]
     },
     {
         icon: csWorkTechnologies.K8.icon,
@@ -77,6 +77,11 @@ export const technology_learned = [
         icon: csWorkTechnologies.Ansible.icon,
         iconName: csWorkTechnologies.Ansible.name,
         projects: ["Homelab", "CTGrassRoots"]
+    },
+    {
+        icon: csWorkTechnologies.Terraform.icon,
+        iconName: csWorkTechnologies.Terraform.name,
+        projects: ["Homelab"]
     },
     {
         icon: csWorkTechnologies.Istio.icon,

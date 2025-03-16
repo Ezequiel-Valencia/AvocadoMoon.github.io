@@ -54,6 +54,11 @@ export const csWorkTechnologies = {
 		name: "Ansible",
 		description: "Remote code execution language focused on idempotencey (no matter how many times a script is executed the same results occur). Super useful, and is written on top of python."
 	},
+	Terraform: {
+		icon: "/icons/terraform.svg",
+		name: "Terraform",
+		description: "Resource declaration language that is idempotent. Makes managing external resources significantly easier via IaC."
+	},
 	K8: {
 		icon: "/icons/k8.png",
 		name: "Kubernetes",

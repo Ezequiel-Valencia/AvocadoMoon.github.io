@@ -1,4 +1,12 @@
+<script lang="ts">
+  import { onMount } from "svelte";
 
+    onMount(() => {
+        const circlesList = document.querySelector<HTMLElement>(".circles")!
+        let pix = document.documentElement.scrollHeight * 0.8 * -1
+        circlesList.style.setProperty("--circle-height", pix + "px");
+    })
+</script>
 
 <div class="area" >
     <ul class="circles">
@@ -20,8 +28,10 @@
 <style lang="scss">
     .area{
         z-index: -1;
+        overflow: hidden;
     }
     .circles{
+    --circle-height: -80vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -131,7 +141,7 @@
     }
 
     100%{
-        transform: translateY(-80vh) rotate(720deg);
+        transform: translateY(var(--circle-height)) rotate(720deg);
         opacity: 0;
         border-radius: 50%;
     }

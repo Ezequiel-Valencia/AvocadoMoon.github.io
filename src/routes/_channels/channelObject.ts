@@ -122,6 +122,19 @@ export let channels: { coverImage: string;
         cubeColor: "rgb(  15, 30, 52  )",
         cubeHoverColor: "rgb(  29, 67, 122 )"
     },
+    {
+        coverImage: "/Channel Covers/cover-image/flux.svg",
+        gifImage: "/Channel Covers/focused-image/book-pen.jpg",
+        channelName: 'Geocache',
+        currentImage: '',
+        focused: false,
+        hover: false,
+        redirect: "/guest_book",
+        musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
+        volumeLevel: .3,
+        cubeColor: "rgb(  15, 30, 52  )",
+        cubeHoverColor: "rgb(  29, 67, 122 )"
+    },
     // {
     //     coverImage: "/Channel Covers/Zine_Cover.webp",
     //     gifImage: "Channel Covers/Zine_Cover.webp",

@@ -75,15 +75,13 @@
         background-color: white;
     }
 
-    .entry:hover{
-        background-color: transparent;
-    }
-
     .hidden-content{
         position:absolute; 
         top:0; 
         left:0;
         clip-path: circle(0% at 0% 0%);
+        background-color: transparent;
+        z-index: 5;
     }
 
     .entry:hover .hidden-content.blacklight{

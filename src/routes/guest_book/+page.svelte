@@ -11,7 +11,7 @@
 
 
 <section id="main-body">
-    <Menu songName="" songPath="" songVolumeLevel=0.2></Menu>
+    <Menu songName="Cry Me a River - Yuiko Eto" songPath="https://files.catbox.moe/mi55xm.mp3" songVolumeLevel=0.2></Menu>
 
     <section id="focus">
         <div style="padding-top: 2vh;"></div>
@@ -39,7 +39,7 @@
         left: 0;
         top: 0;
         position: absolute;
-        background-image: url("/guest_book/forest2.jpg");
+        background-image: url("/guest_book/forest.avif");
         // background-image: radial-gradient(circle at center, rgba(46, 119, 255, 0.712) 0%, rgba(32, 103, 255, 0.699) 50%);
         // background-color: rgb(70, 172, 255);
         // background-image: linear-gradient(rgb(182, 228, 255), rgb(56, 131, 201));
@@ -57,7 +57,7 @@
         margin-right: auto;
         // margin: auto;
         border-radius: 6px;
-        background-color: rgba(255, 255, 255, 0.925);
+        background-color: rgba(255, 255, 255, 0.95);
 
         // position: absolute;
     }

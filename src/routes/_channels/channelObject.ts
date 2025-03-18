@@ -130,7 +130,7 @@ export let channels: { coverImage: string;
         focused: false,
         hover: false,
         redirect: "/guest_book",
-        musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
+        musicClip: 'https://files.catbox.moe/mi55xm.mp3',
         volumeLevel: .3,
         cubeColor: "rgb(  15, 30, 52  )",
         cubeHoverColor: "rgb(  29, 67, 122 )"

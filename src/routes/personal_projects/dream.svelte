@@ -162,7 +162,7 @@
 
 
 <style lang="scss">
-  @import "./dream_animation.scss";
+  @use "./dream_animation.scss";
   #intro-wrapper {
     height: 100vh;
     width: 100vw;

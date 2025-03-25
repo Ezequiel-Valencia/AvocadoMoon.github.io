@@ -122,6 +122,7 @@
 {/if}
 
 <style lang="scss">
+  $channel-view-height: 80vh;
   $button-horizontal-offset: 2%;
   @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
 

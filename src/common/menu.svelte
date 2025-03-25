@@ -1,6 +1,3 @@
-<head>
-  <script src="https://kit.fontawesome.com/6a3a94789b.js" crossorigin="anonymous"></script>
-</head>
 <script lang="ts">
   import { Marquee, Hr } from "flowbite-svelte";
   import { musicController } from "./myLocalStorage";

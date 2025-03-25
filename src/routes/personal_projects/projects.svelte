@@ -125,7 +125,7 @@
                 {#each projectIterator as [key, category], index}
                     {#if activeIndex == index}
                     <article class="category">
-                        <h2 class="category-title">{icons[index][1]} Description: <h5>{key}</h5></h2>
+                        <h2 class="category-title">{icons[index][1]} Description: </h2><h3>{key}</h3>
                         
                         {#each category as project, projectIndex}
                             <div class="project">
@@ -162,7 +162,7 @@
 
 
 <style lang="scss">
-    @import "./projects.scss";
+    @use "./projects.scss";
     .cloud{
         top: 15%; 
         position:absolute; 

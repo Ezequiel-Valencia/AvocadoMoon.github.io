@@ -66,7 +66,7 @@
 <!-- Squircle is a lot easier so that for now -->
 
 <style lang="scss">
-  @import "./circles.scss";
+  @use "./circles.scss";
   #main-div {
     position: absolute;
     left: 0%;

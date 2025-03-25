@@ -4,6 +4,10 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
 
     let submissionReceived = false
     $: addSecret = false
+    $: grabbingLocation = false
+
+    let latitude: number
+    let longitude: number
 
     async function handleGuestSubmission(e: SubmitEvent){
         let username = document.querySelector<HTMLInputElement>("#username")!.textContent
@@ -22,8 +26,20 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
             window.alert("Error with submission.")
         }
     }
-</script>
 
+    function usersLocation(){
+        if (navigator.geolocation) {
+            grabbingLocation = true
+            navigator.geolocation.getCurrentPosition((geo) =>{
+                console.log(geo.coords)
+                grabbingLocation = false
+                latitude = geo.coords.latitude
+                longitude = geo.coords.longitude
+            }, () => {grabbingLocation = false})
+        } 
+    }
+
+</script>
 
 <section>
     {#if submissionReceived}
@@ -35,6 +51,16 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
                 <br>
                 <br>
                 <input placeholder="Your Name" style="border-radius: 6px;" name="username" type="text" id="username">
+                <br>
+                <br>
+                {#if grabbingLocation}
+                    <p>Grabbing Your Location</p>
+                    <div class="loader"></div> 
+                {:else}
+                    <input defaultValue={latitude == undefined ? "" : latitude} placeholder="Latitude (optional)" style="border-radius: 6px;" name="latitude" type="text" id="latitude">
+                    <input defaultValue={longitude == undefined ? "" : longitude} placeholder="Longitude (optional)" style="border-radius: 6px;" name="longitude" type="text" id="longitude">
+                    <button on:click={usersLocation} type="button" style='font-size:small'><i class='fas fa-map-marker-alt'></i></button>
+                {/if}
                 <br>
                 <br>
                 <textarea maxlength="250" placeholder="Your message (max 250 characters)." 
@@ -79,5 +105,20 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
         cursor: pointer;
     }
     
+    .loader {
+        border: 10px solid #f3f3f3; /* Light grey */
+        border-top: 10px solid #000000; /* Blue */
+        border-radius: 50%;
+        width: 2vh;
+        height: 2vh;
+        animation: spin 2s linear infinite;
+        text-align: center;
+        margin:auto;
+    }
+
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
 </style>
 

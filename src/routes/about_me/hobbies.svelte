@@ -32,26 +32,27 @@
       {#each hob.activity as activity, index}
         <div id={activity.name} class="activity">
           <table>
-            <tr>
-              <td>
-                <h3>{activity.name}</h3>
-
-                <p id="{activity.name}-desciption" class="description">
-                  {activity.description}
-                </p>
-              </td>
-
-              <td>
-                <img
-              src={activity.image}
-              alt="activity"
-              class="activity-image"
-              id="{activity.name}-image"
-            />
-              </td>
-
-            </tr>
-
+            <tbody>
+              <tr>
+                <td>
+                  <h3>{activity.name}</h3>
+  
+                  <p id="{activity.name}-desciption" class="description">
+                    {activity.description}
+                  </p>
+                </td>
+  
+                <td>
+                  <img
+                src={activity.image}
+                alt="activity"
+                class="activity-image"
+                id="{activity.name}-image"
+              />
+                </td>
+  
+              </tr>
+            </tbody>
           </table>
           
         </div>

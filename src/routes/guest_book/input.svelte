@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Checkbox } from "flowbite-svelte";
-import { BackendRequestBuilder } from "../../common/backend-requests";
+  import { GeoCacheApi, type GeoCacheSubmission, type SendSubmissionRequest } from "../../backend-api";
 
     let submissionReceived = false
+    let geo = new GeoCacheApi()
     $: addSecret = false
     $: grabbingLocation = false
 
@@ -10,20 +10,21 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
     let longitude: number
 
     async function handleGuestSubmission(e: SubmitEvent){
-        let username = document.querySelector<HTMLInputElement>("#username")!.textContent
-        let note = document.querySelector<HTMLTextAreaElement>("#note")!.textContent
-
+        let username = document.querySelector<HTMLInputElement>("#username")!.value!
+        let note = document.querySelector<HTMLTextAreaElement>("#note")!.value!
+        let secretNode = document.querySelector<HTMLInputElement>("#secret")
         
-        let jsonVersionOfVote = JSON.stringify({username: username, note: note})
-        let responsePromise = new BackendRequestBuilder().setEndpoint("/guestSubmission")
-        .setMethod("POST").isSendingJSON(true)
-        .setBody(jsonVersionOfVote).sendUnAuthenticatedRequest()
-    
-        let response = await responsePromise
-        if (response.ok){
-            submissionReceived = true
-        } else{
-            window.alert("Error with submission.")
+        let submission: GeoCacheSubmission = {name: username, note: note, secret: secretNode != null ? secretNode.value : "", 
+        longitude: longitude + "", latitude: latitude + ""}
+        
+        try{
+            console.log(submission)
+            await geo.sendSubmission({geoCacheSubmission: submission})
+            addSecret = false;
+            window.location.reload()
+        } catch(e: any){
+            window.alert("Error attempting to submit message")
+            console.error(e)
         }
     }
 
@@ -50,7 +51,7 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
                 Formal Submission
                 <br>
                 <br>
-                <input placeholder="Your Name" style="border-radius: 6px;" name="username" type="text" id="username">
+                <input required placeholder="Your Name" style="border-radius: 6px;" name="username" type="text" id="username">
                 <br>
                 <br>
                 {#if grabbingLocation}
@@ -59,17 +60,20 @@ import { BackendRequestBuilder } from "../../common/backend-requests";
                 {:else}
                     <input defaultValue={latitude == undefined ? "" : latitude} placeholder="Latitude (optional)" style="border-radius: 6px;" name="latitude" type="text" id="latitude">
                     <input defaultValue={longitude == undefined ? "" : longitude} placeholder="Longitude (optional)" style="border-radius: 6px;" name="longitude" type="text" id="longitude">
-                    <button on:click={usersLocation} type="button" style='font-size:small'><i class='fas fa-map-marker-alt'></i></button>
+                    <!-- svelte-ignore a11y_consider_explicit_label -->
+                    <button on:click={usersLocation} type="button" style='font-size:small'>
+                        <i class='fas fa-map-marker-alt'></i>
+                    </button>
                 {/if}
                 <br>
                 <br>
-                <textarea maxlength="250" placeholder="Your message (max 250 characters)." 
-                style="border-radius: 6px; width:30vw;" name="note"></textarea>
+                <textarea required maxlength="250" placeholder="Your message (max 250 characters)." 
+                style="border-radius: 6px; width:30vw;" name="note" id="note"></textarea>
                 <br>
                 <br>
                 {#if addSecret}
                     <textarea maxlength="50" placeholder="Secret message (max 50 characters)." 
-                    style="border-radius: 6px; width:30vw;" name="note"></textarea>
+                    style="border-radius: 6px; width:30vw;" name="secret" id="secret"></textarea>
                     <br>
                     <br>
                 {/if}

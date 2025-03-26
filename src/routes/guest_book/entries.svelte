@@ -1,10 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
-    let entries = [{name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."},
-    {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
+  import { Configuration, GeoCacheApi, type GeoCacheSubmission, type GetSubmissionRequest } from "../../backend-api";
+    // let entries = [{name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."},
+    // {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
+    
 
     $: showBlueLight = false
     let interBubble: HTMLElement
+
+    let geo: GeoCacheApi = new GeoCacheApi()
+    let entries: GeoCacheSubmission[]
+    $: entries = []
 
     function updateClipPath(event: any) {
         const container = event.currentTarget;
@@ -15,7 +21,7 @@
         container.style.setProperty('--y', `${y}px`);
     }
 
-    onMount(() => {
+    onMount(async () => {
         interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
         document.addEventListener('mousemove', (event) => {
             const rect = interBubble.getBoundingClientRect();
@@ -24,6 +30,8 @@
             interBubble.style.transform = `translate(${x}px, ${y}px)`;
 
         });
+        let req: GetSubmissionRequest = {pageNumber: 0}
+        entries = await geo.getSubmission(req)
         
     })
 
@@ -46,14 +54,19 @@
             
             <div class="entry-text {showBlueLight ? "blacklight" : ""}">
                 <span style="display: flex; justify-content:space-between;">
-                    <p style="text-align: left; padding-left:1vw;">{entry.name}</p>
+                    <p>{entry.name}</p>
                     <p style="text-align: right; padding-right:1vw;">{entry.date}</p>
                 </span>
-                <p style="text-align: left; padding-left:1vw;">{entry.note}</p>
+                {#if entry.latitude != undefined && entry.latitude != ""}
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q={entry.latitude},{entry.longitude}">
+                        <p style="margin-top: 0px; margin-bottom:40px;">Location</p>
+                    </a>
+                {/if}
+                <p style="text-wrap: wrap;">{entry.note}</p>
             </div>
             <div class="hidden-content {showBlueLight ? "blacklight" : ""}" style="">
                 <div>
-                    <p style="text-align: left; padding-left:1vw; color:white;">{entry.secret}</p>
+                    <p style=" color:white;">{entry.secret}</p>
                 </div>
             </div>
             
@@ -63,6 +76,12 @@
 
 
 <style lang="scss">
+    p{
+        text-align: left; 
+        padding-left:1vw;
+        word-wrap: break-word;
+        text-wrap: wrap;
+    }
     .entry{
         text-align: center; 
         margin-left:auto;

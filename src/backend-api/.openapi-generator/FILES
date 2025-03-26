@@ -1,0 +1,7 @@
+.openapi-generator-ignore
+apis/GeoCacheApi.ts
+apis/index.ts
+index.ts
+models/GeoCacheSubmission.ts
+models/index.ts
+runtime.ts

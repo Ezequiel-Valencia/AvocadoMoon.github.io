@@ -11,6 +11,7 @@
     let geo: GeoCacheApi = new GeoCacheApi()
     let entries: GeoCacheSubmission[]
     $: entries = []
+    $: pageNumber = 0;
 
     function updateClipPath(event: any) {
         const container = event.currentTarget;
@@ -30,7 +31,7 @@
             interBubble.style.transform = `translate(${x}px, ${y}px)`;
 
         });
-        let req: GetSubmissionRequest = {pageNumber: 0}
+        let req: GetSubmissionRequest = {pageNumber: pageNumber}
         entries = await geo.getSubmission(req)
         
     })
@@ -57,12 +58,16 @@
                     <p>{entry.name}</p>
                     <p style="text-align: right; padding-right:1vw;">{entry.date}</p>
                 </span>
-                {#if entry.latitude != undefined && entry.latitude != ""}
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q={entry.latitude},{entry.longitude}">
-                        <p style="margin-top: 0px; margin-bottom:40px;">Location</p>
-                    </a>
+                {#if entry.latitude != undefined}
+                    <div>
+                        <p style="display: inline; text-align:left; margin:auto;">Location: </p>
+                        <a style="display: inline; text-align:left; padding-right:0px;" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q={entry.latitude},{entry.longitude}">
+                            <p style="margin-top: 0px; margin-bottom:40px; padding-left:0px; display:inline; text-align:left;">{entry.locationName}</p>
+                        </a>
+                    </div>
                 {/if}
-                <p style="text-wrap: wrap;">{entry.note}</p>
+                <hr style="width: 95%;">
+                <p>{entry.note}</p>
             </div>
             <div class="hidden-content {showBlueLight ? "blacklight" : ""}" style="">
                 <div>
@@ -116,6 +121,7 @@
         height: 100%;
         width: 100%;
         transition: all 2s ease;
+        text-align: left;
         // background-color: white;
     }
 

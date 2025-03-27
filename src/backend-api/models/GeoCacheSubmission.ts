@@ -42,13 +42,19 @@ export interface GeoCacheSubmission {
      * @type {string}
      * @memberof GeoCacheSubmission
      */
-    longitude?: string;
+    locationName?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GeoCacheSubmission
      */
-    latitude?: string;
+    longitude?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GeoCacheSubmission
+     */
+    latitude?: number;
     /**
      * 
      * @type {string}
@@ -81,6 +87,7 @@ export function GeoCacheSubmissionFromJSONTyped(json: any, ignoreDiscriminator: 
         'name': json['name'],
         'note': json['note'],
         'secret': !exists(json, 'secret') ? undefined : json['secret'],
+        'locationName': !exists(json, 'locationName') ? undefined : json['locationName'],
         'longitude': !exists(json, 'longitude') ? undefined : json['longitude'],
         'latitude': !exists(json, 'latitude') ? undefined : json['latitude'],
         'date': !exists(json, 'date') ? undefined : json['date'],
@@ -99,6 +106,7 @@ export function GeoCacheSubmissionToJSON(value?: GeoCacheSubmission | null): any
         'name': value.name,
         'note': value.note,
         'secret': value.secret,
+        'locationName': value.locationName,
         'longitude': value.longitude,
         'latitude': value.latitude,
         'date': value.date,

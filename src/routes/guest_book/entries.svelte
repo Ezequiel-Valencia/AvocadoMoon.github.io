@@ -22,6 +22,11 @@
         container.style.setProperty('--y', `${y}px`);
     }
 
+    async function getEntries() {
+        let req: GetSubmissionRequest = {pageNumber: pageNumber}
+        entries = await geo.getSubmission(req)
+    }
+
     onMount(async () => {
         interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
         document.addEventListener('mousemove', (event) => {
@@ -31,9 +36,7 @@
             interBubble.style.transform = `translate(${x}px, ${y}px)`;
 
         });
-        let req: GetSubmissionRequest = {pageNumber: pageNumber}
-        entries = await geo.getSubmission(req)
-        
+        getEntries()
     })
 
 </script>
@@ -77,6 +80,16 @@
             
         </div>
     {/each}
+    <br>
+    <div style="display: inline;">
+        {#if pageNumber != 0}
+            <button on:click={() => {pageNumber -= 1; getEntries()}}>&#60;</button>
+        {/if}
+        <p style="display: inline; padding-left:1vw; padding-right:1vw;">{pageNumber + 1}</p>
+        {#if entries.length == 10}
+            <button on:click={() => {pageNumber += 1; getEntries();}}>&#62;</button>
+        {/if}
+    </div>
 </section>
 
 

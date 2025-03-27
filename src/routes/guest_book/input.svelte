@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GeoCacheApi, type GeoCacheSubmission, type SendSubmissionRequest } from "../../backend-api";
+  import { GeoCacheApi, ResponseError, type GeoCacheSubmission, type SendSubmissionRequest } from "../../backend-api";
 
     let geo = new GeoCacheApi()
     $: addSecret = false
@@ -13,18 +13,21 @@
         let username = document.querySelector<HTMLInputElement>("#username")!.value!
         let note = document.querySelector<HTMLTextAreaElement>("#note")!.value!
         let secretNode = document.querySelector<HTMLInputElement>("#secret")
-        let locationName = document.querySelector<HTMLInputElement>("#location-name")
+        let locationNameNode = document.querySelector<HTMLInputElement>("#location-name")
+        let secret = secretNode != null ? secretNode.value : ""
+        let locationName = locationNameNode != null ? locationNameNode.value : ""
         
-        let submission: GeoCacheSubmission = {name: username, note: note, secret: secretNode != null ? secretNode.value : "", 
-        longitude: longitude, latitude: latitude, locationName: locationName != null ? locationName.value : ""}
+        let submission: GeoCacheSubmission = {name: username, note: note, secret: secret, 
+        longitude: longitude, latitude: latitude, locationName: locationName}
         
         try{
-            console.log(submission)
             await geo.sendSubmission({geoCacheSubmission: submission})
             addSecret = false;
             window.location.reload()
         } catch(e: any){
-            window.alert("Error attempting to submit message")
+            if (e instanceof ResponseError){
+                window.alert("Error attempting to submit message: " + await e.response.text())
+            }
             console.error(e)
         }
     }

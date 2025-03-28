@@ -14,8 +14,17 @@
         let note = document.querySelector<HTMLTextAreaElement>("#note")!.value!
         let secretNode = document.querySelector<HTMLInputElement>("#secret")
         let locationNameNode = document.querySelector<HTMLInputElement>("#location-name")
+        let latitudeNode = document.querySelector<HTMLInputElement>("#latitude")
+        let longitudeNode = document.querySelector<HTMLInputElement>("#longitude")
+
         let secret = secretNode != null ? secretNode.value : ""
         let locationName = locationNameNode != null ? locationNameNode.value : ""
+        if (latitudeNode != null){
+            latitude = parseFloat(latitudeNode.value)
+        }
+        if (longitudeNode != null){
+            longitude = parseFloat(longitudeNode.value)
+        }
         
         let submission: GeoCacheSubmission = {name: username, note: note, secret: secret, 
         longitude: longitude, latitude: latitude, locationName: locationName}

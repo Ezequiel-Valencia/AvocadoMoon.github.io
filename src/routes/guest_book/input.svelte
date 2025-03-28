@@ -68,8 +68,8 @@
                         <input maxlength="50" required style="width:30vw;" placeholder="Location Name" name="location-name" type="text" id="location-name">
                         <br>
                         <div style="width:30vw; display:inline-block;">
-                            <input required defaultValue={latitude == undefined ? "" : latitude} placeholder="Latitude" name="latitude" type="number" id="latitude">
-                            <input required defaultValue={longitude == undefined ? "" : longitude} placeholder="Longitude" name="longitude" type="number" id="longitude">
+                            <input required defaultValue={latitude == undefined ? "" : latitude} placeholder="Latitude" name="latitude" type="number" step="any" id="latitude">
+                            <input required defaultValue={longitude == undefined ? "" : longitude} placeholder="Longitude" name="longitude" type="number" step="any" id="longitude">
                             <!-- svelte-ignore a11y_consider_explicit_label -->
                             <button onclick={usersLocation} type="button" style='font-size:small'>
                                 <i class='fas fa-map-marker-alt'></i>

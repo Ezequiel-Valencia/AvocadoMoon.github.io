@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Configuration, GeoCacheApi, type GeoCacheSubmission, type GetSubmissionRequest } from "../../backend-api";
+  import { Configuration, GeoCacheApi, ResponseError, type GeoCacheSubmission, type GetSubmissionRequest } from "../../backend-api";
   import type { Writable } from "svelte/store";
     // let entries = [{name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."},
     // {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
@@ -14,6 +14,7 @@
     let entries: GeoCacheSubmission[]
     $: entries = []
     $: pageNumber = 0;
+    $: canAccessServer = true;
 
     function updateClipPath(event: any) {
         const container = event.currentTarget;
@@ -26,7 +27,11 @@
 
     async function getEntries() {
         let req: GetSubmissionRequest = {pageNumber: pageNumber}
-        entries = await geo.getSubmission(req)
+        try{
+            entries = await geo.getSubmission(req)
+        } catch(e){
+            canAccessServer = false
+        }
     }
 
     onMount(async () => {
@@ -51,6 +56,7 @@
 
 
 <section>
+    {#if canAccessServer}
     <hr style="width: 80vw; margin-top:10vh;">
     <h1 style="text-align: center;">Entries</h1>
     <div style="margin: auto; text-align:center;">
@@ -98,6 +104,9 @@
             <button on:click={() => {pageNumber += 1; getEntries();}}>&#62;</button>
         {/if}
     </div>
+    {:else}
+        <h1>Server seems to be down.</h1>
+    {/if}
 </section>
 
 

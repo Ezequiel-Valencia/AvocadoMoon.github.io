@@ -63,6 +63,8 @@
 
 <section>
     {#if !submittedMessage}
+    <!-- Can put extra inputs as "Honey Pots" for bots.
+    If that honey pot input is given you know a bot is submitting all fields. -->
     <form onsubmit={handleGuestSubmission}>
         <label>
             Your Geocache Entry

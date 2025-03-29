@@ -178,7 +178,12 @@ export const csWorkTechnologies = {
 	Quarkus: {
 		icon: "/icons/quarkus.svg",
 		name: "Quarkus",
-		description: "Backend framework for Java, accelerating the development of HTTP related API's."
+		description: "Backend framework for Java, accelerating the development of Application layer servers."
+	},
+	SpringBoot: {
+		icon: "/icons/spring-boot.png",
+		name: "Spring Boot",
+		description: "Backend framework for Java, accelerating the development of Application layer servers. Similar to Quarkus, but does not have as many quality of life features."
 	},
 	Django: {
 		icon: "/icons/django.svg",

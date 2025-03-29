@@ -24,8 +24,10 @@ export const projects: { [key: string]: Projects[] } = {
             year: "Current",
             description: `My personal website where I experiment with different front end development techniques using typescript, HTML, CSS, 
             and Svelte. 
-            Each channel is it's own containerized style making that experimentation easier.`,
-            technologies: [csWorkTechnologies.CSS, csWorkTechnologies.HTML, csWorkTechnologies.TypeScript, csWorkTechnologies.Svelte]
+            Each channel is it's own containerized style making experimentation easier.`,
+            technologies: [csWorkTechnologies.CSS, csWorkTechnologies.HTML, 
+                csWorkTechnologies.TypeScript, csWorkTechnologies.Svelte, 
+                csWorkTechnologies.SQL, csWorkTechnologies.SpringBoot, csWorkTechnologies.K8]
         },
     ],
     "Application Management, Security, Observability, and Network Control.": [

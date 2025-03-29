@@ -17,6 +17,9 @@
       <li class="menu-med-text">Go to site settings in your browser, and enable autoplay.</li>
       <li class="menu-med-text">Unmute the tab</li>
     </ol>
+    <a target="_blank" style="text-align: center; margin:auto;" class="menu-med-text" href="https://docs.google.com/document/d/e/2PACX-1vSkQh2B7KYF8omxPyYL0deWwESOxGK9V_uYcxOaFljqY3RCpwSB0rmU0HjWcz3p5RE5ShrXQv-5MjIQ/pub">
+      <p>Songs I Use</p>
+    </a>
     <button
       id="sfx"
       class="menu-med-text"

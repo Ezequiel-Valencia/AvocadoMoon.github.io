@@ -26,7 +26,7 @@
 
 <div id="main-div" style="height: {$percentLoaded == 100 || fromExperiencePage ? 'auto': '100vh'}; 
     overflow: {$percentLoaded == 100 || fromExperiencePage ? 'visible': 'hidden'};">
-    <Menu songVolumeLevel=.5 songPath={experiencesSong} songName="Sabbath - Various Artists"></Menu>
+    <Menu songVolumeLevel=.5 songPath={experiencesSong} songName="Sabbath - Saya No Uta"></Menu>
     {#if !fromExperiencePage}
         <div style="opacity: {$percentLoaded == 100 ? 1: 0};">
             <Intro></Intro>

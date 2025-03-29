@@ -1,16 +1,21 @@
 <script lang="ts">
+  import type { Writable } from "svelte/store";
   import { GeoCacheApi, ResponseError, type GeoCacheSubmission, type SendSubmissionRequest } from "../../backend-api";
 
     let geo = new GeoCacheApi()
     $: addSecret = false
     $: addLocation = false
     $: grabbingLocation = false
+    $: submittedMessage = false;
+    $: username = ""
 
     let latitude: number
     let longitude: number
 
+    export let freshSetOfSubmissions: Writable<boolean>;
+
     async function handleGuestSubmission(e: SubmitEvent){
-        let username = document.querySelector<HTMLInputElement>("#username")!.value!
+        username = document.querySelector<HTMLInputElement>("#username")!.value!
         let note = document.querySelector<HTMLTextAreaElement>("#note")!.value!
         let secretNode = document.querySelector<HTMLInputElement>("#secret")
         let locationNameNode = document.querySelector<HTMLInputElement>("#location-name")
@@ -32,7 +37,8 @@
         try{
             await geo.sendSubmission({geoCacheSubmission: submission})
             addSecret = false;
-            window.location.reload()
+            freshSetOfSubmissions.set(false)
+            submittedMessage = true
         } catch(e: any){
             if (e instanceof ResponseError){
                 window.alert("Error attempting to submit message: " + await e.response.text())
@@ -56,6 +62,7 @@
 </script>
 
 <section>
+    {#if !submittedMessage}
     <form onsubmit={handleGuestSubmission}>
         <label>
             Your Geocache Entry
@@ -105,6 +112,16 @@
             <button>Submit Message</button>
         </label>
     </form>
+    {:else}
+    <section>
+        <br>
+        <div>
+            <h2>Message Saved in GeoCache</h2>
+            <p>Thank you for your entry {username}.</p>
+        </div>
+    </section>
+    {/if}
+    
 </section>
 
 

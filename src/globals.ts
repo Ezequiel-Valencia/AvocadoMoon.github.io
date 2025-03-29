@@ -67,7 +67,7 @@ export const csWorkTechnologies = {
 	SQL: {
 		icon: "/icons/sql.png",
 		name: "SQL",
-		description: "Structured Query Language which saves me from having to write a thread safe 'Writer' and 'Reader' for text."
+		description: "Structured Query Language which saves me from having to write a thread safe 'Writer' and 'Reader'."
 	},
 	C: {
 		icon: "/icons/C.png",

@@ -58,12 +58,13 @@
         {#each experience.technologies as tech, index}
           <span id={"description-" + tech.name} class="tech description-holder">
               {#if tech.name == hoveredTech}
-                  <div style="z-index: 3;" class="description">
+                  <!-- Hack to make SQL hover functional -->
+                  <div style="z-index: 3; {tech.name == 'SQL' ? 'margin-top:5vh;': ""}" class="description">
                       <h3 style="text-align:center; font-family: 'Times New Roman', Times, serif;">{tech.name}</h3>
                       <p style="text-align: center;">{tech.description}</p>
                   </div>
               {/if}
-              <img id="img-{tech.name}" class="tech" style="height: 2em; position:static; {tech.name == "SQL" ? "filter: invert(1);" : ""}" src={tech.icon} alt={tech.name}>
+              <img id="img-{tech.name}" class="tech" style="height: 2em; position:static; {tech.name == "SQL" || tech.name == 'Coq' ? "filter: invert(1);" : ""}" src={tech.icon} alt={tech.name}>
           </span>
         {/each}
       </h2>

@@ -29,6 +29,8 @@
     getAudioElements()
     windowWidth = window.innerWidth
 
+    bgMusic.play()
+
     window.addEventListener('resize', () =>{
       windowWidth = window.innerWidth
     })
@@ -93,7 +95,9 @@
 
     <div 
       on:mousedown={(e) => {
-        if (!currentChannel.focused && $musicController){
+        // Audio Play on Channel Click
+        if (!currentChannel.focused && $musicController && currentChannel.redirect != ''
+          && focusedChannel != index){
           getAudioElements()
           channelFunctions.playMusic(index, bgMusic, songElements[index], false);
         }
@@ -153,8 +157,15 @@
           Back
         </button>
 
-        <button on:click={(e) => { if ($sfxController){clickAudio.play();}
-          channelFunctions.redirect(index)}} 
+        <button on:click={(e) => { 
+          if ($sfxController){
+            clickAudio.play();
+          }
+          if ($musicController){
+            songElements[index].pause()
+          }
+          channelFunctions.redirect(index);
+          }} 
           class="play-button channel-buttons future-button" 
         id="pbutton-{index}">
           Continue

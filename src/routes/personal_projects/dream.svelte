@@ -184,7 +184,7 @@
 
   .fish:hover{
     filter: invert(1);
-    animation: shake 0.5s infinite, swim-right 40s linear infinite;
+    animation: shake 0.7s infinite, swim-right 40s linear infinite;
     cursor: grab;
   }
 

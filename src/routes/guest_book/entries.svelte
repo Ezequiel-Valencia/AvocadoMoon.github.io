@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Configuration, GeoCacheApi, type GeoCacheSubmission, type GetSubmissionRequest } from "../../backend-api";
+  import type { Writable } from "svelte/store";
     // let entries = [{name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."},
     // {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
     
+    export let freshSetOfSubmissions: Writable<boolean>;
 
     $: showBlueLight = false
     let interBubble: HTMLElement
@@ -37,6 +39,12 @@
 
         });
         getEntries()
+        freshSetOfSubmissions.subscribe((fresh) => {
+            if (!fresh){
+                getEntries(); 
+                freshSetOfSubmissions.set(true)
+            }
+        });
     })
 
 </script>

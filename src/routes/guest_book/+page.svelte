@@ -4,8 +4,9 @@
   import Entries from "./entries.svelte";
   import Input from "./input.svelte";
   import BlocksAnimated from "../_decals/blocks-animated.svelte";
+  import { writable } from "svelte/store";
 
-  
+  const freshSetOfSubmissions = writable(true);
 
 </script>
 
@@ -21,9 +22,8 @@
             <h1>Ezequiel's Digital Geocache</h1>
             <p>Please leave a message and be respectful</p>
         </div>
-        <Input></Input>
-        <Entries></Entries>
-        <!-- <BlocksAnimated></BlocksAnimated> -->
+        <Input freshSetOfSubmissions={freshSetOfSubmissions}></Input>
+        <Entries freshSetOfSubmissions={freshSetOfSubmissions}></Entries>
     </section>
     
 </section>

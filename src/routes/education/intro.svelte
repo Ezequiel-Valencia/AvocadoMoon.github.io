@@ -37,7 +37,7 @@
           </button>
           <br>
           <br>
-          <button on:click={() => {showHint = true}} style="height: fit-content; max-height:2vh;">Get hint</button>
+          <!-- <button on:click={() => {showHint = true}} style="height: fit-content; max-height:2vh;">Get hint</button> -->
           {#if showHint}
             <p>Hint: Checkout Book and Hover It In the Dark</p>
           {/if}

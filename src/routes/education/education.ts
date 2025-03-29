@@ -24,6 +24,11 @@ export const technology_learned = [
         projects: ["This Website", "Auto Grading Site"]
     },
     {
+        icon: csWorkTechnologies.SpringBoot.icon,
+        iconName: csWorkTechnologies.SpringBoot.name,
+        projects: ["This Website"]
+    },
+    {
         icon: csWorkTechnologies.CSS.icon,
         iconName: csWorkTechnologies.CSS.name,
         projects: ["This Website", "Auto Grading Site"]

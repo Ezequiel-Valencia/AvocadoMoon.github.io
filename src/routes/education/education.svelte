@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { technology_learned, createBookCheckout } from "./education";
+  import ScrollDown from "../../common/scroll-down.svelte";
 
   let mask: HTMLElement | null;
   $: iconIndex = -1;
+  $: showScrollIcon = true
   let bookCheckout = createBookCheckout()
   let education_content: HTMLElement;
 
@@ -69,12 +71,20 @@
         })
 
         updateMaskHeight()
+        
+      const projectsWrapper = document.querySelector("#black-over-top") as HTMLElement
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              showScrollIcon = !entry.isIntersecting
+          })
+      }, {threshold: 0.05})
+      observer.observe(projectsWrapper)
     })
 </script>
 
 
 <section id="all-education-content">
-    <div class="black-over-top"></div>
+    <div id="black-over-top" class="black-over-top"></div>
     <div class="education-content">
         <article class="education-article">
             <div>
@@ -125,6 +135,9 @@
             </div>
         </article>
     </div>
+    {#if showScrollIcon}
+      <ScrollDown text="Checkout Book and Scroll Down"></ScrollDown>
+    {/if}
 </section>
 
 

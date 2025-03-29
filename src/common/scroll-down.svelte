@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  export let text = "Scroll Down"
     $: scrolledDown = false
     onMount(() => {
         window.addEventListener("scroll", function() {
@@ -11,7 +12,7 @@
 
 
 <div class="scroll-down {scrolledDown ? 'hidden': ''}" id="scrollDown">
-    Scroll Down
+    {text}
     <span class="arrow">&#x2193;</span>
 </div>
 

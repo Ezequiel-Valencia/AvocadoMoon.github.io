@@ -76,7 +76,7 @@
 
           <!-- Hack to include href to resume for CCAM experience -->
           {#if paragraph.includes("With this mindset")}
-            <a href={resumeURL}>resume.</a> 
+            <a target="_blank" href={resumeURL}>resume.</a> 
           {/if}
         </p>
       {/each}

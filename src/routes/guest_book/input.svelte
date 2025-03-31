@@ -70,10 +70,10 @@
             Your Geocache Entry
             <br>
             <br>
-            <input required placeholder="Your Name" name="username" type="text" id="username">
+            <input required minlength="3" placeholder="Your Name" name="username" type="text" id="username">
             <br>
             <br>
-            <textarea required maxlength="250" placeholder="Your message (max 250 characters)." 
+            <textarea required minlength="3" maxlength="250" placeholder="Your message (max 250 characters)." 
             style="border-radius: 6px; width:30vw;" name="note" id="note"></textarea>
             <br>
             <br>
@@ -83,7 +83,7 @@
                     <div class="loader"></div> 
                 {:else}
                     <div style="width: 30vw; text-align:center; margin:auto; display:inline;">
-                        <input maxlength="50" required style="width:30vw;" placeholder="Location Name" name="location-name" type="text" id="location-name">
+                        <input maxlength="50" minlength="3" required style="width:30vw;" placeholder="Location Name" name="location-name" type="text" id="location-name">
                         <br>
                         <div style="width:30vw; display:inline-block;">
                             <input required defaultValue={latitude == undefined ? "" : latitude} placeholder="Latitude" name="latitude" type="number" step="any" id="latitude">
@@ -99,7 +99,7 @@
                 <br>
             {/if}
             {#if addSecret}
-                <textarea maxlength="50" placeholder="Secret message (max 50 characters)." 
+                <textarea maxlength="50" minlength="3" placeholder="Secret message (max 50 characters)." 
                 style="border-radius: 6px; width:30vw;" name="secret" id="secret"></textarea>
                 <br>
                 <br>

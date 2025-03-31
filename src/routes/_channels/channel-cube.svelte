@@ -127,6 +127,7 @@
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
+    transform: rotate3d(0, 0, 0, 0deg); // https://stackoverflow.com/questions/11043080/unpredictably-sluggish-performance-stalls-on-3d-css-animations-webkit-transform
     --face-color: var(--cube-color);
   }
   .cube:hover{

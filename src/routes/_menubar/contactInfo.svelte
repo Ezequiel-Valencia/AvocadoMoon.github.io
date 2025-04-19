@@ -7,7 +7,7 @@
     <h2 class="menu-large-text">Contact Info</h2>
 
     <h4 class="menu-med-text">Email:</h4>
-    <a href="mailto:wzeke123@gmail.com" class="menu-med-text">wzeke123@gmail.com</a>
+    <a href="mailto:ezq.valencia@gmail.com" class="menu-med-text">ezq.valencia@gmail.com</a>
 
     <h4 class="menu-med-text">Linkedin:</h4>
     <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a

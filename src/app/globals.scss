@@ -1,0 +1,11 @@
+/* Global styles — equivalent to the original app.scss + app.pcss */
+
+/* Tailwind directives (used by ctgrassroots route; preflight disabled in tailwind.config.cjs) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset / base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}

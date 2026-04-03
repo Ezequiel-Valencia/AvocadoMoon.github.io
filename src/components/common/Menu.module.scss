@@ -1,0 +1,130 @@
+.text {
+  color: white;
+}
+
+.musicButtons {
+  min-height: 1vh;
+  min-width: 2vw;
+}
+
+.musicButtons:hover {
+  cursor: url('/Cursors/wii-open2.png'), pointer;
+}
+
+.musicNav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.box {
+  border-radius: 5%;
+  overflow: auto;
+  color: white;
+}
+
+.homeMenuNav {
+  display: grid;
+  bottom: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: url('/Cursors/Wii-Curso-plain.png'), pointer;
+}
+
+.menuNav {
+  border: none;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-size: 3vmin;
+  position: fixed;
+  padding: 1vmin;
+  left: 50%;
+  transform: translate(-50%);
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: white;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.164);
+  max-width: 200px;
+  max-height: 55px;
+  width: 20vmin;
+  height: auto;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.menuNav:hover {
+  text-decoration: underline;
+}
+
+.bigButtonDiv button {
+  background: grey;
+  border-radius: 40px;
+  height: 10vh;
+  width: 20vw;
+  margin-left: 5%;
+}
+
+.bigButtonDiv button:hover {
+  cursor: url('/Cursors/wii-open2.png'), pointer;
+}
+
+.contactMe {
+  position: relative;
+  text-align: center;
+  max-height: 20vh;
+}
+
+.contactMe h1 {
+  padding-top: 2vh;
+  bottom: 0;
+  color: white;
+}
+
+.contactMe p {
+  bottom: 0;
+  color: white;
+}
+
+
+.divider {
+  margin: 2rem 0;
+}
+
+/* Simple CSS marquee */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee span {
+  display: inline-block;
+  animation: marquee 10s linear infinite;
+  color: white;
+}
+
+@keyframes marquee {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
+}
+
+@media (max-width: 500px) {
+  .menuNav {
+    font-size: 5vmin;
+    padding: 1vmin;
+    width: 30vmin;
+    height: auto;
+  }
+
+  .musicNav {
+    padding-left: 8vw;
+    padding-right: 8vw;
+  }
+}

@@ -1,0 +1,106 @@
+@keyframes turn {
+  from { transform: rotate3d(0, 0, 0, 0); }
+  to   { transform: rotate3d(0, 1, 0, 360deg); }
+}
+
+@keyframes backToZero {
+  to { transform: rotate3d(0, 0, 0, 0deg); }
+}
+
+@keyframes fullOpacity {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.section {
+  width: 100%;
+  height: 100%;
+  --channel-face-space-x: 11vmin;
+  --channel-face-space-y: 11vmin;
+  --channel-face-space-z: 11vmin;
+}
+
+.section:hover {
+  perspective: 1000px;
+}
+
+.cube {
+  transition: all 0.2s;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotate3d(0, 0, 0, 0deg);
+  --face-color: var(--cube-color);
+}
+
+.cube:hover {
+  transition: all 0.2s;
+  --face-color: var(--cube-hover-color);
+}
+
+.rotatingCube {
+  transition: all 0.2s;
+  animation-name: backToZero, turn;
+  animation-duration: 0.3s, 5s;
+  animation-timing-function: ease-in, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, forwards;
+  animation-delay: 0.5s, 1s;
+  --channel-face-space-x: 16vmin;
+  --channel-face-space-y: 16vmin;
+  --channel-face-space-z: 16vmin;
+}
+
+.movingImage {
+  animation: fullOpacity 1s ease-in;
+  animation-fill-mode: forwards;
+  opacity: 1;
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+  border-radius: 10px;
+  transition: transform 1s;
+}
+
+.lowOpacity {
+  opacity: 0.8;
+  background: var(--face-color);
+}
+
+.front  { transform: translateZ(var(--channel-face-space-z)); }
+.back   { transform: translateZ(calc(-1 * var(--channel-face-space-z))) rotateY(180deg); }
+.left   { transform: translateX(calc(-1 * var(--channel-face-space-x))) rotateY(-90deg); }
+.right  { transform: translateX(var(--channel-face-space-x)) rotateY(90deg); }
+.top    { transform: translateY(calc(-1 * var(--channel-face-space-y))) rotateX(90deg); }
+.bottom { transform: translateY(var(--channel-face-space-y)) rotateX(-90deg); }
+
+.channelImage {
+  object-fit: inherit;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .section {
+    --channel-face-space-x: 16vmin;
+    --channel-face-space-y: 16vmin;
+    --channel-face-space-z: 16vmin;
+  }
+
+  .rotatingCube {
+    animation: turn 5s linear infinite;
+    --channel-face-space-x: 25vmin;
+    --channel-face-space-y: 25vmin;
+    --channel-face-space-z: 25vmin;
+  }
+}

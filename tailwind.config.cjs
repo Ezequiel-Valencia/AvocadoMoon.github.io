@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config}*/
 const config = {
   content: [
-    "./src/routes/ctgrassroots/*.{html,js,svelte,ts}", 
-    './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+    "./src/app/ctgrassroots/**/*.{html,js,ts,tsx}",
+    "./src/components/ctgrassroots/**/*.{html,js,ts,tsx}",
   ],
 
   plugins: [require('flowbite/plugin')],
 
-  // Now it doesn't overwrite base css components
+  // Does not overwrite base css components globally
   corePlugins: {
     preflight: false,
   },
@@ -15,7 +15,6 @@ const config = {
   theme: {
     extend: {},
   },
-
 };
 
 module.exports = config;

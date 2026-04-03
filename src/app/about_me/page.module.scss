@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
+
+.mainDiv {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100vw;
+  overflow-x: hidden;
+  background-size: 300%;
+  --gradient: linear-gradient(#339996, #329962, #12693b);
+  background-image: var(--gradient);
+}
+
+/* Me component */
+.intro {
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  text-align: center;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+
+.squircle {
+  height: 40%;
+  aspect-ratio: 1/1;
+  border-radius: 5%;
+  max-width: 80vw;
+  max-height: 40vh;
+  overflow: auto;
+  margin: auto;
+  background-image: url('/about_me/stairs-candid.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: local;
+}
+
+.description {
+  position: relative;
+  width: 100vw;
+}
+
+.aboutMe {
+  margin: 0;
+  padding: 2%;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10vh;
+  font-weight: 100;
+  text-align: center;
+  color: white;
+  top: 5%;
+}
+
+.descriptionText {
+  padding: 5%;
+  margin: auto;
+  max-width: 900px;
+  color: white;
+  font-size: x-large;
+}
+
+/* Hobbies component */
+.hobbies {
+  overflow-y: scroll;
+  height: auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.category {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5%;
+  margin-bottom: 10%;
+  margin-top: 10%;
+  padding: 0%;
+  border-style: solid;
+  border-color: white;
+  max-width: 1000px;
+  width: 80vw;
+}
+
+.activity {
+  padding: 2%;
+  padding-bottom: 5%;
+  overflow: auto;
+  color: white;
+}
+
+.activityDescription {
+  font-size: large;
+  top: 0%;
+  color: white;
+}
+
+.activityImage {
+  height: 200px;
+  float: right;
+  max-width: 150px;
+}

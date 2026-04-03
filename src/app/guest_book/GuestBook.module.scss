@@ -1,0 +1,148 @@
+/* Page */
+#main-body {
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background-image: url('/guest_book/forest.avif');
+}
+
+#focus {
+  height: auto;
+  min-height: 80vh;
+  padding-bottom: 5vh;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+  width: 90vw;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+#focus h1 {
+  text-align: center;
+  margin: auto;
+}
+
+#focus p {
+  text-align: center;
+  margin: auto;
+  padding-top: 3%;
+}
+
+/* Input */
+.input-form {
+  text-align: center;
+  margin: auto;
+  padding-top: 5vh;
+}
+
+.input-form input {
+  border-radius: 6px;
+}
+
+.input-form button,
+.entries-section button {
+  padding: 0.5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+}
+
+.input-form button:hover,
+.entries-section button:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.loader {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #000000;
+  border-radius: 50%;
+  width: 2vh;
+  height: 2vh;
+  animation: spin 2s linear infinite;
+  text-align: center;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Entries */
+.entries-section p {
+  text-align: left;
+  padding-left: 1vw;
+  word-wrap: break-word;
+  text-wrap: wrap;
+}
+
+.entry {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2vh;
+  border-radius: 4px;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  width: 30vw;
+  height: fit-content;
+  position: relative;
+  background-color: white;
+}
+
+.hidden-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  clip-path: circle(0% at 0% 0%);
+  background-color: transparent;
+  z-index: 5;
+}
+
+.entry:hover .hidden-content.blacklight {
+  clip-path: circle(100px at var(--x, 50%) var(--y, 50%));
+}
+
+.entry:hover .entry-text.blacklight {
+  background-color: transparent;
+  clip-path: circle(0% at 0% 0%);
+}
+
+.entry-text {
+  height: 100%;
+  width: 100%;
+  transition: all 2s ease;
+  text-align: left;
+}
+
+.interactive {
+  position: fixed;
+  background: radial-gradient(
+      circle at center,
+      rgba(46, 119, 255, 0.8) 0,
+      rgba(32, 103, 255, 0.63) 50%
+    )
+    no-repeat;
+  mix-blend-mode: hard-light;
+  width: 200px;
+  height: 200px;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 5;
+}

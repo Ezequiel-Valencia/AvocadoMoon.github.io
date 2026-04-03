@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+/* Page wrapper */
+#main-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #523f29;
+  overflow: auto;
+  height: auto;
+}
+
+#touch-screen {
+  height: 60vh;
+  width: 80vw;
+  background-color: antiquewhite;
+  border-radius: 4vmin;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 25vh;
+  margin: auto;
+  text-align: center;
+  z-index: 5;
+}
+
+/* Intro */
+#intro-div {
+  height: auto;
+  width: 100vw;
+  background-image: url('/Education/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.intro-p {
+  color: white;
+}
+
+.intro-article {
+  height: auto;
+  width: auto;
+  display: flex;
+}
+
+.content-div {
+  width: 80vw;
+  height: 80vh;
+  text-align: center;
+  margin: auto;
+  position: relative;
+}
+
+.intro-text {
+  margin-top: 10vh;
+  margin-left: 5vw;
+  text-align: left;
+  font-size: 5em;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.btn {
+  background: white;
+  color: black;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  border-radius: 5%;
+  padding: 1%;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 2.5em;
+}
+
+.btn:hover {
+  background: black;
+  color: white;
+  box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+}
+
+.btn::before,
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: white;
+  transition: 400ms ease all;
+}
+
+.btn::after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+
+.btn:hover::before,
+.btn:hover::after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+/* Education content */
+#all-education-content {
+  height: auto;
+  width: auto;
+  text-align: center;
+}
+
+.black-over-top {
+  --mouse-x: 150%;
+  --mouse-y: 150%;
+  --var-height: 100%;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  width: 100vw;
+  height: var(--var-height);
+  z-index: 2;
+  mask-image: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0) 2vmax,
+    rgb(255, 255, 255) 40vmax
+  );
+}
+
+.degree {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2em;
+  color: white;
+}
+
+.edu-h2,
+.edu-p,
+.edu-h3,
+.edu-h5 {
+  color: white;
+}
+
+.education-content {
+  padding-top: 10%;
+  padding-bottom: 10%;
+  width: 90vw;
+  height: auto;
+  text-align: center;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  position: absolute;
+  z-index: 1;
+}
+
+.education-article {
+  padding-top: 10%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: auto;
+  display: flex;
+}
+
+.institute-img {
+  max-height: 45vh;
+  max-width: 35vw;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  z-index: 10;
+}
+
+.image-holder {
+  z-index: 10;
+  padding: 2vmin;
+  position: relative;
+  display: table;
+  caption-side: top;
+}
+
+.description {
+  z-index: 3;
+  position: absolute;
+  text-align: center;
+  margin: auto;
+  padding-right: 20%;
+  opacity: 1;
+  height: auto;
+  width: auto;
+  bottom: 100%;
+  background-color: rgb(138, 98, 53);
+  border-style: solid;
+  border-color: rgb(41, 23, 0);
+  color: black;
+}
+
+.description h3 {
+  color: black;
+}

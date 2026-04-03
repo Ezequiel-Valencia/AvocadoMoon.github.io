@@ -1,0 +1,133 @@
+$channel-button-height: 40%;
+$channel-button-width: 40%;
+$channel-button-offset: -5%;
+$border-radius: 40px;
+
+.playButton {
+  position: relative;
+  height: $channel-button-height;
+  width: $channel-button-width;
+  right: $channel-button-offset;
+  text-align: center;
+  top: 20%;
+}
+
+.bigChannelContainer {
+  position: fixed;
+  width: 30vmin;
+  height: 30vmin;
+  z-index: 50;
+  transition: all 1s;
+  border-radius: $border-radius;
+}
+
+.channelButtons {
+  max-width: 400px;
+}
+
+.channelContainer {
+  padding: 1px;
+  border-radius: $border-radius;
+  max-height: 400px;
+  max-width: 400px;
+}
+
+.channelContainer:hover {
+  box-shadow: 0px 0px 200px 200px lightblue inset;
+}
+
+.channelBox {
+  padding: 2px;
+  height: 22vmin;
+  width: 22vmin;
+  max-height: 400px;
+  max-width: 400px;
+  border-radius: $border-radius;
+  transition: all 1s;
+  z-index: 1;
+  animation: zHigh 1s linear;
+}
+
+@keyframes zHigh {
+  0%   { z-index: 100; }
+  100% { z-index: 100; }
+}
+
+.channelBox:hover {
+  box-shadow: 0px 0px 10px 10vh lightblue inset;
+}
+
+.menuButton {
+  position: relative;
+  height: $channel-button-height;
+  width: $channel-button-width;
+  left: $channel-button-offset;
+  text-align: center;
+  top: 20%;
+}
+
+.channelBar {
+  position: absolute;
+  left: 0%;
+  height: 15vh;
+  width: 100vw;
+  bottom: 20vh;
+  display: block;
+  z-index: 4;
+  border-radius: $border-radius;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.253);
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 2px solid rgba(15, 164, 250, 0.3);
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 0fr);
+  grid-template-rows: repeat(3, 1fr);
+  text-align: center;
+  justify-content: center;
+  gap: 1%;
+  max-width: 100vw;
+  padding: 1.5%;
+}
+
+.futureButton {
+  background: rgba(44, 188, 255, 0.363);
+  border: 2px solid black;
+  justify-content: center;
+  transition: transform 500ms;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  cursor: url('/Cursors/wii-open2.png'), pointer;
+}
+
+.futureButton:hover {
+  background: rgba(24, 182, 255, 0.747);
+}
+
+@media (max-width: 600px) {
+  .channelBox {
+    padding: 2px;
+    height: 23vmin;
+    width: 23vmin;
+    border-radius: $border-radius;
+    transition: all 1s;
+    z-index: 1;
+    animation: zHigh 1s linear;
+  }
+
+  .gridContainer {
+    grid-template-columns: repeat(2, 0fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .bigChannelContainer {
+    width: 50vmin;
+    height: 50vmin;
+  }
+}

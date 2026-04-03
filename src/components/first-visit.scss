@@ -1,0 +1,51 @@
+button {
+  background-color: rgb(84, 134, 243);
+  border: 0;
+  border-radius: 4px;
+  height: 4vmin;
+  width: 6vmin;
+  min-height: 4vh;
+  min-width: fit-content;
+  font-size: large;
+  font-family: 'Times New Roman', Times, serif;
+  color: white;
+  cursor: url('/Cursors/wii-open2.png'), pointer;
+}
+
+button:hover {
+  background-color: rgb(0, 12, 121);
+}
+
+h1 {
+  font-size: xx-large;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+h2 {
+  font-size: x-large;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+p {
+  max-width: 60%;
+  margin: auto;
+  text-align: center;
+}
+
+hr {
+  max-width: 80%;
+  margin-top: 2%;
+  color: black;
+  border-color: black;
+}
+
+@media (max-width: 500px) {
+  h1 { font-size: 5vmin; }
+  h2 { font-size: 4vmin; }
+  p  { font-size: 3vmin; }
+  button {
+    height: 2vmin;
+    width: 3vmin;
+    font-size: 4vmin;
+  }
+}

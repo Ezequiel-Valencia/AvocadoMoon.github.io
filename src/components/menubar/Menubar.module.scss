@@ -1,0 +1,65 @@
+$channel-view-height: 80vh;
+$button-horizontal-offset: 2%;
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap');
+
+@font-face {
+  src: url('/terminal-font.ttf');
+  font-family: 'Terminal Font';
+}
+
+.barButton {
+  position: absolute;
+  border-radius: 50%;
+  height: 50%;
+  width: 10%;
+  z-index: 1;
+  bottom: 20%;
+  max-width: 150px;
+  background: transparent;
+  border: none !important;
+  cursor: url('/Cursors/wii-open2.png'), pointer;
+}
+
+.text {
+  text-align: center;
+}
+
+.topText {
+  text-align: center;
+  top: 75vh;
+  height: fit-content;
+  line-height: 1;
+}
+
+.clock {
+  font-size: 2.5vmin;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.barDiv {
+  position: fixed;
+  text-align: center;
+  width: 30vw;
+  bottom: 0%;
+}
+
+.leftBarButton {
+  left: $button-horizontal-offset;
+}
+
+.rightBarButton {
+  right: $button-horizontal-offset;
+}
+
+.menuBar {
+  position: fixed;
+  height: calc(100vh - $channel-view-height);
+  width: 100vw;
+  bottom: 0%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}

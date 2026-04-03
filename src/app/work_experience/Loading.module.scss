@@ -1,0 +1,41 @@
+#loading-section {
+  background-color: black;
+  left: 0;
+  top: 0;
+  justify-items: center;
+  align-items: center;
+  display: flex;
+}
+
+#progress-bar {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: white;
+  justify-self: center;
+}
+
+#progress-bar-filling {
+  height: 100%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.star {
+  --fade-time: 2s;
+  width: 0.3em;
+  height: 0.3em;
+  background-color: white;
+  z-index: 1;
+  border-radius: 50%;
+  position: absolute;
+  animation: fadeInAndOut var(--fade-time) infinite alternate;
+}
+
+@keyframes fadeInAndOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

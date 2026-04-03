@@ -1,0 +1,174 @@
+/* projects.scss equivalents */
+
+#sun-animation {
+  --grad-size: 0%;
+  --black-transparent: 1;
+  position: absolute;
+  width: 110vw;
+  height: 110vh;
+  z-index: 5;
+  left: 0%;
+  top: 0%;
+  background-color: rgba(0, 0, 0, var(--black-transparent));
+  mask-image: radial-gradient(
+    circle at 11% 14%,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    black var(--grad-size)
+  );
+}
+
+@keyframes swayClouds {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(calc(100% + var(--left-p)), 0);
+  }
+}
+
+#sun::after {
+  content: '';
+  position: absolute;
+  background-image: radial-gradient(orange, rgba(255, 166, 0, 0.767), transparent, transparent);
+  width: 170%;
+  height: 170%;
+  border-radius: 50%;
+  bottom: -35%;
+  left: -35%;
+}
+
+.waves {
+  position: absolute;
+  width: 100%;
+  height: 30vh;
+  margin-bottom: -7px; /* Fix for safari gap */
+  min-height: 100px;
+  top: 70vh;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+/* projects.svelte scoped styles */
+
+.cloud {
+  top: 15%;
+  position: absolute;
+  height: 10vmin;
+  opacity: 15%;
+  left: var(--left-p);
+  animation: swayClouds calc(20s + var(--time-dif)) linear alternate-reverse infinite;
+}
+
+#sun {
+  left: 10%;
+  top: 10%;
+  border-radius: 50%;
+  height: 10vmin;
+  width: 10vmin;
+  background-color: rgba(255, 166, 0, 0.829);
+  position: absolute;
+  z-index: 2;
+}
+
+#sunny-ocean-intro {
+  height: 101vh;
+  width: 100vw;
+  background-image: linear-gradient(
+    rgb(71, 113, 252),
+    rgb(71, 113, 252),
+    rgb(71, 113, 252),
+    rgb(96, 144, 240)
+  );
+}
+
+#projects-wrapper {
+  width: 100%;
+  min-height: 100%;
+  height: max-content;
+  background-image: linear-gradient(rgb(46, 68, 112), #151f2b);
+  display: flex;
+}
+
+#project-article {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.side-image {
+  width: 10vw;
+  background-image: url('/personal_projects/animal star blue.png');
+  background-repeat: repeat;
+  background-size: contain;
+  object-fit: cover;
+}
+
+.category {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5%;
+  width: 80vw;
+  max-width: 1000px;
+}
+
+.category-title {
+  padding-top: 5%;
+  border-bottom-style: ridge;
+}
+
+.description {
+  z-index: 3;
+  position: absolute;
+  text-align: center;
+  margin: auto;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+  opacity: 1;
+  height: auto;
+  width: auto;
+  background-color: rgb(53, 83, 138);
+  border-style: solid;
+  border-color: rgb(1, 115, 150);
+}
+
+.project {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.description-holder {
+  position: relative;
+  display: inline-block;
+}

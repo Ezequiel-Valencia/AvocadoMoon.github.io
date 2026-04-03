@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+/* Global element styles for work_experience/Explayout component */
+a {
+  color: rgb(88, 255, 255);
+}
+
+a:hover {
+  color: rgb(0, 156, 156);
+}
+
+#text-wrapper-div h2 {
+  color: rgb(190, 190, 190);
+}
+
+h1,
+h2,
+h3,
+h5,
+p {
+  background-color: black;
+}
+
+h3 {
+  color: gray;
+}
+
+h5 {
+  color: rgb(173, 173, 173);
+}
+
+p {
+  color: white;
+}
+
+h1 {
+  color: white;
+}
+
+nav {
+  writing-mode: vertical-lr;
+  margin-bottom: unset;
+  overflow: hidden;
+  height: unset;
+  width: 2em;
+  padding: 0.2em;
+  border-bottom: unset;
+  font-size: 1.4em;
+}
+
+nav h2 {
+  margin-top: 5%;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: transparent;
+  text-decoration: none;
+  color: white;
+}
+
+button {
+  border-right: #535353;
+  border-right-style: ridge;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  background-color: transparent;
+}
+
+button:hover {
+  background: #53535375;
+}

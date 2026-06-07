@@ -43,7 +43,7 @@
 
   <style lang="scss">
     $button-horizontal-offset: 2%;
-    @use '../homeMenu';
+    @use 'homeMenu';
     @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
   
     @font-face{

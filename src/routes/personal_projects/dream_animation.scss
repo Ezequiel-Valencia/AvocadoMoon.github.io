@@ -47,37 +47,3 @@
     }
 }
 
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(5deg); }
-  10% { transform: translate(-1px, -5px) rotate(-1deg); }
-  20% { transform: translate(-3px, 10px) rotate(3deg); }
-  30% { transform: translate(13px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -8px) rotate(5deg); }
-  50% { transform: translate(-8px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(10deg); }
-  70% { transform: translate(3px, 10px) rotate(-1deg); }
-  80% { transform: translate(-11px, -1px) rotate(10deg); }
-  90% { transform: translate(1px, 11px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-@keyframes swim-right{
-  from {
-    left: var(--l-val)
-  }
-   to {
-    left: 110vw;
-  }
-}
-
-@keyframes fishStrobe{
-  0% {
-    filter: invert(0);
-  } 50% {
-    filter: invert(0);
-  } 100% {
-    filter: invert(0.5);
-  }
-}
-

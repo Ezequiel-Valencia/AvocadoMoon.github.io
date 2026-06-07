@@ -3,7 +3,6 @@
   import Menu from "../../common/menu.svelte";
   import Entries from "./entries.svelte";
   import Input from "./input.svelte";
-  import BlocksAnimated from "../_decals/blocks-animated.svelte";
   import { writable } from "svelte/store";
 
   const freshSetOfSubmissions = writable(true);

@@ -88,15 +88,3 @@ export function setCircleTextStyle(circle: HTMLElement, dreamText: string, dream
 
 }
 
-export const dreamThoughts = [
-  "Server side image processing for microscopist's",
-  'Bot that sends digits of pi',
-  'A shaming computer trash bin',
-  'mTLS with post-quantum encryption schemes',
-  'Geo-guesser website for home items',
-  'Soundboard for smells',
-  'Solution for NP=P',
-  'Dr. Phil Message Sender',
-  'Breathalyzer for water (stay hydrated)',
-]
-

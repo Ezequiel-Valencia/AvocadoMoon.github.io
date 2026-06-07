@@ -1,14 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {setStarPositions, createReflections, moveMoonAndGradient, checkAndPerformIfMoonIntersection
-    ,moveAndShowDragMe, setCircleTextStyle, dreamThoughts} from "./dream";
+    ,moveAndShowDragMe, setCircleTextStyle} from "./dream";
+  import Fish from "./fish.svelte";
+  import Touchscreen from "./touchscreen.svelte";
   
   let holdingDownMoon = false;
   let transition = false;
   let dreamText = "End Dream? "
-  let fishHoverIndex = -1;
-  let numFishes = 5;
-  let startDreamThoughtsIndex = Math.floor(Math.random() * (dreamThoughts.length - numFishes - 1))
 
   export let transControl;
 
@@ -28,7 +27,6 @@
     const intro_section = document.querySelector("#intro-wrapper") as HTMLElement;
     const invisibleMoon = document.querySelector("#invisible-moon") as HTMLElement
     const dreamTextSpans = document.querySelectorAll(".circle-text") as NodeListOf<HTMLElement>;
-    const fishes = document.querySelectorAll(".fish-slide") as NodeListOf<HTMLElement>;
 
     setStarPositions()
     createReflections(ocean_reflection)
@@ -75,15 +73,6 @@
       }
     })
 
-    fishes.forEach((fish, i) => {
-      fish.addEventListener("pointerenter", (e) => {
-        fishHoverIndex = i
-      })
-      fish.addEventListener("pointerleave", (e) => {
-        fishHoverIndex = -1
-      })
-    })
-
     window.onresize = () => {setCircleTextStyle(missing_piece, dreamText, dreamTextSpans)}
 
   })
@@ -92,19 +81,7 @@
 
 <section id="intro-wrapper" style="">
   {#if touchscreen}
-    <div style="position:absolute; top:0; left:0; background-image: url('/Backgrounds/stars.jpg'); width:100vw; height:100vh;">
-      <div style="opacity:0.92; margin-top: 8vh; text-align:center; margin-left:auto; margin-right:auto; width: 80vw; height:60vh; background-color:white;">
-        <h1 style="padding-top: 2vh;">This channel features an intro that is only available on computers.</h1>
-        <h3>You can skip that intro and view my personal projects.</h3>
-        <button on:click={transControl.updateToTransitioned()} style="">
-          <u>
-            <i>
-              <h3 style="font-family: 'Times New Roman', Times, serif; font-size:x-large;">Skip Intro</h3>
-            </i>
-          </u>
-        </button>
-      </div>
-    </div>
+    <Touchscreen transControl={transControl}></Touchscreen>
   {:else}
     <div id="sky">
       <div id="circle-missing">
@@ -113,21 +90,7 @@
         {/each}
         <img src='./personal_projects/moon.svg' alt="invisible-moon" id="invisible-moon">
       </div>
-      {#each {length: numFishes} as _, i}
-      <figure class="fish-slide" style="--l-val: -{ (i * (Math.random() * 20)) + (i * 2)}%; 
-      left: var(--l-val); position:absolute; top: {i * 18}%;">
-        <img draggable="false" class="fish"
-          src={i % 2 == 0 ? "./personal_projects/fish.svg": "./personal_projects/fish-2.svg"} 
-          alt="fish" style="transform: {i % 2 == 0 ? "scale(-1, 1)": ""};">
-          {#if fishHoverIndex == i}
-            <figcaption class="fish-caption" style="opacity: 1; color:white;">
-              Fish Idea: <br>
-              {dreamThoughts[startDreamThoughtsIndex + i]}
-            </figcaption>
-          {/if}
-      </figure>
-          
-      {/each}
+      <Fish></Fish>
       <figure>
         <img class="moon to-be-reflected" id="og-moon"
         draggable="false"
@@ -166,26 +129,6 @@
   #intro-wrapper {
     height: 100vh;
     width: 100vw;
-  }
-
-  .fish{
-    color: white;
-    height: 5vmin;
-    animation: fishStrobe 5s ease alternate-reverse infinite;
-  }
-
-  .fish-slide{
-    animation: swim-right 40s linear infinite;
-  }
-
-  .fish-slide:hover{
-    animation-play-state: paused;
-  }
-
-  .fish:hover{
-    filter: invert(1);
-    animation: shake 0.7s infinite, swim-right 40s linear infinite;
-    cursor: grab;
   }
 
   #sky{

@@ -10,7 +10,7 @@
     $: showBlueLight = false
     let interBubble: HTMLElement
 
-    let geo: GeoCacheApi = new GeoCacheApi()
+    let geo: GeoCacheApi = new GeoCacheApi(new Configuration({basePath: "https://d29w5rfwyyex3t.cloudfront.net"}))
     let entries: GeoCacheSubmission[]
     $: entries = []
     $: pageNumber = 0;
@@ -25,6 +25,7 @@
         container.style.setProperty('--y', `${y}px`);
     }
 
+    // https://d29w5rfwyyex3t.cloudfront.net
     async function getEntries() {
         let req: GetSubmissionRequest = {pageNumber: pageNumber}
         try{

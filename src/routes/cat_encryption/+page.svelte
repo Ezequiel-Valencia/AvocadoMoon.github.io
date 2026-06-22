@@ -1,8 +1,8 @@
 <script lang="ts">
     import Menu from "../../common/menu.svelte";
     import Tabs from "../../common/tabs.svelte";
-    import { importSCSSOptions } from "../../globals"
     import Decode from "./decode.svelte"
+    import './tabs.scss';
     import Encode from "./encode.svelte"
     import { onMount } from "svelte"
     import { matrixDisplay } from "./matrixBG"
@@ -29,7 +29,6 @@
 
     <article id="content">
         <Tabs iterable={Object.entries(imageOptions)} bind:activeIndex={activeIndex}
-        tabSCSSFileLocation={importSCSSOptions.cat_encryption}
         getTabNameFunction={(e) => {return e[1]}}></Tabs>
         
         

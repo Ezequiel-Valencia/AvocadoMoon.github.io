@@ -1,5 +1,4 @@
 import { writable } from "svelte/store";
-import { onMount } from "svelte";
 
 // https://github.com/sveltejs/kit/issues/1650
 // https://www.reddit.com/r/sveltejs/comments/p438og/how_to_access_localstorage_via_store_in_sveltekit/?rdt=60526
@@ -17,46 +16,17 @@ export function convertToBoolean(input: string): boolean {
     }
 }
 
-function createSfxController() {
-    const key = 'sfxBool';
-    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
-    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
-    const { subscribe, set, update } = writable(bool)
-
-    // subscribe(val => localStorage.setItem("musicStore", val.toString()))
-    return {
-        subscribe,
-        allow_sfx: () => { set(true); safeLocalStorage?.setItem(key, 'true') },
-        disable_sfx: () => { set(false); safeLocalStorage?.setItem(key, 'false') },
-        toggle_sfx: () => update((bool) => { safeLocalStorage?.setItem(key, String(!bool)); return !bool })
-    }
-}
-
-function firstTimeVisit(){
-    const key = 'visitedSite';
-    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
-    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
-    const { subscribe, set, update } = writable(bool)
+function createBooleanStore(key: string, defaultValue = false) {
+    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, String(defaultValue)) }
+    const initial = convertToBoolean(safeLocalStorage?.getItem(key) as string);
+    const { subscribe, set, update } = writable(initial);
 
     return {
         subscribe,
-        hasVisited: () => {set(true); safeLocalStorage?.setItem(key, 'true')}
-    }
-}
-
-function createMusicController() {
-    const key = 'musicBool';
-    if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, 'false') }
-    const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
-    const { subscribe, set, update } = writable(bool)
-
-    // subscribe(val => localStorage.setItem("musicStore", val.toString()))
-    return {
-        subscribe,
-        allow_music: () => { set(true); safeLocalStorage?.setItem(key, 'true') },
-        disable_music: () => { set(false); safeLocalStorage?.setItem(key, 'false') },
-        toggle_music: () => update((bool) => { safeLocalStorage?.setItem(key, String(!bool)); return !bool })
-    }
+        enable:  () => { set(true);  safeLocalStorage?.setItem(key, 'true') },
+        disable: () => { set(false); safeLocalStorage?.setItem(key, 'false') },
+        toggle:  () => update((v) => { safeLocalStorage?.setItem(key, String(!v)); return !v }),
+    };
 }
 
 function musicPlaybackTime(){
@@ -80,8 +50,8 @@ function musicPlaybackTime(){
     }
 }
 
-export const hasVisited = firstTimeVisit()
-export const musicController = createMusicController();
-export const sfxController = createSfxController();
+export const hasVisited      = createBooleanStore('visitedSite');
+export const musicController = createBooleanStore('musicBool');
+export const sfxController   = createBooleanStore('sfxBool');
 export const musicTime = musicPlaybackTime();
 

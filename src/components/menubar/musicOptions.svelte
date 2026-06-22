@@ -24,7 +24,7 @@
       id="sfx"
       class="menu-med-text"
       on:click={(e) => {
-        sfxController.toggle_sfx();
+        sfxController.toggle();
       }}
     >
       Turn SFX {$sfxController ? "Off" : "On"}
@@ -33,7 +33,7 @@
       id="music"
       class="menu-med-text"
       on:click={(e) => {
-        musicController.toggle_music();
+        musicController.toggle();
       }}
     >
       Turn Music {$musicController ? "Off" : "On"}

@@ -1,10 +1,6 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { importSCSSOptions } from "../globals"
-
     export let iterable: Iterable<any>;
     export let activeIndex: number;
-    export let tabSCSSFileLocation: importSCSSOptions;
     export let getTabNameFunction: (para: any) => string;
     export let icons: Array<any> = [];
 
@@ -12,29 +8,12 @@
     // Tailwind classes for generic CSS
     const tabCSSClass = "inline-block p-5 border-b-2 rounded-t-lg"
     const tabContainerCSSClass = "flex flex-wrap -mb-px text-sm font-medium text-center"
-    const listClass = "flex flex-wrap -mb-px text-sm font-medium text-center";
-
-    //comment vite-ignore is used to suppress dynamic import warnings
-
-    onMount(() =>{
-      if(tabSCSSFileLocation === importSCSSOptions.about_me){
-        import(`../routes/about_me/tabs.scss`)
-      } else if(tabSCSSFileLocation === importSCSSOptions.personal_projects){
-        import(`../routes/personal_projects/tabs.scss`)
-      } else if (tabSCSSFileLocation === importSCSSOptions.cat_encryption){
-        import(`../routes/cat_encryption/tabs.scss`)
-      }
-       else{
-        import(`../routes/web_ring/tabs.scss`)
-      }
-    })
-    
 
 </script>
 
 
 <div id="tabs" class="{tabContainerCSSClass}" style="text-align: center;" role="tablist">
-    <ul class="{listClass}" data-tabs-toggle="#stuffs" style="margin: auto; text-align:center; padding:0%;" role="tablist">
+    <ul class="{tabContainerCSSClass}" data-tabs-toggle="#stuffs" style="margin: auto; text-align:center; padding:0%;" role="tablist">
       {#each iterable as currentObject, index}
         <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation"> 
           <button on:click={

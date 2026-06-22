@@ -2,8 +2,8 @@
     // import type Projects from "./project_object";
     import Tabs from "../../common/tabs.svelte";
     import { projects } from "./project_object";
-    import { importSCSSOptions } from "../../globals"
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
+    import './tabs.scss';
     import {transitionStates} from "./common"
   import ScrollDown from "../../common/scroll-down.svelte";
     const sideImageLocation = "/personal_projects/animal star blue.png";
@@ -117,8 +117,8 @@
         
             <div class="side-image"></div>
             <div id="project-article">
-                <Tabs iterable={projectIterator} bind:activeIndex={activeIndex} 
-                tabSCSSFileLocation={importSCSSOptions.personal_projects} getTabNameFunction={(e) => {return e[0]}}
+                <Tabs iterable={projectIterator} bind:activeIndex={activeIndex}
+                getTabNameFunction={(e) => {return e[0]}}
                 icons={icons}>
 
                 </Tabs>

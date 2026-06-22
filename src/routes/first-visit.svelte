@@ -20,7 +20,7 @@
 
 <section on:animationend={(e) => {
   if (e.animationName.includes("fadeOut")){
-    hasVisited.hasVisited()
+    hasVisited.enable()
   }}
   } class="{finished ? "fade-out" : ""}"
 style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
@@ -40,8 +40,8 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
           <button
             class="{selectedButton == 1 ? "selected" : ""}"
             on:click={(e) => {
-              sfxController.allow_sfx();
-              musicController.allow_music();
+              sfxController.enable();
+              musicController.enable();
               showResumeBlock = true;
               selectedButton = 1;
             }}
@@ -51,8 +51,8 @@ style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;">
           <button 
           class="{selectedButton == 2 ? "selected" : ""}"
           on:click={(e) => {
-            sfxController.disable_sfx();
-            musicController.disable_music();
+            sfxController.disable();
+            musicController.disable();
             showResumeBlock = true;
             selectedButton = 2;
           }}>

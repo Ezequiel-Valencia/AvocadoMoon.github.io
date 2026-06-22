@@ -1,7 +1,7 @@
 <script lang="ts">
   import { hobbies } from './activites';
   import Tabs from '../../common/tabs.svelte';
-  import { importSCSSOptions } from "../../globals"
+  import './tabs.scss';
 
   let activeIndex = 0;
   let icons = [["material-symbols-outlined", "fitness_center"],
@@ -21,8 +21,7 @@
       </h2>
     </i>
   </u>
-  <Tabs iterable={hobbies} bind:activeIndex={activeIndex} 
-  tabSCSSFileLocation={importSCSSOptions.about_me}
+  <Tabs iterable={hobbies} bind:activeIndex={activeIndex}
   getTabNameFunction={(e) => {return e.category}} icons={icons}>
 
   </Tabs>

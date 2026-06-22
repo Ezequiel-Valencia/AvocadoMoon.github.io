@@ -29,7 +29,7 @@
     getAudioElements()
     windowWidth = window.innerWidth
 
-    bgMusic.play()
+    if (bgMusic) bgMusic.play()
 
     window.addEventListener('resize', () =>{
       windowWidth = window.innerWidth

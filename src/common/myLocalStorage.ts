@@ -4,7 +4,8 @@ import { writable } from "svelte/store";
 // https://www.reddit.com/r/sveltejs/comments/p438og/how_to_access_localstorage_via_store_in_sveltekit/?rdt=60526
 
 // Safe method version of local storage since it doesn't throw errors when doing SSR
-export const safeLocalStorage = globalThis.localStorage;
+const _ls = globalThis.localStorage;
+export const safeLocalStorage = (_ls && typeof _ls.getItem === 'function') ? _ls : undefined;
 export const isLocalStorageItemNull = (key:string) => safeLocalStorage?.getItem(key) === null;
 
 export function convertToBoolean(input: string): boolean {
@@ -18,7 +19,8 @@ export function convertToBoolean(input: string): boolean {
 
 function createBooleanStore(key: string, defaultValue = false) {
     if (isLocalStorageItemNull(key)) { safeLocalStorage?.setItem(key, String(defaultValue)) }
-    const initial = convertToBoolean(safeLocalStorage?.getItem(key) as string);
+    const stored = safeLocalStorage?.getItem(key) ?? null;
+    const initial = stored !== null ? convertToBoolean(stored) : defaultValue;
     const { subscribe, set, update } = writable(initial);
 
     return {

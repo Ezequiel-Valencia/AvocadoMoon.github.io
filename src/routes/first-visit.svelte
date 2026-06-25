@@ -4,9 +4,9 @@
   import { onMount } from 'svelte';
   import { clickedOff, resumeURL } from '../globals'
 
-  $: showResumeBlock = false;
-  $: finished = false;
-  $: selectedButton = -1;
+  let showResumeBlock = false;
+  let finished = false;
+  let selectedButton = -1;
 
   let touchscreen = false
   onMount(() => {

@@ -26,9 +26,7 @@
 
     // Wait until all items are loaded in the DOM, then apply the anchor
     if (window.location.href.includes("#myExperience")){
-      var url = location.href;
-      url = url.replace("#myExperience", "#myExperience")
-      location.href = url
+      location.href = "#myExperience"
     }
 
   })

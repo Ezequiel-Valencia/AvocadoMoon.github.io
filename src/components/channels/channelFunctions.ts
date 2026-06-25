@@ -1,17 +1,12 @@
 import { channels } from "./channelObject.js";
 
 export class ChannelFunctions {
-    hoverSound = 1;
-    clickSound = 2;
-    musicClip = 3;
-    backgroundMusic = 4;
-
-    staticImage(event: PointerEvent, id: number) {
+    staticImage(_event: PointerEvent, id: number) {
         channels[id].currentImage = channels[id].coverImage;
         channels[id].hover = false;
     }
 
-    async playgif(event: PointerEvent, id: number) {
+    async playgif(_event: PointerEvent, id: number) {
         const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
         channels[id].hover = true;
         await sleep(1000);

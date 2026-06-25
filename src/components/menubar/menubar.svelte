@@ -11,24 +11,8 @@
   import ContactInfo from "./contactInfo.svelte";
   import Cube from "./cube.svelte";
 
-  function dayToName(d: any) {
-    switch (d) {
-      case 0:
-        return "Sun";
-      case 1:
-        return "Mon";
-      case 2:
-        return "Tue";
-      case 3:
-        return "Wed";
-      case 4:
-        return "Thu";
-      case 5:
-        return "Fri";
-      case 6:
-        return "Sat";
-    }
-  }
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayToName = (d: number) => days[d];
 
   let time = new Date();
   $: hour = time.getHours();

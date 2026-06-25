@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <div id="intro">
   <h1 id="about-me">About Me</h1>
 

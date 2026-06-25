@@ -10,12 +10,12 @@ export const transitionStates = {
 export function createTransitionControl() {
     const key = 'personalProjectsTransitionControl';
     safeLocalStorage?.setItem(key, transitionStates.stillInDream)
-    const { subscribe, set, update } = writable(transitionStates.stillInDream)
+    const { subscribe, set } = writable(transitionStates.stillInDream)
 
     return {
         subscribe,
-        read: () => {return safeLocalStorage.getItem(key);},
-        updateToTransitioning: () => {update((string) => {safeLocalStorage?.setItem(key, transitionStates.transitionToProjects); return transitionStates.transitionToProjects})},
-        updateToTransitioned: () => {update((string) => {safeLocalStorage?.setItem(key, transitionStates.showPersonalProjects); return transitionStates.showPersonalProjects})}
+        read: () => safeLocalStorage?.getItem(key),
+        updateToTransitioning: () => { safeLocalStorage?.setItem(key, transitionStates.transitionToProjects); set(transitionStates.transitionToProjects) },
+        updateToTransitioned: () => { safeLocalStorage?.setItem(key, transitionStates.showPersonalProjects); set(transitionStates.showPersonalProjects) }
     }
 }

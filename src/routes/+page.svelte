@@ -3,30 +3,26 @@
   import Menubar from '../components/menubar/menubar.svelte';
   import { musicController, sfxController, hasVisited } from "../common/myLocalStorage";
   import { onMount } from 'svelte';
-  import { clickedOff } from '../globals'
   import FirstVisit from './first-visit.svelte';
   import BlocksAnimated from '../components/decals/blocks-animated.svelte';
 
+  let hoverAudio: HTMLAudioElement;
+  let bgmAudio: HTMLAudioElement;
+
+  onMount(() => {
+    if (hoverAudio) hoverAudio.volume = 0.1;
+    if (bgmAudio) bgmAudio.volume = 0.2;
+  });
 </script>
 
 <div id="mainDiv">
   {#if $sfxController}
-    <audio src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
-    <script lang="ts">
-      var audio = document.getElementById("channel-hover-audio");
-      audio.volume = 0.1;
-    </script>
+    <audio bind:this={hoverAudio} src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
     <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
   {/if}
-  
-
 
   {#if $musicController}
-    <audio src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
-    <script lang="ts">
-      var audio = document.getElementById("bgm");
-      audio.volume = 0.2;
-    </script>
+    <audio bind:this={bgmAudio} src="/Audio/bgm.wav" id="bgm" autoplay loop></audio>
   {/if}
 
   <Channels></Channels>

@@ -5,7 +5,6 @@
   */
 
 
-import { SvelteComponent } from "svelte";
 import { sfxController, musicController } from "../../common/myLocalStorage";
 
 const nRows = 4;
@@ -147,15 +146,12 @@ export let channels: { coverImage: string;
     //     volumeLevel: .2
     // },
 ];
-const channelPriorLength = channels.length
+// Fill remaining grid slots with blank placeholders
+while (channels.length < nRows * nCols) {
+    channels.push({ coverImage: '', gifImage: '', currentImage: '',
+        hover: false, focused: false, redirect: '',
+        musicClip: '', volumeLevel: .5, channelName: '', cubeColor: '', cubeHoverColor: '' });
+}
 
-// Fill channels with default if still space
-for (let index = 0; index < nRows * nCols; index++) {
-    index < ((nRows * nCols) - channelPriorLength)
-        ? channels.push({ coverImage: '', 
-        gifImage: '', currentImage: '', 
-        hover: false, focused: false, redirect: '', 
-        musicClip: '', volumeLevel:.5, channelName: '', cubeColor: "", cubeHoverColor: ""})
-        : null;
-    channels[index].currentImage = channels[index].coverImage
-};
+// Initialize currentImage for all channels
+channels.forEach(c => c.currentImage = c.coverImage);

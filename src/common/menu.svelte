@@ -9,9 +9,9 @@
   export let songPath: string = "";
   export let songVolumeLevel: string = "1";
 
-  var paused = true
-  var audioLength: any;
-  var currentAudioTime: any;
+  let paused = true
+  let audioLength: any;
+  let currentAudioTime: any;
 
   onMount(() => {
     let audio = document.getElementById("bg-song") as HTMLAudioElement;
@@ -36,19 +36,11 @@
 
 </script>
 
-{#if $musicController}
-  <audio id="bg-song" src={songPath} autoplay loop
+<audio id="bg-song" src={songPath} autoplay={$musicController} loop
   bind:paused
   bind:duration={audioLength}
   bind:currentTime={currentAudioTime}
-  ></audio>
-{:else}
-  <audio id="bg-song" src={songPath} loop
-  bind:paused
-  bind:duration={audioLength}
-  bind:currentTime={currentAudioTime}
-  ></audio>
-{/if}
+></audio>
 
 
 

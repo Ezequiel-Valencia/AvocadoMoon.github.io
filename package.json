@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
-    "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-static": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "autoprefixer": "^10.4.14",
     "flowbite": "^2.1.1",
     "flowbite-svelte": "^0.48.4",
@@ -35,7 +35,6 @@
     "cookie": "0.7.2"
   },
   "dependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "gsap": "^3.12.2"
   }
 }

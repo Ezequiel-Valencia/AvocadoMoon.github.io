@@ -6,7 +6,7 @@
 
 
 <div id="main-div">
-    <Menu email="website@worker.slmail.me" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
+    <Menu songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
 </div>
 
 

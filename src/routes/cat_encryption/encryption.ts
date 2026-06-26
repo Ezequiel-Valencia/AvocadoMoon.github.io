@@ -42,7 +42,7 @@ export async function encryptMessage(message: string) {
 
 }
 
-export function arrayBufferToString(arrayBuffer: ArrayBuffer) {
+export function arrayBufferToString(arrayBuffer: ArrayBuffer | Uint8Array) {
     let resultString = "";
     const bytes = new Uint8Array(arrayBuffer);
     const len = bytes.length;
@@ -52,12 +52,12 @@ export function arrayBufferToString(arrayBuffer: ArrayBuffer) {
     return resultString;
 }
 
-export function stringToArrayBuffer(message: string) {
+export function stringToArrayBuffer(message: string): Uint8Array {
     const len = message.length;
     const bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {
         bytes[i] = message.charCodeAt(i);
     }
-    return bytes.buffer;
+    return bytes;
 }
   

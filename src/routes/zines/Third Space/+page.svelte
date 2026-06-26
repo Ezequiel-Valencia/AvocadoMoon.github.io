@@ -12,7 +12,7 @@
 <div style="position: absolute; top: 0; left: 0; text-align:center;
  height:100%; width: 100%;
  ">
-    <Menu email="" songName=""></Menu>
+    <Menu songName=""></Menu>
     <DisplayZine zine={zines.thirdSpace}></DisplayZine>
 </div>
 

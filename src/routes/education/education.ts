@@ -12,7 +12,7 @@ export function createBookCheckout() {
 
     return {
         subscribe,
-        read: () => {let v = safeLocalStorage.getItem(key); return v == null ? false : convertToBoolean(v)},
+        read: () => {let v = safeLocalStorage?.getItem(key); return v == null ? false : convertToBoolean(v)},
         toggleBookStatus: () => update((bool) => { safeLocalStorage?.setItem(key, String(!bool)); return !bool })
     }
 }

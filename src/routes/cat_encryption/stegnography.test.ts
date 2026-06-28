@@ -88,8 +88,7 @@ test("Encrypt and Decrypt with String Key", async () =>{
     let cipher = await encryptMessage(unencryptedMessage)
     let rawKey = await crypto.subtle.exportKey("raw", cipher.key)
     let key = arrayBufferToString(rawKey)
-    rawKey = stringToArrayBuffer(key);
-    let cipherKey = await crypto.subtle.importKey("raw", rawKey, {name: encryptMethod}, true, ["decrypt", "encrypt"])
+    let cipherKey = await crypto.subtle.importKey("raw", stringToArrayBuffer(key), {name: encryptMethod}, true, ["decrypt", "encrypt"])
     let plainText = await decryptMessage(cipherKey, cipher.encrypted)
 
     expect(plainText).toBe(unencryptedMessage)

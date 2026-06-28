@@ -1,7 +1,7 @@
 <div id="intro">
   <h1 id="about-me">About Me</h1>
 
-  <div id="squircle" />
+  <div id="squircle"></div>
 
   <article>
     <div id="description">

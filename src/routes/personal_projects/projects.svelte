@@ -137,7 +137,7 @@
                                         
                                         {#if (tech.name + projectIndex) == techIndexAndName}
                                             <div style="z-index: 3;" class="description">
-                                                <h3 style="text-align:center; font-family: 'Times New Roman', Times, serif;">{tech.name}</h3>
+                                                <p style="text-align:center; font-family: 'Times New Roman', Times, serif; margin: 0;">{tech.name}</p>
                                                 <p style="text-align: center;">{tech.description}</p>
                                             </div>
                                         {/if}

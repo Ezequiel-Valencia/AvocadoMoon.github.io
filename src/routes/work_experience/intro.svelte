@@ -64,7 +64,7 @@
 </script>
 
 <section>
-  <canvas class="canvas" />
+  <canvas class="canvas"></canvas>
   <ScrollDown></ScrollDown>
 </section>
 

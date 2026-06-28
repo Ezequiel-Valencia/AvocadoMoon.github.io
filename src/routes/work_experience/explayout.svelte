@@ -60,7 +60,7 @@
               {#if tech.name == hoveredTech}
                   <!-- Hack to make SQL hover functional -->
                   <div style="z-index: 3; {tech.name == 'SQL' ? 'margin-top:5vh;': ""}" class="description">
-                      <h3 style="text-align:center; font-family: 'Times New Roman', Times, serif;">{tech.name}</h3>
+                      <p style="text-align:center; font-family: 'Times New Roman', Times, serif; margin: 0;">{tech.name}</p>
                       <p style="text-align: center;">{tech.description}</p>
                   </div>
               {/if}

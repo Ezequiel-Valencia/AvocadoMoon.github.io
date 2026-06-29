@@ -1,53 +1,55 @@
 <script lang="ts">
-  import { experiences } from "./experiences";
-  import { musicTime, musicController } from "../../common/myLocalStorage";
-  import { onMount } from "svelte";
+  import { experiences } from './experiences';
+  import { musicTime, musicController } from '../../common/myLocalStorage';
+  import { onMount } from 'svelte';
 
   onMount(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting){
-          let n = entry.target.id.split("-");
-          let r = "#entry-" + n[n.length - 1];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let n = entry.target.id.split('-');
+          let r = '#entry-' + n[n.length - 1];
           let exp: HTMLElement | null = document.querySelector(r);
-          exp?.classList.add('in-view')
+          exp?.classList.add('in-view');
         }
-      })
-    })
-    let stars = document.querySelectorAll(".star") as NodeListOf<HTMLElement>
+      });
+    });
+    let stars = document.querySelectorAll('.star') as NodeListOf<HTMLElement>;
     stars.forEach((star) => {
-        star.style.top = "" + Math.floor(Math.random() * 100) + "%"
-        star.style.left = "" + Math.floor(Math.random() * 100) + "%"
-    })
-    
+      star.style.top = '' + Math.floor(Math.random() * 100) + '%';
+      star.style.left = '' + Math.floor(Math.random() * 100) + '%';
+    });
+
     // Get all the elements with the .animate class applied
-    const allElementsToAnimate = document.querySelectorAll(".watch")
-    allElementsToAnimate.forEach((element) => {observer.observe(element)})
+    const allElementsToAnimate = document.querySelectorAll('.watch');
+    allElementsToAnimate.forEach((element) => {
+      observer.observe(element);
+    });
 
     // Wait until all items are loaded in the DOM, then apply the anchor
-    if (window.location.href.includes("#myExperience")){
-      location.href = "#myExperience"
+    if (window.location.href.includes('#myExperience')) {
+      location.href = '#myExperience';
     }
-
-  })
-
-
+  });
 </script>
 
 <section style="" id="wrapper-div">
-  {#each {length: 60} as _, i}
-    <div style="--fade-time: {Math.max((i * Math.random()) % 5, 2 + Math.random())}s;" class="star"></div>
+  {#each { length: 60 } as _, i (i)}
+    <div
+      style="--fade-time: {Math.max((i * Math.random()) % 5, 2 + Math.random())}s;"
+      class="star"
+    ></div>
   {/each}
   <h1 id="world">World</h1>
   <h2 id="myExperience">My Work Experience</h2>
-  {#each Object.entries(experiences) as [key, experience], index}
-    <div id={"entry-spacer-" + index} class="spacer watch">
+  {#each Object.entries(experiences) as [key, experience], index (index)}
+    <div id={'entry-spacer-' + index} class="spacer watch">
       <div
-        id={"entry-" + index}
-        class={index % 2 == 0 ? "experience-div left": "experience-div right"}
+        id={'entry-' + index}
+        class={index % 2 == 0 ? 'experience-div left' : 'experience-div right'}
         on:mousedown={(e) => {
-          if($musicController){
-            musicTime.updateTimeStamp()
+          if ($musicController) {
+            musicTime.updateTimeStamp();
           }
           location.href = experience.redirect;
         }}
@@ -69,7 +71,7 @@
 </section>
 
 <style lang="scss">
-  @import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
   #wrapper-div {
     margin: 0;
     padding: 0;
@@ -80,10 +82,8 @@
     overflow-x: hidden;
   }
 
-  
-
   #world {
-    font-family: "Poiret One", cursive;
+    font-family: 'Poiret One', cursive;
     color: white;
     padding-bottom: 50%;
     font-size: 500%;
@@ -113,7 +113,7 @@
     writing-mode: vertical-lr;
   }
 
-  @keyframes rightToLeft{
+  @keyframes rightToLeft {
     from {
       right: 100%;
       opacity: 0%;
@@ -123,7 +123,7 @@
     }
   }
 
-  @keyframes leftToRight{
+  @keyframes leftToRight {
     from {
       left: 100%;
       opacity: 0%;
@@ -147,41 +147,40 @@
     z-index: 2;
   }
 
-  .experience-div:hover{
+  .experience-div:hover {
     background-color: #2e2e2e;
-    cursor:pointer;
+    cursor: pointer;
   }
 
-  .in-view.left{
+  .in-view.left {
     animation: rightToLeft 2.5s ease;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
 
-  .in-view.right{
+  .in-view.right {
     animation: leftToRight 2.5s ease;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
 
-  .star{
-        --fade-time: 2s;
-        width: 0.3em;
-        height: 0.3em;
-        background-color: white;
-        z-index: 1;
-        border-radius: 50%;
-        position: absolute;
-        animation: fadeInAndOut var(--fade-time) infinite alternate;
+  .star {
+    --fade-time: 2s;
+    width: 0.3em;
+    height: 0.3em;
+    background-color: white;
+    z-index: 1;
+    border-radius: 50%;
+    position: absolute;
+    animation: fadeInAndOut var(--fade-time) infinite alternate;
+  }
+
+  @keyframes fadeInAndOut {
+    from {
+      opacity: 0;
     }
-
-    @keyframes fadeInAndOut{
-        from{
-            opacity: 0;
-        } to {
-            opacity: 1;
-        }
+    to {
+      opacity: 1;
     }
-
-
+  }
 </style>

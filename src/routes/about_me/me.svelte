@@ -6,10 +6,9 @@
   <article>
     <div id="description">
       <p id="description-text">
-        I'm a Cybersecurity graduate from UConn class 2023. 
-        I apply my knowledge to differing fields of computer science, 
-        such as bio-informatics, IT, full-end development, and of course cybersecurity. 
-        Although computer science helps me feel a sense of Ikigai, work is not life, 
+        I'm a Cybersecurity graduate from UConn class 2023. I apply my knowledge to differing fields
+        of computer science, such as bio-informatics, IT, full-end development, and of course
+        cybersecurity. Although computer science helps me feel a sense of Ikigai, work is not life,
         so I try to spend my free time exploring life to its fullest.
       </p>
     </div>
@@ -17,15 +16,14 @@
 </div>
 
 <style lang="scss">
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Merriweather:wght@300&display=swap');
 
   #intro {
     height: auto;
     min-height: 100vh;
     width: 100vw;
     text-align: center;
-    overflow:visible;
+    overflow: visible;
     position: relative;
     z-index: 10;
   }
@@ -38,13 +36,13 @@
     overflow: auto;
     margin: auto;
 
-    background-image: url("/about_me/stairs-candid.jpg");
-    background-size:cover;
+    background-image: url('/about_me/stairs-candid.jpg');
+    background-size: cover;
     background-repeat: no-repeat;
-    background-attachment:local;
+    background-attachment: local;
   }
 
-  #description{
+  #description {
     position: relative;
     width: 100vw;
   }
@@ -60,7 +58,7 @@
     top: 5%;
   }
 
-  #description-text{
+  #description-text {
     padding: 5%;
     margin: auto;
     max-width: 900px;
@@ -68,5 +66,4 @@
 
     font-size: x-large;
   }
-
 </style>

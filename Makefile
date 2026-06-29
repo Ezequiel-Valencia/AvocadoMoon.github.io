@@ -1,4 +1,4 @@
-.PHONY: dev build test check
+.PHONY: dev build test check lint fmt
 
 dev:
 	npm run dev
@@ -11,3 +11,12 @@ test:
 
 check:
 	npm run check
+	npm run lint
+	npm run format
+	npm run test
+
+lint:
+	npm run lint
+
+fmt:
+	npm run format

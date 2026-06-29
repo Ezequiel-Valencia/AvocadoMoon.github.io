@@ -47,14 +47,12 @@
         </li>
       </ul>
     </div>
-  
   </div>
-  
 </section>
 
 <style lang="scss">
   #main-div {
-    background-image: url("/Backgrounds/stars.jpg");
+    background-image: url('/Backgrounds/stars.jpg');
     height: auto;
     min-height: 100vh;
     width: 100vw;
@@ -64,7 +62,7 @@
     position: absolute;
   }
 
-  #text-div{
+  #text-div {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.911);
     max-width: 80vw;
@@ -76,31 +74,30 @@
     padding: 1%;
   }
 
-  h1, li, a{
+  h1,
+  li,
+  a {
     color: rgb(0, 0, 0);
   }
 
- 
-
-  li{
+  li {
     text-indent: -5%;
     padding-top: 2vh;
     padding-bottom: 2vh;
     list-style: none;
   }
-   ul li{
+  ul li {
     display: flex;
     align-items: center; /* Align items vertically in the middle */
-   }
+  }
 
   ul li::before {
-  content: "";
-  display: block;
-  width: 20px; /* Set the size of the list item marker */
-  height: 20px; /* Set the size of the list item marker */
-  background-image: url('/personal_projects/moon.svg'); /* Your custom image */
-  background-size: cover; /* Resize the image to cover the size set */
-  margin-right: 15px; /* Space between the marker and the list item text */
-}
-
+    content: '';
+    display: block;
+    width: 20px; /* Set the size of the list item marker */
+    height: 20px; /* Set the size of the list item marker */
+    background-image: url('/personal_projects/moon.svg'); /* Your custom image */
+    background-size: cover; /* Resize the image to cover the size set */
+    margin-right: 15px; /* Space between the marker and the list item text */
+  }
 </style>

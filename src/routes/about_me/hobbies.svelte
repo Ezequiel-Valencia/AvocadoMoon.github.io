@@ -4,60 +4,68 @@
   import './tabs.scss';
 
   let activeIndex = 0;
-  let icons = [["material-symbols-outlined", "fitness_center"],
-  ["material-symbols-outlined", "brush"], ["material-symbols-outlined", "forest"]]
-  
+  let icons = [
+    ['material-symbols-outlined', 'fitness_center'],
+    ['material-symbols-outlined', 'brush'],
+    ['material-symbols-outlined', 'forest'],
+  ];
 </script>
 
 <svelte:head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+  />
 </svelte:head>
 
 <section id="hobbies">
   <u style="color: white;">
     <i>
-      <h2 style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size:xx-large;">
-        Hobbies <br> 
+      <h2
+        style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size:xx-large;"
+      >
+        Hobbies <br />
       </h2>
     </i>
   </u>
-  <Tabs iterable={hobbies} bind:activeIndex={activeIndex}
-  getTabNameFunction={(e) => {return e.category}} icons={icons}>
-
-  </Tabs>
-  {#each hobbies as hob, index}
+  <Tabs
+    iterable={hobbies}
+    bind:activeIndex
+    getTabNameFunction={(e) => {
+      return e.category;
+    }}
+    {icons}
+  ></Tabs>
+  {#each hobbies as hob, index (index)}
     {#if activeIndex == index}
-     <div id={hob.category} class="category">
-      {#each hob.activity as activity, index}
-        <div id={activity.name} class="activity">
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <h3>{activity.name}</h3>
-  
-                  <p id="{activity.name}-desciption" class="description">
-                    {activity.description}
-                  </p>
-                </td>
-  
-                <td>
-                  <img
-                src={activity.image}
-                alt="activity"
-                class="activity-image"
-                id="{activity.name}-image"
-              />
-                </td>
-  
-              </tr>
-            </tbody>
-          </table>
-          
-        </div>
-      {/each}
-      
-    </div>
+      <div id={hob.category} class="category">
+        {#each hob.activity as activity, index (index)}
+          <div id={activity.name} class="activity">
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <h3>{activity.name}</h3>
+
+                    <p id="{activity.name}-desciption" class="description">
+                      {activity.description}
+                    </p>
+                  </td>
+
+                  <td>
+                    <img
+                      src={activity.image}
+                      alt="activity"
+                      class="activity-image"
+                      id="{activity.name}-image"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        {/each}
+      </div>
     {/if}
   {/each}
 </section>
@@ -96,7 +104,6 @@
     // float: inline-start;
   }
 
-  
   .activity {
     // height: 100%;
     padding: 2%;
@@ -111,13 +118,11 @@
     color: white;
   }
 
-  .activity-image{
+  .activity-image {
     height: 200px;
-    
+
     // margin-left: 70%;
     float: right;
     max-width: 150px;
-    
   }
-
 </style>

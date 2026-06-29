@@ -1,17 +1,15 @@
-
-
-.tab{
-  background-color:rgb(8, 63, 88);
+.tab {
+  background-color: rgb(8, 63, 88);
   color: white;
 }
 
-.tab:hover{
-background-color: #122269;
+.tab:hover {
+  background-color: #122269;
 }
 
-.selected_tab{
+.selected_tab {
   background-color: black;
-  opacity: .9;
-  border-bottom:white;
+  opacity: 0.9;
+  border-bottom: white;
   color: white;
 }

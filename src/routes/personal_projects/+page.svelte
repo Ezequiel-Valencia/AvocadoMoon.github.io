@@ -1,37 +1,36 @@
 <script lang="ts">
-  import Menu from "../../common/menu.svelte";
-  import Dream from "./dream.svelte";
-  import Projects from "./projects.svelte";
+  import Menu from '../../common/menu.svelte';
+  import Dream from './dream.svelte';
+  import Projects from './projects.svelte';
 
-  import {createTransitionControl, transitionStates} from "./common";
+  import { createTransitionControl, transitionStates } from './common';
 
-  const transControl = createTransitionControl()
+  const transControl = createTransitionControl();
 </script>
 
-
 <div id="main-div">
-    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/way98y.mp3" songName="Zora's Domain - Day (Breath of the Wild)"></Menu>
-    {#if $transControl === transitionStates.stillInDream}
-        <Dream transControl={transControl}></Dream>
-    {:else}
-        <Projects transControl={transControl}></Projects>
-    {/if}
-    
-    
+  <Menu
+    songVolumeLevel=".3"
+    songPath="https://files.catbox.moe/way98y.mp3"
+    songName="Zora's Domain - Day (Breath of the Wild)"
+  ></Menu>
+  {#if $transControl === transitionStates.stillInDream}
+    <Dream {transControl}></Dream>
+  {:else}
+    <Projects {transControl}></Projects>
+  {/if}
 </div>
 
-
 <style lang="scss">
-    #main-div{
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        // background-color: #151f2b;
-        background-color: black;
-        overflow: auto;
-        overflow-x: hidden;
-    }
-
+  #main-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    // background-color: #151f2b;
+    background-color: black;
+    overflow: auto;
+    overflow-x: hidden;
+  }
 </style>

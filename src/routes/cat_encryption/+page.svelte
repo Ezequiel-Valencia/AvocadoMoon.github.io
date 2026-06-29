@@ -1,81 +1,89 @@
 <script lang="ts">
-    import Menu from "../../common/menu.svelte";
-    import Tabs from "../../common/tabs.svelte";
-    import Decode from "./decode.svelte"
-    import './tabs.scss';
-    import Encode from "./encode.svelte"
-    import { onMount } from "svelte"
-    import { matrixDisplay } from "./matrixBG"
+  import Menu from '../../common/menu.svelte';
+  import Tabs from '../../common/tabs.svelte';
+  import Decode from './decode.svelte';
+  import './tabs.scss';
+  import Encode from './encode.svelte';
+  import { onMount } from 'svelte';
+  import { matrixDisplay } from './matrixBG';
 
-    onMount(() => {
-        matrixDisplay()
-    })
+  onMount(() => {
+    matrixDisplay();
+  });
 
-    let activeIndex = 0
-    const imageOptions = ["Encode Cat", "Decode Cat"]
+  let activeIndex = 0;
+  const imageOptions = ['Encode Cat', 'Decode Cat'];
 </script>
 
-
-
 <div id="main-div">
-    <Menu songVolumeLevel=.3 songPath="https://files.catbox.moe/uc8nho.mp3" songName="Intense - Only You (Cat Breakdance Section)"></Menu>
+  <Menu
+    songVolumeLevel=".3"
+    songPath="https://files.catbox.moe/uc8nho.mp3"
+    songName="Intense - Only You (Cat Breakdance Section)"
+  ></Menu>
 
-    <div id="title" style="">
-        <h1 id="title-text" class="text">Cat Communication</h1>
-        <p class="text">Hiding your message in cat images using <a style="color:cadetblue;" href="https://en.wikipedia.org/wiki/Steganography">Stenography</a>.</p>
-    </div>
+  <div id="title" style="">
+    <h1 id="title-text" class="text">Cat Communication</h1>
+    <p class="text">
+      Hiding your message in cat images using <a
+        style="color:cadetblue;"
+        href="https://en.wikipedia.org/wiki/Steganography">Stenography</a
+      >.
+    </p>
+  </div>
 
-    <canvas id="matrixCanvas"></canvas>
+  <canvas id="matrixCanvas"></canvas>
 
-    <article id="content">
-        <Tabs iterable={Object.entries(imageOptions)} bind:activeIndex={activeIndex}
-        getTabNameFunction={(e) => {return e[1]}}></Tabs>
-        
-        
-        {#if activeIndex == 0}
-            <Encode></Encode>
-        {:else}
-            <Decode></Decode>
-        {/if}
-    </article>
+  <article id="content">
+    <Tabs
+      iterable={Object.entries(imageOptions)}
+      bind:activeIndex
+      getTabNameFunction={(e) => {
+        return e[1];
+      }}
+    ></Tabs>
+
+    {#if activeIndex == 0}
+      <Encode></Encode>
+    {:else}
+      <Decode></Decode>
+    {/if}
+  </article>
 </div>
 
-
 <style lang="scss">
+  #main-div {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: auto;
+    min-height: 100vh;
+    width: 100vw;
+    z-index: -100;
+    background-color: black;
+  }
 
-    #main-div{
-        top: 0;
-        left: 0;
-        position: absolute;
-        height: auto;
-        min-height: 100vh;
-        width: 100vw;
-        z-index: -100;
-        background-color: black;
-    }
+  #title {
+    margin-top: 10vh;
+    text-align: center;
+  }
 
-    #title{
-        margin-top: 10vh;
-        text-align: center;
-    }
+  #content {
+    width: 100vw;
+    height: auto;
+  }
 
-    #content{
-        width: 100vw;
-        height: auto;
-    }
+  .text {
+    color: white;
+  }
 
-    .text{
-        color: white;
-    }
-
-    #matrixCanvas{
-        top: 0;
-        left: 0;
-        position: absolute;
-        height: 100%;
-        width: 100vw;
-        z-index: -99;
-        opacity: .35;
-    }
-
+  #matrixCanvas {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    z-index: -99;
+    opacity: 0.35;
+  }
 </style>

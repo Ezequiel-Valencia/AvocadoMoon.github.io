@@ -1,82 +1,96 @@
 <script lang="ts">
-  import type { WorkExperience } from "./experiences";
-  import {experiences, experiencesSong} from "./experiences"
-  import { musicController, musicTime } from "../../common/myLocalStorage";
-  import { onMount } from "svelte";
-  import { percentLoaded } from "./experiences";
-  import { resumeURL } from "../../globals";
+  import type { WorkExperience } from './experiences';
+  import { experiencesSong } from './experiences';
+  import { musicController, musicTime } from '../../common/myLocalStorage';
+  import { onMount } from 'svelte';
+  import { resumeURL } from '../../globals';
 
   export var experience: WorkExperience;
   export var description: string[];
   export var imgSrc: string;
   export let takeaway: string;
 
+  let hoveredTech = '';
 
-  let hoveredTech = ''
-
-  function displayIconsDescription(pos: MouseEvent){
-        const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY)
-        if (hiddenElement != null && hiddenElement.classList.contains("tech")){
-        let n = hiddenElement.id.split("-");
-            hoveredTech = n[1];
-        } else {
-            hoveredTech = "";
-        }
+  function displayIconsDescription(pos: MouseEvent) {
+    const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY);
+    if (hiddenElement != null && hiddenElement.classList.contains('tech')) {
+      let n = hiddenElement.id.split('-');
+      hoveredTech = n[1];
+    } else {
+      hoveredTech = '';
     }
-
+  }
 
   onMount(() => {
-    if($musicController){
-      musicTime.setAudioTagTime()
+    if ($musicController) {
+      musicTime.setAudioTagTime();
     }
-    document.addEventListener("pointermove", (e) => {
-            displayIconsDescription(e)
-        })
-  })
+    document.addEventListener('pointermove', (e) => {
+      displayIconsDescription(e);
+    });
+  });
 </script>
 
 <section id="wrapper">
-  <button style="" on:click={(e) => {
-    if($musicController){
-      musicTime.updateTimeStamp()
-    }
-    location.href = "/work_experience#myExperience"
-  }}> 
+  <button
+    style=""
+    on:click={(e) => {
+      if ($musicController) {
+        musicTime.updateTimeStamp();
+      }
+      location.href = '/work_experience#myExperience';
+    }}
+  >
     <nav>
-        <h2>
-          Return
-        </h2>
-      </nav>
+      <h2>Return</h2>
+    </nav>
   </button>
-  
+
   <div id="right-wrapper">
-    
     <div id="text-wrapper-div">
       <h1 class="text">{experience.company}</h1>
       <h2 class="text">{experience.jobTitle}</h2>
-      <h2 class="text">Technologies: 
-        {#each experience.technologies as tech, index}
-          <span id={"description-" + tech.name} class="tech description-holder">
-              {#if tech.name == hoveredTech}
-                  <!-- Hack to make SQL hover functional -->
-                  <div style="z-index: 3; {tech.name == 'SQL' ? 'margin-top:5vh;': ""}" class="description">
-                      <p style="text-align:center; font-family: 'Times New Roman', Times, serif; margin: 0;">{tech.name}</p>
-                      <p style="text-align: center;">{tech.description}</p>
-                  </div>
-              {/if}
-              <img id="img-{tech.name}" class="tech" style="height: 2em; position:static; {tech.name == "SQL" || tech.name == 'Coq' ? "filter: invert(1);" : ""}" src={tech.icon} alt={tech.name}>
+      <h2 class="text">
+        Technologies:
+        {#each experience.technologies as tech, index (index)}
+          <span id={'description-' + tech.name} class="tech description-holder">
+            {#if tech.name == hoveredTech}
+              <!-- Hack to make SQL hover functional -->
+              <div
+                style="z-index: 3; {tech.name == 'SQL' ? 'margin-top:5vh;' : ''}"
+                class="description"
+              >
+                <p
+                  style="text-align:center; font-family: 'Times New Roman', Times, serif; margin: 0;"
+                >
+                  {tech.name}
+                </p>
+                <p style="text-align: center;">{tech.description}</p>
+              </div>
+            {/if}
+            <img
+              id="img-{tech.name}"
+              class="tech"
+              style="height: 2em; position:static; {tech.name == 'SQL' || tech.name == 'Coq'
+                ? 'filter: invert(1);'
+                : ''}"
+              src={tech.icon}
+              alt={tech.name}
+            />
           </span>
         {/each}
       </h2>
       <h3 class="text">{experience.time}</h3>
       <h5 class="text">Key Takeaway: {takeaway}</h5>
       <img class="job-img" src={imgSrc} alt="Work Related" />
-      {#each description as paragraph }
-         <p class="text">{paragraph}
+      {#each description as paragraph, i (i)}
+        <p class="text">
+          {paragraph}
 
           <!-- Hack to include href to resume for CCAM experience -->
-          {#if paragraph.includes("With this mindset")}
-            <a target="_blank" href={resumeURL}>resume.</a> 
+          {#if paragraph.includes('With this mindset')}
+            <a target="_blank" href={resumeURL}>resume.</a>
           {/if}
         </p>
       {/each}
@@ -84,9 +98,8 @@
   </div>
 
   {#if $musicController}
-    <audio id="bg-song" src="{experiencesSong}" autoplay loop></audio>
+    <audio id="bg-song" src={experiencesSong} autoplay loop></audio>
   {/if}
-  
 </section>
 
 <style lang="scss">
@@ -102,7 +115,7 @@
     display: flex;
   }
 
-  #right-wrapper{
+  #right-wrapper {
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -115,15 +128,15 @@
     max-width: 500px;
   }
 
-  #text-wrapper-div{
+  #text-wrapper-div {
     width: 100%;
     max-width: 1080px;
   }
 
-  a{
+  a {
     color: rgb(88, 255, 255);
   }
-  a:hover{
+  a:hover {
     color: rgb(0, 156, 156);
   }
 
@@ -131,7 +144,11 @@
     color: rgb(190, 190, 190);
   }
 
-  h1, h2, h3, h5, p{
+  h1,
+  h2,
+  h3,
+  h5,
+  p {
     background-color: black;
   }
 
@@ -139,7 +156,7 @@
     color: gray;
   }
 
-  h5{
+  h5 {
     color: rgb(173, 173, 173);
   }
 
@@ -157,33 +174,33 @@
     overflow: hidden;
     height: unset;
     width: 2em;
-    padding: .2em;
+    padding: 0.2em;
     border-bottom: unset;
     font-size: 1.4em;
   }
 
-  nav h2{
+  nav h2 {
     margin-top: 5%;
     margin-left: 0;
     margin-right: 0;
     background-color: transparent;
   }
 
-  nav h2{
+  nav h2 {
     text-decoration: none;
     color: white;
   }
 
-  button{
+  button {
     border-right: #535353;
-    border-right-style:ridge;
+    border-right-style: ridge;
     border-left: none;
     border-top: none;
     border-bottom: none;
     background-color: transparent;
   }
 
-  button:hover{
+  button:hover {
     background: #53535375;
   }
 
@@ -195,20 +212,18 @@
   }
 
   .description {
-        z-index: 3;
-        position: absolute;
-        text-align: center;
-        margin: auto;
-        padding-right: 1.5%;
-        padding-left: 1.5%;
-        opacity: 1;
-        height: auto;
-        width: auto;
+    z-index: 3;
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+    opacity: 1;
+    height: auto;
+    width: auto;
 
-        background-color: rgb(0, 0, 0);
-        border-style: solid;
-        border-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
   }
-
-  
 </style>

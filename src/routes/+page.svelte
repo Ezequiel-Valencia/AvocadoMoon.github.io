@@ -1,7 +1,7 @@
 <script lang="ts">
   import Channels from '../components/channels/channels.svelte';
   import Menubar from '../components/menubar/menubar.svelte';
-  import { musicController, sfxController, hasVisited } from "../common/myLocalStorage";
+  import { musicController, sfxController, hasVisited } from '../common/myLocalStorage';
   import { onMount } from 'svelte';
   import FirstVisit from './first-visit.svelte';
   import BlocksAnimated from '../components/decals/blocks-animated.svelte';
@@ -26,7 +26,7 @@
   {/if}
 
   <Channels></Channels>
-  
+
   <Menubar></Menubar>
 
   <BlocksAnimated></BlocksAnimated>
@@ -35,8 +35,6 @@
   {#if !$hasVisited}
     <FirstVisit></FirstVisit>
   {/if}
-  
-
 </div>
 
 <style lang="scss">
@@ -51,12 +49,11 @@
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
-    cursor: url("/Cursors/Wii-Curso-plain.png"), pointer;
+    cursor: url('/Cursors/Wii-Curso-plain.png'), pointer;
     // cursor: url("/Cursors/Wii-Curso-plain.png") pointer;
 
     // covers whole screen
-    top:0px;
-    left:0px;
+    top: 0px;
+    left: 0px;
   }
-  
 </style>

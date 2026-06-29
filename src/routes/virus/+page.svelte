@@ -1,19 +1,17 @@
 <script lang="ts">
-  import Menu from "../../common/menu.svelte";
-  import { musicController } from "../../common/myLocalStorage";
+  import { musicController } from '../../common/myLocalStorage';
 </script>
 
 <span id="main-div">
   <div style="background-color: white;">
     <h1>Davids Lovely Delight ;)</h1>
-    
+
     <a href="/virus/FreeFrameRate.zip">Download Me</a>
   </div>
 
   {#if $musicController}
     <audio src="https://files.catbox.moe/ll8iaa.mp3" autoplay loop></audio>
   {/if}
-
 </span>
 
 <!-- https://www.youtube.com/watch?v=vJNVramny9k -->
@@ -27,7 +25,7 @@
     top: 0%;
     height: 100%;
     width: 100%;
-    background-image: url("/virus/house.png");
+    background-image: url('/virus/house.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }

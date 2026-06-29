@@ -7,7 +7,7 @@
 }
 
 .remove-gradient {
-    animation: removeGradient 2s ease-in forwards;
+  animation: removeGradient 2s ease-in forwards;
 }
 
 @keyframes slideMoonIn {
@@ -30,20 +30,22 @@
   }
 }
 
-@keyframes removeGradient{
-    from{
-        background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), 
-    rgba(137, 43, 226, 0.397), rgba(6, 6, 109, 0.397), rgba(6, 6, 109, 0.185));
-    }
-    to{
-        background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), black);
-    }
+@keyframes removeGradient {
+  from {
+    background-image: radial-gradient(
+      circle at var(--grad-x) var(--grad-y),
+      rgba(137, 43, 226, 0.397),
+      rgba(6, 6, 109, 0.397),
+      rgba(6, 6, 109, 0.185)
+    );
+  }
+  to {
+    background-image: radial-gradient(circle at var(--grad-x) var(--grad-y), black);
+  }
 }
 
 @keyframes rotateDreamText {
-    
-     100% {
-        transform: rotate(var(--end-pos));
-    }
+  100% {
+    transform: rotate(var(--end-pos));
+  }
 }
-

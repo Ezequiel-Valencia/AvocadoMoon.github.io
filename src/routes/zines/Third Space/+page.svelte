@@ -1,25 +1,17 @@
 <script lang="ts">
-  import { zines } from "../zine";
-  import DisplayZine from "../displayZine.svelte";
-  import Menu from "../../../common/menu.svelte";
-
+  import { zines } from '../zine';
+  import DisplayZine from '../displayZine.svelte';
+  import Menu from '../../../common/menu.svelte';
 </script>
 
-
-
-
-
-<div style="position: absolute; top: 0; left: 0; text-align:center;
+<div
+  style="position: absolute; top: 0; left: 0; text-align:center;
  height:100%; width: 100%;
- ">
-    <Menu songName=""></Menu>
-    <DisplayZine zine={zines.thirdSpace}></DisplayZine>
+ "
+>
+  <Menu songName=""></Menu>
+  <DisplayZine zine={zines.thirdSpace}></DisplayZine>
 </div>
 
-
-
-
 <style lang="scss">
-
-
 </style>

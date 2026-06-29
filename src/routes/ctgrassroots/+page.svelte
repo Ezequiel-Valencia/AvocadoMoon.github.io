@@ -1,17 +1,20 @@
 <script lang="ts">
-  import Menu from "../../common/menu.svelte";
-  import Faq from "./FAQ.svelte";
+  import Menu from '../../common/menu.svelte';
+  import Faq from './FAQ.svelte';
 </script>
 
-<div style="background-image: url('/ctgrassroots/back.jpg'); 
+<div
+  style="background-image: url('/ctgrassroots/back.jpg'); 
   background-size: 100% 100%; 
-  background-repeat:no-repeat;" id="main-div">
-
-  <Menu songPath="https://files.catbox.moe/kaznbt.mp3" songName="It's Just Begun (2002 Remastered)"></Menu>
+  background-repeat:no-repeat;"
+  id="main-div"
+>
+  <Menu songPath="https://files.catbox.moe/kaznbt.mp3" songName="It's Just Begun (2002 Remastered)"
+  ></Menu>
 
   <div id="intro">
     <div style="margin: auto;">
-      <img class="side-image" src="/ctgrassroots/7upup.png" alt="Img"/>
+      <img class="side-image" src="/ctgrassroots/7upup.png" alt="Img" />
     </div>
   </div>
   <div style="text-align: center;">
@@ -21,9 +24,8 @@
   <Faq></Faq>
 </div>
 
-
 <style lang="scss">
-  #main-div{
+  #main-div {
     position: absolute;
     top: 0;
     left: 0;
@@ -33,7 +35,7 @@
     // background-image: radial-gradient(rgb(1, 73, 17), rgb(0, 56, 9));
     overflow: auto;
   }
-  #intro{
+  #intro {
     height: 50vh;
     width: 100vw;
     text-align: center;
@@ -43,7 +45,7 @@
 
   // #ctheader{
   //   font-family: 'Playfair Display', serif;
-        
+
   //   text-align: center;
   //   color: rgb(1, 114, 134);
   //   position: relative;
@@ -53,13 +55,12 @@
   //   margin: auto;
   // }
 
-  .side-image{
+  .side-image {
     text-align: center;
     background-size: contain;
     background-repeat: no-repeat;
     margin: auto;
     width: 30dvh;
-    height:auto;
+    height: auto;
   }
-
 </style>

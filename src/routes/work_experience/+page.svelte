@@ -8,7 +8,7 @@
   import Loading from './loading.svelte';
   import { percentLoaded } from './experiences';
 
-  let fromExperiencePage: boolean = false;
+  let fromExperiencePage: boolean = $state(false);
 
   onMount(() => {
     if (window.location.href.includes('#myExperience')) {

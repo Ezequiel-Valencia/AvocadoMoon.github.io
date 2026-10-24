@@ -1,19 +1,19 @@
 <script lang="ts">
   import { zines } from './zine';
   let zinesKeyValueArray = Object.entries(zines);
-  let hoveredEntity = -1;
+  let hoveredEntity = $state(-1);
 </script>
 
 <div id="zines">
   {#each zinesKeyValueArray as [key, zine], index (index)}
     <div
-      on:mouseenter={(e) => {
+      onmouseenter={(e) => {
         hoveredEntity = index;
       }}
-      on:mouseleave={(e) => {
+      onmouseleave={(e) => {
         hoveredEntity = -1;
       }}
-      on:mousedown={(e) => {
+      onmousedown={(e) => {
         window.open(zine.redirect);
       }}
       id={zinesKeyValueArray.length === 1 + index ? 'last-zine' : 'zine-' + index}

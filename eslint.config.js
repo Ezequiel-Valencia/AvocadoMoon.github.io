@@ -51,11 +51,6 @@ export default [
         varsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',
       }],
-      // These are Svelte 4 reactive-declaration patterns still valid in Svelte 5 compat mode.
-      // Warn rather than error — a future runes migration will clear them.
-      'svelte/no-reactive-literals': 'warn',
-      'svelte/no-immutable-reactive-statements': 'warn',
-      'svelte/no-reactive-reassign': 'warn',
       // Static adapter uses base: "" so resolve() is not required for internal hrefs
       'svelte/no-navigation-without-resolve': 'off',
       // {@html} is used intentionally with static/server-controlled content, not user input

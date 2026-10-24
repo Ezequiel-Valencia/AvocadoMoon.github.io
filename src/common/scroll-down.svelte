@@ -1,7 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  export let text = 'Scroll Down';
-  let scrolledDown = false;
+  interface Props {
+    text?: string;
+  }
+
+  let { text = 'Scroll Down' }: Props = $props();
+  let scrolledDown = $state(false);
   onMount(() => {
     const onScroll = () => {
       scrolledDown = window.scrollY > 50;

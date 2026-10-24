@@ -11,11 +11,12 @@
     {#each exp as panel, i (i)}
       <div class="accord-item">
         <AccordionItem
-          borderClass="border-l border-r group-first:border-t"
           activeClass="border-gray-300"
-          defaultClass="flex items-center justify-between w-full font-medium text-left group-first:rounded-t-xl border-gray-200 dark:border-gray-700"
+          headerClass="flex items-center justify-between w-full font-medium text-left border-l border-r group-first:border-t group-first:rounded-t-xl border-gray-200 dark:border-gray-700"
         >
-          <span slot="header">{panel.header}</span>
+          {#snippet header()}
+            <span>{panel.header}</span>
+          {/snippet}
           <p class="explanation">
             {@html panel.explanation}
           </p>

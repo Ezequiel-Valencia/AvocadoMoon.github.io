@@ -4,7 +4,7 @@
   import './tabs.scss';
 
   const webRingIterable = Object.entries(webRing);
-  let activeIndex = 0;
+  let activeIndex = $state(0);
   const icons = [
     ['material-symbols-outlined', 'construction'],
     ['material-symbols-outlined', 'palette'],
@@ -39,7 +39,7 @@
         <div style="text-align:center; padding-bottom: 5%; height:auto;">
           <div
             class="content-div"
-            on:mousedown={(e) => {
+            onmousedown={(e) => {
               redirctNewTab(e, web.url);
             }}
             role="tab"

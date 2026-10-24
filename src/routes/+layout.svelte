@@ -1,6 +1,13 @@
 <script>
-  import '../app.pcss';
+  import '../app.css';
   import '../app.scss';
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 </script>
 
-<slot />
+{@render children?.()}

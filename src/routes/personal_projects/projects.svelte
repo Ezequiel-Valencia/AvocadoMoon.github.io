@@ -8,12 +8,12 @@
   import ScrollDown from '../../common/scroll-down.svelte';
   const sideImageLocation = '/personal_projects/animal star blue.png';
   const projectIterator = Object.entries(projects);
-  let activeIndex = 0;
+  let activeIndex = $state(0);
 
-  export let transControl;
+  let { transControl } = $props();
 
-  let techIndexAndName = '-1';
-  let showScrollIcon = true;
+  let techIndexAndName = $state('-1');
+  let showScrollIcon = $state(true);
 
   function displayIconsDescription(pos: MouseEvent) {
     const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY);

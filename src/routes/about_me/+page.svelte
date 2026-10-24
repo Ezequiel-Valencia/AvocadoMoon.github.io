@@ -4,7 +4,7 @@
   import Menu from '../../common/menu.svelte';
   import { onMount } from 'svelte';
 
-  let touchscreen = false;
+  let touchscreen = $state(false);
   onMount(() => {
     const interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
     let curX = 0;

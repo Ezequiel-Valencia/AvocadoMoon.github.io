@@ -49,7 +49,7 @@
       <div
         id={'entry-' + index}
         class={index % 2 == 0 ? 'experience-div left' : 'experience-div right'}
-        on:mousedown={(e) => {
+        onmousedown={(e) => {
           if ($musicController) {
             musicTime.updateTimeStamp();
           }

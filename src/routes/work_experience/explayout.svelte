@@ -5,12 +5,16 @@
   import { onMount } from 'svelte';
   import { resumeURL } from '../../globals';
 
-  export var experience: WorkExperience;
-  export var description: string[];
-  export var imgSrc: string;
-  export let takeaway: string;
+  interface Props {
+    experience: WorkExperience;
+    description: string[];
+    imgSrc: string;
+    takeaway: string;
+  }
 
-  let hoveredTech = '';
+  let { experience, description, imgSrc, takeaway }: Props = $props();
+
+  let hoveredTech = $state('');
 
   function displayIconsDescription(pos: MouseEvent) {
     const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY);
@@ -34,7 +38,7 @@
 <section id="wrapper">
   <button
     style=""
-    on:click={(e) => {
+    onclick={(e) => {
       if ($musicController) {
         musicTime.updateTimeStamp();
       }

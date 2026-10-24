@@ -15,9 +15,9 @@
   let transition = false;
   let dreamText = 'End Dream? ';
 
-  export let transControl;
+  let { transControl } = $props();
 
-  let touchscreen = false;
+  let touchscreen = $state(false);
   onMount(() => {
     if ('ontouchstart' in window) {
       touchscreen = true;
@@ -128,7 +128,7 @@
 
     <div style="position: absolute; bottom: 5%; right: 15%; text-align:center; z-index:5;">
       <button
-        on:click={transControl.updateToTransitioned()}
+        onclick={transControl.updateToTransitioned()}
         style="background-color: transparent; border-color: white; border-radius:20%;"
       >
         <u style="color: white;">

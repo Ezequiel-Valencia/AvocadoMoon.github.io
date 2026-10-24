@@ -3,16 +3,16 @@
   import { decryptMessage, encryptMethod } from './encryption';
   import StenographyWorker from './stenography.worker?worker';
 
-  let imageFiles: FileList;
-  let isCanvasEmpty = true;
-  let isEncrypted = false;
+  let imageFiles: FileList | undefined = $state();
+  let isCanvasEmpty = $state(true);
+  let isEncrypted = $state(false);
   var file: File;
 
-  let keyFiles: FileList;
+  let keyFiles: FileList | undefined = $state();
   let keyFile: File | null;
   let rawKey: ArrayBuffer;
 
-  var message = '';
+  var message = $state('');
 
   function whenImageLoaded(imageInfo: any) {
     const decoderWorker = new StenographyWorker();
@@ -51,7 +51,7 @@
 
       if (isEncrypted) {
         const keyReader: FileReader = new FileReader();
-        keyFile = keyFiles.item(0);
+        keyFile = keyFiles?.item(0) ?? null;
         if (keyFile == null) {
           window.alert('A key is required to decode an encrypted message.');
           return;
@@ -113,7 +113,7 @@
     <br />
     <button
       style="width: 15vw; min-width:fit-content; height: 4vh; max-height:max-content; margin-left: auto; margin-top:3vh; text-align:center;"
-      on:click={imageFileHasBeenInput}
+      onclick={imageFileHasBeenInput}
     >
       Decode Cat Image</button
     >

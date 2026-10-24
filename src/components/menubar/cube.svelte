@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let cubeImage: string;
+  interface Props {
+    cubeImage: string;
+  }
+
+  let { cubeImage }: Props = $props();
 </script>
 
 <section>

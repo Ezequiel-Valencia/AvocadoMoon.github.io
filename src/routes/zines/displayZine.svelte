@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { zineMetaData } from './zine';
-  export let zine: zineMetaData;
+  interface Props {
+    zine: zineMetaData;
+  }
+
+  let { zine }: Props = $props();
 </script>
 
 <div

@@ -2,7 +2,7 @@
   import { createBookCheckout } from './education';
 
   let bookCheckout = createBookCheckout();
-  $: showHint = false;
+  let showHint = $state(false);
 
   function checkedOutBook() {
     bookCheckout.toggleBookStatus();
@@ -27,10 +27,10 @@
           </p>
           <button
             class="btn"
-            on:click={(e) => {
+            onclick={(e) => {
               checkedOutBook();
             }}
-            on:pointerenter={(e) => {}}
+            onpointerenter={(e) => {}}
             style="margin-top:0; font-size:2.5em;"
           >
             {#if $bookCheckout}

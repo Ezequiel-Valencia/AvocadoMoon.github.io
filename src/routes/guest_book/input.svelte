@@ -3,16 +3,20 @@
   import { GeoCacheApi, ResponseError, type GeoCacheSubmission } from '../../backend-api';
 
   let geo = new GeoCacheApi();
-  let addSecret = false;
-  let addLocation = false;
-  let grabbingLocation = false;
-  let submittedMessage = false;
-  let username = '';
+  let addSecret = $state(false);
+  let addLocation = $state(false);
+  let grabbingLocation = $state(false);
+  let submittedMessage = $state(false);
+  let username = $state('');
 
-  let latitude: number;
-  let longitude: number;
+  let latitude: number | undefined = $state();
+  let longitude: number | undefined = $state();
 
-  export let freshSetOfSubmissions: Writable<boolean>;
+  interface Props {
+    freshSetOfSubmissions: Writable<boolean>;
+  }
+
+  let { freshSetOfSubmissions }: Props = $props();
 
   async function handleGuestSubmission(e: SubmitEvent) {
     username = document.querySelector<HTMLInputElement>('#username')!.value!;

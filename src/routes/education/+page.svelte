@@ -4,7 +4,7 @@
   import Education from './education.svelte';
   import Intro from './intro.svelte';
 
-  $: touchscreen = false;
+  let touchscreen = $state(false);
 
   onMount(() => {
     if ('ontouchstart' in window) {
@@ -22,7 +22,7 @@
         be dysfunctional so please if possible revisit this channel on a computer.
       </p>
       <button
-        on:click={(e) => {
+        onclick={(e) => {
           touchscreen = false;
         }}>Continue</button
       >

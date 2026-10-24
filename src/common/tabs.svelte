@@ -1,8 +1,12 @@
 <script lang="ts">
-  export let iterable: Iterable<any>;
-  export let activeIndex: number;
-  export let getTabNameFunction: (para: any) => string;
-  export let icons: Array<any> = [];
+  interface Props {
+    iterable: Iterable<any>;
+    activeIndex: number;
+    getTabNameFunction: (para: any) => string;
+    icons?: Array<any>;
+  }
+
+  let { iterable, activeIndex = $bindable(), getTabNameFunction, icons = [] }: Props = $props();
 
   // https://flowbite.com/docs/components/tabs/#typescript
   // Tailwind classes for generic CSS
@@ -20,7 +24,7 @@
     {#each iterable as currentObject, index (index)}
       <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation">
         <button
-          on:click={(e) => {
+          onclick={(e) => {
             activeIndex = index;
           }}
           class="button {tabCSSClass} {activeIndex == index ? 'selected_tab' : 'tab'}"

@@ -13,14 +13,14 @@
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const dayToName = (d: number) => days[d];
 
-  let time = new Date();
-  $: hour = time.getHours();
-  $: min = time.getMinutes();
-  $: dayOrNight = hour >= 12 ? 'PM' : 'AM';
-  $: displayHour = hour % 12 || 12;
-  $: date = time.getDate();
-  $: month = time.getMonth() + 1; // Month is 0 indexed so January is 0
-  $: day = dayToName(time.getDay());
+  let time = $state(new Date());
+  let hour = $derived(time.getHours());
+  let min = $derived(time.getMinutes());
+  let dayOrNight = $derived(hour >= 12 ? 'PM' : 'AM');
+  let displayHour = $derived(hour % 12 || 12);
+  let date = $derived(time.getDate());
+  let month = $derived(time.getMonth() + 1); // Month is 0 indexed so January is 0
+  let day = $derived(dayToName(time.getDay()));
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -43,8 +43,8 @@
     };
   });
 
-  let music_options = false;
-  let contact_info = false;
+  let music_options = $state(false);
+  let contact_info = $state(false);
 </script>
 
 <div id="menu-bar">
@@ -55,7 +55,7 @@
     <button
       id="left-bar-button"
       class="bar-button"
-      on:click={(e) => {
+      onclick={(e) => {
         music_options = !music_options;
       }}
     >
@@ -96,7 +96,7 @@
     <button
       id="right-bar-button"
       class="bar-button"
-      on:click={(e) => {
+      onclick={(e) => {
         contact_info = !contact_info;
       }}
     >

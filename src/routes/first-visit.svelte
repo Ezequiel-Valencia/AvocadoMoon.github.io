@@ -3,11 +3,11 @@
   import { onMount } from 'svelte';
   import { resumeURL } from '../globals';
 
-  let showResumeBlock = false;
-  let finished = false;
-  let selectedButton = -1;
+  let showResumeBlock = $state(false);
+  let finished = $state(false);
+  let selectedButton = $state(-1);
 
-  let touchscreen = false;
+  let touchscreen = $state(false);
   onMount(() => {
     if ('ontouchstart' in window) {
       touchscreen = true;
@@ -16,7 +16,7 @@
 </script>
 
 <section
-  on:animationend={(e) => {
+  onanimationend={(e) => {
     if (e.animationName.includes('fadeOut')) {
       hasVisited.enable();
     }
@@ -38,7 +38,7 @@
         {/if}
         <button
           class={selectedButton == 1 ? 'selected' : ''}
-          on:click={(e) => {
+          onclick={(e) => {
             sfxController.enable();
             musicController.enable();
             showResumeBlock = true;
@@ -49,7 +49,7 @@
         </button>
         <button
           class={selectedButton == 2 ? 'selected' : ''}
-          on:click={(e) => {
+          onclick={(e) => {
             sfxController.disable();
             musicController.disable();
             showResumeBlock = true;
@@ -73,14 +73,14 @@
           <br />
           <br />
           <button
-            on:click={(e) => {
+            onclick={(e) => {
               window.open(resumeURL);
             }}
           >
             Open Resume</button
           >
           <button
-            on:click={(e) => {
+            onclick={(e) => {
               finished = true;
             }}>Continue</button
           >

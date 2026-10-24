@@ -1,14 +1,27 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  export let description;
-  export let frontImagePath;
-  export let gifImagePath;
-  export let focusedOn: boolean;
-  export let cubeColor: string;
-  export let cubeColorHover: string;
-  export let id;
-  $: hover = false;
+  interface Props {
+    description: any;
+    frontImagePath: any;
+    gifImagePath: any;
+    focusedOn: boolean;
+    cubeColor: string;
+    cubeColorHover: string;
+    id: any;
+  }
+
+  let {
+    description,
+    frontImagePath,
+    gifImagePath,
+    focusedOn,
+    cubeColor,
+    cubeColorHover,
+    id,
+  }: Props = $props();
+  let hover = $state(false);
+
   let touchscreen = false;
 
   let cubeReference: HTMLElement;
@@ -48,18 +61,18 @@
   <div
     role="gridcell"
     tabindex="0"
-    on:mouseenter={(e) => {
+    onmouseenter={(e) => {
       hover = true;
     }}
     style="--cube-color: {cubeColor}; --cube-hover-color: {cubeColorHover};"
-    on:mousemove={(e) => {
+    onmousemove={(e) => {
       followMouse(e);
     }}
-    on:mouseleave={() => {
+    onmouseleave={() => {
       hover = false;
       resetMouse();
     }}
-    on:animationend={(e) => {}}
+    onanimationend={(e) => {}}
     id="cube-{id}"
     class="cube {focusedOn ? 'rotating-cube' : 'unfocused-cube'}"
   >

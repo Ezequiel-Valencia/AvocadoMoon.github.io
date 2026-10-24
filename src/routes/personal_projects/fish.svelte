@@ -13,7 +13,7 @@
     'Breathalyzer for water (stay hydrated)',
   ];
 
-  let fishHoverIndex = -1;
+  let fishHoverIndex = $state(-1);
   let numFishes = 5;
   let startDreamThoughtsIndex = Math.floor(Math.random() * (dreamThoughts.length - numFishes - 1));
 

@@ -5,12 +5,16 @@
   import FirstVisit from './first-visit.svelte';
   import BlocksAnimated from '../components/decals/blocks-animated.svelte';
 
-  let hoverAudio: HTMLAudioElement;
-  let bgmAudio: HTMLAudioElement;
+  let hoverAudio: HTMLAudioElement | undefined = $state();
+  let bgmAudio: HTMLAudioElement | undefined = $state();
 
   // Re-runs whenever the elements are (re)created by toggling sfx/music
-  $: if (hoverAudio) hoverAudio.volume = 0.1;
-  $: if (bgmAudio) bgmAudio.volume = 0.2;
+  $effect(() => {
+    if (hoverAudio) hoverAudio.volume = 0.1;
+  });
+  $effect(() => {
+    if (bgmAudio) bgmAudio.volume = 0.2;
+  });
 </script>
 
 <div id="mainDiv">

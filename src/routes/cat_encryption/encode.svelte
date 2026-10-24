@@ -12,15 +12,15 @@
     file: string;
     name: string;
   };
-  const images: CatImages[] = [
+  const images: CatImages[] = $state([
     { file: '/cat_encryption/question_cat.png', name: 'Custom Upload' },
     { file: '/cat_encryption/stanced.jpg', name: 'Stanced' },
     { file: '/cat_encryption/doge-cat.jpg', name: 'Doge' },
     { file: '/cat_encryption/demon-cat.jpg', name: 'Demon' },
-  ];
-  let chosenImage = 0;
-  let encrypt = false;
-  let uploadedImage: FileList;
+  ]);
+  let chosenImage = $state(0);
+  let encrypt = $state(false);
+  let uploadedImage: FileList | undefined = $state();
 
   async function encode(imageInfo: any) {
     // https://www.mdpi.com/2073-8994/13/2/165
@@ -115,8 +115,8 @@
         tabindex="0"
         aria-roledescription="Select Left"
         role="button"
-        on:keypress={(e) => {}}
-        on:click={(e) => {
+        onkeypress={() => {}}
+        onclick={() => {
           if (chosenImage == 0) {
             chosenImage = images.length - 1;
           } else {
@@ -163,7 +163,7 @@
           bind:files={uploadedImage}
           type="file"
           accept="image/*"
-          on:input={imageFileHasBeenInput}
+          oninput={imageFileHasBeenInput}
         />
       {/if}
     </div>
@@ -174,8 +174,8 @@
         tabindex="0"
         aria-roledescription="Select Right"
         role="button"
-        on:keypress={(e) => {}}
-        on:click={(e) => {
+        onkeypress={() => {}}
+        onclick={() => {
           chosenImage = (chosenImage + 1) % images.length;
         }}
         version="1.1"
@@ -227,9 +227,9 @@
     <br />
     <button
       style="width: 15vw; min-width:fit-content; margin-left:auto; margin-right:auto; height: 4vh; max-height:max-content; margin-top: 2vh;"
-      on:click={(e) => {
+      onclick={() => {
         const image = new Image();
-        image.onload = (j) => {
+        image.onload = () => {
           if (isTextToLarge(image)) {
             window.alert('The message you are trying to encode is to large');
           } else {

@@ -1,0 +1,12 @@
+/* Tailwind is only used for flowbite-svelte components and the ctgrassroots page.
+   Preflight is left out so it doesn't override the site's base styles, and automatic
+   source detection is turned off so class names elsewhere don't pick up utilities. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+
+@source './routes/ctgrassroots';
+@source './common/menu.svelte';
+@source '../node_modules/flowbite-svelte/dist';
+
+@plugin 'flowbite/plugin';

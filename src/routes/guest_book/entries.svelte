@@ -8,19 +8,23 @@
   } from '../../backend-api';
   import type { Writable } from 'svelte/store';
   // let entries = [{name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."},
-  // {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
 
-  export let freshSetOfSubmissions: Writable<boolean>;
+  interface Props {
+    // {name: "Ezequiel", note: "Message", date: "5/10/2025", secret: "Secret message."}]
+    freshSetOfSubmissions: Writable<boolean>;
+  }
 
-  let showBlueLight = false;
+  let { freshSetOfSubmissions }: Props = $props();
+
+  let showBlueLight = $state(false);
   let interBubble: HTMLElement;
 
   let geo: GeoCacheApi = new GeoCacheApi(
     new Configuration({ basePath: 'https://d29w5rfwyyex3t.cloudfront.net' })
   );
-  let entries: GeoCacheSubmission[] = [];
-  let pageNumber = 0;
-  let canAccessServer = true;
+  let entries: GeoCacheSubmission[] = $state([]);
+  let pageNumber = $state(0);
+  let canAccessServer = $state(true);
 
   function updateClipPath(event: any) {
     const container = event.currentTarget;
@@ -72,7 +76,7 @@
     <h1 style="text-align: center;">Entries</h1>
     <div style="margin: auto; text-align:center;">
       <button
-        on:click={() => {
+        onclick={() => {
           showBlueLight = !showBlueLight;
         }}
         style="text-align: center; margin:auto;"
@@ -81,8 +85,8 @@
     </div>
     <div style="opacity: {showBlueLight ? 1 : 0};" class="interactive"></div>
     {#each entries as entry, i (i)}
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div class="entry" on:mousemove={updateClipPath} style="">
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="entry" onmousemove={updateClipPath} style="">
         <div class="entry-text {showBlueLight ? 'blacklight' : ''}">
           <span style="display: flex; justify-content:space-between;">
             <p>{entry.name}</p>
@@ -119,7 +123,7 @@
     <div style="display: inline;">
       {#if pageNumber != 0}
         <button
-          on:click={() => {
+          onclick={() => {
             pageNumber -= 1;
             getEntries();
           }}>&#60;</button
@@ -128,7 +132,7 @@
       <p style="display: inline; padding-left:1vw; padding-right:1vw;">{pageNumber + 1}</p>
       {#if entries.length == 10}
         <button
-          on:click={() => {
+          onclick={() => {
             pageNumber += 1;
             getEntries();
           }}>&#62;</button

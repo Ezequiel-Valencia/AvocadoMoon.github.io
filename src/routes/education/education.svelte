@@ -4,8 +4,8 @@
   import ScrollDown from '../../common/scroll-down.svelte';
 
   let mask: HTMLElement | null;
-  let iconIndex = -1;
-  let showScrollIcon = true;
+  let iconIndex = $state(-1);
+  let showScrollIcon = $state(true);
   let bookCheckout = createBookCheckout();
   let education_content: HTMLElement;
 

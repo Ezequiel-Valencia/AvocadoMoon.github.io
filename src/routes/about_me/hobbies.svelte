@@ -3,7 +3,7 @@
   import Tabs from '../../common/tabs.svelte';
   import './tabs.scss';
 
-  let activeIndex = 0;
+  let activeIndex = $state(0);
   let icons = [
     ['material-symbols-outlined', 'fitness_center'],
     ['material-symbols-outlined', 'brush'],

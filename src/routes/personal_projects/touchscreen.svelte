@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let transControl;
+  let { transControl } = $props();
 </script>
 
 <div
@@ -12,7 +12,7 @@
       This channel features an intro that is only available on computers.
     </h1>
     <h3>You can skip that intro and view my personal projects.</h3>
-    <button on:click={transControl.updateToTransitioned()} style="">
+    <button onclick={transControl.updateToTransitioned()} style="">
       <u>
         <i>
           <h3 style="font-family: 'Times New Roman', Times, serif; font-size:x-large;">

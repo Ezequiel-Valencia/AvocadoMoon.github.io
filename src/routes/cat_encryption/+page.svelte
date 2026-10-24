@@ -11,7 +11,7 @@
     return matrixDisplay();
   });
 
-  let activeIndex = 0;
+  let activeIndex = $state(0);
   const imageOptions = ['Encode Cat', 'Decode Cat'];
 </script>
 

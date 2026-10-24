@@ -1,7 +1,7 @@
 // Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works
 export const backgroundMusic: { videos: string[] } = {
   videos: [
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://youtu.be/l-vSSYEuO88?si=aR61o5o5r-P7AR7s',
     'https://www.youtube.com/watch?v=4xDzrJKXOOY',
     'https://www.youtube.com/watch?v=rUxyKA_-grg',
   ],

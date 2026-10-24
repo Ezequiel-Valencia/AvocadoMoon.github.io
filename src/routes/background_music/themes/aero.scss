@@ -1,12 +1,16 @@
 // Frutiger Aero: glossy blue and white glass cubes rising through a pale sky
 
-.bgm-page[data-theme='aero'] {
+// Palette, shared by the page and the theme island
+.bgm-page[data-theme='aero'],
+.theme-island[data-theme='aero'] {
   --main: rgb(64, 170, 255);
   --main-deep: rgb(20, 120, 230);
   --title: rgb(30, 120, 210);
   --glow: rgba(33, 185, 255, 0.45);
   --white: rgba(255, 255, 255, 0.95);
+}
 
+.bgm-page[data-theme='aero'] {
   background: linear-gradient(180deg, rgb(214, 238, 255) 0%, rgb(245, 245, 245) 55%);
   font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
   color: var(--title);
@@ -186,5 +190,40 @@
     100% {
       transform: scaleY(var(--peak));
     }
+  }
+}
+
+// ---------- Theme island: a frosted glass panel over a sky-blue haze ----------
+
+.theme-island[data-theme='aero'] {
+  background: rgba(30, 120, 210, 0.22);
+
+  .island {
+    border-radius: 28px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(214, 238, 255, 0.85) 100%
+    );
+    border: 3px solid var(--white);
+    box-shadow:
+      0 0 0 2px rgba(33, 150, 243, 0.45),
+      0 0 30px var(--glow),
+      0 24px 60px rgba(20, 100, 180, 0.35),
+      inset 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+
+  h2 {
+    font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+    color: var(--title);
+    text-shadow:
+      0 2px 0 white,
+      0 0 14px var(--glow);
+  }
+
+  .preview {
+    box-shadow:
+      0 0 0 2px var(--white),
+      0 6px 16px rgba(20, 100, 180, 0.2);
   }
 }

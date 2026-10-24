@@ -3,11 +3,11 @@
   import { GeoCacheApi, ResponseError, type GeoCacheSubmission } from '../../backend-api';
 
   let geo = new GeoCacheApi();
-  $: addSecret = false;
-  $: addLocation = false;
-  $: grabbingLocation = false;
-  $: submittedMessage = false;
-  $: username = '';
+  let addSecret = false;
+  let addLocation = false;
+  let grabbingLocation = false;
+  let submittedMessage = false;
+  let username = '';
 
   let latitude: number;
   let longitude: number;
@@ -58,7 +58,6 @@
       grabbingLocation = true;
       navigator.geolocation.getCurrentPosition(
         (geo) => {
-          console.log(geo.coords);
           grabbingLocation = false;
           latitude = geo.coords.latitude;
           longitude = geo.coords.longitude;

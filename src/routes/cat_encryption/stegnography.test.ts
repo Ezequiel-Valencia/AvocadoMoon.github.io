@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import { exportedForTesting } from './stenography.worker';
+import { MAX_MESSAGE_LENGTH } from './common';
 import {
   decryptMessage,
   encryptMessage,
@@ -36,13 +37,28 @@ test('Encode and Decode Message', async () => {
 });
 
 test('Random Message Encode Decode', () => {
-  let width = getRandomInt(100);
-  let height = getRandomInt(100);
+  // the length header needs at least two pixels in the first column
+  let width = 2 + getRandomInt(98);
+  let height = 2 + getRandomInt(98);
 
-  let message = getRandomString(getRandomInt((width * height) / 4));
+  let message = getRandomString(
+    getRandomInt(Math.min((width * height) / 4, MAX_MESSAGE_LENGTH + 1))
+  );
   let originalArrayImage = new Uint8ClampedArray(
     new Array(width * height * 4).fill(getRandomInt(255))
   );
+
+  const encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height);
+  const decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height);
+  expect(decodedMessage).toBe(message);
+});
+
+test('Max Header Length', () => {
+  let width = 50;
+  let height = 50;
+
+  let message = getRandomString(MAX_MESSAGE_LENGTH);
+  let originalArrayImage = new Uint8ClampedArray(width * height * 4).fill(255);
 
   const encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height);
   const decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height);
@@ -56,7 +72,9 @@ test('Max Message Length', async () => {
   let message = 'Ma'; //two less than message length because of header
 
   // process.stdout.write("Going to encode \n")
-  let originalArrayImage: Uint8ClampedArray = new Uint8ClampedArray(width * height * 4).fill(255);
+  let originalArrayImage: Uint8ClampedArray<ArrayBuffer> = new Uint8ClampedArray(
+    width * height * 4
+  ).fill(255);
 
   let encodedImage = exportedForTesting.encodeImage(message, originalArrayImage, width, height);
   let decodedMessage = exportedForTesting.decodeImage(encodedImage, width, height);

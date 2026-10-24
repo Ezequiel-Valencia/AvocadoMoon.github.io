@@ -2,11 +2,10 @@ import { StenographyWorkerPayload } from './common';
 
 function encodeImage(
   message: string,
-  arrayImage: Uint8ClampedArray,
+  arrayImage: Uint8ClampedArray<ArrayBuffer>,
   width: number,
   height: number
-): Uint8ClampedArray {
-  console.log('Encoding');
+): Uint8ClampedArray<ArrayBuffer> {
   var focusedChar = 0;
 
   // first byte encoded within the Image is used for holding length of the message
@@ -49,7 +48,6 @@ function decodeImage(arrayImage: Uint8ClampedArray, width: number, height: numbe
   let indices = getColorIndicesForCord(0, 0, width);
   let indices2 = getColorIndicesForCord(0, 1, width);
   let messageLength: number = getChar(indices, arrayImage) + getChar(indices2, arrayImage);
-  console.log('Message Length: ' + messageLength);
 
   let message = '';
 
@@ -69,7 +67,6 @@ function decodeImage(arrayImage: Uint8ClampedArray, width: number, height: numbe
       }
     }
   }
-  console.log('Resulting Message: ' + JSON.stringify(message));
   return message;
 }
 

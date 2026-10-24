@@ -28,7 +28,7 @@
       images.push(img);
     }
 
-    gsap.to(galaxy, {
+    const tween = gsap.to(galaxy, {
       frame: frameCount - 1,
       snap: 'frame',
       ease: 'none',
@@ -52,6 +52,12 @@
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.drawImage(images[galaxy.frame], 0, 0);
     }
+
+    // Kill the tween and its pinned ScrollTrigger so it doesn't outlive the page
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
   });
 </script>
 

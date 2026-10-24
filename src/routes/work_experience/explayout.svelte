@@ -26,9 +26,8 @@
     if ($musicController) {
       musicTime.setAudioTagTime();
     }
-    document.addEventListener('pointermove', (e) => {
-      displayIconsDescription(e);
-    });
+    document.addEventListener('pointermove', displayIconsDescription);
+    return () => document.removeEventListener('pointermove', displayIconsDescription);
   });
 </script>
 

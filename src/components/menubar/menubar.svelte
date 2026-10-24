@@ -16,25 +16,31 @@
   let time = new Date();
   $: hour = time.getHours();
   $: min = time.getMinutes();
-  $: dayOrNight = 'AM';
+  $: dayOrNight = hour >= 12 ? 'PM' : 'AM';
+  $: displayHour = hour % 12 || 12;
   $: date = time.getDate();
   $: month = time.getMonth() + 1; // Month is 0 indexed so January is 0
   $: day = dayToName(time.getDay());
 
-  onMount(async () => {
-    setInterval(() => {
+  onMount(() => {
+    const interval = setInterval(() => {
       time = new Date();
-      dayOrNight = hour >= 12 ? 'PM' : 'AM';
     }, 1000);
 
-    document.addEventListener('click', (event): void => {
+    const onClick = (event: MouseEvent): void => {
       if (clickedOff('contact', event) && clickedOff('right-bar-button', event)) {
         contact_info = false;
       }
       if (clickedOff('left-bar-button', event) && clickedOff('music-options', event)) {
         music_options = false;
       }
-    });
+    };
+    document.addEventListener('click', onClick);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('click', onClick);
+    };
   });
 
   let music_options = false;
@@ -76,7 +82,7 @@
       id="bar-div"
     >
       <p style="text-align: center;" id="clock">
-        {hour > 12 ? hour - 12 : hour}:{min > 9 ? min : '0' + min}
+        {displayHour}:{min > 9 ? min : '0' + min}
         {dayOrNight} | {day}
         {date}/{month}
       </p>

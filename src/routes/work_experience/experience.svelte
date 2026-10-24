@@ -30,6 +30,8 @@
     if (window.location.href.includes('#myExperience')) {
       location.href = '#myExperience';
     }
+
+    return () => observer.disconnect();
   });
 </script>
 

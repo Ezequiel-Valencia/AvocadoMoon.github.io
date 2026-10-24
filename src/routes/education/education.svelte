@@ -4,8 +4,8 @@
   import ScrollDown from '../../common/scroll-down.svelte';
 
   let mask: HTMLElement | null;
-  $: iconIndex = -1;
-  $: showScrollIcon = true;
+  let iconIndex = -1;
+  let showScrollIcon = true;
   let bookCheckout = createBookCheckout();
   let education_content: HTMLElement;
 
@@ -47,18 +47,16 @@
     updateMaskHeight();
     mask = document.querySelector('.black-over-top');
     let inMask = false;
-    document.addEventListener('mousemove', (pos) => {
+    const onMouseMove = (pos: MouseEvent) => {
       if (mask != null && bookCheckout.read() && inMask) {
         displayIconsDescription(mask, pos);
         moveGradient(mask, pos);
       } else if (mask != null) {
         hideGradient(mask);
       }
-    });
-
-    document.addEventListener('scroll', () => {
-      updateMaskHeight();
-    });
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('scroll', updateMaskHeight);
 
     mask?.addEventListener('mouseleave', (e) => {
       inMask = false;
@@ -81,6 +79,12 @@
       { threshold: 0.05 }
     );
     observer.observe(projectsWrapper);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('scroll', updateMaskHeight);
+      observer.disconnect();
+    };
   });
 </script>
 

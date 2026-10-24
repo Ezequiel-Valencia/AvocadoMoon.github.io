@@ -49,7 +49,7 @@
       });
     });
 
-    document.addEventListener('pointerup', () => {
+    const onPointerUp = () => {
       holdingDownMoon = false;
       if (!transition) {
         moveAndShowDragMe(ogMoon, drag_me_text);
@@ -58,20 +58,17 @@
           e.style.opacity = '0';
         });
       }
-    });
+    };
+    document.addEventListener('pointerup', onPointerUp);
 
     // Animate the transition to Personal Projects
-    ogMoon.addEventListener('animationend', async () => {
+    let transitionTimeout: ReturnType<typeof setTimeout> | undefined;
+    ogMoon.addEventListener('animationend', () => {
       intro_section.style.maskImage = 'url(./personal_projects/dream-transition.gif)';
       intro_section.style.maskSize = 'cover';
-      let k = async () => {
-        return new Promise(() => {
-          setTimeout(() => {
-            transControl.updateToTransitioning();
-          }, 3000);
-        });
-      };
-      await k();
+      transitionTimeout = setTimeout(() => {
+        transControl.updateToTransitioning();
+      }, 3000);
     });
 
     sky.addEventListener('pointermove', (e) => {
@@ -81,8 +78,15 @@
       }
     });
 
-    window.onresize = () => {
+    const onResize = () => {
       setCircleTextStyle(missing_piece, dreamText, dreamTextSpans);
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      clearTimeout(transitionTimeout);
+      document.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('resize', onResize);
     };
   });
 </script>

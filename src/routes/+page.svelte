@@ -2,17 +2,15 @@
   import Channels from '../components/channels/channels.svelte';
   import Menubar from '../components/menubar/menubar.svelte';
   import { musicController, sfxController, hasVisited } from '../common/myLocalStorage';
-  import { onMount } from 'svelte';
   import FirstVisit from './first-visit.svelte';
   import BlocksAnimated from '../components/decals/blocks-animated.svelte';
 
   let hoverAudio: HTMLAudioElement;
   let bgmAudio: HTMLAudioElement;
 
-  onMount(() => {
-    if (hoverAudio) hoverAudio.volume = 0.1;
-    if (bgmAudio) bgmAudio.volume = 0.2;
-  });
+  // Re-runs whenever the elements are (re)created by toggling sfx/music
+  $: if (hoverAudio) hoverAudio.volume = 0.1;
+  $: if (bgmAudio) bgmAudio.volume = 0.2;
 </script>
 
 <div id="mainDiv">

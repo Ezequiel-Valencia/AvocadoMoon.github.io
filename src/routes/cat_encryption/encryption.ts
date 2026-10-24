@@ -44,7 +44,7 @@ export function arrayBufferToString(arrayBuffer: ArrayBuffer | Uint8Array) {
   return resultString;
 }
 
-export function stringToArrayBuffer(message: string): Uint8Array {
+export function stringToArrayBuffer(message: string): Uint8Array<ArrayBuffer> {
   const len = message.length;
   const bytes = new Uint8Array(len);
   for (let i = 0; i < len; i++) {

@@ -45,5 +45,6 @@ export function matrixDisplay() {
     }
   }
 
-  setInterval(draw, 35);
+  const interval = setInterval(draw, 35);
+  return () => clearInterval(interval);
 }

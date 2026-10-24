@@ -13,7 +13,7 @@
   let hoverAudio: HTMLAudioElement;
   let clickAudio: HTMLAudioElement;
   let focusedChannel = -1;
-  $: windowWidth = 1000;
+  let windowWidth = 1000;
 
   onMount(() => {
     let video = document.querySelector('video');
@@ -29,9 +29,11 @@
 
     if (bgMusic) bgMusic.play();
 
-    window.addEventListener('resize', () => {
+    const onResize = () => {
       windowWidth = window.innerWidth;
-    });
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   });
 
   function focus(index: number, zIndex: string) {

@@ -13,7 +13,7 @@
   export let transControl;
 
   let techIndexAndName = '-1';
-  $: showScrollIcon = true;
+  let showScrollIcon = true;
 
   function displayIconsDescription(pos: MouseEvent) {
     const hiddenElement = document.elementFromPoint(pos.clientX, pos.clientY);
@@ -37,16 +37,17 @@
     // Cloud Sway Time Difference
     const clouds = document.querySelectorAll('.cloud') as NodeListOf<HTMLElement>;
     clouds.forEach((c) => {
-      c.style.setProperty('--time-dif', Math.floor(Math.random() * 1) + 's');
+      c.style.setProperty('--time-dif', (Math.random() * 2).toFixed(2) + 's');
     });
 
     const bGradient = document.querySelector('#sun-animation') as HTMLElement;
+    let interval: ReturnType<typeof setInterval> | undefined;
     let gradPercent = 0;
     let blackTransparent = 1;
 
     // Expand black circle to transparent, or immediately show my projects
     if (transControl.read() == transitionStates.transitionToProjects) {
-      let interval = setInterval(() => {
+      interval = setInterval(() => {
         if (gradPercent <= 100) {
           bGradient.style.setProperty('--grad-size', gradPercent + '%');
           bGradient.style.setProperty('--black-transparent', blackTransparent + '');
@@ -64,9 +65,7 @@
       bGradient.style.zIndex = '-1';
     }
 
-    document.addEventListener('pointermove', (e) => {
-      displayIconsDescription(e);
-    });
+    document.addEventListener('pointermove', displayIconsDescription);
 
     const projectsWrapper = document.querySelector('#projects-wrapper') as HTMLElement;
     const observer = new IntersectionObserver((entries) => {
@@ -75,6 +74,12 @@
       });
     });
     observer.observe(projectsWrapper);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('pointermove', displayIconsDescription);
+      observer.disconnect();
+    };
   });
 </script>
 

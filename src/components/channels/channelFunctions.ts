@@ -22,7 +22,8 @@ export class ChannelFunctions {
       bg.pause();
       song.currentTime = 0;
       song.volume = channels[id].volumeLevel;
-      song.play();
+      // stay silent if the clip can't be loaded
+      song.play().catch(() => {});
     }
   }
 

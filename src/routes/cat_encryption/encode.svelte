@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { StenographyWorkerPayload, getImageData, isAlphaNumeric } from './common';
+  import {
+    MAX_MESSAGE_LENGTH,
+    StenographyWorkerPayload,
+    getImageData,
+    isAlphaNumeric,
+  } from './common';
   import { encryptMessage } from './encryption';
   import StenographyWorker from './stenography.worker?worker';
 
@@ -88,7 +93,6 @@
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
-      console.log('Image Has Been Input');
       let src = reader.result as string;
       images[0].file = src;
     };
@@ -97,7 +101,9 @@
   function isTextToLarge(image: HTMLImageElement): boolean {
     let textArea: HTMLTextAreaElement = document.getElementById('textArea') as HTMLTextAreaElement;
     let message = textArea.value;
-    return message.length > (image.width * image.height) / 4 || message.length > 65530;
+    // encrypted messages are a 16 byte IV plus the ciphertext padded to the next 16 byte block
+    let encodedLength = encrypt ? 16 + 16 * (Math.floor(message.length / 16) + 1) : message.length;
+    return message.length > (image.width * image.height) / 4 || encodedLength > MAX_MESSAGE_LENGTH;
   }
 </script>
 
@@ -111,7 +117,6 @@
         role="button"
         on:keypress={(e) => {}}
         on:click={(e) => {
-          console.log(chosenImage);
           if (chosenImage == 0) {
             chosenImage = images.length - 1;
           } else {

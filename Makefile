@@ -12,8 +12,8 @@ test:
 check:
 	npm run check
 	npm run lint
-	npm run format
-	npm run test
+	npm run format:check
+	npm test -- --run
 
 lint:
 	npm run lint

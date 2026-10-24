@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   export let text = 'Scroll Down';
-  $: scrolledDown = false;
+  let scrolledDown = false;
   onMount(() => {
-    window.addEventListener('scroll', function () {
+    const onScroll = () => {
       scrolledDown = window.scrollY > 50;
-    });
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   });
 </script>
 

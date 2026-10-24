@@ -16,21 +16,26 @@
       touchscreen = true;
     }
 
+    let frame: number;
     function move() {
       curX += (tgX - curX) / 20;
       curY += (tgY - curY) / 20;
       interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
-      requestAnimationFrame(() => {
-        move();
-      });
+      frame = requestAnimationFrame(move);
     }
 
-    document.addEventListener('mousemove', (event) => {
+    const onMouseMove = (event: MouseEvent) => {
       tgX = event.pageX;
       tgY = event.pageY;
-    });
+    };
+    document.addEventListener('mousemove', onMouseMove);
 
     move();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener('mousemove', onMouseMove);
+    };
   });
 </script>
 

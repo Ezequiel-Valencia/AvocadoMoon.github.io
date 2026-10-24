@@ -8,7 +8,7 @@
   import { matrixDisplay } from './matrixBG';
 
   onMount(() => {
-    matrixDisplay();
+    return matrixDisplay();
   });
 
   let activeIndex = 0;

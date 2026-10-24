@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 // https://github.com/sveltejs/kit/issues/1650
 // https://www.reddit.com/r/sveltejs/comments/p438og/how_to_access_localstorage_via_store_in_sveltekit/?rdt=60526
@@ -48,15 +48,14 @@ function musicPlaybackTime() {
     safeLocalStorage?.setItem(key, '0');
   }
   const songTimeStamp = Number(safeLocalStorage?.getItem(key));
-  const { subscribe, set } = writable(songTimeStamp);
+  const store = writable(songTimeStamp);
+  const { subscribe, set } = store;
 
   return {
     subscribe,
     setAudioTagTime: () => {
-      let audio = document.getElementById('bg-song') as HTMLAudioElement;
-      subscribe((num) => {
-        audio.currentTime = num;
-      });
+      const audio = document.getElementById('bg-song') as HTMLAudioElement;
+      audio.currentTime = get(store);
     },
     reset: () => {
       set(0);

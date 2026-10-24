@@ -12,16 +12,15 @@
 
   export let freshSetOfSubmissions: Writable<boolean>;
 
-  $: showBlueLight = false;
+  let showBlueLight = false;
   let interBubble: HTMLElement;
 
   let geo: GeoCacheApi = new GeoCacheApi(
     new Configuration({ basePath: 'https://d29w5rfwyyex3t.cloudfront.net' })
   );
-  let entries: GeoCacheSubmission[];
-  $: entries = [];
-  $: pageNumber = 0;
-  $: canAccessServer = true;
+  let entries: GeoCacheSubmission[] = [];
+  let pageNumber = 0;
+  let canAccessServer = true;
 
   function updateClipPath(event: any) {
     const container = event.currentTarget;
@@ -42,21 +41,28 @@
     }
   }
 
-  onMount(async () => {
+  onMount(() => {
     interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
-    document.addEventListener('mousemove', (event) => {
-      const rect = interBubble.getBoundingClientRect();
+    const onMouseMove = (event: MouseEvent) => {
+      // .interactive only exists while the server is reachable
+      if (!interBubble) return;
       const x = event.clientX - 200 / 2;
       const y = event.clientY - 200 / 2;
       interBubble.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    };
+    document.addEventListener('mousemove', onMouseMove);
     getEntries();
-    freshSetOfSubmissions.subscribe((fresh) => {
+    const unsubscribe = freshSetOfSubmissions.subscribe((fresh) => {
       if (!fresh) {
         getEntries();
         freshSetOfSubmissions.set(true);
       }
     });
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      unsubscribe();
+    };
   });
 </script>
 

@@ -1,7 +1,10 @@
 // https://www.jiit.ac.in/jiit/ic3/IC3_2008/IC3-2008/APP2_21.pdf
 // https://github.com/thavixt/steganography-svelte/blob/master/src/components/ImageSection.svelte
 
-type ImageInfo = { data: Uint8ClampedArray; width: number; height: number };
+type ImageInfo = { data: Uint8ClampedArray<ArrayBuffer>; width: number; height: number };
+
+// The length header is two pixels holding one byte each, so at most 255 + 255 characters
+export const MAX_MESSAGE_LENGTH = 510;
 
 export function getImageData(
   image: HTMLImageElement | string,
@@ -52,13 +55,13 @@ export function isAlphaNumeric(str: string) {
 
 export class StenographyWorkerPayload {
   message: string;
-  arrayImage: Uint8ClampedArray;
+  arrayImage: Uint8ClampedArray<ArrayBuffer>;
   width: number;
   height: number;
   encode: boolean;
   constructor(
     message: string,
-    arrayImage: Uint8ClampedArray,
+    arrayImage: Uint8ClampedArray<ArrayBuffer>,
     width: number,
     height: number,
     encode: boolean

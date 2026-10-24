@@ -262,7 +262,7 @@ $maple-leaf: polygon(
 
   // ---------- Visualizer: stalks rising from below the video, hazelnut into orange ----------
 
-  .visualizer {
+  .visualizer.bars {
     align-items: flex-end;
     top: auto;
     bottom: -10%;
@@ -294,6 +294,44 @@ $maple-leaf: polygon(
     100% {
       transform: scaleY(var(--peak));
     }
+  }
+
+  // ---------- Circle visualizer: a ring of stalks, alternating orange and hazelnut ----------
+
+  .ray {
+    border-radius: 999px 999px 2px 2px;
+    background: linear-gradient(
+      0deg,
+      var(--hazelnut) 0%,
+      var(--orange) 55%,
+      var(--orange-light) 100%
+    );
+    box-shadow: 0 0 6px rgba(232, 118, 34, 0.35);
+  }
+
+  .spoke:nth-child(odd) .ray {
+    background: linear-gradient(0deg, var(--hazelnut) 0%, var(--hazelnut-light) 100%);
+  }
+
+  // ---------- Wave visualizer: orange and hazelnut ribbons ----------
+
+  .visualizer.wave svg {
+    filter: drop-shadow(0 2px 3px rgba(140, 94, 58, 0.3));
+  }
+
+  .wave-line.sin {
+    stroke: var(--orange);
+    stroke-width: 4px;
+  }
+
+  .wave-line.cos {
+    stroke: var(--hazelnut);
+    stroke-width: 3px;
+  }
+
+  .wave-line.ripple {
+    stroke: var(--orange-light);
+    stroke-width: 2px;
   }
 }
 

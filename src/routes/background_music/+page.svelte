@@ -3,6 +3,9 @@
   import Background from './background.svelte';
   import ThemedButton from './themed-button.svelte';
   import ThemeIsland from './theme-island.svelte';
+  import Visualizer from './visualizer.svelte';
+  import VisualizerIsland from './visualizer-island.svelte';
+  import { visualizerName, type VisualizerId } from './visualizers';
   import { loadTheme, saveTheme, themeName, type ThemeId } from './themes';
   import {
     backgroundMusic,
@@ -17,7 +20,6 @@
   import.meta.glob('./themes/*.scss', { eager: true });
 
   const videos = backgroundMusic.videos;
-  const barCount = 40;
   // Only the first video loads through src; later ones are swapped in through the API
   const embedSrc = videos.length > 0 ? youtubeEmbedUrl(videos[0]) : '';
 
@@ -26,11 +28,11 @@
   let currentIndex = $state(0);
   let playing = $state(false);
 
-  let visualizers = $state(true);
+  let visualizer: VisualizerId = $state('bars');
   let shuffle = $state(false);
   let repeat = $state(false);
   let theme: ThemeId = $state('aero');
-  let pickingTheme = $state(false);
+  let picking: 'theme' | 'visualizer' | null = $state(null);
 
   // The YouTube player's callback is created once, so it reads these through a function
   // to always see the current toggle values
@@ -66,13 +68,6 @@
     }
     return destroy_youtube_video;
   });
-
-  // Each bar gets its own speed and offset so the visualizer doesn't pulse in unison
-  const bars = Array.from({ length: barCount }, (_, i) => ({
-    duration: 0.6 + ((i * 37) % 11) / 10,
-    delay: -((i * 53) % 17) / 10,
-    peak: 0.35 + ((i * 29) % 13) / 20,
-  }));
 </script>
 
 <svelte:head>
@@ -85,12 +80,12 @@
   <h1 class="title">Background Music</h1>
 
   <nav class="controls" aria-label="Background music controls">
-    <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (pickingTheme = true)} />
+    <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (picking = 'theme')} />
     <ThemedButton
       label="Audio Visualizers"
-      status={visualizers ? 'ON' : 'OFF'}
-      active={visualizers}
-      onclick={() => (visualizers = !visualizers)}
+      status={visualizerName(visualizer).toUpperCase()}
+      active={visualizer !== 'off'}
+      onclick={() => (picking = 'visualizer')}
     />
     <ThemedButton
       label="Shuffle"
@@ -106,16 +101,9 @@
     />
   </nav>
 
-  <section class="stage {visualizers ? 'focused' : 'docked'}">
-    {#if visualizers}
-      <div class="visualizer {playing ? 'playing' : ''}" aria-hidden="true">
-        {#each bars as bar, i (i)}
-          <span
-            class="bar"
-            style="--duration: {bar.duration}s; --delay: {bar.delay}s; --peak: {bar.peak};"
-          ></span>
-        {/each}
-      </div>
+  <section class="stage {visualizer !== 'off' ? 'focused' : 'docked'}">
+    {#if visualizer !== 'off'}
+      <Visualizer kind={visualizer} {playing} />
     {/if}
 
     <div class="video-frame">
@@ -137,13 +125,20 @@
 </div>
 
 <!-- Outside the page root so the current theme's styles don't reach the other themes' previews -->
-{#if pickingTheme}
+{#if picking === 'theme'}
   <ThemeIsland
     current={theme}
     onselect={(id) => {
       theme = id;
       saveTheme(id);
     }}
-    onclose={() => (pickingTheme = false)}
+    onclose={() => (picking = null)}
+  />
+{:else if picking === 'visualizer'}
+  <VisualizerIsland
+    {theme}
+    current={visualizer}
+    onselect={(id) => (visualizer = id)}
+    onclose={() => (picking = null)}
   />
 {/if}

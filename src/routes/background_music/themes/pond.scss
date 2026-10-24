@@ -270,7 +270,7 @@ $lily-petals: polygon(
 
   // ---------- Visualizer: reeds rising from below the video ----------
 
-  .visualizer {
+  .visualizer.bars {
     align-items: flex-end;
     top: auto;
     bottom: -10%;
@@ -302,6 +302,44 @@ $lily-petals: polygon(
     100% {
       transform: scaleY(var(--peak));
     }
+  }
+
+  // ---------- Circle visualizer: a ring of reeds, some tipped with lily pink ----------
+
+  .ray {
+    border-radius: 999px 999px 2px 2px;
+    background: linear-gradient(
+      0deg,
+      var(--green-deep) 0%,
+      var(--green) 60%,
+      var(--green-light) 100%
+    );
+    box-shadow: 0 0 6px rgba(84, 160, 98, 0.3);
+  }
+
+  .spoke:nth-child(6n) .ray {
+    background: linear-gradient(0deg, var(--green) 0%, var(--pink-light) 70%, var(--pink) 100%);
+  }
+
+  // ---------- Wave visualizer: green and white ripples with a thread of pink ----------
+
+  .visualizer.wave svg {
+    filter: drop-shadow(0 1px 3px rgba(38, 105, 62, 0.35));
+  }
+
+  .wave-line.sin {
+    stroke: var(--green);
+    stroke-width: 4px;
+  }
+
+  .wave-line.cos {
+    stroke: var(--white);
+    stroke-width: 4px;
+  }
+
+  .wave-line.ripple {
+    stroke: var(--pink);
+    stroke-width: 2px;
   }
 }
 

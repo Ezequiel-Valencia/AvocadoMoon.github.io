@@ -20,11 +20,6 @@ export function saveTheme(id: ThemeId) {
   safeLocalStorage?.setItem(storageKey, id);
 }
 
-export function nextTheme(id: ThemeId): ThemeId {
-  const i = themes.findIndex((t) => t.id === id);
-  return themes[(i + 1) % themes.length].id;
-}
-
 export function themeName(id: ThemeId): string {
   return themes.find((t) => t.id === id)?.name ?? id;
 }

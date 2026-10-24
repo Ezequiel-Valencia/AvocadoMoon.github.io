@@ -2,7 +2,8 @@
   import { onMount } from 'svelte';
   import Background from './background.svelte';
   import ThemedButton from './themed-button.svelte';
-  import { loadTheme, nextTheme, saveTheme, themeName, type ThemeId } from './themes';
+  import ThemeIsland from './theme-island.svelte';
+  import { loadTheme, saveTheme, themeName, type ThemeId } from './themes';
   import {
     backgroundMusic,
     embed_youtube_video,
@@ -29,6 +30,7 @@
   let shuffle = $state(false);
   let repeat = $state(false);
   let theme: ThemeId = $state('aero');
+  let pickingTheme = $state(false);
 
   // The YouTube player's callback is created once, so it reads these through a function
   // to always see the current toggle values
@@ -83,14 +85,7 @@
   <h1 class="title">Background Music</h1>
 
   <nav class="controls" aria-label="Background music controls">
-    <ThemedButton
-      label="Theme"
-      status={themeName(theme)}
-      onclick={() => {
-        theme = nextTheme(theme);
-        saveTheme(theme);
-      }}
-    />
+    <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (pickingTheme = true)} />
     <ThemedButton
       label="Audio Visualizers"
       status={visualizers ? 'ON' : 'OFF'}
@@ -140,3 +135,15 @@
     </div>
   </section>
 </div>
+
+<!-- Outside the page root so the current theme's styles don't reach the other themes' previews -->
+{#if pickingTheme}
+  <ThemeIsland
+    current={theme}
+    onselect={(id) => {
+      theme = id;
+      saveTheme(id);
+    }}
+    onclose={() => (pickingTheme = false)}
+  />
+{/if}

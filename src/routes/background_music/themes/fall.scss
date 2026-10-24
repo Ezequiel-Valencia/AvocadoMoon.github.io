@@ -56,7 +56,11 @@ $maple-leaf: polygon(
     clip-path: $maple-leaf;
     background: linear-gradient(135deg, var(--orange-light), var(--orange));
     opacity: 0.55;
-    animation: fall-drift var(--duration) ease-in-out var(--delay) infinite;
+    // The drop and spin run at a steady pace so a leaf never stalls mid-air; only the
+    // side-to-side sway eases, slowing at each end of its swing like a real leaf
+    animation:
+      fall-drop var(--duration) ease-in-out var(--delay) infinite,
+      fall-sway var(--duration) ease-in-out var(--delay) infinite;
   }
 
   .particle:nth-child(3n + 2) {
@@ -67,24 +71,35 @@ $maple-leaf: polygon(
     background: linear-gradient(135deg, var(--orange), var(--orange-deep));
   }
 
-  @keyframes fall-drift {
+  @keyframes fall-drop {
     0% {
-      transform: translate(0, 0) rotate(0deg);
+      transform: translateY(0) rotate(0deg);
       opacity: 0.6;
     }
-    25% {
-      transform: translate(50px, 30vh) rotate(80deg);
-    }
-    50% {
-      transform: translate(-40px, 60vh) rotate(170deg);
-    }
     75% {
-      transform: translate(40px, 90vh) rotate(260deg);
       opacity: 0.55;
     }
     100% {
-      transform: translate(0, calc(100vh + 200px)) rotate(360deg);
+      transform: translateY(calc(100vh + 200px)) rotate(360deg);
       opacity: 0;
+    }
+  }
+
+  // Uses the translate property, which applies before transform, so the sway stays
+  // horizontal on screen instead of turning with the leaf's spin
+  @keyframes fall-sway {
+    0%,
+    100% {
+      translate: 0;
+    }
+    25% {
+      translate: 50px;
+    }
+    50% {
+      translate: -40px;
+    }
+    75% {
+      translate: 40px;
     }
   }
 

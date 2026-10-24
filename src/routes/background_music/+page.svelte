@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import BlocksAnimated from '../../components/decals/blocks-animated.svelte';
-  import CubeButton from './cube-button.svelte';
+  import Background from './background.svelte';
+  import ThemedButton from './themed-button.svelte';
+  import { loadTheme, nextTheme, saveTheme, themeName, type ThemeId } from './themes';
   import {
     backgroundMusic,
     embed_youtube_video,
@@ -9,6 +10,9 @@
     PlayerState,
     type YouTubePlayer,
   } from './videos';
+  import './layout.scss';
+  // Every themes/*.scss is loaded; data-theme on the page root picks which one applies
+  import.meta.glob('./themes/*.scss', { eager: true });
 
   const videos = backgroundMusic.videos;
   const barCount = 40;
@@ -21,6 +25,7 @@
   let visualizers = $state(true);
   let shuffle = $state(false);
   let repeat = $state(false);
+  let theme: ThemeId = $state('aero');
 
   // The YouTube player's callback is created once, so it reads these through a function
   // to always see the current toggle values
@@ -48,6 +53,7 @@
   }
 
   onMount(() => {
+    theme = loadTheme();
     if (videos.length > 0) {
       embed_youtube_video(playerContainer, videos[currentIndex], onStateChange).then(
         (p) => (player = p)
@@ -68,18 +74,38 @@
   <title>Background Music</title>
 </svelte:head>
 
-<div id="main-div">
+<div class="bgm-page" data-theme={theme}>
+  <Background />
+
   <h1 class="title">Background Music</h1>
 
   <nav class="controls" aria-label="Background music controls">
-    <CubeButton label="Theme" toggle={false} onclick={() => {}} />
-    <CubeButton
+    <ThemedButton
+      label="Theme"
+      status={themeName(theme)}
+      onclick={() => {
+        theme = nextTheme(theme);
+        saveTheme(theme);
+      }}
+    />
+    <ThemedButton
       label="Audio Visualizers"
+      status={visualizers ? 'ON' : 'OFF'}
       active={visualizers}
       onclick={() => (visualizers = !visualizers)}
     />
-    <CubeButton label="Shuffle" active={shuffle} onclick={() => (shuffle = !shuffle)} />
-    <CubeButton label="Repeat" active={repeat} onclick={() => (repeat = !repeat)} />
+    <ThemedButton
+      label="Shuffle"
+      status={shuffle ? 'ON' : 'OFF'}
+      active={shuffle}
+      onclick={() => (shuffle = !shuffle)}
+    />
+    <ThemedButton
+      label="Repeat"
+      status={repeat ? 'ON' : 'OFF'}
+      active={repeat}
+      onclick={() => (repeat = !repeat)}
+    />
   </nav>
 
   <section class="stage {visualizers ? 'focused' : 'docked'}">
@@ -102,166 +128,4 @@
       <div bind:this={playerContainer}></div>
     </div>
   </section>
-
-  <BlocksAnimated></BlocksAnimated>
 </div>
-
-<style lang="scss">
-  #main-div {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    background: linear-gradient(180deg, rgb(214, 238, 255) 0%, rgb(245, 245, 245) 55%);
-    cursor:
-      url('/Cursors/Wii-Curso-plain.png') 10 1,
-      pointer;
-    font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
-  }
-
-  .title {
-    margin: 3vh 0 1vh;
-    text-align: center;
-    font-size: clamp(28px, 6vmin, 64px);
-    font-weight: 700;
-    color: rgb(30, 120, 210);
-    text-shadow:
-      0 2px 0 white,
-      0 0 18px rgba(33, 185, 255, 0.45);
-  }
-
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(20px, 5vmin, 56px);
-    padding: 2vh 16px;
-    position: relative;
-    z-index: 5;
-  }
-
-  .stage {
-    position: absolute;
-    z-index: 2;
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  // Visualizers on: the video is the centerpiece with bars behind it
-  .stage.focused {
-    left: 50%;
-    top: 62%;
-    width: min(64vw, 92vh, 960px);
-    transform: translate(-50%, -50%);
-  }
-
-  // Visualizers off: the video tucks into the corner like a mini player
-  .stage.docked {
-    left: calc(100% - 16px);
-    top: calc(100% - 16px);
-    width: min(32vw, 420px);
-    transform: translate(-100%, -100%);
-  }
-
-  .video-frame {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.35);
-    border: 3px solid rgba(255, 255, 255, 0.9);
-    box-shadow:
-      0 0 0 2px rgba(33, 150, 243, 0.45),
-      0 18px 40px rgba(20, 100, 180, 0.3),
-      inset 0 0 30px rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(6px);
-
-    :global(iframe) {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .empty {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    text-align: center;
-    color: rgb(30, 100, 180);
-  }
-
-  .visualizer {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 130%;
-    height: 150%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    pointer-events: none;
-  }
-
-  .bar {
-    flex: 1;
-    height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(64, 170, 255, 0.85) 30%,
-      rgba(64, 170, 255, 0.85) 70%,
-      rgba(255, 255, 255, 0.95) 100%
-    );
-    box-shadow: 0 0 10px rgba(33, 185, 255, 0.5);
-    transform: scaleY(0.12);
-    transition: transform 0.6s;
-    animation: pulse var(--duration) ease-in-out var(--delay) infinite alternate;
-    animation-play-state: paused;
-  }
-
-  .playing .bar {
-    animation-play-state: running;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: scaleY(0.12);
-    }
-    50% {
-      transform: scaleY(calc(var(--peak) * 0.6));
-    }
-    100% {
-      transform: scaleY(var(--peak));
-    }
-  }
-
-  @media (max-width: 600px) {
-    .stage.focused {
-      top: 68%;
-      width: calc(100vw - 32px);
-    }
-    .stage.docked {
-      width: 60vw;
-    }
-    .visualizer {
-      width: 110%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .stage {
-      transition: none;
-    }
-    .playing .bar {
-      animation-play-state: paused;
-    }
-  }
-</style>

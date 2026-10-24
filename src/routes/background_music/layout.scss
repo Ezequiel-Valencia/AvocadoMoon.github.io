@@ -1,0 +1,221 @@
+// Base layout shared by every theme: positions, sizes, and structure only.
+// Colours, shapes, and motion belong in themes/<id>.scss.
+
+.bgm-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  cursor:
+    url('/Cursors/Wii-Curso-plain.png') 10 1,
+    pointer;
+
+  .title {
+    position: relative;
+    z-index: 5;
+    margin: 3vh 0 1vh;
+    text-align: center;
+    font-size: clamp(28px, 6vmin, 64px);
+    font-weight: 700;
+  }
+
+  .controls {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(20px, 5vmin, 56px);
+    padding: 2vh 16px;
+  }
+
+  // ---------- Background ----------
+
+  .background {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    display: block;
+    list-style: none;
+    left: var(--left);
+    width: var(--size);
+    height: var(--size);
+  }
+
+  // ---------- Buttons ----------
+
+  .themed-button {
+    --size: clamp(80px, 13vmin, 140px);
+    --half: calc(var(--size) / 2);
+    width: var(--size);
+    height: var(--size);
+    perspective: 700px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor:
+      url('/Cursors/wii-open2.png') 17 1,
+      pointer;
+  }
+
+  .themed-button:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 8px;
+    border-radius: 12px;
+  }
+
+  .shape {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease-out;
+  }
+
+  .spinner {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+
+  .face {
+    position: absolute;
+    inset: 0;
+  }
+
+  .front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .shine {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .label,
+  .status {
+    position: relative;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .label {
+    font-size: clamp(12px, 1.9vmin, 18px);
+    font-weight: 700;
+    padding: 0 6px;
+  }
+
+  .status {
+    font-size: clamp(9px, 1.3vmin, 12px);
+    letter-spacing: 0.1em;
+  }
+
+  // ---------- Video stage ----------
+
+  .stage {
+    position: absolute;
+    z-index: 2;
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // Visualizers on: the video is the centerpiece with the visualizer behind it
+  .stage.focused {
+    left: 50%;
+    top: 62%;
+    width: min(64vw, 92vh, 960px);
+    transform: translate(-50%, -50%);
+  }
+
+  // Visualizers off: the video tucks into the corner like a mini player
+  .stage.docked {
+    left: calc(100% - 16px);
+    top: calc(100% - 16px);
+    width: min(32vw, 420px);
+    transform: translate(-100%, -100%);
+  }
+
+  .video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    overflow: hidden;
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .empty {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .visualizer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130%;
+    height: 150%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  .bar {
+    flex: 1;
+    height: 100%;
+  }
+
+  // More specific than a theme's `animation` shorthand, so bars hold still whatever the theme
+  .visualizer:not(.playing) .bar {
+    animation-play-state: paused;
+  }
+
+  @media (max-width: 600px) {
+    .stage.focused {
+      top: 68%;
+      width: calc(100vw - 32px);
+    }
+    .stage.docked {
+      width: 60vw;
+    }
+    .visualizer {
+      width: 110%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage {
+      transition: none;
+    }
+    // [data-theme] keeps these ahead of the themes' own animation rules
+    &[data-theme] .visualizer .bar,
+    &[data-theme] .background .particle,
+    &[data-theme] .spinner.spin {
+      animation-play-state: paused;
+    }
+  }
+}

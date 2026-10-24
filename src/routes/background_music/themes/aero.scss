@@ -1,0 +1,190 @@
+// Frutiger Aero: glossy blue and white glass cubes rising through a pale sky
+
+.bgm-page[data-theme='aero'] {
+  --main: rgb(64, 170, 255);
+  --main-deep: rgb(20, 120, 230);
+  --title: rgb(30, 120, 210);
+  --glow: rgba(33, 185, 255, 0.45);
+  --white: rgba(255, 255, 255, 0.95);
+
+  background: linear-gradient(180deg, rgb(214, 238, 255) 0%, rgb(245, 245, 245) 55%);
+  font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+  color: var(--title);
+
+  .title {
+    color: var(--title);
+    text-shadow:
+      0 2px 0 white,
+      0 0 18px var(--glow);
+  }
+
+  // ---------- Background: blocks floating upward, like the main page ----------
+
+  .particle {
+    bottom: -150px;
+    background: rgba(111, 207, 252, 0.527);
+    animation: aero-rise var(--duration) linear var(--delay) infinite;
+  }
+
+  @keyframes aero-rise {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      border-radius: 0;
+    }
+    100% {
+      transform: translateY(-110vh) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+    }
+  }
+
+  // ---------- Buttons: glass cubes ----------
+
+  .shape {
+    transform: rotate3d(1, -1, 0, 18deg);
+    --face-top: rgba(255, 255, 255, 0.95);
+    --face-bottom: rgba(120, 200, 255, 0.85);
+    --edge: rgba(70, 160, 230, 0.8);
+    --text: rgb(20, 80, 150);
+  }
+
+  .shape.active {
+    --face-top: rgba(150, 215, 255, 0.95);
+    --face-bottom: rgba(20, 120, 230, 0.95);
+    --edge: rgba(255, 255, 255, 0.9);
+    --text: white;
+  }
+
+  .themed-button:hover .shape {
+    --edge: rgba(255, 255, 255, 1);
+  }
+
+  .themed-button:focus-visible {
+    outline-color: rgb(33, 185, 255);
+  }
+
+  .face {
+    border-radius: 14px;
+    border: 2px solid var(--edge);
+    background: linear-gradient(180deg, var(--face-top) 0%, var(--face-bottom) 100%);
+    box-shadow:
+      inset 0 0 18px rgba(255, 255, 255, 0.6),
+      0 0 14px rgba(33, 185, 255, 0.35);
+    transition:
+      background 0.3s,
+      border-color 0.3s;
+  }
+
+  .back,
+  .bottom,
+  .left,
+  .right,
+  .top {
+    opacity: 0.75;
+  }
+
+  .front {
+    transform: translateZ(var(--half));
+    backdrop-filter: blur(4px);
+  }
+  .back {
+    transform: translateZ(calc(-1 * var(--half))) rotateY(180deg);
+  }
+  .left {
+    transform: translateX(calc(-1 * var(--half))) rotateY(-90deg);
+  }
+  .right {
+    transform: translateX(var(--half)) rotateY(90deg);
+  }
+  .top {
+    transform: translateY(calc(-1 * var(--half))) rotateX(90deg);
+  }
+  .bottom {
+    transform: translateY(var(--half)) rotateX(-90deg);
+  }
+
+  // Glossy highlight across the top half of the front face
+  .shine {
+    top: 3%;
+    left: 6%;
+    width: 88%;
+    height: 45%;
+    border-radius: 12px 12px 50% 50% / 12px 12px 20px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.05));
+  }
+
+  .label,
+  .status {
+    font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+    color: var(--text);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  }
+
+  .status {
+    opacity: 0.85;
+  }
+
+  .active .label,
+  .active .status {
+    text-shadow: 0 1px 3px rgba(0, 60, 140, 0.6);
+  }
+
+  .spin {
+    animation: aero-spin 0.6s ease-in-out;
+  }
+
+  @keyframes aero-spin {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  // ---------- Video ----------
+
+  .video-frame {
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.35);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 0 0 2px rgba(33, 150, 243, 0.45),
+      0 18px 40px rgba(20, 100, 180, 0.3),
+      inset 0 0 30px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+  }
+
+  .empty {
+    color: rgb(30, 100, 180);
+  }
+
+  // ---------- Visualizer: glowing bars mirrored around the video's center ----------
+
+  .bar {
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      var(--white) 0%,
+      rgba(64, 170, 255, 0.85) 30%,
+      rgba(64, 170, 255, 0.85) 70%,
+      var(--white) 100%
+    );
+    box-shadow: 0 0 10px rgba(33, 185, 255, 0.5);
+    transform: scaleY(0.12);
+    animation: aero-pulse var(--duration) ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes aero-pulse {
+    0% {
+      transform: scaleY(0.12);
+    }
+    50% {
+      transform: scaleY(calc(var(--peak) * 0.6));
+    }
+    100% {
+      transform: scaleY(var(--peak));
+    }
+  }
+}

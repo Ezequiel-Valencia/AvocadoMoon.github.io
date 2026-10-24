@@ -106,7 +106,7 @@
     pointer-events: none;
   }
 
-  .outline {
+  .edge-trace {
     display: none;
     position: absolute;
     inset: 0;
@@ -221,7 +221,7 @@
     .stage {
       transition: none;
     }
-    &[data-theme] .outline polygon {
+    &[data-theme] .edge-trace polygon {
       transition: none;
     }
     // [data-theme] keeps these ahead of the themes' own animation rules

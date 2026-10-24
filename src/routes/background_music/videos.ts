@@ -17,13 +17,10 @@ export interface YouTubePlayer {
 }
 
 interface YouTubeNamespace {
+  // Given an existing embed iframe (with enablejsapi=1), the API attaches to it instead of building its own
   Player: new (
-    element: HTMLElement,
+    element: HTMLIFrameElement,
     options: {
-      videoId: string;
-      width?: string;
-      height?: string;
-      playerVars?: Record<string, number>;
       events?: {
         onReady?: () => void;
         onStateChange?: (event: { data: number }) => void;
@@ -50,6 +47,20 @@ export function getYoutubeVideoId(url: string): string {
   return match ? match[1] : url;
 }
 
+/**
+ * Plain embed URL for an `<iframe>`. Loading the video through our own iframe (with a
+ * referrer policy) instead of letting the API build one avoids YouTube's embed errors.
+ */
+export function youtubeEmbedUrl(url: string): string {
+  const params = new URLSearchParams({
+    enablejsapi: '1',
+    autoplay: '1',
+    rel: '0',
+    playsinline: '1',
+  });
+  return `https://www.youtube.com/embed/${getYoutubeVideoId(url)}?${params}`;
+}
+
 let apiLoading: Promise<YouTubeNamespace> | undefined;
 
 function loadYoutubeApi(): Promise<YouTubeNamespace> {
@@ -68,29 +79,23 @@ function loadYoutubeApi(): Promise<YouTubeNamespace> {
 let player: YouTubePlayer | undefined;
 
 /**
- * Embeds a YouTube video inside `container` and displays it, reusing the existing
- * player when one has already been created so switching videos doesn't rebuild the iframe.
+ * Plays a YouTube video in `iframe`, which must already point at `youtubeEmbedUrl(...)`.
+ * The first call hooks the IFrame API onto it for state events; later calls reuse that
+ * player so switching videos doesn't reload the iframe.
  */
 export async function embed_youtube_video(
-  container: HTMLElement,
+  iframe: HTMLIFrameElement,
   url: string,
   onStateChange: (state: number) => void
 ): Promise<YouTubePlayer> {
-  const videoId = getYoutubeVideoId(url);
-
   if (player) {
-    player.loadVideoById(videoId);
+    player.loadVideoById(getYoutubeVideoId(url));
     return player;
   }
 
   const YT = await loadYoutubeApi();
-  player = new YT.Player(container, {
-    videoId,
-    width: '100%',
-    height: '100%',
-    playerVars: { autoplay: 1, rel: 0, playsinline: 1, modestbranding: 1 },
+  player = new YT.Player(iframe, {
     events: {
-      onReady: () => player?.playVideo(),
       onStateChange: (event) => onStateChange(event.data),
     },
   });

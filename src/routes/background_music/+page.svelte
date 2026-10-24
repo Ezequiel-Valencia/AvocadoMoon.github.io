@@ -7,6 +7,7 @@
     backgroundMusic,
     embed_youtube_video,
     destroy_youtube_video,
+    youtubeEmbedUrl,
     PlayerState,
     type YouTubePlayer,
   } from './videos';
@@ -16,8 +17,10 @@
 
   const videos = backgroundMusic.videos;
   const barCount = 40;
+  // Only the first video loads through src; later ones are swapped in through the API
+  const embedSrc = videos.length > 0 ? youtubeEmbedUrl(videos[0]) : '';
 
-  let playerContainer: HTMLElement;
+  let playerFrame: HTMLIFrameElement | undefined = $state();
   let player: YouTubePlayer | undefined;
   let currentIndex = $state(0);
   let playing = $state(false);
@@ -48,14 +51,14 @@
       player?.playVideo();
     } else {
       currentIndex = nextIndex();
-      embed_youtube_video(playerContainer, videos[currentIndex], onStateChange);
+      if (playerFrame) embed_youtube_video(playerFrame, videos[currentIndex], onStateChange);
     }
   }
 
   onMount(() => {
     theme = loadTheme();
-    if (videos.length > 0) {
-      embed_youtube_video(playerContainer, videos[currentIndex], onStateChange).then(
+    if (playerFrame) {
+      embed_youtube_video(playerFrame, videos[currentIndex], onStateChange).then(
         (p) => (player = p)
       );
     }
@@ -123,9 +126,17 @@
     <div class="video-frame">
       {#if videos.length === 0}
         <p class="empty">Add YouTube links to <code>videos.ts</code> to start listening.</p>
+      {:else}
+        <!-- A plain embed iframe; the YouTube API only attaches to it to track playback -->
+        <iframe
+          bind:this={playerFrame}
+          src={embedSrc}
+          title="Background music"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       {/if}
-      <!-- The YouTube API replaces this element with its iframe -->
-      <div bind:this={playerContainer}></div>
     </div>
   </section>
 </div>

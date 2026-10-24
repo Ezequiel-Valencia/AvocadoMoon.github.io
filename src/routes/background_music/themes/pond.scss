@@ -1,0 +1,333 @@
+// Pond: lily pad buttons that bloom pink when switched on, under a light rain on pale green
+
+// Eight rounded petals around the center, in a 0-100% box
+$lily-petals: polygon(
+  50% 0%,
+  54.7% 2.7%,
+  57.9% 10.2%,
+  58.8% 21.1%,
+  56.9% 33.4%,
+  64.3% 23.3%,
+  72.6% 16.2%,
+  80.2% 13.2%,
+  85.4% 14.6%,
+  86.8% 19.8%,
+  83.8% 27.4%,
+  76.7% 35.7%,
+  66.6% 43.1%,
+  78.9% 41.2%,
+  89.8% 42.1%,
+  97.3% 45.3%,
+  100% 50%,
+  97.3% 54.7%,
+  89.8% 57.9%,
+  78.9% 58.8%,
+  66.6% 56.9%,
+  76.7% 64.3%,
+  83.8% 72.6%,
+  86.8% 80.2%,
+  85.4% 85.4%,
+  80.2% 86.8%,
+  72.6% 83.8%,
+  64.3% 76.7%,
+  56.9% 66.6%,
+  58.8% 78.9%,
+  57.9% 89.8%,
+  54.7% 97.3%,
+  50% 100%,
+  45.3% 97.3%,
+  42.1% 89.8%,
+  41.2% 78.9%,
+  43.1% 66.6%,
+  35.7% 76.7%,
+  27.4% 83.8%,
+  19.8% 86.8%,
+  14.6% 85.4%,
+  13.2% 80.2%,
+  16.2% 72.6%,
+  23.3% 64.3%,
+  33.4% 56.9%,
+  21.1% 58.8%,
+  10.2% 57.9%,
+  2.7% 54.7%,
+  0% 50%,
+  2.7% 45.3%,
+  10.2% 42.1%,
+  21.1% 41.2%,
+  33.4% 43.1%,
+  23.3% 35.7%,
+  16.2% 27.4%,
+  13.2% 19.8%,
+  14.6% 14.6%,
+  19.8% 13.2%,
+  27.4% 16.2%,
+  35.7% 23.3%,
+  43.1% 33.4%,
+  41.2% 21.1%,
+  42.1% 10.2%,
+  45.3% 2.7%
+);
+
+// Palette, shared by the page and the theme island
+.bgm-page[data-theme='pond'],
+.theme-island[data-theme='pond'] {
+  --green: rgb(84, 160, 98);
+  --green-light: rgb(160, 214, 150);
+  --green-deep: rgb(38, 105, 62);
+  --mist: rgb(232, 246, 234);
+  --white: rgb(255, 255, 255);
+  --rain: rgba(70, 120, 90, 0.35);
+  --pink: rgb(240, 120, 165);
+  --pink-light: rgb(255, 214, 228);
+  --pollen: rgb(255, 214, 90);
+}
+
+.bgm-page[data-theme='pond'] {
+  background: linear-gradient(180deg, rgb(214, 238, 220) 0%, rgb(248, 252, 248) 60%);
+  font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  color: var(--green-deep);
+
+  .title {
+    color: var(--green);
+    text-shadow:
+      0 2px 0 var(--white),
+      0 0 18px rgba(84, 160, 98, 0.3);
+  }
+
+  // ---------- Background: light rain ----------
+
+  // Each particle is one slanted streak plus a few box-shadow copies, so ten particles
+  // make a sparse drizzle across the whole page
+  .particle {
+    top: -45vh;
+    width: 1.5px;
+    height: calc(var(--size) * 0.35 + 18px);
+    border-radius: 1px;
+    background: var(--rain);
+    box-shadow:
+      12vw 14vh 0 var(--rain),
+      -9vw 27vh 0 var(--rain),
+      22vw 36vh 0 var(--rain),
+      -18vw 8vh 0 var(--rain);
+    opacity: 0.8;
+    animation: pond-rain calc(var(--duration) * 0.08) linear calc(var(--delay) * 0.1) infinite;
+  }
+
+  @keyframes pond-rain {
+    from {
+      transform: translate(0, 0) rotate(10deg);
+    }
+    to {
+      transform: translate(-26vh, 150vh) rotate(10deg);
+    }
+  }
+
+  // ---------- Buttons: lily pads that sprout a flower when switched on ----------
+
+  .shape {
+    transform: rotate(-8deg);
+    --pad-light: var(--green-light);
+    --pad: var(--green);
+    --pad-deep: var(--green-deep);
+  }
+
+  .themed-button:hover .shape {
+    --pad-light: rgb(185, 230, 172);
+  }
+
+  .themed-button:focus-visible {
+    outline-color: var(--green);
+  }
+
+  // A lily pad is flat: hide the cube's sides
+  .back,
+  .bottom,
+  .left,
+  .right,
+  .top {
+    display: none;
+  }
+
+  // Visible overflow lets the flower bloom past the pad's edge
+  .front {
+    overflow: visible;
+    filter: drop-shadow(0 5px 8px rgba(38, 105, 62, 0.3));
+  }
+
+  // The pad: a round leaf with veins fanning from the center and a notch cut to its middle
+  .front::before {
+    content: '';
+    position: absolute;
+    inset: 3%;
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(rgba(255, 255, 255, 0.2) 0deg 1.2deg, transparent 1.2deg 30deg),
+      radial-gradient(circle at 40% 35%, var(--pad-light) 0%, var(--pad) 60%, var(--pad-deep) 100%);
+    mask: conic-gradient(from 120deg, transparent 0deg 26deg, #000 26deg);
+    transition: background 0.3s;
+  }
+
+  // Flower petals, back layer then front layer: they sit tucked away at scale 0 and
+  // spring open when the toggle turns on, then fold back down when it turns off
+  .shine,
+  .front::after {
+    top: -22%;
+    right: -16%;
+    width: 60%;
+    height: 60%;
+    clip-path: $lily-petals;
+    transform: scale(0) rotate(-60deg);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .shine {
+    background: radial-gradient(circle, var(--pink) 0%, rgb(225, 90, 140) 100%);
+    rotate: 22.5deg;
+  }
+
+  .front::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(
+      circle,
+      var(--pollen) 0%,
+      var(--pollen) 14%,
+      var(--pink-light) 22%,
+      var(--pink) 100%
+    );
+    transition-delay: 0.08s;
+  }
+
+  .active .shine,
+  .active .front::after {
+    transform: scale(1) rotate(0deg);
+  }
+
+  // Front petals open just after the back ones, and close first
+  .shape:not(.active) .shine {
+    transition-delay: 0.08s;
+  }
+
+  .shape:not(.active) .front::after {
+    transition-delay: 0s;
+  }
+
+  .label,
+  .status {
+    z-index: 1;
+    font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    color: var(--white);
+    text-shadow: 0 1px 3px rgba(20, 70, 40, 0.75);
+  }
+
+  .label {
+    padding: 0 14%;
+  }
+
+  .status {
+    opacity: 0.9;
+  }
+
+  .active .status {
+    opacity: 1;
+    font-weight: 700;
+  }
+
+  // Clicking makes the pad bob on the water instead of spinning
+  .spin {
+    animation: pond-bob 0.6s ease-out;
+  }
+
+  @keyframes pond-bob {
+    0% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(0.92);
+    }
+    65% {
+      transform: scale(1.04);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  // ---------- Video ----------
+
+  .video-frame {
+    border-radius: 18px;
+    background: var(--mist);
+    border: 4px solid var(--white);
+    box-shadow:
+      0 0 0 2px var(--green-light),
+      0 18px 40px rgba(38, 105, 62, 0.3);
+  }
+
+  .empty {
+    color: var(--green-deep);
+  }
+
+  // ---------- Visualizer: reeds rising from below the video ----------
+
+  .visualizer {
+    align-items: flex-end;
+    top: auto;
+    bottom: -10%;
+    height: 190%;
+    transform: translateX(-50%);
+  }
+
+  .bar {
+    border-radius: 50% 50% 2px 2px / 12px 12px 2px 2px;
+    background: linear-gradient(
+      0deg,
+      var(--green-deep) 0%,
+      var(--green) 60%,
+      var(--green-light) 100%
+    );
+    box-shadow: 0 0 8px rgba(84, 160, 98, 0.3);
+    transform-origin: bottom;
+    transform: scaleY(0.15);
+    animation: pond-sway var(--duration) ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes pond-sway {
+    0% {
+      transform: scaleY(0.15);
+    }
+    50% {
+      transform: scaleY(calc(var(--peak) * 0.65));
+    }
+    100% {
+      transform: scaleY(var(--peak));
+    }
+  }
+}
+
+// ---------- Theme island: a white card ringed in green over a misty haze ----------
+
+.theme-island[data-theme='pond'] {
+  background: rgba(38, 105, 62, 0.25);
+
+  .island {
+    border-radius: 32px;
+    background: linear-gradient(180deg, var(--white) 0%, var(--mist) 100%);
+    border: 4px solid var(--white);
+    box-shadow:
+      0 0 0 2px var(--green-light),
+      0 24px 60px rgba(38, 105, 62, 0.35);
+  }
+
+  h2 {
+    font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    color: var(--green);
+    text-shadow: 0 2px 0 var(--white);
+  }
+
+  .preview {
+    box-shadow:
+      0 0 0 2px var(--green-light),
+      0 6px 16px rgba(38, 105, 62, 0.2);
+  }
+}

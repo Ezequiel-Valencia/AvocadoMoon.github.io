@@ -5,6 +5,7 @@ import { safeLocalStorage } from '../../../common/myLocalStorage';
 export const themes = [
   { id: 'aero', name: 'Aero' },
   { id: 'fall', name: 'Fall' },
+  { id: 'pond', name: 'Pond' },
 ] as const;
 
 export type ThemeId = (typeof themes)[number]['id'];

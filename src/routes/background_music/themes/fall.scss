@@ -103,7 +103,7 @@ $maple-leaf: polygon(
 
   .shape.active {
     --vein: var(--gold-edge);
-    --text: rgb(95, 60, 10);
+    --text: rgb(80, 45, 5);
   }
 
   .themed-button:hover .shape {
@@ -178,7 +178,7 @@ $maple-leaf: polygon(
   }
 
   // Gold outline that traces itself around the leaf when switched on, and erases when off
-  .outline {
+  .edge-trace {
     display: block;
 
     polygon {
@@ -192,12 +192,14 @@ $maple-leaf: polygon(
     }
   }
 
-  .active .outline polygon {
+  .active .edge-trace polygon {
     stroke-dashoffset: 0;
   }
 
+  // Above the leaf layers, which would otherwise paint over the text once the gold fades in
   .label,
   .status {
+    z-index: 1;
     font-family: Georgia, 'Palatino Linotype', 'Book Antiqua', serif;
     color: var(--text);
     text-shadow: 0 1px 2px rgba(255, 240, 220, 0.7);
@@ -212,6 +214,11 @@ $maple-leaf: polygon(
 
   .status {
     opacity: 0.85;
+  }
+
+  .active .status {
+    opacity: 1;
+    font-weight: 700;
   }
 
   // Leaves don't spin on click; the gold outline is their feedback

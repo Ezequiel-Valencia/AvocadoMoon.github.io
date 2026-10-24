@@ -112,7 +112,9 @@ $channel-view-height: 80vh;
   transition: transform 500ms;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  cursor: url('/Cursors/wii-open2.png'), pointer;
+  cursor:
+    url('/Cursors/wii-open2.png') 17 1,
+    pointer;
 }
 
 .future-button:hover {

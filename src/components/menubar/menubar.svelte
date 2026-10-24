@@ -133,7 +133,9 @@
     max-width: 150px;
     background: transparent;
     border: none !important;
-    cursor: url('/Cursors/wii-open2.png'), pointer;
+    cursor:
+      url('/Cursors/wii-open2.png') 17 1,
+      pointer;
   }
 
   .text {

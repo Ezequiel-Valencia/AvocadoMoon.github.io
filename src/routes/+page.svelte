@@ -51,7 +51,9 @@
     padding: 0%;
     position: fixed;
     // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
-    cursor: url('/Cursors/Wii-Curso-plain.png'), pointer;
+    cursor:
+      url('/Cursors/Wii-Curso-plain.png') 10 1,
+      pointer;
     // cursor: url("/Cursors/Wii-Curso-plain.png") pointer;
 
     // covers whole screen

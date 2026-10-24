@@ -1,16 +1,20 @@
 <script lang="ts">
-  import { Marquee, Hr } from 'flowbite-svelte';
+  import { Hr } from 'flowbite-svelte';
   import { musicController } from './myLocalStorage';
   import { onMount } from 'svelte';
 
-  let display_entire_menu = false;
-  export let songName: string;
-  export let songPath: string = '';
-  export let songVolumeLevel: string = '1';
+  let display_entire_menu = $state(false);
+  interface Props {
+    songName: string;
+    songPath?: string;
+    songVolumeLevel?: string;
+  }
 
-  let paused = true;
-  let audioLength: any;
-  let currentAudioTime: any;
+  let { songName, songPath = '', songVolumeLevel = '1' }: Props = $props();
+
+  let paused = $state(true);
+  let audioLength: any = $state();
+  let currentAudioTime: any = $state();
 
   onMount(() => {
     let audio = document.getElementById('bg-song') as HTMLAudioElement;
@@ -51,7 +55,7 @@
     <nav>
       <button
         id="menu-nav"
-        on:click={(e) => {
+        onclick={(e) => {
           display_entire_menu = !display_entire_menu;
           // scroll = false;
         }}>Menu</button
@@ -71,9 +75,9 @@
     >
       <!-- Song Name -->
       <h1 style="color: white; text-align:center; padding:5%; padding-bottom:0%;">Music:</h1>
-      <Marquee speed={0.3} hoverSpeed={0.2}>
+      <div class="marquee">
         <h5>{songName}</h5>
-      </Marquee>
+      </div>
 
       <div id="music-nav">
         <!-- Play/Pause Button -->
@@ -81,10 +85,10 @@
           <span
             id="play-button"
             class="music-buttons"
-            on:click={(e) => {
+            onclick={(e) => {
               paused = true;
             }}
-            on:keydown={(e) => {}}
+            onkeydown={(e) => {}}
             role="button"
             tabindex="0"
           >
@@ -94,10 +98,10 @@
           <span
             id="play-button"
             class="music-buttons"
-            on:click={(e) => {
+            onclick={(e) => {
               paused = false;
             }}
-            on:keydown={(e) => {}}
+            onkeydown={(e) => {}}
             role="button"
             tabindex="0"
           >
@@ -114,28 +118,28 @@
               min="1"
               max={audioLength}
               value={currentAudioTime}
-              on:input={(e) => {
+              oninput={(e) => {
                 currentAudioTime = e.currentTarget.value;
               }}
             />
           </span>
-          <span class="text"
+          <span class="text" style="padding-left: 1vw;"
             >{formatAudioTime(currentAudioTime)}/{formatAudioTime(audioLength)}</span
           >
         </span>
       </div>
 
-      <Hr classHr="my-8" />
+      <Hr class="my-8" />
     </span>
 
     <div style="text-align:center;" id="big-button-div">
       <button
-        on:click={(e) => {
+        onclick={(e) => {
           location.href = '/';
         }}>Main Menu</button
       >
       <button
-        on:click={(e) => {
+        onclick={(e) => {
           display_entire_menu = !display_entire_menu;
           //   scroll = true;
         }}>Return</button
@@ -176,7 +180,38 @@
   }
 
   .music-buttons:hover {
-    cursor: url('/Cursors/wii-open2.png'), pointer;
+    cursor:
+      url('/Cursors/wii-open2.png') 17 1,
+      pointer;
+  }
+
+  /* width: 0 keeps the title out of the box's fit-content width; min-width fills it instead */
+  .marquee {
+    width: 0;
+    min-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* The left padding starts the title just past the right edge, and the animation moves it
+     until it has fully left on the left before starting again */
+  .marquee h5 {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 12s linear infinite;
+  }
+
+  .marquee:hover h5 {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
   }
 
   .box {
@@ -193,7 +228,9 @@
     width: 100vw;
     z-index: 999;
     background: rgba(0, 0, 0, 0.85);
-    cursor: url('/Cursors/Wii-Curso-plain.png'), pointer;
+    cursor:
+      url('/Cursors/Wii-Curso-plain.png') 10 1,
+      pointer;
   }
 
   #menu-nav {
@@ -233,7 +270,9 @@
   }
 
   #big-button-div button:hover {
-    cursor: url('/Cursors/wii-open2.png'), pointer;
+    cursor:
+      url('/Cursors/wii-open2.png') 17 1,
+      pointer;
   }
 
   #contact-me {
@@ -259,6 +298,37 @@
     background: transparent;
     cursor: pointer;
     width: 15rem;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  input[type='range']::-moz-range-track {
+    height: 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.1rem;
+    width: 1.1rem;
+    margin-top: -0.35rem; /* centers the thumb on the track in Chromium/WebKit */
+    border: 0;
+    border-radius: 50%;
+    background: #1c64f2;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    height: 1.1rem;
+    width: 1.1rem;
+    border: 0;
+    border-radius: 50%;
+    background: #1c64f2;
   }
 
   @media (max-width: 500px) {

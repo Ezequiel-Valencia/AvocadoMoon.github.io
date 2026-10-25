@@ -128,26 +128,27 @@
 
   // ---------- Video stage ----------
 
+  // Placed by its top-left corner from its width (--w) and 16:9 height, with no transform,
+  // so +page.svelte can animate a size change as a single transform (see toggleMinimized)
   .stage {
     position: absolute;
     z-index: 2;
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    width: var(--w);
+    left: calc(50% - var(--w) / 2);
+    transform-origin: top left;
   }
 
-  // Visualizers on: the video is the centerpiece with the visualizer behind it
+  // Expanded: the video is the centerpiece with the visualizer behind it
   .stage.focused {
-    left: 50%;
-    top: 62%;
-    width: min(64vw, 92vh, 960px);
-    transform: translate(-50%, -50%);
+    --w: min(64vw, 92vh, 960px);
+    top: calc(62% - var(--w) * 9 / 32);
   }
 
-  // Visualizers off: the video tucks into the corner like a mini player
+  // Minimized: the video tucks into the corner like a mini player
   .stage.docked {
-    left: calc(100% - 16px);
-    top: calc(100% - 16px);
-    width: min(32vw, 420px);
-    transform: translate(-100%, -100%);
+    --w: min(32vw, 420px);
+    left: calc(100% - 16px - var(--w));
+    top: calc(100% - 16px - var(--w) * 9 / 16);
   }
 
   // A see-through bar the width of the video, with a caret that points where the video
@@ -405,11 +406,11 @@
 
   @media (max-width: 600px) {
     .stage.focused {
-      top: 68%;
-      width: calc(100vw - 32px);
+      --w: calc(100vw - 32px);
+      top: calc(68% - var(--w) * 9 / 32);
     }
     .stage.docked {
-      width: 60vw;
+      --w: 60vw;
     }
     .visualizer.bars {
       width: 110%;
@@ -417,7 +418,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .stage,
     .stage-toggle,
     .stage-toggle svg {
       transition: none;

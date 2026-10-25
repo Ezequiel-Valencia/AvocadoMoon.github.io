@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
+  import { fade } from 'svelte/transition';
   import Background from './background.svelte';
   import ThemedButton from './themed-button.svelte';
   import SubButton from './sub-button.svelte';
@@ -45,6 +46,30 @@
   // The video's size is the listener's choice: centered with the visualizer behind it,
   // or tucked into the corner as a mini player
   let minimized = $state(false);
+  let stage: HTMLElement | undefined = $state();
+
+  // The stage jumps straight to its new place, then a transform carries it there from the
+  // old one. Transforms run on the compositor, so the video glides instead of re-laying out
+  // (and resizing the YouTube iframe) on every frame
+  async function toggleMinimized() {
+    const first = stage?.getBoundingClientRect();
+    minimized = !minimized;
+    if (!stage || !first || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    await tick();
+    // A click mid-glide starts from wherever the video is now
+    stage.getAnimations().forEach((a) => a.cancel());
+    const last = stage.getBoundingClientRect();
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+    stage.animate(
+      [
+        { transform: `translate(${dx}px, ${dy}px) scale(${first.width / last.width})` },
+        { transform: 'none' },
+      ],
+      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+    );
+  }
 
   // Live tab audio for the visualizers; only offered in browsers that can share it
   let canListen = $state(false);
@@ -134,9 +159,12 @@
     />
   </nav>
 
-  <section class="stage {minimized ? 'docked' : 'focused'}">
+  <section bind:this={stage} class="stage {minimized ? 'docked' : 'focused'}">
     {#if !minimized && visualizer !== 'off'}
-      <Visualizer kind={visualizer} {playing} analyser={liveAudio?.analyser} />
+      <!-- Unpositioned, so the visualizer still places itself against the stage -->
+      <div transition:fade={{ duration: 300 }}>
+        <Visualizer kind={visualizer} {playing} analyser={liveAudio?.analyser} />
+      </div>
     {/if}
 
     <div class="video-frame">
@@ -162,7 +190,7 @@
       class="stage-toggle"
       aria-label={minimized ? 'Expand video' : 'Minimize video'}
       aria-expanded={!minimized}
-      onclick={() => (minimized = !minimized)}
+      onclick={toggleMinimized}
     >
       <svg viewBox="0 0 24 12" aria-hidden="true">
         <polyline points="2,2 12,10 22,2" />

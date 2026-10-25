@@ -4,7 +4,13 @@
   import Island from './island.svelte';
   import ThemedButton from './themed-button.svelte';
   import type { ThemeId } from './themes';
-  import { videoTags, type Video, type VideoTag } from './videos';
+  import {
+    getVideoCoverImage,
+    getYoutubeVideoId,
+    videoTags,
+    type Video,
+    type VideoTag,
+  } from './videos';
 
   interface Props {
     theme: ThemeId;
@@ -36,6 +42,15 @@
 
   const open = $derived(groups.find((group) => group.tag === openTag));
   const ids = $derived(open ? open.indices.map(String) : groups.map((group) => group.tag));
+
+  // Not every video has a full-size cover; YouTube answers with an error or a tiny grey
+  // placeholder instead, so those fall back to the smaller cover every video has
+  function coverFallback(e: Event, url: string) {
+    const img = e.currentTarget as HTMLImageElement;
+    if (e.type === 'load' && img.naturalWidth > 120) return;
+    const fallback = `https://i.ytimg.com/vi/${getYoutubeVideoId(url)}/hqdefault.jpg`;
+    if (img.src !== fallback) img.src = fallback;
+  }
 
   function markOrigin(e: MouseEvent) {
     const tile = e.currentTarget as HTMLElement;
@@ -93,7 +108,16 @@
     {#snippet option(id, choose)}
       {#if open}
         {@const index = Number(id)}
+        {@const url = videos[index].video}
         <button class="video-row" aria-current={index === current} onclick={choose}>
+          <img
+            class="video-cover"
+            src={getVideoCoverImage(url)}
+            alt=""
+            loading="lazy"
+            onload={(e) => coverFallback(e, url)}
+            onerror={(e) => coverFallback(e, url)}
+          />
           <span class="video-title">{videos[index].title}</span>
           {#if index === current}
             <span class="video-status">PLAYING</span>
@@ -146,8 +170,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 14px;
+    padding: 8px 16px 8px 8px;
     font: inherit;
     font-size: clamp(14px, 2vmin, 17px);
     text-align: left;
@@ -160,6 +184,20 @@
     &:focus-visible {
       transform: translateX(4px);
     }
+  }
+
+  // A preview of the video's visuals, cropped to the player's shape
+  .video-cover {
+    flex-shrink: 0;
+    width: clamp(96px, 16vmin, 144px);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .video-title {
+    flex: 1;
   }
 
   .video-status {

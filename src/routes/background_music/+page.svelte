@@ -159,14 +159,18 @@
     />
   </nav>
 
-  <section bind:this={stage} class="stage {minimized ? 'docked' : 'focused'}">
-    {#if !minimized && visualizer !== 'off'}
-      <!-- Unpositioned, so the visualizer still places itself against the stage -->
+  <!-- The visualizer keeps the expanded video's place whether or not the video is there,
+       so it plays on in the middle of the page while the video is minimized -->
+  <div class="visualizer-stage">
+    {#if visualizer !== 'off'}
+      <!-- Unpositioned, so the visualizer still places itself against the visualizer stage -->
       <div transition:fade={{ duration: 300 }}>
         <Visualizer kind={visualizer} {playing} analyser={liveAudio?.analyser} />
       </div>
     {/if}
+  </div>
 
+  <section bind:this={stage} class="stage {minimized ? 'docked' : 'focused'}">
     <div class="video-frame">
       {#if videos.length === 0}
         <p class="empty">

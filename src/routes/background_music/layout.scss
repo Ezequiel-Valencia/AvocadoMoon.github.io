@@ -184,9 +184,21 @@
   }
 
   // Expanded: the video is the centerpiece with the visualizer behind it
-  .stage.focused {
+  .stage.focused,
+  .visualizer-stage {
     --w: min(64vw, 92vh, 960px);
     top: calc(62% - var(--w) * 9 / 32);
+  }
+
+  // Always where the expanded video goes, beneath it, so the visualizer stays put when the
+  // video is minimized; the 16:9 box gives the visualizer the video's proportions to size by
+  .visualizer-stage {
+    position: absolute;
+    z-index: 1;
+    width: var(--w);
+    left: calc(50% - var(--w) / 2);
+    aspect-ratio: 16 / 9;
+    pointer-events: none;
   }
 
   // Minimized: the video tucks into the corner like a mini player
@@ -450,7 +462,8 @@
   }
 
   @media (max-width: 600px) {
-    .stage.focused {
+    .stage.focused,
+    .visualizer-stage {
       --w: calc(100vw - 32px);
       top: calc(68% - var(--w) * 9 / 32);
     }

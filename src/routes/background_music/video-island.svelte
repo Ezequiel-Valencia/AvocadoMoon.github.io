@@ -1,6 +1,6 @@
 <!-- Video picker: videos grouped by tag; picking a group zooms in to a list of its videos -->
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { tick, type Snippet } from 'svelte';
   import Island from './island.svelte';
   import ThemedButton from './themed-button.svelte';
   import type { ThemeId } from './themes';
@@ -19,9 +19,11 @@
     current: number;
     onselect: (index: number) => void;
     onclose: () => void;
+    // Toggles shown under the options, e.g. Shuffle and Repeat
+    settings?: Snippet;
   }
 
-  let { theme, videos, current, onselect, onclose }: Props = $props();
+  let { theme, videos, current, onselect, onclose, settings }: Props = $props();
 
   // Tags in the order videos.ts lists them, leaving out any no video uses yet; a video
   // with several tags shows up in each of their groups
@@ -98,6 +100,7 @@
       onselect(Number(id));
     }}
     onclose={back}
+    footer={settings}
   >
     {#snippet toolbar()}
       {#if open}

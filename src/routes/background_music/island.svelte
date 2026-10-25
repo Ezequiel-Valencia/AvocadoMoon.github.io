@@ -16,13 +16,15 @@
     list?: boolean;
     // Shown above the options, e.g. a button back to a previous view
     toolbar?: Snippet;
+    // Shown below the options in every view, e.g. toggles for the picker's settings
+    footer?: Snippet;
     // Pickers with more than one view change `title` to switch views; the new view zooms
     // in (going deeper) or out (coming back), centered on `origin`
     zoom?: 'in' | 'out';
     origin?: string;
   }
 
-  let { title, theme, ids, onselect, onclose, option, list, toolbar, zoom, origin }: Props =
+  let { title, theme, ids, onselect, onclose, option, list, toolbar, footer, zoom, origin }: Props =
     $props();
 
   let island: HTMLElement;
@@ -72,6 +74,11 @@
         </div>
       </div>
     {/key}
+    {#if footer}
+      <div class="footer">
+        {@render footer()}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -117,6 +124,14 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: clamp(12px, 2.5vmin, 24px);
+  }
+
+  // Outside the zooming view, so settings stay put while the views change
+  .footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: clamp(14px, 2.5vmin, 24px);
   }
 
   .options.list {

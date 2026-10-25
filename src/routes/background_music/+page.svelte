@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Background from './background.svelte';
   import ThemedButton from './themed-button.svelte';
+  import SubButton from './sub-button.svelte';
   import ThemeIsland from './theme-island.svelte';
   import Visualizer from './visualizer.svelte';
   import VisualizerIsland from './visualizer-island.svelte';
@@ -129,26 +130,6 @@
       active={visualizer !== 'off'}
       onclick={() => (picking = 'visualizer')}
     />
-    {#if canListen}
-      <ThemedButton
-        label="Live Audio"
-        status={liveAudio ? 'ON' : noAudioShared ? 'NO AUDIO' : 'OFF'}
-        active={!!liveAudio}
-        onclick={toggleLiveAudio}
-      />
-    {/if}
-    <ThemedButton
-      label="Shuffle"
-      status={shuffle ? 'ON' : 'OFF'}
-      active={shuffle}
-      onclick={() => (shuffle = !shuffle)}
-    />
-    <ThemedButton
-      label="Repeat"
-      status={repeat ? 'ON' : 'OFF'}
-      active={repeat}
-      onclick={() => (repeat = !repeat)}
-    />
   </nav>
 
   <section class="stage {visualizer !== 'off' ? 'focused' : 'docked'}">
@@ -191,7 +172,18 @@
     analyser={liveAudio?.analyser}
     onselect={(id) => (visualizer = id)}
     onclose={() => (picking = null)}
-  />
+  >
+    {#snippet settings()}
+      {#if canListen}
+        <SubButton
+          label="Live Audio"
+          status={liveAudio ? 'ON' : noAudioShared ? 'NO AUDIO' : 'OFF'}
+          active={!!liveAudio}
+          onclick={toggleLiveAudio}
+        />
+      {/if}
+    {/snippet}
+  </VisualizerIsland>
 {:else if picking === 'video'}
   <VideoIsland
     {theme}
@@ -199,5 +191,20 @@
     current={currentIndex}
     onselect={(index) => index !== currentIndex && playVideo(index)}
     onclose={() => (picking = null)}
-  />
+  >
+    {#snippet settings()}
+      <SubButton
+        label="Shuffle"
+        status={shuffle ? 'ON' : 'OFF'}
+        active={shuffle}
+        onclick={() => (shuffle = !shuffle)}
+      />
+      <SubButton
+        label="Repeat"
+        status={repeat ? 'ON' : 'OFF'}
+        active={repeat}
+        onclick={() => (repeat = !repeat)}
+      />
+    {/snippet}
+  </VideoIsland>
 {/if}

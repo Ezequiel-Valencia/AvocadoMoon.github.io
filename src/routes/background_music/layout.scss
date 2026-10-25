@@ -98,7 +98,8 @@
     pointer-events: none;
   }
 
-  .pond-defs {
+  // Holds shared SVG pieces (symbols, filters) without taking up space
+  .scene-defs {
     position: absolute;
   }
 
@@ -174,6 +175,76 @@
       height: 100%;
       overflow: visible;
     }
+  }
+
+  // Hidden unless a theme shows it: a tree on each side of the page with fallen leaves
+  // piled at its foot, over a bed of leaves along the bottom
+  .fall-scene {
+    --px: clamp(0.75px, 0.11vmin, 1.3px);
+    --bed-h: clamp(50px, 11vh, 120px);
+    --tree-h: min(70vh, 100vw);
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  // Each tree hangs a third of its width off its side of the page, rooted in the leaves
+  .tree {
+    position: absolute;
+    bottom: calc(var(--bed-h) * 0.5);
+    height: var(--tree-h);
+    width: calc(var(--tree-h) * 0.94);
+    overflow: visible;
+  }
+
+  .tree-left {
+    left: calc(var(--tree-h) * -0.33);
+  }
+
+  // The same tree, mirrored
+  .tree-right {
+    right: calc(var(--tree-h) * -0.33);
+    transform: scaleX(-1);
+  }
+
+  // Wider than the page so its rounded top runs off both sides
+  .leaf-bed {
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: 0;
+    height: var(--bed-h);
+  }
+
+  // A heap of leaves centered on each trunk, which stands 14% of the tree's height in from
+  // its side of the page
+  .leaf-pile {
+    --pile-h: calc(var(--tree-h) * 0.13);
+    position: absolute;
+    bottom: calc(var(--bed-h) * 0.3);
+    width: calc(var(--tree-h) * 0.4);
+    height: var(--pile-h);
+  }
+
+  .pile-left {
+    left: calc(var(--tree-h) * -0.06);
+  }
+
+  .pile-right {
+    right: calc(var(--tree-h) * -0.06);
+  }
+
+  // Each leaf is centered on its spot in the pile
+  .bed-leaf {
+    position: absolute;
+    left: var(--left);
+    bottom: calc(var(--pile-h) * var(--height));
+    width: calc(var(--size) * var(--px));
+    aspect-ratio: 1;
+    translate: -50% 50%;
   }
 
   // ---------- Buttons ----------

@@ -17,6 +17,7 @@
     type TabAudio,
   } from './visualizer_menu/tab-audio';
   import { loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
+  import { loadSettings, saveSettings } from './settings';
   import {
     backgroundMusic,
     embed_youtube_video,
@@ -30,8 +31,9 @@
   import.meta.glob('./theme_menu/themes/*.scss', { eager: true });
 
   const videos = backgroundMusic;
-  // Only the first video loads through src; later ones are swapped in through the API
-  const embedSrc = videos.length > 0 ? youtubeEmbedUrl(videos[0].video) : '';
+  // Only the first video loads through src; later ones are swapped in through the API.
+  // Set once the saved video is known, so the page doesn't load one video then another
+  let embedSrc = $state('');
 
   let playerFrame: HTMLIFrameElement | undefined = $state();
   let player: YouTubePlayer | undefined;
@@ -47,6 +49,19 @@
   // or tucked into the corner as a mini player
   let minimized = $state(false);
   let stage: HTMLElement | undefined = $state();
+
+  // Saving waits until the saved settings are loaded, or the defaults would replace them
+  let settingsLoaded = $state(false);
+  $effect(() => {
+    if (!settingsLoaded) return;
+    saveSettings({
+      visualizer,
+      video: videos[currentIndex]?.video ?? '',
+      shuffle,
+      repeat,
+      minimized,
+    });
+  });
 
   // The stage jumps straight to its new place, then a transform carries it there from the
   // old one. Transforms run on the compositor, so the video glides instead of re-laying out
@@ -122,11 +137,30 @@
 
   onMount(() => {
     theme = loadTheme();
+    const saved = loadSettings();
+    visualizer = saved.visualizer ?? visualizer;
+    shuffle = saved.shuffle ?? shuffle;
+    repeat = saved.repeat ?? repeat;
+    minimized = saved.minimized ?? minimized;
+    currentIndex = Math.max(
+      0,
+      videos.findIndex((v) => v.video === saved.video)
+    );
+    settingsLoaded = true;
+
     canListen = canCaptureTabAudio();
-    if (playerFrame) {
-      embed_youtube_video(playerFrame, videos[currentIndex].video, onStateChange).then(
-        (p) => (player = p)
-      );
+    if (videos.length > 0) {
+      embedSrc = youtubeEmbedUrl(videos[currentIndex].video);
+      // Waits for the iframe to render with its src before the API attaches to it
+      tick().then(async () => {
+        if (playerFrame) {
+          player = await embed_youtube_video(
+            playerFrame,
+            videos[currentIndex].video,
+            onStateChange
+          );
+        }
+      });
     }
     return () => {
       destroy_youtube_video();
@@ -176,7 +210,7 @@
         <p class="empty">
           Add YouTube links to <code>video_menu/videos.ts</code> to start listening.
         </p>
-      {:else}
+      {:else if embedSrc}
         <!-- A plain embed iframe; the YouTube API only attaches to it to track playback -->
         <iframe
           bind:this={playerFrame}

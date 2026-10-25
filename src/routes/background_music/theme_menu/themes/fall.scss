@@ -143,8 +143,11 @@ $maple-leaf: polygon(
     display: none;
   }
 
-  // The leaf is drawn on pseudo-elements so the clip doesn't cut off the label
+  // The leaf is drawn on pseudo-elements so the clip doesn't cut off the label; the face
+  // itself stays unclipped so a long label is never cut off at the box's edge
   .front {
+    overflow: visible;
+    gap: 2px;
     filter: drop-shadow(0 5px 8px rgba(140, 94, 58, 0.35));
     transition: filter 0.6s;
   }
@@ -225,13 +228,17 @@ $maple-leaf: polygon(
     transition: color 0.6s;
   }
 
-  // Sit the text on the leaf's broad middle rather than the box's center
+  // Sit the text on the leaf's broad middle (roughly 38-64% down, between the side notches
+  // and the lower lobes) rather than up in the narrow top lobe
   .label {
-    padding: 0 16%;
-    margin-top: -10%;
+    padding: 0 12%;
+    margin-top: 2%;
+    font-size: clamp(11px, 1.6vmin, 15px);
+    line-height: 1;
   }
 
   .status {
+    font-size: clamp(8px, 1.1vmin, 10px);
     opacity: 0.85;
   }
 

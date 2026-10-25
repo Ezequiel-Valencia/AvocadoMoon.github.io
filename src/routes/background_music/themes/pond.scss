@@ -390,3 +390,21 @@ $lily-petals: polygon(
     color: var(--pink-light);
   }
 }
+
+.theme-island[data-theme='pond'] {
+  // ---------- Sub-buttons: white squircles ringed in green ----------
+
+  .sub-button {
+    font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    color: var(--green-deep);
+    border: 2px solid var(--green-light);
+    background: var(--white);
+    box-shadow: 0 3px 8px rgba(38, 105, 62, 0.18);
+  }
+
+  .sub-button[aria-pressed='true'] {
+    color: var(--white);
+    border-color: var(--green-deep);
+    background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
+  }
+}

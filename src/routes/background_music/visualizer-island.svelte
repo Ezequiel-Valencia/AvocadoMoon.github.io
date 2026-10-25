@@ -1,5 +1,6 @@
 <!-- Visualizer picker: each option previews that visualizer in the current theme -->
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import Island from './island.svelte';
   import ThemedButton from './themed-button.svelte';
   import Visualizer from './visualizer.svelte';
@@ -12,12 +13,21 @@
     analyser?: AnalyserNode;
     onselect: (id: VisualizerId) => void;
     onclose: () => void;
+    // Toggles shown under the options, e.g. the visualizers' Live Audio
+    settings?: Snippet;
   }
 
-  let { theme, current, analyser, onselect, onclose }: Props = $props();
+  let { theme, current, analyser, onselect, onclose, settings }: Props = $props();
 </script>
 
-<Island title="Choose a Visualizer" {theme} ids={visualizers.map((v) => v.id)} {onselect} {onclose}>
+<Island
+  title="Choose a Visualizer"
+  {theme}
+  ids={visualizers.map((v) => v.id)}
+  {onselect}
+  {onclose}
+  footer={settings}
+>
   {#snippet option(id, choose)}
     <!-- bgm-page + data-theme gives the preview the current theme's paint -->
     <div class="bgm-page preview" data-theme={theme}>

@@ -362,4 +362,21 @@ $maple-leaf: polygon(
       0 0 0 2px var(--hazelnut-light),
       0 6px 16px rgba(110, 60, 25, 0.25);
   }
+
+  // Video list rows and the back button: cream cards edged in hazelnut
+  .video-row,
+  .island-back {
+    font-family: Georgia, 'Palatino Linotype', 'Book Antiqua', serif;
+    color: var(--hazelnut);
+    border: 2px solid var(--hazelnut-light);
+    border-radius: 12px;
+    background: var(--cream);
+    box-shadow: 0 3px 8px rgba(110, 60, 25, 0.15);
+  }
+
+  .video-row[aria-current='true'] {
+    color: var(--cream);
+    border-color: var(--orange-deep);
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+  }
 }

@@ -5,6 +5,7 @@
   import ThemeIsland from './theme-island.svelte';
   import Visualizer from './visualizer.svelte';
   import VisualizerIsland from './visualizer-island.svelte';
+  import VideoIsland from './video-island.svelte';
   import { visualizerName, type VisualizerId } from './visualizers';
   import {
     canCaptureTabAudio,
@@ -25,9 +26,9 @@
   // Every themes/*.scss is loaded; data-theme on the page root picks which one applies
   import.meta.glob('./themes/*.scss', { eager: true });
 
-  const videos = backgroundMusic.videos;
+  const videos = backgroundMusic;
   // Only the first video loads through src; later ones are swapped in through the API
-  const embedSrc = videos.length > 0 ? youtubeEmbedUrl(videos[0]) : '';
+  const embedSrc = videos.length > 0 ? youtubeEmbedUrl(videos[0].video) : '';
 
   let playerFrame: HTMLIFrameElement | undefined = $state();
   let player: YouTubePlayer | undefined;
@@ -38,7 +39,7 @@
   let shuffle = $state(false);
   let repeat = $state(false);
   let theme: ThemeId = $state('aero');
-  let picking: 'theme' | 'visualizer' | null = $state(null);
+  let picking: 'theme' | 'visualizer' | 'video' | null = $state(null);
 
   // Live tab audio for the visualizers; only offered in browsers that can share it
   let canListen = $state(false);
@@ -80,16 +81,20 @@
       player?.seekTo(0, true);
       player?.playVideo();
     } else {
-      currentIndex = nextIndex();
-      if (playerFrame) embed_youtube_video(playerFrame, videos[currentIndex], onStateChange);
+      playVideo(nextIndex());
     }
+  }
+
+  function playVideo(index: number) {
+    currentIndex = index;
+    if (playerFrame) embed_youtube_video(playerFrame, videos[index].video, onStateChange);
   }
 
   onMount(() => {
     theme = loadTheme();
     canListen = canCaptureTabAudio();
     if (playerFrame) {
-      embed_youtube_video(playerFrame, videos[currentIndex], onStateChange).then(
+      embed_youtube_video(playerFrame, videos[currentIndex].video, onStateChange).then(
         (p) => (player = p)
       );
     }
@@ -111,6 +116,13 @@
 
   <nav class="controls" aria-label="Background music controls">
     <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (picking = 'theme')} />
+    {#if videos.length > 0}
+      <ThemedButton
+        label="Videos"
+        status="{currentIndex + 1} / {videos.length}"
+        onclick={() => (picking = 'video')}
+      />
+    {/if}
     <ThemedButton
       label="Audio Visualizers"
       status={visualizerName(visualizer).toUpperCase()}
@@ -178,6 +190,14 @@
     current={visualizer}
     analyser={liveAudio?.analyser}
     onselect={(id) => (visualizer = id)}
+    onclose={() => (picking = null)}
+  />
+{:else if picking === 'video'}
+  <VideoIsland
+    {theme}
+    {videos}
+    current={currentIndex}
+    onselect={(index) => index !== currentIndex && playVideo(index)}
     onclose={() => (picking = null)}
   />
 {/if}

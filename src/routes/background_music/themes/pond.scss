@@ -368,4 +368,25 @@ $lily-petals: polygon(
       0 0 0 2px var(--green-light),
       0 6px 16px rgba(38, 105, 62, 0.2);
   }
+
+  // Video list rows and the back button: rounded white pads ringed in green
+  .video-row,
+  .island-back {
+    font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+    color: var(--green-deep);
+    border: 2px solid var(--green-light);
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: 0 3px 8px rgba(38, 105, 62, 0.15);
+  }
+
+  .video-row[aria-current='true'] {
+    color: var(--white);
+    border-color: var(--green-deep);
+    background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
+  }
+
+  .video-row[aria-current='true'] .video-status {
+    color: var(--pink-light);
+  }
 }

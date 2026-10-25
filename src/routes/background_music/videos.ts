@@ -1,11 +1,32 @@
-// Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works
-export const backgroundMusic: { videos: string[] } = {
-  videos: [
-    'https://youtu.be/l-vSSYEuO88?si=aR61o5o5r-P7AR7s',
-    'https://www.youtube.com/watch?v=4xDzrJKXOOY',
-    'https://www.youtube.com/watch?v=rUxyKA_-grg',
-  ],
-};
+// Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works.
+// Each video's tags place it in groups of the same name in the video picker.
+export const videoTags = ['Assorted Collection', 'Jazz', 'Drum n Bass', 'Classical'] as const;
+
+export type VideoTag = (typeof videoTags)[number];
+
+export interface Video {
+  video: string;
+  title: string;
+  tags: VideoTag[];
+}
+
+export const backgroundMusic: Video[] = [
+  {
+    video: 'https://youtu.be/_C_UkCAhRXE?si=Ujn-wL4c0HIpCnXt',
+    title: 'Arctic Eggs',
+    tags: ['Assorted Collection'],
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=z0_ijQ3r2EI',
+    title: 'Xbox Live',
+    tags: ['Drum n Bass'],
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=vcGeWUiWrT4',
+    title: 'Music To Heal Brain Rot',
+    tags: ['Classical'],
+  },
+];
 
 // Minimal slice of the YouTube IFrame Player API that this channel uses
 // https://developers.google.com/youtube/iframe_api_reference

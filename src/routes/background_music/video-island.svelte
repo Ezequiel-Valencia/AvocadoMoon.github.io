@@ -1,0 +1,170 @@
+<!-- Video picker: videos grouped by tag; picking a group zooms in to a list of its videos -->
+<script lang="ts">
+  import { tick } from 'svelte';
+  import Island from './island.svelte';
+  import ThemedButton from './themed-button.svelte';
+  import type { ThemeId } from './themes';
+  import { videoTags, type Video, type VideoTag } from './videos';
+
+  interface Props {
+    theme: ThemeId;
+    videos: Video[];
+    // Index into `videos` of the one playing now
+    current: number;
+    onselect: (index: number) => void;
+    onclose: () => void;
+  }
+
+  let { theme, videos, current, onselect, onclose }: Props = $props();
+
+  // Tags in the order videos.ts lists them, leaving out any no video uses yet; a video
+  // with several tags shows up in each of their groups
+  const groups = $derived(
+    videoTags
+      .map((tag) => ({
+        tag,
+        indices: videos.flatMap((video, i) => (video.tags.includes(tag) ? [i] : [])),
+      }))
+      .filter((group) => group.indices.length > 0)
+  );
+
+  let openTag: VideoTag | null = $state(null);
+  let zoom: 'in' | 'out' | undefined = $state();
+  // Where the clicked group sat, so its list grows out of it and shrinks back into it
+  let origin: string | undefined = $state();
+  let chosen = false;
+
+  const open = $derived(groups.find((group) => group.tag === openTag));
+  const ids = $derived(open ? open.indices.map(String) : groups.map((group) => group.tag));
+
+  function markOrigin(e: MouseEvent) {
+    const tile = e.currentTarget as HTMLElement;
+    const view = tile.closest('.view');
+    if (!view) return;
+    const t = tile.getBoundingClientRect();
+    const v = view.getBoundingClientRect();
+    origin = `${t.left + t.width / 2 - v.left}px ${t.top + t.height / 2 - v.top}px`;
+  }
+
+  async function show(tag: VideoTag | null) {
+    zoom = tag ? 'in' : 'out';
+    openTag = tag;
+    // Keep keyboard focus inside the island as its contents are swapped out
+    await tick();
+    const focusable = [
+      '.video-island [aria-current="true"]',
+      '.video-island .island-back',
+      '.video-island [aria-pressed="true"]',
+    ];
+    for (const selector of focusable) {
+      const el = document.querySelector<HTMLElement>(selector);
+      if (el) return el.focus();
+    }
+  }
+
+  // Escape and clicks outside step back out of a group before closing the island; once a
+  // video is picked the island closes outright
+  function back() {
+    if (openTag && !chosen) show(null);
+    else onclose();
+  }
+</script>
+
+<div class="video-island">
+  <Island
+    title={openTag ?? 'Choose a Video'}
+    {theme}
+    {ids}
+    list={!!open}
+    {zoom}
+    {origin}
+    onselect={(id) => {
+      chosen = true;
+      onselect(Number(id));
+    }}
+    onclose={back}
+  >
+    {#snippet toolbar()}
+      {#if open}
+        <button class="island-back" onclick={() => show(null)}>← All groups</button>
+      {/if}
+    {/snippet}
+
+    {#snippet option(id, choose)}
+      {#if open}
+        {@const index = Number(id)}
+        <button class="video-row" aria-current={index === current} onclick={choose}>
+          <span class="video-title">{videos[index].title}</span>
+          {#if index === current}
+            <span class="video-status">PLAYING</span>
+          {/if}
+        </button>
+      {:else}
+        {@const group = groups.find((g) => g.tag === id)!}
+        <!-- bgm-page + data-theme gives the tile the current theme's paint -->
+        <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
+          <ThemedButton
+            label={group.tag}
+            status="{group.indices.length} {group.indices.length === 1 ? 'VIDEO' : 'VIDEOS'}"
+            active={group.indices.includes(current)}
+            onclick={() => show(group.tag)}
+          />
+        </div>
+      {/if}
+    {/snippet}
+  </Island>
+</div>
+
+<style lang="scss">
+  // Only a wrapper for finding this island's elements; it takes no space itself
+  .video-island {
+    display: contents;
+  }
+
+  // Overrides the full-screen page layout so the theme root works as a small tile
+  .bgm-page.preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(140px, 24vmin, 220px);
+    height: clamp(140px, 24vmin, 220px);
+    border-radius: 20px;
+  }
+
+  // Layout only; each theme's stylesheet colors the rows and the back button
+  .island-back {
+    display: block;
+    margin: 0 auto clamp(12px, 2vmin, 20px);
+    padding: 6px 14px;
+    font: inherit;
+    font-size: 14px;
+    cursor: inherit;
+  }
+
+  .video-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: clamp(14px, 2vmin, 17px);
+    text-align: left;
+    cursor: inherit;
+    transition:
+      transform 0.15s,
+      background 0.15s;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateX(4px);
+    }
+  }
+
+  .video-status {
+    flex-shrink: 0;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+</style>

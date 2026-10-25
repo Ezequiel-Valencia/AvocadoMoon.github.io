@@ -255,4 +255,25 @@
       0 0 0 2px var(--white),
       0 6px 16px rgba(20, 100, 180, 0.2);
   }
+
+  // Video list rows and the back button: small glossy glass panels
+  .video-row,
+  .island-back {
+    font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+    color: var(--title);
+    border: 2px solid var(--white);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--white) 0%, rgba(190, 228, 255, 0.9) 100%);
+    box-shadow:
+      0 0 0 1px rgba(33, 150, 243, 0.35),
+      0 4px 10px rgba(20, 100, 180, 0.15);
+  }
+
+  .video-row[aria-current='true'] {
+    color: var(--white);
+    background: linear-gradient(180deg, var(--main) 0%, var(--main-deep) 100%);
+    box-shadow:
+      0 0 0 1px var(--main-deep),
+      0 0 14px var(--glow);
+  }
 }

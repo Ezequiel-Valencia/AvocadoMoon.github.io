@@ -1,4 +1,4 @@
-<!-- Centered picker panel shared by the theme and visualizer pickers; each option is a snippet -->
+<!-- Centered picker panel shared by the theme, visualizer, and video pickers; each option is a snippet -->
 <script lang="ts" generics="Id extends string">
   import { onMount, type Snippet } from 'svelte';
   import type { ThemeId } from './themes';
@@ -12,9 +12,18 @@
     onclose: () => void;
     // Renders one option's tile; call `choose` when that option is picked
     option: Snippet<[Id, () => void]>;
+    // Stacks the options in a column instead of wrapping them in rows
+    list?: boolean;
+    // Shown above the options, e.g. a button back to a previous view
+    toolbar?: Snippet;
+    // Pickers with more than one view change `title` to switch views; the new view zooms
+    // in (going deeper) or out (coming back), centered on `origin`
+    zoom?: 'in' | 'out';
+    origin?: string;
   }
 
-  let { title, theme, ids, onselect, onclose, option }: Props = $props();
+  let { title, theme, ids, onselect, onclose, option, list, toolbar, zoom, origin }: Props =
+    $props();
 
   let island: HTMLElement;
   let closing = false;
@@ -52,12 +61,17 @@
     aria-modal="true"
     aria-labelledby="island-title"
   >
-    <h2 id="island-title">{title}</h2>
-    <div class="options">
-      {#each ids as id (id)}
-        {@render option(id, () => choose(id))}
-      {/each}
-    </div>
+    {#key title}
+      <div class="view {zoom ? `zoom-${zoom}` : ''}" style:transform-origin={origin}>
+        <h2 id="island-title">{title}</h2>
+        {@render toolbar?.()}
+        <div class="options" class:list>
+          {#each ids as id (id)}
+            {@render option(id, () => choose(id))}
+          {/each}
+        </div>
+      </div>
+    {/key}
   </div>
 </div>
 
@@ -105,6 +119,37 @@
     gap: clamp(12px, 2.5vmin, 24px);
   }
 
+  .options.list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 8px;
+    width: min(440px, 80vw);
+    margin: 0 auto;
+  }
+
+  .zoom-in {
+    animation: zoom-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .zoom-out {
+    animation: zoom-out 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+
+  @keyframes zoom-out {
+    from {
+      opacity: 0;
+      transform: scale(1.15);
+    }
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -120,7 +165,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .backdrop,
-    .island {
+    .island,
+    .view {
       animation: none;
     }
   }

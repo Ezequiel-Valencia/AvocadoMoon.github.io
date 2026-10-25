@@ -50,12 +50,12 @@
 
   // Writes a custom property only when its text changes; each write makes the browser
   // restyle the element (and, for the root, everything inside it), so steady values are skipped
-  const written = new WeakMap<Element, Map<string, string>>();
+  const written = new WeakMap<Element, Record<string, string>>();
   function setVar(el: HTMLElement | SVGElement, prop: string, value: string) {
     let props = written.get(el);
-    if (!props) written.set(el, (props = new Map()));
-    if (props.get(prop) === value) return;
-    props.set(prop, value);
+    if (!props) written.set(el, (props = {}));
+    if (props[prop] === value) return;
+    props[prop] = value;
     el.style.setProperty(prop, value);
   }
 

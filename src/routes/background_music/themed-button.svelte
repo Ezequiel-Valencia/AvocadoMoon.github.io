@@ -3,7 +3,7 @@
   interface Props {
     label: string;
     // Small line under the label, e.g. ON/OFF or the current theme's name
-    status: string;
+    status?: string;
     // Leave undefined for buttons that aren't on/off toggles
     active?: boolean;
     onclick: () => void;
@@ -118,7 +118,9 @@
           />
         </svg>
         <span class="label">{label}</span>
-        <span class="status">{status}</span>
+        {#if status}
+          <span class="status">{status}</span>
+        {/if}
       </div>
     </div>
   </div>

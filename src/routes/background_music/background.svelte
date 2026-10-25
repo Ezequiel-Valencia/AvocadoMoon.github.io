@@ -55,10 +55,136 @@
     // Leaves sprout from the upper nodes, alternating sides
     leaves: [0.52, 0.68, 0.82, 0.95].map((at, j) => ({ at, side: (i + j) % 2 ? 'l' : 'r' })),
   }));
+
+  // Fall scene, hidden unless a theme shows it: a tree on each side of the page with fallen
+  // leaves piled at its foot. The trunk and limbs are smooth tapering shapes, each traced
+  // along a curve (start, two control points, end) from a wide base to a thin tip
+  function taper(curve: number[], from: number, to: number): string {
+    const [x0, y0, x1, y1, x2, y2, x3, y3] = curve;
+    const steps = 16;
+    const sideA: string[] = [];
+    const sideB: string[] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const u = 1 - t;
+      const x = u * u * u * x0 + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3;
+      const y = u * u * u * y0 + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3;
+      // Direction along the curve, turned a quarter to point across it
+      const dx = 3 * u * u * (x1 - x0) + 6 * u * t * (x2 - x1) + 3 * t * t * (x3 - x2);
+      const dy = 3 * u * u * (y1 - y0) + 6 * u * t * (y2 - y1) + 3 * t * t * (y3 - y2);
+      const half = (from + (to - from) * t) / 2 / Math.hypot(dx, dy);
+      sideA.push(`${(x - dy * half).toFixed(1)} ${(y + dx * half).toFixed(1)}`);
+      sideB.unshift(`${(x + dy * half).toFixed(1)} ${(y - dx * half).toFixed(1)}`);
+    }
+    return `M${sideA.join(' L')} L${sideB.join(' L')} Z`;
+  }
+
+  // The trunk forks into two limbs just below the canopy; the rest of the limbs reach up
+  // into it, showing only where they leave the trunk
+  const wood = [
+    taper([150, 322, 147, 295, 152, 262, 150, 236], 26, 17),
+    taper([146, 244, 140, 226, 128, 212, 106, 182], 13, 4),
+    taper([154, 244, 162, 226, 178, 212, 206, 186], 13, 4),
+    taper([128, 214, 124, 196, 120, 180, 118, 160], 6, 1.5),
+    taper([150, 238, 149, 215, 151, 195, 154, 170], 7, 2),
+    taper([180, 214, 184, 198, 186, 182, 186, 162], 6, 1.5),
+  ];
+
+  // A fixed sequence of random numbers, so the leaves land in the same places every visit
+  let seed = 11;
+  const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  // Fallen leaves heaped into a mound around each trunk: highest in the middle, thinning
+  // out to the sides. Higher leaves are drawn first, so the ones lower down lie on top
+  function leafPile(count: number) {
+    return Array.from({ length: count }, () => {
+      const across = random();
+      const peak = 1 - (2 * across - 1) ** 2;
+      return {
+        left: across * 100,
+        height: random() * peak,
+        size: 18 + random() * 22,
+        turn: Math.round(random() * 360),
+        tone: 1 + Math.floor(random() * 4),
+      };
+    }).sort((a, b) => b.height - a.height);
+  }
+  const piles = [
+    { side: 'left', leaves: leafPile(70) },
+    { side: 'right', leaves: leafPile(70) },
+  ];
+
+  // Dabs of colour spread over the canopy so it reads as painted foliage: lighter toward
+  // the top where the sun catches it, deeper toward the bottom
+  const dabs = Array.from({ length: 90 }, () => {
+    const angle = random() * Math.PI * 2;
+    const reach = Math.sqrt(random());
+    const cx = Math.round(152 + Math.cos(angle) * reach * 108);
+    const cy = Math.round(118 + Math.sin(angle) * reach * 72);
+    const shade = (cy - 45) / 150 + (random() - 0.5) * 0.5;
+    return {
+      cx,
+      cy,
+      r: Math.round(5 + random() * 9),
+      tone: Math.min(4, Math.max(1, 1 + Math.floor(shade * 4))),
+    };
+  });
 </script>
 
+<div class="fall-scene" aria-hidden="true">
+  <svg class="scene-defs" width="0" height="0">
+    <!-- Roughens the canopy's edges into leafy, ragged ones -->
+    <filter id="fall-foliage" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" />
+      <feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  {#each ['left', 'right'] as side (side)}
+    <svg class="tree tree-{side}" viewBox="0 0 300 320" preserveAspectRatio="xMidYMax meet">
+      <!-- The canopy's deep underside, behind the wood, so the limbs show against it
+           only in the band beneath the rest of the canopy -->
+      <path
+        class="foliage canopy-4"
+        d="M40 190 C20 170 25 140 45 130 C40 100 60 80 85 82 C90 55 120 40 145 45 C165 25 200 30 215 55 C240 55 260 80 255 105 C278 120 280 160 262 180 C255 200 225 205 200 198 C180 210 150 205 135 198 C110 208 75 205 60 196 C52 200 44 196 40 190 Z"
+      />
+
+      {#each wood as d, i (i)}
+        <path class="wood" {d} />
+      {/each}
+
+      <g class="foliage">
+        <path
+          class="canopy-3"
+          d="M50 170 C38 150 48 125 70 122 C70 95 95 80 115 85 C125 60 160 52 180 65 C205 55 235 75 232 100 C255 110 258 145 240 160 C230 178 200 176 185 170 C165 182 130 178 115 172 C95 182 65 182 50 170 Z"
+        />
+        <path
+          class="canopy-2"
+          d="M70 130 C65 105 90 92 110 98 C115 70 150 60 170 75 C190 62 220 80 212 105 C230 118 222 140 200 140 C185 150 160 145 150 140 C130 150 100 148 90 140 C78 145 70 140 70 130 Z"
+        />
+        {#each dabs as d, i (i)}
+          <circle class="canopy-{d.tone}" cx={d.cx} cy={d.cy} r={d.r} />
+        {/each}
+      </g>
+    </svg>
+  {/each}
+
+  <div class="leaf-bed"></div>
+
+  {#each piles as pile (pile.side)}
+    <div class="leaf-pile pile-{pile.side}">
+      {#each pile.leaves as l, i (i)}
+        <span
+          class="bed-leaf tone-{l.tone}"
+          style="--left: {l.left}%; --height: {l.height}; --size: {l.size}; --turn: {l.turn}deg;"
+        ></span>
+      {/each}
+    </div>
+  {/each}
+</div>
+
 <div class="pond-scene" aria-hidden="true">
-  <svg class="pond-defs" width="0" height="0">
+  <svg class="scene-defs" width="0" height="0">
     <!-- A duck facing right; each kind colours it through custom properties -->
     <symbol id="pond-duck" viewBox="0 0 64 48">
       <ellipse

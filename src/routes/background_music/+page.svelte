@@ -40,7 +40,7 @@
   let currentIndex = $state(0);
   let playing = $state(false);
 
-  let visualizer: VisualizerId = $state('bars');
+  let visualizer: VisualizerId = $state('off');
   let shuffle = $state(false);
   let repeat = $state(false);
   let theme: ThemeId = $state('aero');

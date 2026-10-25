@@ -22,10 +22,25 @@
     // in (going deeper) or out (coming back), centered on `origin`
     zoom?: 'in' | 'out';
     origin?: string;
+    // Stays open after a choice, so options can be tried one after another; clicking off
+    // the island or pressing Escape closes it
+    stayOpen?: boolean;
   }
 
-  let { title, theme, ids, onselect, onclose, option, list, toolbar, footer, zoom, origin }: Props =
-    $props();
+  let {
+    title,
+    theme,
+    ids,
+    onselect,
+    onclose,
+    option,
+    list,
+    toolbar,
+    footer,
+    zoom,
+    origin,
+    stayOpen,
+  }: Props = $props();
 
   let island: HTMLElement;
   let closing = false;
@@ -38,6 +53,7 @@
   });
 
   function choose(id: Id) {
+    if (stayOpen) return onselect(id);
     if (closing) return;
     closing = true;
     onselect(id);

@@ -13,7 +13,14 @@
   let { current, onselect, onclose }: Props = $props();
 </script>
 
-<Island title="Choose a Theme" theme={current} ids={themes.map((t) => t.id)} {onselect} {onclose}>
+<Island
+  title="Choose a Theme"
+  theme={current}
+  ids={themes.map((t) => t.id)}
+  {onselect}
+  {onclose}
+  stayOpen
+>
   {#snippet option(id, choose)}
     <!-- bgm-page + data-theme lets each tile pick up that theme's stylesheet -->
     <div class="bgm-page preview" data-theme={id}>

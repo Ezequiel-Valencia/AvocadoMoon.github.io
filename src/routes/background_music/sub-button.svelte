@@ -1,4 +1,4 @@
-<!-- Small squircle toggle tucked under a main button; layout.scss shapes it, themes only colour it -->
+<!-- Small squircle toggle for a picker's settings; it shapes itself, themes only colour it -->
 <script lang="ts">
   interface Props {
     label: string;

@@ -1,10 +1,10 @@
 <!-- Visualizer picker: each option previews that visualizer in the current theme -->
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import Island from './island.svelte';
-  import ThemedButton from './themed-button.svelte';
+  import Island from '../island.svelte';
+  import ThemedButton from '../themed-button.svelte';
   import Visualizer from './visualizer.svelte';
-  import type { ThemeId } from './themes';
+  import type { ThemeId } from '../theme_menu/themes';
   import { visualizers, visualizerName, type VisualizerId } from './visualizers';
 
   interface Props {

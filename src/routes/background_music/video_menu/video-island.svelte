@@ -1,9 +1,9 @@
 <!-- Video picker: videos grouped by tag; picking a group zooms in to a list of its videos -->
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
-  import Island from './island.svelte';
-  import ThemedButton from './themed-button.svelte';
-  import type { ThemeId } from './themes';
+  import Island from '../island.svelte';
+  import ThemedButton from '../themed-button.svelte';
+  import type { ThemeId } from '../theme_menu/themes';
   import {
     getVideoCoverImage,
     getYoutubeVideoId,

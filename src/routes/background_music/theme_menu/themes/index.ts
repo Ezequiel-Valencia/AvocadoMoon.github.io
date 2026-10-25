@@ -1,4 +1,4 @@
-import { safeLocalStorage } from '../../../common/myLocalStorage';
+import { safeLocalStorage } from '../../../../common/myLocalStorage';
 
 // Each theme's look lives in its own stylesheet in this folder (themes/<id>.scss),
 // which styles the page whenever its root has data-theme="<id>"

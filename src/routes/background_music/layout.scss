@@ -311,6 +311,13 @@
     }
   }
 
+  // Live audio: heights come from the music (--level, set every frame by visualizer.svelte)
+  // instead of each piece's own animation; the wave lines keep rolling sideways
+  .visualizer.live :is(.bar, .ray, .wave-swell) {
+    animation: none;
+    transform: scaleY(var(--level, 0.1));
+  }
+
   // More specific than a theme's `animation` shorthand, so pieces hold still whatever the theme
   .visualizer:not(.playing) :is(.bar, .ray, .wave-line, .wave-swell) {
     animation-play-state: paused;

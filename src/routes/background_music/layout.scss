@@ -43,6 +43,47 @@
     height: var(--size);
   }
 
+  // Hidden unless a theme shows it and colours its lines
+  .globe {
+    --globe-size: min(108vmin, 1200px);
+    display: none;
+    position: absolute;
+    left: calc(50% - var(--globe-size) / 2);
+    top: calc(55% - var(--globe-size) / 2);
+    width: var(--globe-size);
+    height: var(--globe-size);
+    pointer-events: none;
+    transform-style: preserve-3d;
+  }
+
+  .globe-spin {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+
+  .meridian,
+  .latitude {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  // A great circle through both poles, turned to its longitude
+  .meridian {
+    inset: 0;
+    transform: rotateY(var(--angle));
+  }
+
+  // A ring lying flat, shrunk to the globe's width at its latitude and lifted to its height
+  .latitude {
+    --ring: calc(var(--globe-size) * cos(var(--lat)));
+    left: calc(50% - var(--ring) / 2);
+    top: calc(50% - var(--ring) / 2);
+    width: var(--ring);
+    height: var(--ring);
+    transform: translateY(calc(var(--globe-size) / -2 * sin(var(--lat)))) rotateX(90deg);
+  }
+
   // ---------- Buttons ----------
 
   .themed-button {
@@ -106,6 +147,10 @@
     height: 100%;
     overflow: visible;
     pointer-events: none;
+  }
+
+  .halo {
+    display: none;
   }
 
   .label,
@@ -428,6 +473,7 @@
     // [data-theme] keeps these ahead of the themes' own animation rules
     &[data-theme] .visualizer :is(.bar, .ray, .wave-line, .wave-swell),
     &[data-theme] .background .particle,
+    &[data-theme] .globe-spin,
     &[data-theme] .spinner.spin {
       animation-play-state: paused;
     }

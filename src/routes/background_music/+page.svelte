@@ -6,6 +6,7 @@
   import ThemeIsland from './theme_menu/theme-island.svelte';
   import Visualizer from './visualizer_menu/visualizer.svelte';
   import VisualizerIsland from './visualizer_menu/visualizer-island.svelte';
+  import Menu from '../../common/menu.svelte';
   import VideoIsland from './video_menu/video-island.svelte';
   import { visualizerName, type VisualizerId } from './visualizer_menu/visualizers';
   import {
@@ -113,8 +114,6 @@
 <div class="bgm-page" data-theme={theme}>
   <Background />
 
-  <h1 class="title">Background Music</h1>
-
   <nav class="controls" aria-label="Background music controls">
     <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (picking = 'theme')} />
     {#if videos.length > 0}
@@ -156,6 +155,7 @@
     </div>
   </section>
 </div>
+<Menu songName={videos[currentIndex]?.title ?? ''}></Menu>
 
 <!-- Outside the page root so the current theme's styles don't reach the other themes' previews -->
 {#if picking === 'theme'}

@@ -87,13 +87,6 @@ $lily-petals: polygon(
   font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
   color: var(--green-deep);
 
-  .title {
-    color: var(--green);
-    text-shadow:
-      0 2px 0 var(--white),
-      0 0 18px rgba(84, 160, 98, 0.3);
-  }
-
   // ---------- Background: light rain ----------
 
   // Each particle is one slanted streak plus a few box-shadow copies, so ten particles

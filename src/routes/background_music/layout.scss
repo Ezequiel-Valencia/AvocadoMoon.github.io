@@ -150,6 +150,71 @@
     transform: translate(-100%, -100%);
   }
 
+  // A see-through bar the width of the video, with a caret that points where the video
+  // will go; it only shows itself on hover so it stays out of the way
+  .stage-toggle {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    color: inherit;
+    // Frosted so the caret still reads over the visualizer behind it
+    background: color-mix(in srgb, currentColor 18%, rgba(255, 255, 255, 0.7));
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.25s;
+    cursor:
+      url('/Cursors/wii-open2.png') 17 1,
+      pointer;
+
+    svg {
+      width: 28px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: rotate 0.4s;
+    }
+  }
+
+  .stage-toggle:hover,
+  .stage-toggle:focus-visible {
+    opacity: 1;
+  }
+
+  .stage-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  // Touch screens can't hover, so the bar stays faintly visible there
+  @media (hover: none) {
+    .stage-toggle {
+      opacity: 0.6;
+    }
+  }
+
+  .stage.focused .stage-toggle {
+    top: calc(100% + 6px);
+  }
+
+  // Minimized: the bar sits on top of the mini player and its caret points up
+  .stage.docked .stage-toggle {
+    bottom: calc(100% + 6px);
+
+    svg {
+      rotate: 180deg;
+    }
+  }
+
   .video-frame {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -352,7 +417,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .stage {
+    .stage,
+    .stage-toggle,
+    .stage-toggle svg {
       transition: none;
     }
     &[data-theme] .edge-trace polygon {

@@ -42,7 +42,7 @@
     closing = true;
     onselect(id);
     // Linger briefly so the chosen button's own click animation is seen
-    setTimeout(onclose, 450);
+    setTimeout(onclose, 1250);
   }
 </script>
 

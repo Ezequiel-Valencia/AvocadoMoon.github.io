@@ -1,3 +1,5 @@
+import { cavaInputSize } from './cava';
+
 // The YouTube iframe is cross-origin, so its audio can't be read directly. Chromium browsers
 // do let a page capture its own tab's audio once the visitor agrees in the share prompt,
 // which is what the visualizers listen to.
@@ -39,10 +41,11 @@ export async function captureTabAudio(onEnded: () => void): Promise<TabAudio> {
 
   const context = new AudioContext();
   const analyser = context.createAnalyser();
-  // Fine enough that the lowest bars each get their own slice of the bass
-  analyser.fftSize = 2048;
-  analyser.smoothingTimeConstant = 0.75;
-  // Extra headroom so loud bass doesn't pin the bars at full height
+  // Holds as much recent audio as the cava bar engine reads each frame
+  analyser.fftSize = cavaInputSize(context.sampleRate);
+  // Unsmoothed so beats arrive sharp; the visualizer does its own smoothing
+  analyser.smoothingTimeConstant = 0;
+  // Range for the byte readings used to find beats and brightness; the bars read decibels
   analyser.minDecibels = -90;
   analyser.maxDecibels = -20;
   // Left unconnected to the speakers: the tab already plays the sound itself

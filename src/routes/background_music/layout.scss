@@ -318,6 +318,29 @@
     transform: scaleY(var(--level, 0.1));
   }
 
+  // Changes made from script every frame would repaint each piece and the whole filtered
+  // visualizer; their own layers let the compositor apply new heights and filters instead
+  .visualizer.live :is(.bar, .ray) {
+    will-change: transform;
+  }
+
+  // The music's overall feel, also set by visualizer.svelte, each 0-1: loudness brightens
+  // the visualizer; a beat (1 on the hit, fading to 0) flashes it; brightness (treble-heavy
+  // sound) deepens its colors and nudges their hue, mellow sound one way and bright sound
+  // the other
+  .visualizer.live {
+    will-change: filter;
+    filter: brightness(calc(0.7 + 0.35 * var(--loudness, 0) + 0.45 * var(--beat, 0)))
+      saturate(calc(0.5 + 1.1 * var(--brightness, 0)))
+      hue-rotate(calc((var(--brightness, 0.5) - 0.5) * 50deg));
+  }
+
+  // The waves roll at a pace set by the loudness
+  .visualizer.live .wave-line {
+    animation: none;
+    transform: translateX(calc(var(--roll, 0) * -1px));
+  }
+
   // More specific than a theme's `animation` shorthand, so pieces hold still whatever the theme
   .visualizer:not(.playing) :is(.bar, .ray, .wave-line, .wave-swell) {
     animation-play-state: paused;

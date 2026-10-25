@@ -191,8 +191,10 @@
 
   // A preview of the video's visuals, cropped to the player's shape
   .video-cover {
+    // Themes with pill-shaped rows read this to round the cover's left end to match
+    --cover-width: clamp(96px, 16vmin, 144px);
     flex-shrink: 0;
-    width: clamp(96px, 16vmin, 144px);
+    width: var(--cover-width);
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 8px;

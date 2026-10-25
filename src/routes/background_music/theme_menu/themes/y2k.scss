@@ -434,6 +434,11 @@ $sparkle: polygon(50% 0%, 56% 44%, 100% 50%, 56% 56%, 50% 100%, 44% 56%, 0% 50%,
     box-shadow: 0 0 14px var(--glow);
   }
 
+  // Half the cover's 16:9 height, so its left end follows the pill row's round end
+  .video-cover {
+    border-radius: calc(var(--cover-width) * 9 / 32) 8px 8px calc(var(--cover-width) * 9 / 32);
+  }
+
   // ---------- Sub-buttons: black squircles rimmed in silver, chrome when on ----------
 
   .sub-button {

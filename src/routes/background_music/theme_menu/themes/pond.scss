@@ -584,6 +584,11 @@ $lily-petals: polygon(
   .video-row[aria-current='true'] .video-status {
     color: var(--pink-light);
   }
+
+  // Half the cover's 16:9 height, so its left end follows the pill row's round end
+  .video-cover {
+    border-radius: calc(var(--cover-width) * 9 / 32) 8px 8px calc(var(--cover-width) * 9 / 32);
+  }
 }
 
 .theme-island[data-theme='pond'] {

@@ -180,8 +180,7 @@
     <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (picking = 'theme')} />
     {#if videos.length > 0}
       <ThemedButton
-        label="Videos"
-        status="{currentIndex + 1} / {videos.length}"
+        label="Music"
         onclick={() => (picking = 'video')}
       />
     {/if}

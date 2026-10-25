@@ -3,18 +3,18 @@
   import Background from './background.svelte';
   import ThemedButton from './themed-button.svelte';
   import SubButton from './sub-button.svelte';
-  import ThemeIsland from './theme-island.svelte';
-  import Visualizer from './visualizer.svelte';
-  import VisualizerIsland from './visualizer-island.svelte';
-  import VideoIsland from './video-island.svelte';
-  import { visualizerName, type VisualizerId } from './visualizers';
+  import ThemeIsland from './theme_menu/theme-island.svelte';
+  import Visualizer from './visualizer_menu/visualizer.svelte';
+  import VisualizerIsland from './visualizer_menu/visualizer-island.svelte';
+  import VideoIsland from './video_menu/video-island.svelte';
+  import { visualizerName, type VisualizerId } from './visualizer_menu/visualizers';
   import {
     canCaptureTabAudio,
     captureTabAudio,
     NoAudioSharedError,
     type TabAudio,
-  } from './tab-audio';
-  import { loadTheme, saveTheme, themeName, type ThemeId } from './themes';
+  } from './visualizer_menu/tab-audio';
+  import { loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
   import {
     backgroundMusic,
     embed_youtube_video,
@@ -22,10 +22,10 @@
     youtubeEmbedUrl,
     PlayerState,
     type YouTubePlayer,
-  } from './videos';
+  } from './video_menu/videos';
   import './layout.scss';
-  // Every themes/*.scss is loaded; data-theme on the page root picks which one applies
-  import.meta.glob('./themes/*.scss', { eager: true });
+  // Every theme_menu/themes/*.scss is loaded; data-theme on the page root picks which one applies
+  import.meta.glob('./theme_menu/themes/*.scss', { eager: true });
 
   const videos = backgroundMusic;
   // Only the first video loads through src; later ones are swapped in through the API
@@ -139,7 +139,9 @@
 
     <div class="video-frame">
       {#if videos.length === 0}
-        <p class="empty">Add YouTube links to <code>videos.ts</code> to start listening.</p>
+        <p class="empty">
+          Add YouTube links to <code>video_menu/videos.ts</code> to start listening.
+        </p>
       {:else}
         <!-- A plain embed iframe; the YouTube API only attaches to it to track playback -->
         <iframe

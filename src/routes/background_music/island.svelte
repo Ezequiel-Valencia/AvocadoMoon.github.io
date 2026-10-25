@@ -1,7 +1,7 @@
 <!-- Centered picker panel shared by the theme, visualizer, and video pickers; each option is a snippet -->
 <script lang="ts" generics="Id extends string">
   import { onMount, type Snippet } from 'svelte';
-  import type { ThemeId } from './themes';
+  import type { ThemeId } from './theme_menu/themes';
 
   interface Props {
     title: string;

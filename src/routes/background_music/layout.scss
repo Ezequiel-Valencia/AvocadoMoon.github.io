@@ -1,5 +1,5 @@
 // Base layout shared by every theme: positions, sizes, and structure only.
-// Colours, shapes, and motion belong in themes/<id>.scss.
+// Colours, shapes, and motion belong in theme_menu/themes/<id>.scss.
 
 .bgm-page {
   position: fixed;
@@ -311,7 +311,7 @@
     }
   }
 
-  // Live audio: heights come from the music (--level, set every frame by visualizer.svelte)
+  // Live audio: heights come from the music (--level, set every frame by visualizer_menu/visualizer.svelte)
   // instead of each piece's own animation; the wave lines keep rolling sideways
   .visualizer.live :is(.bar, .ray, .wave-swell) {
     animation: none;
@@ -324,7 +324,7 @@
     will-change: transform;
   }
 
-  // The music's overall feel, also set by visualizer.svelte, each 0-1: loudness brightens
+  // The music's overall feel, also set by visualizer_menu/visualizer.svelte, each 0-1: loudness brightens
   // the visualizer; a beat (1 on the hit, fading to 0) flashes it; brightness (treble-heavy
   // sound) deepens its colors and nudges their hue, mellow sound one way and bright sound
   // the other

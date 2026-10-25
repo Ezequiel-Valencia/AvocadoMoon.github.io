@@ -1,7 +1,7 @@
 <!-- Theme picker: each theme shown as one of its own buttons -->
 <script lang="ts">
-  import Island from './island.svelte';
-  import ThemedButton from './themed-button.svelte';
+  import Island from '../island.svelte';
+  import ThemedButton from '../themed-button.svelte';
   import { themes, themeName, type ThemeId } from './themes';
 
   interface Props {

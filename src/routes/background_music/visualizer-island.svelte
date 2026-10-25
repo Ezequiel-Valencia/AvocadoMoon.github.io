@@ -9,11 +9,12 @@
   interface Props {
     theme: ThemeId;
     current: VisualizerId;
+    analyser?: AnalyserNode;
     onselect: (id: VisualizerId) => void;
     onclose: () => void;
   }
 
-  let { theme, current, onselect, onclose }: Props = $props();
+  let { theme, current, analyser, onselect, onclose }: Props = $props();
 </script>
 
 <Island title="Choose a Visualizer" {theme} ids={visualizers.map((v) => v.id)} {onselect} {onclose}>
@@ -22,7 +23,7 @@
     <div class="bgm-page preview" data-theme={theme}>
       <div class="mini-stage">
         {#if id !== 'off'}
-          <Visualizer kind={id} playing={true} />
+          <Visualizer kind={id} playing={true} {analyser} />
         {/if}
         <div class="video-frame"></div>
       </div>

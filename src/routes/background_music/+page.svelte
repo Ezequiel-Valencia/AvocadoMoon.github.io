@@ -6,6 +6,12 @@
   import Visualizer from './visualizer.svelte';
   import VisualizerIsland from './visualizer-island.svelte';
   import { visualizerName, type VisualizerId } from './visualizers';
+  import {
+    canCaptureTabAudio,
+    captureTabAudio,
+    NoAudioSharedError,
+    type TabAudio,
+  } from './tab-audio';
   import { loadTheme, saveTheme, themeName, type ThemeId } from './themes';
   import {
     backgroundMusic,
@@ -34,6 +40,26 @@
   let theme: ThemeId = $state('aero');
   let picking: 'theme' | 'visualizer' | null = $state(null);
 
+  // Live tab audio for the visualizers; only offered in browsers that can share it
+  let canListen = $state(false);
+  let liveAudio: TabAudio | null = $state.raw(null);
+  let noAudioShared = $state(false);
+
+  async function toggleLiveAudio() {
+    if (liveAudio) {
+      liveAudio.stop();
+      liveAudio = null;
+      return;
+    }
+    try {
+      liveAudio = await captureTabAudio(() => (liveAudio = null));
+      noAudioShared = false;
+    } catch (e) {
+      // Cancelling the prompt just leaves it off; sharing without audio gets called out
+      noAudioShared = e instanceof NoAudioSharedError;
+    }
+  }
+
   // The YouTube player's callback is created once, so it reads these through a function
   // to always see the current toggle values
   function nextIndex(): number {
@@ -61,12 +87,16 @@
 
   onMount(() => {
     theme = loadTheme();
+    canListen = canCaptureTabAudio();
     if (playerFrame) {
       embed_youtube_video(playerFrame, videos[currentIndex], onStateChange).then(
         (p) => (player = p)
       );
     }
-    return destroy_youtube_video;
+    return () => {
+      destroy_youtube_video();
+      liveAudio?.stop();
+    };
   });
 </script>
 
@@ -87,6 +117,14 @@
       active={visualizer !== 'off'}
       onclick={() => (picking = 'visualizer')}
     />
+    {#if canListen}
+      <ThemedButton
+        label="Live Audio"
+        status={liveAudio ? 'ON' : noAudioShared ? 'NO AUDIO' : 'OFF'}
+        active={!!liveAudio}
+        onclick={toggleLiveAudio}
+      />
+    {/if}
     <ThemedButton
       label="Shuffle"
       status={shuffle ? 'ON' : 'OFF'}
@@ -103,7 +141,7 @@
 
   <section class="stage {visualizer !== 'off' ? 'focused' : 'docked'}">
     {#if visualizer !== 'off'}
-      <Visualizer kind={visualizer} {playing} />
+      <Visualizer kind={visualizer} {playing} analyser={liveAudio?.analyser} />
     {/if}
 
     <div class="video-frame">
@@ -138,6 +176,7 @@
   <VisualizerIsland
     {theme}
     current={visualizer}
+    analyser={liveAudio?.analyser}
     onselect={(id) => (visualizer = id)}
     onclose={() => (picking = null)}
   />

@@ -241,6 +241,7 @@
     font-size: 3vmin;
     position: fixed;
     padding: 1vmin;
+    top: 0;
     left: 50%;
     transform: translate(-50%);
     border-bottom-style: solid;

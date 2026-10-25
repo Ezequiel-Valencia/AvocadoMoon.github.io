@@ -84,6 +84,98 @@
     transform: translateY(calc(var(--globe-size) / -2 * sin(var(--lat)))) rotateX(90deg);
   }
 
+  // Hidden unless a theme shows it: water along the bottom of the page with bamboo on
+  // its banks, lily pads floating on it, and ducks swimming across it
+  .pond-scene {
+    // One unit of the scene's artwork, so it scales with the screen
+    --px: clamp(0.75px, 0.11vmin, 1.3px);
+    --pond-h: clamp(90px, 20vh, 220px);
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .pond-defs {
+    position: absolute;
+  }
+
+  // Wider than the page so its rounded shore runs off both sides
+  .pond-water {
+    position: absolute;
+    z-index: 0;
+    left: -10%;
+    right: -10%;
+    bottom: 0;
+    height: var(--pond-h);
+  }
+
+  // Rooted on the bank, behind the water
+  .stalk {
+    position: absolute;
+    bottom: calc(var(--pond-h) * 0.6);
+    width: calc(var(--width) * var(--px));
+    height: var(--height);
+    transform-origin: bottom center;
+  }
+
+  .stalk-left {
+    left: calc(var(--x) * var(--px));
+  }
+
+  .stalk-right {
+    right: calc(var(--x) * var(--px));
+  }
+
+  // Grows from the stalk's center out to one side
+  .leaf {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--at) * 100%);
+    width: calc(46 * var(--px));
+    height: calc(10 * var(--px));
+    transform-origin: 0 50%;
+  }
+
+  .lily {
+    position: absolute;
+    left: var(--left);
+    bottom: calc(var(--pond-h) * var(--depth));
+    width: calc(var(--size) * var(--px));
+    aspect-ratio: 2.4;
+  }
+
+  .lily-pad {
+    position: absolute;
+    inset: 0;
+  }
+
+  .lily-flower {
+    position: absolute;
+    left: 30%;
+    bottom: 25%;
+    width: 40%;
+    aspect-ratio: 1;
+  }
+
+  // Placed at the left edge; its swim carries it across
+  .duck {
+    position: absolute;
+    left: 0;
+    bottom: calc(var(--pond-h) * var(--depth));
+    width: calc(var(--width) * var(--px));
+    aspect-ratio: 4 / 3;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+  }
+
   // ---------- Buttons ----------
 
   .themed-button {

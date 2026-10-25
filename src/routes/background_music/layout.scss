@@ -12,15 +12,6 @@
     url('/Cursors/Wii-Curso-plain.png') 10 1,
     pointer;
 
-  .title {
-    position: relative;
-    z-index: 5;
-    margin: 3vh 0 1vh;
-    text-align: center;
-    font-size: clamp(28px, 6vmin, 64px);
-    font-weight: 700;
-  }
-
   .controls {
     position: relative;
     z-index: 5;
@@ -28,7 +19,8 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: clamp(20px, 5vmin, 56px);
-    padding: 2vh 16px;
+    // Clears the shared Menu tab fixed at the top of the page
+    padding: max(2vh, 76px) 16px 2vh;
   }
 
   // ---------- Background ----------

@@ -45,14 +45,6 @@ $maple-leaf: polygon(
   font-family: Georgia, 'Palatino Linotype', 'Book Antiqua', serif;
   color: var(--hazelnut);
 
-  .title {
-    color: var(--orange);
-    text-shadow:
-      0 2px 0 var(--cream),
-      0 3px 0 var(--hazelnut-light),
-      0 0 18px rgba(232, 118, 34, 0.3);
-  }
-
   // ---------- Background: leaves drifting down ----------
 
   .particle {

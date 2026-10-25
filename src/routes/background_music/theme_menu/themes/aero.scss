@@ -15,13 +15,6 @@
   font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
   color: var(--title);
 
-  .title {
-    color: var(--title);
-    text-shadow:
-      0 2px 0 white,
-      0 0 18px var(--glow);
-  }
-
   // ---------- Background: blocks floating upward, like the main page ----------
 
   .particle {

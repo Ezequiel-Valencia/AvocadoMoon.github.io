@@ -82,6 +82,12 @@ export function youtubeEmbedUrl(url: string): string {
   return `https://www.youtube.com/embed/${getYoutubeVideoId(url)}?${params}`;
 }
 
+
+export function getVideoCoverImage(url: string): string {
+  return `https://i.ytimg.com/vi_webp/${getYoutubeVideoId(url)}/maxresdefault.webp`
+}
+
+
 let apiLoading: Promise<YouTubeNamespace> | undefined;
 
 function loadYoutubeApi(): Promise<YouTubeNamespace> {

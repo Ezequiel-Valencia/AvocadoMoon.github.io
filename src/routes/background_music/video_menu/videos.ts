@@ -85,7 +85,6 @@ export function getYoutubeVideoId(url: string): string {
 export function youtubeEmbedUrl(url: string): string {
   const params = new URLSearchParams({
     enablejsapi: '1',
-    autoplay: '1',
     rel: '0',
     playsinline: '1',
   });

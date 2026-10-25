@@ -1,0 +1,453 @@
+// Y2K: chrome halos ringed with sparkles, shooting stars falling past a spinning wireframe
+// globe, all in black, white, and polished silver
+
+// Four-pointed sparkle with thin, pinched arms, in a 0-100% box
+$sparkle: polygon(50% 0%, 56% 44%, 100% 50%, 56% 56%, 50% 100%, 44% 56%, 0% 50%, 44% 44%);
+
+// Palette, shared by the page and the theme island
+.bgm-page[data-theme='y2k'],
+.theme-island[data-theme='y2k'] {
+  --black: rgb(6, 6, 8);
+  --ink: rgb(20, 20, 24);
+  --white: rgb(255, 255, 255);
+  --silver: rgb(200, 204, 212);
+  --steel: rgb(120, 124, 134);
+  --glow: rgba(255, 255, 255, 0.5);
+  // Polished metal: bright bands broken by dark reflections
+  --chrome: linear-gradient(
+    180deg,
+    rgb(255, 255, 255) 0%,
+    rgb(214, 218, 226) 22%,
+    rgb(110, 114, 124) 48%,
+    rgb(232, 235, 240) 54%,
+    rgb(160, 164, 174) 78%,
+    rgb(255, 255, 255) 100%
+  );
+  --font: 'Eurostile', 'Microgramma', 'Michroma', Verdana, sans-serif;
+}
+
+.bgm-page[data-theme='y2k'] {
+  background: radial-gradient(ellipse at 50% 55%, rgb(34, 34, 40) 0%, var(--black) 70%);
+  font-family: var(--font);
+  color: var(--white);
+
+  // ---------- Background: a wireframe globe turning behind everything ----------
+
+  .globe {
+    display: block;
+    // A tilted axis, seen from slightly above
+    transform: perspective(1600px) rotateZ(-16deg) rotateX(14deg);
+  }
+
+  .globe-spin {
+    animation: y2k-globe 40s linear infinite;
+  }
+
+  .meridian,
+  .latitude {
+    border: 1px solid rgba(220, 224, 232, 0.3);
+  }
+
+  .equator {
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  @keyframes y2k-globe {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  // ---------- Background: shooting stars falling at a slant ----------
+
+  // Each particle is a twinkling sparkle (::before) dragging a fading tail (::after); the
+  // particle itself stays unclipped so the tail can stream out behind the star
+  .particle {
+    --star: calc(var(--size) * 0.28 + 8px);
+    top: -30vh;
+    width: var(--star);
+    height: var(--star);
+    animation: y2k-fall calc(var(--duration) * 0.45) linear var(--delay) infinite;
+  }
+
+  .particle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: $sparkle;
+    background: radial-gradient(
+      circle,
+      var(--white) 0%,
+      var(--white) 18%,
+      var(--silver) 45%,
+      var(--steel) 100%
+    );
+    animation: y2k-twinkle 1.4s ease-in-out infinite alternate;
+  }
+
+  .particle:nth-child(odd)::before {
+    animation-duration: 0.9s;
+    animation-delay: -0.4s;
+  }
+
+  // The tail points back up the star's path, the way it came from
+  .particle::after {
+    content: '';
+    position: absolute;
+    left: calc(50% - 1px);
+    bottom: 50%;
+    width: 2px;
+    height: calc(var(--star) * 4);
+    border-radius: 2px;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+    transform-origin: bottom center;
+    // Matches the slant of y2k-fall: 30 across for every 140 down
+    rotate: 12deg;
+  }
+
+  @keyframes y2k-fall {
+    0% {
+      transform: translate(0, 0);
+      opacity: 0;
+    }
+    8% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-30vh, 140vh);
+      opacity: 0;
+    }
+  }
+
+  @keyframes y2k-twinkle {
+    from {
+      transform: scale(0.7) rotate(0deg);
+      opacity: 0.75;
+    }
+    to {
+      transform: scale(1.15) rotate(45deg);
+      opacity: 1;
+    }
+  }
+
+  // ---------- Buttons: chrome halos with a star pushed through them ----------
+
+  .shape {
+    --halo-light: var(--white);
+    --halo-dark: var(--steel);
+    --halo-glow: rgba(255, 255, 255, 0.25);
+  }
+
+  .shape.active {
+    --halo-dark: var(--silver);
+    --halo-glow: rgba(255, 255, 255, 0.7);
+  }
+
+  .themed-button:hover .shape {
+    --halo-glow: rgba(255, 255, 255, 0.5);
+  }
+
+  .themed-button:focus-visible {
+    outline-color: var(--silver);
+    border-radius: 50%;
+  }
+
+  // A halo is flat: hide the cube's sides and its shine
+  .back,
+  .bottom,
+  .left,
+  .right,
+  .top,
+  .shine {
+    display: none;
+  }
+
+  // The halo takes the top of the button and the text sits beneath it, clear of the star
+  .front {
+    overflow: visible;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  // Raised and drawn a little past the button's sides so the star and sparkles can stray
+  // outside it; the drawing itself spans about 12-88% of its height
+  .halo {
+    display: block;
+    position: absolute;
+    left: -5%;
+    top: -26%;
+    width: 110%;
+    height: 110%;
+    overflow: visible;
+    pointer-events: none;
+    filter: drop-shadow(0 0 4px var(--halo-glow));
+    transition: filter 0.4s;
+  }
+
+  .halo-light {
+    stop-color: var(--halo-light);
+    transition: stop-color 0.4s;
+  }
+
+  .halo-dark {
+    stop-color: var(--halo-dark);
+    transition: stop-color 0.4s;
+  }
+
+  .halo-ring {
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 0.6;
+  }
+
+  // The big star is an outline that fills in solid white when switched on
+  .halo-star {
+    fill: rgba(255, 255, 255, 0);
+    stroke: var(--silver);
+    stroke-width: 2.4;
+    stroke-linejoin: miter;
+    transition:
+      fill 0.4s,
+      stroke 0.4s;
+  }
+
+  .active .halo-star {
+    fill: var(--white);
+    stroke: var(--white);
+  }
+
+  .halo-sparkle {
+    fill: var(--silver);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: y2k-glint 1.8s ease-in-out infinite alternate;
+  }
+
+  .halo-sparkle:nth-of-type(odd) {
+    animation-duration: 1.2s;
+    animation-delay: -0.5s;
+  }
+
+  .active .halo-sparkle {
+    fill: var(--white);
+  }
+
+  // Sparkles twinkle in place
+  @keyframes y2k-glint {
+    from {
+      opacity: 0.35;
+      transform: scale(0.75);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  .label,
+  .status {
+    z-index: 1;
+    font-family: var(--font);
+    color: var(--white);
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.9),
+      0 0 8px rgba(255, 255, 255, 0.35);
+  }
+
+  .label {
+    padding: 0 16%;
+    font-size: clamp(11px, 1.6vmin, 15px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .status {
+    font-size: clamp(8px, 1.1vmin, 10px);
+    color: var(--silver);
+  }
+
+  .active .status {
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  // Clicking makes the halo pop rather than spin
+  .spin {
+    animation: y2k-pop 0.5s ease-out;
+  }
+
+  @keyframes y2k-pop {
+    0% {
+      transform: scale(1);
+    }
+    35% {
+      transform: scale(1.12);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  // ---------- Video ----------
+
+  .video-frame {
+    border-radius: 16px;
+    background: var(--ink);
+    border: 3px solid var(--silver);
+    box-shadow:
+      0 0 0 1px var(--steel),
+      0 0 0 5px var(--black),
+      0 0 0 6px rgba(200, 204, 212, 0.6),
+      0 0 40px rgba(255, 255, 255, 0.15);
+  }
+
+  .empty {
+    color: var(--silver);
+  }
+
+  // The shared bar is frosted white; keep it smoked so the white caret still reads
+  .stage-toggle {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(200, 204, 212, 0.4);
+  }
+
+  // ---------- Visualizer: chrome bars mirrored around the video's center ----------
+
+  .bar {
+    border-radius: 999px;
+    background: var(--chrome);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    transform: scaleY(0.12);
+    animation: y2k-pulse var(--duration) ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes y2k-pulse {
+    0% {
+      transform: scaleY(0.12);
+    }
+    50% {
+      transform: scaleY(calc(var(--peak) * 0.6));
+    }
+    100% {
+      transform: scaleY(var(--peak));
+    }
+  }
+
+  // ---------- Circle visualizer: a ring of chrome rays, every few tipped bright ----------
+
+  .ray {
+    border-radius: 999px;
+    background: linear-gradient(0deg, var(--steel) 0%, var(--silver) 60%, var(--white) 100%);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  }
+
+  .spoke:nth-child(4n) .ray {
+    background: linear-gradient(0deg, var(--silver) 0%, var(--white) 100%);
+    box-shadow: 0 0 10px var(--glow);
+  }
+
+  // ---------- Wave visualizer: white and silver light trails ----------
+
+  .visualizer.wave svg {
+    filter: drop-shadow(0 0 6px var(--glow));
+  }
+
+  .wave-line.sin {
+    stroke: var(--white);
+    stroke-width: 4px;
+  }
+
+  .wave-line.cos {
+    stroke: var(--silver);
+    stroke-width: 3px;
+  }
+
+  .wave-line.ripple {
+    stroke: var(--steel);
+    stroke-width: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .particle::before,
+    .halo-sparkle {
+      animation-play-state: paused;
+    }
+  }
+}
+
+// ---------- Theme island: a black glass panel rimmed in chrome ----------
+
+.theme-island[data-theme='y2k'] {
+  background: rgba(0, 0, 0, 0.55);
+
+  .island {
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgb(28, 28, 34) 0%, var(--black) 100%);
+    border: 3px solid var(--silver);
+    box-shadow:
+      0 0 0 1px var(--steel),
+      0 0 0 5px var(--black),
+      0 0 0 6px rgba(200, 204, 212, 0.5),
+      0 0 40px rgba(255, 255, 255, 0.18),
+      0 24px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  // Chrome lettering
+  h2 {
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--silver);
+    background: var(--chrome);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+  }
+
+  .preview {
+    box-shadow:
+      0 0 0 1px var(--steel),
+      0 0 0 2px var(--silver),
+      0 6px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  // Video list rows and the back button: black pills rimmed in silver
+  .video-row,
+  .island-back {
+    font-family: var(--font);
+    color: var(--white);
+    border: 1px solid var(--silver);
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgb(40, 40, 46) 0%, var(--black) 100%);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  }
+
+  .video-row[aria-current='true'] {
+    color: var(--black);
+    border-color: var(--white);
+    background: var(--chrome);
+    box-shadow: 0 0 14px var(--glow);
+  }
+
+  // ---------- Sub-buttons: black squircles rimmed in silver, chrome when on ----------
+
+  .sub-button {
+    font-family: var(--font);
+    color: var(--white);
+    border: 1px solid var(--silver);
+    background: linear-gradient(180deg, rgb(40, 40, 46) 0%, var(--black) 100%);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  }
+
+  .sub-button[aria-pressed='true'] {
+    color: var(--black);
+    border-color: var(--white);
+    background: var(--chrome);
+    box-shadow: 0 0 14px var(--glow);
+  }
+}

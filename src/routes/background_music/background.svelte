@@ -13,7 +13,23 @@
     { left: 20, size: 15, delay: 2, duration: 35 },
     { left: 85, size: 150, delay: 0, duration: 11 },
   ];
+
+  // Wireframe globe lines, hidden unless a theme shows the globe: meridians are great
+  // circles turned around the axis, latitudes are rings stacked up it
+  const meridians = [0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5];
+  const latitudes = [-60, -40, -20, 0, 20, 40, 60];
 </script>
+
+<div class="globe" aria-hidden="true">
+  <div class="globe-spin">
+    {#each meridians as angle (angle)}
+      <span class="meridian" style="--angle: {angle}deg;"></span>
+    {/each}
+    {#each latitudes as lat (lat)}
+      <span class="latitude {lat === 0 ? 'equator' : ''}" style="--lat: {lat}deg;"></span>
+    {/each}
+  </div>
+</div>
 
 <ul class="background" aria-hidden="true">
   {#each particles as p, i (i)}

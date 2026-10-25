@@ -26,6 +26,16 @@ export const backgroundMusic: Video[] = [
     title: 'Music To Heal Brain Rot',
     tags: ['Classical'],
   },
+  {
+    video: `https://youtu.be/l-vSSYEuO88?si=-z9JKPra51sy0iy6`,
+    title: `Smoke Break`,
+    tags: ['Jazz']
+  },
+  {
+    video: `https://www.youtube.com/watch?v=Do5_wU9X1pc`,
+    title: `PS Liquid Drum n Bass`,
+    tags: ['Drum n Bass']
+  }
 ];
 
 // Minimal slice of the YouTube IFrame Player API that this channel uses

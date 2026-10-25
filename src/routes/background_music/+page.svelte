@@ -42,6 +42,9 @@
   let repeat = $state(false);
   let theme: ThemeId = $state('aero');
   let picking: 'theme' | 'visualizer' | 'video' | null = $state(null);
+  // The video's size is the listener's choice: centered with the visualizer behind it,
+  // or tucked into the corner as a mini player
+  let minimized = $state(false);
 
   // Live tab audio for the visualizers; only offered in browsers that can share it
   let canListen = $state(false);
@@ -131,8 +134,8 @@
     />
   </nav>
 
-  <section class="stage {visualizer !== 'off' ? 'focused' : 'docked'}">
-    {#if visualizer !== 'off'}
+  <section class="stage {minimized ? 'docked' : 'focused'}">
+    {#if !minimized && visualizer !== 'off'}
       <Visualizer kind={visualizer} {playing} analyser={liveAudio?.analyser} />
     {/if}
 
@@ -153,6 +156,18 @@
         ></iframe>
       {/if}
     </div>
+
+    <!-- Spans the video's width: below it to minimize, above the mini player to expand -->
+    <button
+      class="stage-toggle"
+      aria-label={minimized ? 'Expand video' : 'Minimize video'}
+      aria-expanded={!minimized}
+      onclick={() => (minimized = !minimized)}
+    >
+      <svg viewBox="0 0 24 12" aria-hidden="true">
+        <polyline points="2,2 12,10 22,2" />
+      </svg>
+    </button>
   </section>
 </div>
 <Menu songName={videos[currentIndex]?.title ?? ''}></Menu>

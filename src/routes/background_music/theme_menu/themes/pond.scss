@@ -80,6 +80,12 @@ $lily-petals: polygon(
   --pink: rgb(240, 120, 165);
   --pink-light: rgb(255, 214, 228);
   --pollen: rgb(255, 214, 90);
+  --water-light: rgb(150, 205, 238);
+  --water: rgb(72, 146, 208);
+  --water-deep: rgb(36, 96, 168);
+  --bamboo-light: rgb(190, 222, 120);
+  --bamboo: rgb(122, 176, 74);
+  --bamboo-deep: rgb(70, 122, 48);
 }
 
 .bgm-page[data-theme='pond'] {
@@ -112,6 +118,202 @@ $lily-petals: polygon(
     }
     to {
       transform: translate(-26vh, 150vh) rotate(10deg);
+    }
+  }
+
+  // ---------- Background: a pond along the bottom of the page ----------
+
+  .pond-scene {
+    display: block;
+  }
+
+  // Blue water with a grassy bank around its rounded shore, glinting as it drifts
+  .pond-water {
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+    background: linear-gradient(
+      180deg,
+      var(--water-light) 0%,
+      var(--water) 40%,
+      var(--water-deep) 100%
+    );
+    box-shadow:
+      0 -5px 0 var(--green-light),
+      0 -9px 0 var(--green);
+    overflow: hidden;
+  }
+
+  .pond-water::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 26px 2px at 30% 40%, rgba(255, 255, 255, 0.55), transparent) 0 0 /
+        170px 34px,
+      radial-gradient(ellipse 18px 1.5px at 70% 70%, rgba(255, 255, 255, 0.4), transparent) 0 0 /
+        110px 26px;
+    animation: pond-glint 14s linear infinite;
+  }
+
+  @keyframes pond-glint {
+    to {
+      background-position:
+        170px 0,
+        -110px 0;
+    }
+  }
+
+  // Bamboo: banded green stalks swaying from the banks
+  .stalk {
+    --segment: clamp(36px, 8vh, 80px);
+    border-radius: 4px 4px 0 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 calc(var(--segment) - 4px),
+        var(--bamboo-deep) calc(var(--segment) - 4px) var(--segment)
+      ),
+      linear-gradient(
+        90deg,
+        var(--bamboo-deep) 0%,
+        var(--bamboo) 35%,
+        var(--bamboo-light) 55%,
+        var(--bamboo-deep) 100%
+      );
+    animation: pond-bamboo 7s ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes pond-bamboo {
+    from {
+      transform: rotate(-1.5deg);
+    }
+    to {
+      transform: rotate(1.5deg);
+    }
+  }
+
+  .leaf {
+    border-radius: 0 100% 0 100%;
+    background: linear-gradient(90deg, var(--bamboo-deep), var(--green));
+  }
+
+  .leaf.r {
+    rotate: -28deg;
+  }
+
+  .leaf.l {
+    rotate: 208deg;
+  }
+
+  // Lily pads: round leaves seen from the side, a few with a pink flower, drifting gently
+  .lily {
+    animation: pond-drift 5s ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes pond-drift {
+    from {
+      transform: translate(-3px, 0) rotate(-2deg);
+    }
+    to {
+      transform: translate(3px, -2px) rotate(2deg);
+    }
+  }
+
+  .lily-pad {
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(rgba(255, 255, 255, 0.18) 0deg 1.5deg, transparent 1.5deg 30deg),
+      radial-gradient(
+        ellipse at 40% 35%,
+        var(--green-light) 0%,
+        var(--green) 60%,
+        var(--green-deep) 100%
+      );
+    mask: conic-gradient(from 150deg, transparent 0deg 24deg, #000 24deg);
+    box-shadow: 0 3px 0 rgba(20, 60, 110, 0.35);
+  }
+
+  .lily-flower {
+    clip-path: $lily-petals;
+    background: radial-gradient(
+      circle,
+      var(--pollen) 0%,
+      var(--pollen) 14%,
+      var(--pink-light) 24%,
+      var(--pink) 100%
+    );
+  }
+
+  // Ducks swim one way, turn around, and swim back, bobbing as they paddle
+  .duck {
+    --duck-wake: rgba(255, 255, 255, 0.55);
+    --duck-eye: rgb(30, 30, 30);
+    --duck-beak: rgb(245, 160, 40);
+    animation: pond-swim var(--duration) ease-in-out var(--delay) infinite;
+  }
+
+  .duck.mallard {
+    --duck-body: rgb(205, 200, 190);
+    --duck-wing: rgb(125, 110, 95);
+    --duck-head: rgb(30, 112, 72);
+    --duck-beak: rgb(230, 200, 60);
+  }
+
+  .duck.hen {
+    --duck-body: rgb(172, 132, 92);
+    --duck-wing: rgb(120, 86, 56);
+    --duck-head: rgb(150, 112, 76);
+  }
+
+  .duck.white {
+    --duck-body: var(--white);
+    --duck-wing: rgb(222, 228, 232);
+    --duck-head: var(--white);
+  }
+
+  .duck.duckling {
+    --duck-body: rgb(255, 216, 90);
+    --duck-wing: rgb(240, 188, 60);
+    --duck-head: rgb(255, 216, 90);
+  }
+
+  @keyframes pond-swim {
+    0% {
+      transform: translateX(var(--from)) scaleX(1);
+    }
+    46% {
+      transform: translateX(var(--to)) scaleX(1);
+    }
+    50% {
+      transform: translateX(var(--to)) scaleX(-1);
+    }
+    96% {
+      transform: translateX(var(--from)) scaleX(-1);
+    }
+    100% {
+      transform: translateX(var(--from)) scaleX(1);
+    }
+  }
+
+  .duck-bob {
+    animation: pond-paddle 1.6s ease-in-out var(--delay) infinite alternate;
+  }
+
+  @keyframes pond-paddle {
+    from {
+      transform: translateY(1px) rotate(2deg);
+    }
+    to {
+      transform: translateY(-2px) rotate(-2deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pond-water::before,
+    .stalk,
+    .lily,
+    .duck,
+    .duck-bob {
+      animation-play-state: paused;
     }
   }
 

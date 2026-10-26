@@ -16,6 +16,7 @@
 </script>
 
 <section
+  id="first-visit"
   onanimationend={(e) => {
     if (e.animationName.includes('fadeOut')) {
       hasVisited.enable();

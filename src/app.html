@@ -24,6 +24,20 @@
     <meta property="og:url" content="https://ezequielvalencia.com" />
     <meta property="og:image" content="https://ezequielvalencia.com/clouds.jpg" />
 
+    <!-- The prerendered HTML always contains the first-visit splash (no localStorage at build
+         time). Hide it before first paint for returning visitors so it doesn't flash. -->
+    <script>
+      try {
+        if (localStorage.getItem('visitedSite') === 'true') {
+          document.documentElement.classList.add('visited');
+        }
+      } catch {}
+    </script>
+    <style>
+      html.visited #first-visit {
+        display: none;
+      }
+    </style>
     %sveltekit.head%
     <link
       rel="stylesheet"

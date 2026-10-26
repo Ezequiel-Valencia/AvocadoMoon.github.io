@@ -125,6 +125,7 @@
           <ChannelCube
             cubeColor={currentChannel.cubeColor}
             cubeColorHover={currentChannel.cubeHoverColor}
+            frontHasBackground={currentChannel.frontHasBackground}
             id={index}
             focusedOn={focusedChannel == index}
             gifImagePath={currentChannel.gifImage}

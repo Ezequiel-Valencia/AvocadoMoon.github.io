@@ -19,7 +19,7 @@
   import { loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
   import { loadSettings, saveSettings } from './settings';
   import {
-    backgroundMusic,
+    collections,
     embed_youtube_video,
     destroy_youtube_video,
     youtubeEmbedUrl,
@@ -30,7 +30,15 @@
   // Every theme_menu/themes/*.scss is loaded; data-theme on the page root picks which one applies
   import.meta.glob('./theme_menu/themes/*.scss', { eager: true });
 
-  const videos = backgroundMusic;
+  // Every collection's videos in one list; each collection keeps the indices of its own
+  const videos = collections.flatMap((collection) => collection.videos);
+  const pickerCollections = collections.reduce<{ name: string; unit: string; indices: number[] }[]>(
+    (all, { name, unit, videos: own }) => {
+      const start = all.reduce((count, c) => count + c.indices.length, 0);
+      return [...all, { name, unit, indices: own.map((_, i) => start + i) }];
+    },
+    []
+  );
   // Only the first video loads through src; later ones are swapped in through the API.
   // Set once the saved video is known, so the page doesn't load one video then another
   let embedSrc = $state('');
@@ -107,15 +115,20 @@
   }
 
   // The YouTube player's callback is created once, so it reads these through a function
-  // to always see the current toggle values
+  // to always see the current toggle values. Playback stays within the playing video's
+  // collection, so background music doesn't run on into an album
   function nextIndex(): number {
-    if (videos.length <= 1) return 0;
+    const pool =
+      pickerCollections.find((c) => c.indices.includes(currentIndex))?.indices ??
+      videos.map((_, i) => i);
+    if (pool.length <= 1) return pool[0] ?? 0;
+    const at = pool.indexOf(currentIndex);
     if (shuffle) {
-      let next = currentIndex;
-      while (next === currentIndex) next = Math.floor(Math.random() * videos.length);
-      return next;
+      let next = at;
+      while (next === at) next = Math.floor(Math.random() * pool.length);
+      return pool[next];
     }
-    return (currentIndex + 1) % videos.length;
+    return pool[(at + 1) % pool.length];
   }
 
   function onStateChange(state: number) {
@@ -270,6 +283,7 @@
   <VideoIsland
     {theme}
     {videos}
+    collections={pickerCollections}
     current={currentIndex}
     onselect={(index) => index !== currentIndex && playVideo(index)}
     onclose={() => (picking = null)}

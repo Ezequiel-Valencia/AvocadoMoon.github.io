@@ -1,4 +1,4 @@
-<!-- Video picker: videos grouped by tag; picking a group zooms in to a list of its videos -->
+<!-- Video picker: a collection, then its videos grouped by tag; each pick zooms in a level -->
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import Island from '../island.svelte';
@@ -15,6 +15,8 @@
   interface Props {
     theme: ThemeId;
     videos: Video[];
+    // The first level of the picker; each lists the indices into `videos` it holds
+    collections: { name: string; unit: string; indices: number[] }[];
     // Index into `videos` of the one playing now
     current: number;
     onselect: (index: number) => void;
@@ -23,27 +25,43 @@
     settings?: Snippet;
   }
 
-  let { theme, videos, current, onselect, onclose, settings }: Props = $props();
+  let { theme, videos, collections, current, onselect, onclose, settings }: Props = $props();
 
-  // Tags in the order videos.ts lists them, leaving out any no video uses yet; a video
-  // with several tags shows up in each of their groups
+  let openCollection: string | null = $state(null);
+  let openTag: VideoTag | null = $state(null);
+
+  const collection = $derived(collections.find((c) => c.name === openCollection));
+
+  // Tags in the order videos.ts lists them, leaving out any the open collection doesn't
+  // use; a video with several tags shows up in each of their groups
   const groups = $derived(
-    videoTags
-      .map((tag) => ({
-        tag,
-        indices: videos.flatMap((video, i) => (video.tags.includes(tag) ? [i] : [])),
-      }))
-      .filter((group) => group.indices.length > 0)
+    collection
+      ? videoTags
+          .map((tag) => ({
+            tag,
+            indices: collection.indices.filter((i) => videos[i].tags.includes(tag)),
+          }))
+          .filter((group) => group.indices.length > 0)
+      : []
   );
 
-  let openTag: VideoTag | null = $state(null);
   let zoom: 'in' | 'out' | undefined = $state();
-  // Where the clicked group sat, so its list grows out of it and shrinks back into it
+  // Where the clicked tile sat, so its list grows out of it and shrinks back into it
   let origin: string | undefined = $state();
   let chosen = false;
 
   const open = $derived(groups.find((group) => group.tag === openTag));
-  const ids = $derived(open ? open.indices.map(String) : groups.map((group) => group.tag));
+  const ids = $derived(
+    open
+      ? open.indices.map(String)
+      : collection
+        ? groups.map((group) => group.tag)
+        : collections.map((c) => c.name)
+  );
+
+  function count(n: number, unit: string) {
+    return `${n} ${unit}${n === 1 ? '' : 'S'}`;
+  }
 
   // Not every video has a full-size cover; YouTube answers with an error or a tiny grey
   // placeholder instead, so those fall back to the smaller cover every video has
@@ -63,8 +81,11 @@
     origin = `${t.left + t.width / 2 - v.left}px ${t.top + t.height / 2 - v.top}px`;
   }
 
-  async function show(tag: VideoTag | null) {
-    zoom = tag ? 'in' : 'out';
+  async function show(name: string | null, tag: VideoTag | null) {
+    const depth = (name ? 1 : 0) + (tag ? 1 : 0);
+    const was = (openCollection ? 1 : 0) + (openTag ? 1 : 0);
+    zoom = depth > was ? 'in' : 'out';
+    openCollection = name;
     openTag = tag;
     // Keep keyboard focus inside the island as its contents are swapped out
     await tick();
@@ -79,17 +100,19 @@
     }
   }
 
-  // Escape and clicks outside step back out of a group before closing the island; once a
+  // Escape and clicks outside step back out a level before closing the island; once a
   // video is picked the island closes outright
   function back() {
-    if (openTag && !chosen) show(null);
+    if (chosen) onclose();
+    else if (openTag) show(openCollection, null);
+    else if (openCollection) show(null, null);
     else onclose();
   }
 </script>
 
 <div class="video-island">
   <Island
-    title={openTag ?? 'Choose a Video'}
+    title={openTag ?? openCollection ?? 'Choose Music'}
     {theme}
     {ids}
     list={!!open}
@@ -104,7 +127,9 @@
   >
     {#snippet toolbar()}
       {#if open}
-        <button class="island-back" onclick={() => show(null)}>← All groups</button>
+        <button class="island-back" onclick={() => show(openCollection, null)}>← All groups</button>
+      {:else if collection}
+        <button class="island-back" onclick={() => show(null, null)}>← All collections</button>
       {/if}
     {/snippet}
 
@@ -126,15 +151,25 @@
             <span class="video-status">PLAYING</span>
           {/if}
         </button>
-      {:else}
+      {:else if collection}
         {@const group = groups.find((g) => g.tag === id)!}
         <!-- bgm-page + data-theme gives the tile the current theme's paint -->
         <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
           <ThemedButton
             label={group.tag}
-            status="{group.indices.length} {group.indices.length === 1 ? 'VIDEO' : 'VIDEOS'}"
+            status={count(group.indices.length, collection.unit)}
             active={group.indices.includes(current)}
-            onclick={() => show(group.tag)}
+            onclick={() => show(collection.name, group.tag)}
+          />
+        </div>
+      {:else}
+        {@const c = collections.find((c) => c.name === id)!}
+        <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
+          <ThemedButton
+            label={c.name}
+            status={count(c.indices.length, c.unit)}
+            active={c.indices.includes(current)}
+            onclick={() => show(c.name, null)}
           />
         </div>
       {/if}

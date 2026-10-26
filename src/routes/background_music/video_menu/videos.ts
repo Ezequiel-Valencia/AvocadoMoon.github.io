@@ -1,6 +1,7 @@
 // Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works.
 // Each video's tags place it in groups of the same name in the video picker.
-export const videoTags = ['Assorted Collection', 'Jazz', 'Drum n Bass', 'Classical', 'Ambient Lounge', 'Psychedelic', 'Video Game OST'] as const;
+export const videoTags = ['Assorted Collection', 'Jazz', 'Drum n Bass', 'Classical', 
+  'Ambient Lounge', 'Psychedelic', 'Video Game OST', 'Hyperpop', 'Surf'] as const;
 
 export type VideoTag = (typeof videoTags)[number];
 
@@ -83,8 +84,36 @@ export const albums: Video[] = [
     video: `https://www.youtube.com/watch?v=NdwVwX1hWzA&list=PLf93Ae7s390s5Y7Dut1qRibTqTh0cLGPz`,
     title: `Moonage Lobotomy`,
     tags: [`Psychedelic`, 'Video Game OST']
+  },
+  {
+    video: `https://www.youtube.com/watch?v=lJhNRgMIeAE&list=PLuX3i5mdbQK4BQkuSiXuEAtk6k0WRSMDa`,
+    title: `The Millennium`,
+    tags: ['Surf']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=_fh133ZO1AE&list=PLEpZan9S2GOFesp-gJqsdD80a7zoaflHa',
+    title: 'Charlie Brown Christmas',
+    tags: ['Jazz']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=CJ5sq5qRJHo&list=OLAK5uy_kKsub2F8Fty7H9y4Cx0g36ACBunz5y4UI',
+    title: 'Happy Camper',
+    tags: ['Surf']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=1seLZKzlQb0',
+    title: 'Crumb Locket',
+    tags: ['Psychedelic']
   }
 ];
+
+export const favorites: Video[] = [
+  {
+    video: 'https://www.youtube.com/watch?v=1seLZKzlQb0',
+    title: 'Crumb Locket',
+    tags: ['Psychedelic']
+  }
+]
 
 // The first step of the video picker; each collection then groups its own videos by tag
 export interface Collection {
@@ -97,6 +126,7 @@ export interface Collection {
 export const collections: Collection[] = [
   { name: 'Background Music', videos: backgroundMusic, unit: 'VIDEO' },
   { name: 'Albums', videos: albums, unit: 'ALBUM' },
+  { name: 'Favorites', videos: favorites, unit: 'SONGS'}
 ];
 
 // Minimal slice of the YouTube IFrame Player API that this channel uses

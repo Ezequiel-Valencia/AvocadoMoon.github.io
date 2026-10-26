@@ -1,7 +1,7 @@
 // Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works.
 // Each video's tags place it in groups of the same name in the video picker.
 export const videoTags = ['Assorted Collection', 'Jazz', 'Drum n Bass', 'Classical', 
-  'Ambient Lounge', 'Psychedelic', 'Video Game OST', 'Hyperpop', 'Surf'] as const;
+  'Ambient Lounge', 'Psychedelic', 'Video Game OST', 'Hyperpop', 'Surf', 'Hardcore'] as const;
 
 export type VideoTag = (typeof videoTags)[number];
 
@@ -112,6 +112,11 @@ export const favorites: Video[] = [
     video: 'https://www.youtube.com/watch?v=1seLZKzlQb0',
     title: 'Crumb Locket',
     tags: ['Psychedelic']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=uwYg1hOGRQQ&list=PLLKXGehIBqSZLp0QcHq_4J9Yi6uBcH7bb',
+    title: 'Glow On',
+    tags: ['Hardcore']
   }
 ]
 
@@ -121,12 +126,14 @@ export interface Collection {
   videos: Video[];
   // What one of its entries is called on its tile, e.g. "3 ALBUMS"
   unit: string;
+  // Lists its videos straight away instead of grouping them by tag first
+  flat?: boolean;
 }
 
 export const collections: Collection[] = [
   { name: 'Background Music', videos: backgroundMusic, unit: 'VIDEO' },
   { name: 'Albums', videos: albums, unit: 'ALBUM' },
-  { name: 'Favorites', videos: favorites, unit: 'SONGS'}
+  { name: 'Favorites', videos: favorites, unit: 'SONG', flat: true }
 ];
 
 // Minimal slice of the YouTube IFrame Player API that this channel uses

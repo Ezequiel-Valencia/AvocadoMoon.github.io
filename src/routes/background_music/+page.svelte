@@ -32,10 +32,12 @@
 
   // Every collection's videos in one list; each collection keeps the indices of its own
   const videos = collections.flatMap((collection) => collection.videos);
-  const pickerCollections = collections.reduce<{ name: string; unit: string; indices: number[] }[]>(
-    (all, { name, unit, videos: own }) => {
+  const pickerCollections = collections.reduce<
+    { name: string; unit: string; flat?: boolean; indices: number[] }[]
+  >(
+    (all, { name, unit, flat, videos: own }) => {
       const start = all.reduce((count, c) => count + c.indices.length, 0);
-      return [...all, { name, unit, indices: own.map((_, i) => start + i) }];
+      return [...all, { name, unit, flat, indices: own.map((_, i) => start + i) }];
     },
     []
   );

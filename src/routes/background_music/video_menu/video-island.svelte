@@ -16,7 +16,7 @@
     theme: ThemeId;
     videos: Video[];
     // The first level of the picker; each lists the indices into `videos` it holds
-    collections: { name: string; unit: string; indices: number[] }[];
+    collections: { name: string; unit: string; flat?: boolean; indices: number[] }[];
     // Index into `videos` of the one playing now
     current: number;
     onselect: (index: number) => void;
@@ -51,9 +51,11 @@
   let chosen = false;
 
   const open = $derived(groups.find((group) => group.tag === openTag));
+  // The videos being listed: an open group's, or all of a flat collection's
+  const listed = $derived(open ? open.indices : collection?.flat ? collection.indices : null);
   const ids = $derived(
-    open
-      ? open.indices.map(String)
+    listed
+      ? listed.map(String)
       : collection
         ? groups.map((group) => group.tag)
         : collections.map((c) => c.name)
@@ -115,7 +117,7 @@
     title={openTag ?? openCollection ?? 'Choose Music'}
     {theme}
     {ids}
-    list={!!open}
+    list={!!listed}
     {zoom}
     {origin}
     onselect={(id) => {
@@ -134,7 +136,7 @@
     {/snippet}
 
     {#snippet option(id, choose)}
-      {#if open}
+      {#if listed}
         {@const index = Number(id)}
         {@const url = videos[index].video}
         <button class="video-row" aria-current={index === current} onclick={choose}>

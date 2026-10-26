@@ -8,6 +8,7 @@
     focusedOn: boolean;
     cubeColor: string;
     cubeColorHover: string;
+    frontHasBackground: boolean;
     id: any;
   }
 
@@ -18,6 +19,7 @@
     focusedOn,
     cubeColor,
     cubeColorHover,
+    frontHasBackground,
     id,
   }: Props = $props();
   let hover = $state(false);
@@ -89,16 +91,16 @@
           muted
           playsinline
           src={gifImagePath}
-          class="front face channel-image moving-image"
+          class="front face channel-image moving-image {frontHasBackground ? 'low-opacity' : ''}"
         >
         </video>
       {:else}
-        <img class="front face channel-image moving-image" src={gifImagePath} alt="cube" />
+        <img class="front face channel-image moving-image {frontHasBackground ? 'low-opacity' : ''}" src={gifImagePath} alt="cube" />
       {/if}
 
       <!-- Not focused on -->
     {:else}
-      <img class="front face channel-image" src={frontImagePath} alt="cube" />
+      <img class="front face channel-image {frontHasBackground ? 'low-opacity' : ''}" src={frontImagePath} alt="cube" />
     {/if}
 
     <!-- Text on top of Image -->

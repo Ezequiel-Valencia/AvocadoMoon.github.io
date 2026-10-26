@@ -20,6 +20,7 @@ export let channels: {
   volumeLevel: number;
   cubeColor: string;
   cubeHoverColor: string;
+  frontHasBackground: boolean;
 }[] = [
   {
     coverImage: '/Channel Covers/cover-image/union.svg',
@@ -33,6 +34,7 @@ export let channels: {
     volumeLevel: 0.4,
     cubeColor: 'rgb( 38, 219, 191 )',
     cubeHoverColor: 'rgb(28, 163, 141)',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/bottom-waves.svg',
@@ -46,6 +48,7 @@ export let channels: {
     volumeLevel: 0.5,
     cubeColor: 'rgb(  82, 82, 82 )',
     cubeHoverColor: 'black',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/waves.svg',
@@ -59,6 +62,7 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'skyblue',
     cubeHoverColor: 'rgb(33, 185, 255)',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/oscillate.svg',
@@ -72,6 +76,7 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'rgb( 34, 22, 81 )',
     cubeHoverColor: 'rgb( 20, 13, 47 )',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/disc.svg',
@@ -85,6 +90,7 @@ export let channels: {
     volumeLevel: 0.5,
     cubeColor: 'rgb( 132, 129, 255 )',
     cubeHoverColor: 'rgb( 55, 51, 229 )',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/blob-sandwich.svg',
@@ -98,6 +104,7 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'rgb(  255, 141, 40  )',
     cubeHoverColor: 'rgb(   219, 93, 33  )',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/low-poly.svg',
@@ -111,6 +118,7 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'rgb( 47, 96, 167 )',
     cubeHoverColor: 'rgb( 33, 65, 113 )',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/chaos.svg',
@@ -124,6 +132,7 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'rgb(  15, 30, 52  )',
     cubeHoverColor: 'rgb(  29, 67, 122 )',
+    frontHasBackground: false,
   },
   {
     coverImage: '/Channel Covers/cover-image/flux.svg',
@@ -137,19 +146,21 @@ export let channels: {
     volumeLevel: 0.3,
     cubeColor: 'rgb(  15, 30, 52  )',
     cubeHoverColor: 'rgb(  29, 67, 122 )',
+    frontHasBackground: false,
   },
   {
-    coverImage: '/Channel Covers/cover-image/line.svg',
-    gifImage: '/Channel Covers/cover-image/ccchaos.svg',
+    coverImage: '/Channel Covers/cover-image/blue_ssstar.svg',
+    gifImage: '/Channel Covers/focused-image/pink_ssstar.svg',
     channelName: 'Background Music',
     currentImage: '',
     focused: false,
     hover: false,
     redirect: '/background_music',
-    musicClip: '',
+    musicClip: '/Audio/channels/threemix-music.mp3',
     volumeLevel: 0.3,
-    cubeColor: 'rgb( 64, 156, 255 )',
-    cubeHoverColor: 'rgb( 20, 110, 230 )',
+    cubeColor: 'rgb(22, 25, 29)',
+    cubeHoverColor: 'rgb(0, 0, 0)',
+    frontHasBackground: true,
   },
   // {
   //     coverImage: "/Channel Covers/Zine_Cover.webp",
@@ -177,6 +188,7 @@ while (channels.length < nRows * nCols) {
     channelName: '',
     cubeColor: '',
     cubeHoverColor: '',
+    frontHasBackground: false,
   });
 }
 

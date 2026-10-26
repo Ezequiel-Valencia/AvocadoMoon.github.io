@@ -151,7 +151,7 @@ export let channels: {
   {
     coverImage: '/Channel Covers/cover-image/blue_ssstar.svg',
     gifImage: '/Channel Covers/focused-image/pink_ssstar.svg',
-    channelName: 'Background Music',
+    channelName: 'Music',
     currentImage: '',
     focused: false,
     hover: false,

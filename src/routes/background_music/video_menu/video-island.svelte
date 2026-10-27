@@ -4,13 +4,8 @@
   import Island from '../island.svelte';
   import ThemedButton from '../themed-button.svelte';
   import type { ThemeId } from '../theme_menu/themes';
-  import {
-    getVideoCoverImage,
-    getYoutubeVideoId,
-    videoTags,
-    type Video,
-    type VideoTag,
-  } from './videos';
+  import { videoTags, type Video, type VideoTag } from './videos';
+  import { getVideoCoverImage, getYoutubeVideoId } from '../../../common/youtube';
 
   interface Props {
     theme: ThemeId;

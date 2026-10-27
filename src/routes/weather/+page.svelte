@@ -181,7 +181,7 @@
 <section id="main-body" style="--daylight: {daylight}">
   <Menu
     songName="Weather Channel"
-    songPath="/Audio/channels/geocache-music.mp3"
+    songPath="https://youtu.be/1H5b4n0l7SY?si=AAn7V-avfpVpzcWH"
     songVolumeLevel="0.2"
   ></Menu>
 

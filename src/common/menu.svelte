@@ -2,28 +2,90 @@
   import { Hr } from 'flowbite-svelte';
   import { musicController } from './myLocalStorage';
   import { onMount } from 'svelte';
+  import {
+    isYoutubeUrl,
+    loadYoutubeApi,
+    youtubeEmbedUrl,
+    PlayerState,
+    type YouTubePlayer,
+  } from './youtube';
 
   let display_entire_menu = $state(false);
   interface Props {
     songName: string;
+    // An audio file, or any YouTube watch, youtu.be, embed, or live URL
     songPath?: string;
     songVolumeLevel?: string;
   }
 
   let { songName, songPath = '', songVolumeLevel = '1' }: Props = $props();
 
+  let isYoutube = $derived(isYoutubeUrl(songPath));
+
   let paused = $state(true);
   let audioLength: any = $state();
   let currentAudioTime: any = $state();
 
+  let audio: HTMLAudioElement | undefined = $state();
+  let youtubeFrame: HTMLIFrameElement | undefined = $state();
+  let youtubePlayer: YouTubePlayer | undefined;
+
   onMount(() => {
-    let audio = document.getElementById('bg-song') as HTMLAudioElement;
-    audio.volume = Number(songVolumeLevel);
-    paused = !$musicController;
-    if (paused) {
-      audio.pause();
+    if (!isYoutube) {
+      if (!audio) return;
+      audio.volume = Number(songVolumeLevel);
+      paused = !$musicController;
+      if (paused) {
+        audio.pause();
+      }
+      return;
     }
+
+    // The <audio> tag keeps these in sync through its bindings; YouTube has to be asked
+    const poll = setInterval(() => {
+      if (!youtubePlayer?.getCurrentTime) return;
+      currentAudioTime = youtubePlayer.getCurrentTime();
+      audioLength = youtubePlayer.getDuration();
+    }, 500);
+
+    loadYoutubeApi().then((YT) => {
+      if (!youtubeFrame) return;
+      youtubePlayer = new YT.Player(youtubeFrame, {
+        events: {
+          onReady: () => {
+            youtubePlayer?.setVolume(Number(songVolumeLevel) * 100);
+            if ($musicController) youtubePlayer?.playVideo();
+          },
+          onStateChange: ({ data }) => {
+            // Buffering and cueing leave the button as it was
+            if (data === PlayerState.PLAYING) paused = false;
+            if (data === PlayerState.PAUSED) paused = true;
+            if (data === PlayerState.ENDED) {
+              youtubePlayer?.seekTo(0, true);
+              youtubePlayer?.playVideo();
+            }
+          },
+        },
+      });
+    });
+
+    return () => {
+      clearInterval(poll);
+      youtubePlayer?.destroy();
+      youtubePlayer = undefined;
+    };
   });
+
+  function setPaused(value: boolean) {
+    paused = value;
+    if (value) youtubePlayer?.pauseVideo();
+    else youtubePlayer?.playVideo();
+  }
+
+  function seek(time: number) {
+    currentAudioTime = time;
+    youtubePlayer?.seekTo(time, true);
+  }
 
   function formatAudioTime(time: number) {
     let mins = Math.floor(time / 60);
@@ -38,15 +100,30 @@
   }
 </script>
 
-<audio
-  id="bg-song"
-  src={songPath}
-  autoplay={$musicController}
-  loop
-  bind:paused
-  bind:duration={audioLength}
-  bind:currentTime={currentAudioTime}
-></audio>
+{#if isYoutube}
+  <!-- Kept on the page but out of sight, so only its audio comes through -->
+  <iframe
+    bind:this={youtubeFrame}
+    id="bg-song-youtube"
+    src={youtubeEmbedUrl(songPath)}
+    title={songName}
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="autoplay; encrypted-media"
+    tabindex="-1"
+    aria-hidden="true"
+  ></iframe>
+{:else}
+  <audio
+    bind:this={audio}
+    id="bg-song"
+    src={songPath}
+    autoplay={$musicController}
+    loop
+    bind:paused
+    bind:duration={audioLength}
+    bind:currentTime={currentAudioTime}
+  ></audio>
+{/if}
 
 <!-- ############ When the menu is not open ################## -->
 
@@ -86,7 +163,7 @@
             id="play-button"
             class="music-buttons"
             onclick={(e) => {
-              paused = true;
+              setPaused(true);
             }}
             onkeydown={(e) => {}}
             role="button"
@@ -99,7 +176,7 @@
             id="play-button"
             class="music-buttons"
             onclick={(e) => {
-              paused = false;
+              setPaused(false);
             }}
             onkeydown={(e) => {}}
             role="button"
@@ -119,7 +196,7 @@
               max={audioLength}
               value={currentAudioTime}
               oninput={(e) => {
-                currentAudioTime = e.currentTarget.value;
+                seek(Number(e.currentTarget.value));
               }}
             />
           </span>
@@ -172,6 +249,16 @@
 <style lang="scss">
   .text {
     color: white;
+  }
+
+  #bg-song-youtube {
+    position: fixed;
+    left: -10000px;
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    pointer-events: none;
+    border: none;
   }
 
   .music-buttons {

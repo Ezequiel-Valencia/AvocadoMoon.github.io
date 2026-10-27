@@ -18,14 +18,14 @@
   } from './visualizer_menu/tab-audio';
   import { loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
   import { loadSettings, saveSettings } from './settings';
+  import { collections } from './video_menu/videos';
   import {
-    collections,
     embed_youtube_video,
     destroy_youtube_video,
     youtubeEmbedUrl,
     PlayerState,
     type YouTubePlayer,
-  } from './video_menu/videos';
+  } from '../../common/youtube';
   import './layout.scss';
   // Every theme_menu/themes/*.scss is loaded; data-theme on the page root picks which one applies
   import.meta.glob('./theme_menu/themes/*.scss', { eager: true });

@@ -7,6 +7,7 @@
     clockTime,
     compassDirection,
     dayName,
+    daylightAt,
     defaultLocation,
     describe,
     fetchForecast,
@@ -20,10 +21,19 @@
 
   const locationKey = 'weather-location';
   const unitsKey = 'weather-units';
+  const paletteKey = 'weather-palette';
+
+  type PaletteMode = 'auto' | 'day' | 'night';
+  const paletteModes: PaletteMode[] = ['auto', 'day', 'night'];
+  const paletteLabels: Record<PaletteMode, string> = {
+    auto: '🌗 Auto',
+    day: '☀️ Day',
+    night: '🌙 Night',
+  };
 
   let location: WeatherLocation = $state(defaultLocation);
   let units: Units = $state('imperial');
-  let forecast: Forecast | null = $state(null);
+  let forecast = $state<Forecast | null>(null);
   let loading = $state(true);
   let error = $state('');
 
@@ -34,6 +44,14 @@
   let searching = $state(false);
   let locating = $state(false);
   let showGlobe = $state(false);
+
+  let paletteMode = $state<PaletteMode>('auto');
+  let now = $state(Date.now());
+  // Auto follows the location's sunrise and sunset, starting on the night palette until the
+  // forecast arrives so it fades in to day on load
+  let daylight = $derived(
+    paletteMode == 'day' ? 1 : paletteMode == 'night' ? 0 : forecast ? daylightAt(forecast, now) : 0
+  );
 
   let tempUnit = $derived(units == 'imperial' ? '°F' : '°C');
   let speedUnit = $derived(units == 'imperial' ? 'mph' : 'km/h');
@@ -55,10 +73,18 @@
       }
       const savedUnits = safeLocalStorage?.getItem(unitsKey);
       if (savedUnits == 'metric' || savedUnits == 'imperial') units = savedUnits;
+      const savedPalette = safeLocalStorage?.getItem(paletteKey);
+      if (paletteModes.includes(savedPalette as PaletteMode)) {
+        paletteMode = savedPalette as PaletteMode;
+      }
     } catch {
       // ignore unreadable saved settings and fall back to the defaults
     }
     loadForecast();
+
+    // keeps dawn and dusk moving while the page is left open
+    const clock = setInterval(() => (now = Date.now()), 60 * 1000);
+    return () => clearInterval(clock);
   });
 
   async function loadForecast() {
@@ -133,6 +159,15 @@
     loadForecast();
   }
 
+  function cyclePalette() {
+    paletteMode = paletteModes[(paletteModes.indexOf(paletteMode) + 1) % paletteModes.length];
+    try {
+      safeLocalStorage?.setItem(paletteKey, paletteMode);
+    } catch {
+      // saving is a convenience only
+    }
+  }
+
   function openDay(index: number) {
     selectedDay = index;
     view = 'day';
@@ -143,7 +178,7 @@
   <title>Weather</title>
 </svelte:head>
 
-<section id="main-body">
+<section id="main-body" style="--daylight: {daylight}">
   <Menu
     songName="Weather Channel"
     songPath="/Audio/channels/geocache-music.mp3"
@@ -177,6 +212,14 @@
     <button class:active={view == 'week'} onclick={() => (view = 'week')}>Week</button>
     <button class:active={view == 'day'} onclick={() => (view = 'day')}>Day</button>
     <button class="units" onclick={toggleUnits} title="Switch units">{tempUnit}</button>
+    <button
+      class="palette"
+      onclick={cyclePalette}
+      title="Colours: automatic follows sunrise and sunset"
+      aria-label="Colour palette: {paletteMode}"
+    >
+      {paletteLabels[paletteMode]}
+    </button>
   </nav>
 
   {#if showGlobe}
@@ -265,7 +308,10 @@
           </div>
         </div>
         <dl class="stats">
-          <div><dt>Chance of Rain</dt><dd>{day.precipChance}%</dd></div>
+          <div>
+            <dt>Chance of Rain</dt>
+            <dd>{day.precipChance}%</dd>
+          </div>
           <div>
             <dt>Precipitation</dt>
             <dd>{day.precipSum.toFixed(units == 'imperial' ? 2 : 1)} {precipUnit}</dd>
@@ -274,9 +320,18 @@
             <dt>Max Wind</dt>
             <dd>{Math.round(day.windMax)} {speedUnit} {compassDirection(day.windDirection)}</dd>
           </div>
-          <div><dt>UV Index</dt><dd>{day.uvMax.toFixed(1)}</dd></div>
-          <div><dt>Sunrise</dt><dd>🌅 {clockTime(day.sunrise)}</dd></div>
-          <div><dt>Sunset</dt><dd>🌇 {clockTime(day.sunset)}</dd></div>
+          <div>
+            <dt>UV Index</dt>
+            <dd>{day.uvMax.toFixed(1)}</dd>
+          </div>
+          <div>
+            <dt>Sunrise</dt>
+            <dd>🌅 {clockTime(day.sunrise)}</dd>
+          </div>
+          <div>
+            <dt>Sunset</dt>
+            <dd>🌇 {clockTime(day.sunset)}</dd>
+          </div>
         </dl>
       </div>
 
@@ -305,11 +360,70 @@
 </section>
 
 <style lang="scss">
+  // Day is the light Wii sky; night is a local-forecast TV look with deep blues and broadcast
+  // green. --daylight (0 to 1, set from the location's sunrise and sunset) blends between them.
+
+  // day palette
   $wii-blue: rgb(52, 190, 237);
-  $deep-blue: rgb(18, 76, 150);
-  $panel-border: rgba(255, 255, 255, 0.9);
+  $wii-deep-blue: rgb(18, 76, 150);
+  $day-text: rgb(30, 40, 60);
+  $day-muted: rgb(80, 95, 120);
+
+  // night palette
+  $navy: rgb(6, 16, 52);
+  $deep-blue: rgb(14, 38, 104);
+  $mid-blue: rgb(34, 78, 170);
+  $light-blue: rgb(140, 195, 255);
+  $green: rgb(40, 170, 80);
+  $dark-green: rgb(14, 96, 44);
+  $light-green: rgb(130, 235, 140);
+  $night-muted: rgb(175, 195, 230);
+
+  $wii-cursor:
+    url('/Cursors/Wii-Curso-plain.png') 10 1,
+    auto;
+  $wii-hover:
+    url('/Cursors/wii-open2.png') 17 1,
+    pointer;
+
+  @function day-night($day, $night) {
+    @return color-mix(in srgb, #{$day} calc(var(--daylight) * 100%), #{$night});
+  }
+
+  // Registered so it can be transitioned, which lets every colour built from it fade together
+  @property --daylight {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
 
   #main-body {
+    --text: #{day-night($day-text, white)};
+    --heading: #{day-night($wii-deep-blue, white)};
+    --label: #{day-night($wii-deep-blue, $light-green)};
+    --muted: #{day-night($day-muted, $night-muted)};
+    --rain: #{day-night($wii-deep-blue, $light-blue)};
+    --hi: #{day-night(rgb(225, 80, 40), rgb(255, 180, 90))};
+    --lo: #{day-night(rgb(40, 110, 210), $light-blue)};
+    --error: #{day-night(rgb(170, 20, 20), rgb(255, 130, 120))};
+    --accent-top: #{day-night($wii-blue, $green)};
+    --accent-bottom: #{day-night($wii-deep-blue, $dark-green)};
+    --accent-hover: #{day-night($wii-blue, $light-green)};
+    --panel-top: #{day-night(rgba(255, 255, 255, 0.95), $mid-blue)};
+    --panel-bottom: #{day-night(rgba(225, 242, 255, 0.92), $deep-blue)};
+    --panel-border: #{day-night(rgba(255, 255, 255, 0.9), rgba(150, 190, 255, 0.55))};
+    --panel-shadow: #{day-night(rgba(18, 76, 150, 0.25), rgba(0, 0, 0, 0.45))};
+    --panel-inset: #{day-night(rgba(52, 190, 237, 0.25), rgba(255, 255, 255, 0.25))};
+    --text-shadow: #{day-night(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))};
+    --toggle-bg: #{day-night(rgba(255, 255, 255, 0.6), rgba(14, 38, 104, 0.7))};
+    --toggle-text: #{day-night($wii-deep-blue, $light-blue)};
+    --toggle-hover-bg: #{day-night(white, $mid-blue)};
+    --toggle-hover-text: #{day-night($wii-deep-blue, white)};
+    --pill-top: #{day-night(white, $mid-blue)};
+    --pill-bottom: #{day-night(white, $deep-blue)};
+    --pill-text: #{day-night($wii-deep-blue, white)};
+    --input-border: #{day-night(white, $dark-green)};
+
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
@@ -319,7 +433,25 @@
     padding: 9vh 16px 4vh;
     box-sizing: border-box;
     font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-    color: rgb(30, 40, 60);
+    color: var(--text);
+    cursor: $wii-cursor;
+    transition: --daylight 3s ease;
+    // keeps the day sky below underneath the page content
+    isolation: isolate;
+    background:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at 50% 0%, rgba(60, 120, 230, 0.45) 0, transparent 60%),
+      linear-gradient(180deg, $deep-blue 0%, rgb(10, 26, 78) 50%, $navy 100%);
+  }
+
+  // Gradients can't blend into each other, so the day sky sits over the night one and fades
+  #main-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--daylight);
     background:
       radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.55) 0, transparent 30%),
       linear-gradient(
@@ -330,19 +462,24 @@
       );
   }
 
-  button:not(:disabled) {
-    cursor:
-      url('/Cursors/wii-open2.png') 17 1,
-      pointer;
+  // :global so the shared menu's buttons get the Wii hand too
+  #main-body :global(button:not(:disabled)),
+  #main-body :global(a) {
+    cursor: $wii-hover;
+  }
+
+  #main-body :global(button:disabled) {
+    cursor: $wii-cursor;
   }
 
   .panel {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(225, 242, 255, 0.92));
-    border: 3px solid $panel-border;
-    border-radius: 18px;
+    background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+    border: 2px solid var(--panel-border);
+    border-radius: 14px;
     box-shadow:
-      0 4px 14px rgba(18, 76, 150, 0.25),
-      inset 0 -3px 0 rgba(52, 190, 237, 0.25);
+      0 4px 14px var(--panel-shadow),
+      inset 0 -3px 0 var(--panel-inset);
+    text-shadow: 0 1px 2px var(--text-shadow);
   }
 
   .top-bar {
@@ -353,12 +490,12 @@
     gap: 12px;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(180deg, $wii-blue, $deep-blue);
-    border: 3px solid $panel-border;
+    background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
+    border: 2px solid rgba(255, 255, 255, 0.85);
     border-radius: 999px;
     padding: 10px 20px;
     color: white;
-    box-shadow: 0 4px 14px rgba(18, 76, 150, 0.35);
+    box-shadow: 0 4px 14px var(--panel-shadow);
   }
 
   .location {
@@ -369,7 +506,9 @@
     h1 {
       font-size: clamp(1.1rem, 3vw, 1.8rem);
       font-weight: bold;
-      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -390,7 +529,7 @@
     gap: 6px;
     input {
       border-radius: 999px;
-      border: none;
+      border: 2px solid var(--input-border);
       padding: 6px 14px;
       color: black;
       width: min(220px, 45vw);
@@ -399,11 +538,15 @@
 
   .pill {
     border-radius: 999px;
-    background: white;
-    color: $deep-blue;
+    background: linear-gradient(180deg, var(--pill-top), var(--pill-bottom));
+    color: var(--pill-text);
     font-weight: bold;
     padding: 6px 14px;
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    transition: filter 0.2s;
+    &:hover:not(:disabled) {
+      filter: brightness(1.15);
+    }
   }
 
   .view-toggle {
@@ -416,28 +559,35 @@
       min-width: 110px;
       padding: 8px 20px;
       border-radius: 999px;
-      border: 3px solid $panel-border;
-      background: rgba(255, 255, 255, 0.6);
-      color: $deep-blue;
+      border: 2px solid var(--panel-border);
+      background: var(--toggle-bg);
+      color: var(--toggle-text);
       font-weight: bold;
       font-size: 1.1rem;
-      transition: all 0.2s;
+      transition:
+        background 0.2s,
+        color 0.2s;
     }
     button.active {
-      background: linear-gradient(180deg, $wii-blue, $deep-blue);
+      background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
+      border-color: rgba(255, 255, 255, 0.85);
       color: white;
     }
     button:hover:not(.active) {
-      background: white;
+      background: var(--toggle-hover-bg);
+      color: var(--toggle-hover-text);
     }
     .units {
       min-width: 60px;
+    }
+    .palette {
+      min-width: 120px;
     }
   }
 
   .error {
     text-align: center;
-    color: rgb(170, 20, 20);
+    color: var(--error);
     font-weight: bold;
     margin-bottom: 1.5vh;
   }
@@ -468,7 +618,7 @@
     align-items: center;
     gap: 20px;
     .label {
-      color: $deep-blue;
+      color: var(--label);
       font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -483,7 +633,7 @@
   .big-temp {
     font-size: 2.4rem;
     font-weight: bold;
-    color: $deep-blue;
+    color: var(--heading);
     line-height: 1.1;
   }
 
@@ -496,25 +646,36 @@
   }
 
   .day-card {
-    padding: 14px 6px;
+    padding: 0 0 14px;
+    overflow: hidden;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    transition: transform 0.2s;
+    color: var(--text);
+    transition:
+      transform 0.2s,
+      border-color 0.2s;
     &:hover {
       transform: translateY(-6px) scale(1.03);
+      border-color: var(--accent-hover);
     }
+    // coloured header strip like a broadcast forecast tile
     .day-name {
+      width: 100%;
+      padding: 6px 4px 4px;
       font-weight: bold;
-      color: $deep-blue;
+      color: white;
       font-size: 1.1rem;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
     }
     .date,
     .cond {
       font-size: 0.85rem;
-      color: rgb(80, 95, 120);
+      color: var(--muted);
     }
     .icon {
       font-size: 2.6rem;
@@ -532,25 +693,24 @@
     align-items: baseline;
     font-weight: bold;
     .hi {
-      color: rgb(225, 80, 40);
+      color: var(--hi);
       font-size: 1.4rem;
     }
     .lo {
-      color: rgb(40, 110, 210);
+      color: var(--lo);
       font-size: 1.1rem;
     }
   }
 
   .rain {
     font-size: 0.9rem;
-    color: $deep-blue;
+    color: var(--rain);
   }
 
   .hint {
     text-align: center;
     margin-top: 2vh;
-    color: $deep-blue;
-    opacity: 0.8;
+    color: var(--muted);
   }
 
   .day-nav {
@@ -564,8 +724,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: 3px solid $panel-border;
-      background: linear-gradient(180deg, $wii-blue, $deep-blue);
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
       color: white;
       font-size: 1.2rem;
       &:disabled {
@@ -575,10 +735,15 @@
     .day-title {
       text-align: center;
       min-width: 160px;
+      text-shadow: 0 1px 2px var(--text-shadow);
       h2 {
         font-size: 1.8rem;
         font-weight: bold;
-        color: $deep-blue;
+        color: var(--heading);
+        text-transform: uppercase;
+      }
+      p {
+        color: var(--label);
       }
     }
   }
@@ -613,12 +778,12 @@
     gap: 12px 24px;
     dt {
       font-size: 0.8rem;
-      color: rgb(80, 95, 120);
+      color: var(--label);
       text-transform: uppercase;
     }
     dd {
       font-weight: bold;
-      color: $deep-blue;
+      color: var(--heading);
     }
   }
 
@@ -635,7 +800,7 @@
     text-align: center;
     .hour-time {
       font-weight: bold;
-      color: $deep-blue;
+      color: var(--label);
     }
     .icon {
       font-size: 1.8rem;
@@ -646,15 +811,19 @@
     }
     .small {
       font-size: 0.75rem;
-      color: rgb(80, 95, 120);
+      color: var(--muted);
     }
   }
 
   footer {
+    max-width: 1100px;
+    margin: 4vh auto 0;
+    padding: 6px 16px;
     text-align: center;
-    margin-top: 4vh;
     font-size: 0.85rem;
-    color: $deep-blue;
+    color: white;
+    background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
+    border-radius: 999px;
     a {
       text-decoration: underline;
     }

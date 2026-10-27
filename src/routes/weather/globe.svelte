@@ -434,8 +434,17 @@
 </div>
 
 <style lang="scss">
-  $wii-blue: rgb(52, 190, 237);
-  $deep-blue: rgb(18, 76, 150);
+  $deep-blue: rgb(14, 38, 104);
+  $mid-blue: rgb(34, 78, 170);
+  $green: rgb(40, 170, 80);
+  $dark-green: rgb(14, 96, 44);
+
+  $wii-cursor:
+    url('/Cursors/Wii-Curso-plain.png') 10 1,
+    auto;
+  $wii-hover:
+    url('/Cursors/wii-open2.png') 17 1,
+    pointer;
 
   .space {
     position: fixed;
@@ -448,6 +457,7 @@
     padding: 8vh 16px 3vh;
     overflow: hidden;
     color: white;
+    cursor: $wii-cursor;
     background: radial-gradient(ellipse at center, rgb(16, 30, 64) 0%, rgb(3, 6, 18) 70%);
     animation: fadeIn 0.4s ease-out;
   }
@@ -481,7 +491,7 @@
     h2 {
       font-size: clamp(1.4rem, 4vw, 2.2rem);
       font-weight: bold;
-      text-shadow: 0 0 12px rgba(52, 190, 237, 0.8);
+      text-shadow: 0 0 12px rgba(40, 170, 80, 0.9);
     }
     p {
       opacity: 0.75;
@@ -494,12 +504,7 @@
     inset: 0;
     z-index: 0;
     touch-action: none;
-    cursor: grab;
     user-select: none;
-  }
-
-  .stage:active {
-    cursor: grabbing;
   }
 
   canvas {
@@ -526,9 +531,7 @@
     border: none;
     padding: 0;
     color: white;
-    cursor:
-      url('/Cursors/wii-open2.png') 17 1,
-      pointer;
+    cursor: $wii-hover;
   }
 
   .bubble-body {
@@ -539,9 +542,9 @@
     border-radius: 999px;
     font-weight: bold;
     font-size: clamp(0.7rem, 1.6vmin, 0.95rem);
-    color: $deep-blue;
-    background: linear-gradient(180deg, white, rgb(210, 238, 255));
-    border: 2px solid $wii-blue;
+    color: white;
+    background: linear-gradient(180deg, $mid-blue, $deep-blue);
+    border: 2px solid $green;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     transition: transform 0.15s;
     white-space: nowrap;
@@ -553,7 +556,7 @@
     width: 0;
     height: 0;
     border: 5px solid transparent;
-    border-top-color: $wii-blue;
+    border-top-color: $green;
     order: 1;
   }
 
@@ -581,8 +584,8 @@
   }
 
   .bubble.current .bubble-body {
-    border-color: rgb(255, 200, 40);
-    background: linear-gradient(180deg, rgb(255, 250, 220), rgb(255, 225, 140));
+    border-color: white;
+    background: linear-gradient(180deg, $green, $dark-green);
   }
 
   .bubble.current .city-name {
@@ -616,13 +619,15 @@
       height: 48px;
       padding: 0 16px;
       border-radius: 999px;
-      border: 3px solid rgba(255, 255, 255, 0.9);
-      background: linear-gradient(180deg, $wii-blue, $deep-blue);
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      background: linear-gradient(180deg, $green, $dark-green);
       color: white;
       font-weight: bold;
       font-size: 1.2rem;
+      cursor: $wii-hover;
       &:disabled {
         opacity: 0.6;
+        cursor: $wii-cursor;
       }
     }
     .back {

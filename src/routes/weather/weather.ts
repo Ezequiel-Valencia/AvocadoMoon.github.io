@@ -46,6 +46,8 @@ export interface Forecast {
   days: DayForecast[];
   // hours[i] holds the 24 hourly entries for days[i]
   hours: HourForecast[][];
+  // offset of the location's local time from UTC, which all the times above are given in
+  utcOffsetSeconds: number;
 }
 
 export const defaultLocation: WeatherLocation = {
@@ -115,7 +117,29 @@ export async function fetchForecast(loc: WeatherLocation, units: Units): Promise
     },
     days,
     hours: days.map((day) => allHours.filter((hour) => hour.time.startsWith(day.date))),
+    utcOffsetSeconds: data.utc_offset_seconds,
   };
+}
+
+// Half the length of dawn and dusk, centred on sunrise and sunset
+const twilightMs = 30 * 60 * 1000;
+
+// How light it is at the forecast's location: 1 in daytime, 0 at night, and in between
+// during dawn and dusk
+export function daylightAt(forecast: Forecast, nowMs: number): number {
+  // Shift to the location's wall clock so it lines up with the API's local sunrise and sunset
+  // strings, which are then read as if they were UTC
+  const local = nowMs + forecast.utcOffsetSeconds * 1000;
+  const today = new Date(local).toISOString().slice(0, 10);
+  const day = forecast.days.find((d) => d.date == today) ?? forecast.days[0];
+  const sunrise = Date.parse(day.sunrise + 'Z');
+  const sunset = Date.parse(day.sunset + 'Z');
+  // polar day or night has no sunrise or sunset
+  if (isNaN(sunrise) || isNaN(sunset)) return forecast.current.isDay ? 1 : 0;
+
+  const ramp = (edge: number) =>
+    Math.min(1, Math.max(0, (local - edge + twilightMs) / (2 * twilightMs)));
+  return Math.min(ramp(sunrise), 1 - ramp(sunset));
 }
 
 export async function searchLocation(query: string): Promise<WeatherLocation | null> {

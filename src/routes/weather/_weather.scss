@@ -1,6 +1,9 @@
 // Day is the light Wii sky; night is a local-forecast TV look with deep blues and broadcast
 // green. --daylight (0 to 1, set from the location's sunrise and sunset) blends between them.
 
+// --ink is --daylight snapped to 0 or 1. Text and the panels behind it follow --ink so they never
+// meet halfway as two similar mid-tones at dusk; only the sky and accent bars fade gradually.
+
 // day palette
 $wii-blue: rgb(52, 190, 237);
 $wii-deep-blue: rgb(18, 76, 150);
@@ -28,39 +31,51 @@ $wii-hover:
   @return color-mix(in srgb, #{$day} calc(var(--daylight) * 100%), #{$night});
 }
 
-// Registered so it can be transitioned, which lets every colour built from it fade together
+@function ink($day, $night) {
+  @return color-mix(in srgb, #{$day} calc(var(--ink) * 100%), #{$night});
+}
+
+// Registered so they can be transitioned, which lets every colour built from them fade together
 @property --daylight {
   syntax: '<number>';
   inherits: true;
   initial-value: 0;
 }
 
+@property --ink {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 #main-body {
-  --text: #{day-night($day-text, white)};
-  --heading: #{day-night($wii-deep-blue, white)};
-  --label: #{day-night($wii-deep-blue, $light-green)};
-  --muted: #{day-night($day-muted, $night-muted)};
-  --rain: #{day-night($wii-deep-blue, $light-blue)};
-  --hi: #{day-night(rgb(225, 80, 40), rgb(255, 180, 90))};
-  --lo: #{day-night(rgb(40, 110, 210), $light-blue)};
-  --error: #{day-night(rgb(170, 20, 20), rgb(255, 130, 120))};
+  --text: #{ink($day-text, white)};
+  --heading: #{ink($wii-deep-blue, white)};
+  --label: #{ink($wii-deep-blue, $light-green)};
+  --muted: #{ink($day-muted, $night-muted)};
+  --rain: #{ink($wii-deep-blue, $light-blue)};
+  --hi: #{ink(rgb(225, 80, 40), rgb(255, 180, 90))};
+  --lo: #{ink(rgb(40, 110, 210), $light-blue)};
+  --error: #{ink(rgb(170, 20, 20), rgb(255, 130, 120))};
   --accent-top: #{day-night($wii-blue, $green)};
   --accent-bottom: #{day-night($wii-deep-blue, $dark-green)};
   --accent-hover: #{day-night($wii-blue, $light-green)};
-  --panel-top: #{day-night(rgba(255, 255, 255, 0.95), $mid-blue)};
-  --panel-bottom: #{day-night(rgba(225, 242, 255, 0.92), $deep-blue)};
-  --panel-border: #{day-night(rgba(255, 255, 255, 0.9), rgba(150, 190, 255, 0.55))};
-  --panel-shadow: #{day-night(rgba(18, 76, 150, 0.25), rgba(0, 0, 0, 0.45))};
-  --panel-inset: #{day-night(rgba(52, 190, 237, 0.25), rgba(255, 255, 255, 0.25))};
-  --text-shadow: #{day-night(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))};
-  --toggle-bg: #{day-night(rgba(255, 255, 255, 0.6), rgba(14, 38, 104, 0.7))};
-  --toggle-text: #{day-night($wii-deep-blue, $light-blue)};
-  --toggle-hover-bg: #{day-night(white, $mid-blue)};
-  --toggle-hover-text: #{day-night($wii-deep-blue, white)};
-  --pill-top: #{day-night(white, $mid-blue)};
-  --pill-bottom: #{day-night(white, $deep-blue)};
-  --pill-text: #{day-night($wii-deep-blue, white)};
-  --input-border: #{day-night(white, $dark-green)};
+  --panel-top: #{ink(rgba(255, 255, 255, 0.95), $mid-blue)};
+  --panel-bottom: #{ink(rgba(225, 242, 255, 0.92), $deep-blue)};
+  --panel-border: #{ink(rgba(255, 255, 255, 0.9), rgba(150, 190, 255, 0.55))};
+  --panel-shadow: #{ink(rgba(18, 76, 150, 0.25), rgba(0, 0, 0, 0.45))};
+  --panel-inset: #{ink(rgba(52, 190, 237, 0.25), rgba(255, 255, 255, 0.25))};
+  --text-shadow: #{ink(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))};
+  --toggle-bg: #{ink(rgba(255, 255, 255, 0.6), rgba(14, 38, 104, 0.7))};
+  --toggle-text: #{ink($wii-deep-blue, $light-blue)};
+  --toggle-hover-bg: #{ink(white, $mid-blue)};
+  --toggle-hover-text: #{ink($wii-deep-blue, white)};
+  --pill-top: #{ink(white, $mid-blue)};
+  --pill-bottom: #{ink(white, $deep-blue)};
+  --pill-text: #{ink($wii-deep-blue, white)};
+  --input-border: #{ink(white, $dark-green)};
+  // outlines text that sits straight on the sky, which can be mid-tone at dusk
+  --halo: #{ink(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.75))};
 
   min-height: 100vh;
   width: 100vw;
@@ -73,7 +88,9 @@ $wii-hover:
   font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
   color: var(--text);
   cursor: $wii-cursor;
-  transition: --daylight 3s ease;
+  transition:
+    --daylight 3s ease,
+    --ink 1s ease;
   // keeps the day sky below underneath the page content
   isolation: isolate;
   background:
@@ -92,12 +109,7 @@ $wii-hover:
   opacity: var(--daylight);
   background:
     radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.55) 0, transparent 30%),
-    linear-gradient(
-      180deg,
-      rgb(120, 200, 255) 0%,
-      rgb(190, 232, 255) 55%,
-      rgb(240, 250, 255) 100%
-    );
+    linear-gradient(180deg, rgb(120, 200, 255) 0%, rgb(190, 232, 255) 55%, rgb(240, 250, 255) 100%);
 }
 
 // :global so the shared menu's buttons get the Wii hand too
@@ -226,6 +238,9 @@ $wii-hover:
 .error {
   text-align: center;
   color: var(--error);
+  text-shadow:
+    0 0 2px var(--halo),
+    0 0 6px var(--halo);
   font-weight: bold;
   margin-bottom: 1.5vh;
 }
@@ -348,7 +363,10 @@ $wii-hover:
 .hint {
   text-align: center;
   margin-top: 2vh;
-  color: var(--muted);
+  color: var(--text);
+  text-shadow:
+    0 0 2px var(--halo),
+    0 0 6px var(--halo);
 }
 
 .day-nav {
@@ -373,7 +391,9 @@ $wii-hover:
   .day-title {
     text-align: center;
     min-width: 160px;
-    text-shadow: 0 1px 2px var(--text-shadow);
+    text-shadow:
+      0 0 2px var(--halo),
+      0 0 6px var(--halo);
     h2 {
       font-size: 1.8rem;
       font-weight: bold;
@@ -463,6 +483,7 @@ footer {
   background: linear-gradient(180deg, var(--accent-top), var(--accent-bottom));
   border-radius: 999px;
   a {
+    color: inherit;
     text-decoration: underline;
   }
 }

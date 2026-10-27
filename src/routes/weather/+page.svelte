@@ -53,6 +53,9 @@
     paletteMode == 'day' ? 1 : paletteMode == 'night' ? 0 : forecast ? daylightAt(forecast, now) : 0
   );
 
+  // Text and panels snap to whichever palette reads better instead of blending into grey
+  let ink = $derived(daylight >= 0.5 ? 1 : 0);
+
   let tempUnit = $derived(units == 'imperial' ? '°F' : '°C');
   let speedUnit = $derived(units == 'imperial' ? 'mph' : 'km/h');
   let precipUnit = $derived(units == 'imperial' ? 'in' : 'mm');
@@ -178,7 +181,7 @@
   <title>Weather</title>
 </svelte:head>
 
-<section id="main-body" style="--daylight: {daylight}">
+<section id="main-body" style="--daylight: {daylight}; --ink: {ink}">
   <!-- The menu sets its player up once, so it's rebuilt to switch songs with the globe -->
   {#key showGlobe}
     <Menu

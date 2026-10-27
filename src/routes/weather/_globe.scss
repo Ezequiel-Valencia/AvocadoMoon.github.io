@@ -1,0 +1,201 @@
+$deep-blue: rgb(14, 38, 104);
+$mid-blue: rgb(34, 78, 170);
+$green: rgb(40, 170, 80);
+$dark-green: rgb(14, 96, 44);
+
+$wii-cursor:
+  url('/Cursors/Wii-Curso-plain.png') 10 1,
+  auto;
+$wii-hover:
+  url('/Cursors/wii-open2.png') 17 1,
+  pointer;
+
+.space {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8vh 16px 3vh;
+  overflow: hidden;
+  color: white;
+  cursor: $wii-cursor;
+  background: radial-gradient(ellipse at center, rgb(16, 30, 64) 0%, rgb(3, 6, 18) 70%);
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+// Header and controls float over the globe, which fills the whole screen so it can be
+// zoomed in past the edges without being cropped
+header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 1px 4px black;
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(40, 170, 80, 0.9);
+  }
+  p {
+    opacity: 0.75;
+    font-size: 0.9rem;
+  }
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  touch-action: none;
+  user-select: none;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.bubble {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: white;
+  cursor: $wii-hover;
+}
+
+.bubble-body {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: clamp(0.7rem, 1.6vmin, 0.95rem);
+  color: white;
+  background: linear-gradient(180deg, $mid-blue, $deep-blue);
+  border: 2px solid $green;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s;
+  white-space: nowrap;
+}
+
+// the little tail pointing at the city
+.bubble::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-top-color: $green;
+  order: 1;
+}
+
+.city-name {
+  order: 2;
+  position: absolute;
+  top: 100%;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px black;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.bubble:hover,
+.bubble:focus-visible {
+  z-index: 200 !important;
+  .bubble-body {
+    transform: scale(1.2);
+  }
+  .city-name {
+    opacity: 1;
+  }
+}
+
+.bubble.current .bubble-body {
+  border-color: white;
+  background: linear-gradient(180deg, $green, $dark-green);
+}
+
+.bubble.current .city-name {
+  opacity: 1;
+}
+
+.pick {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 1.8rem;
+  z-index: 150;
+  pointer-events: none;
+  animation: drop 0.4s ease-out;
+}
+
+@keyframes drop {
+  from {
+    transform: translate(-50%, -250%);
+    opacity: 0;
+  }
+}
+
+.controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  button {
+    min-width: 48px;
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    background: linear-gradient(180deg, $green, $dark-green);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: $wii-hover;
+    &:disabled {
+      opacity: 0.6;
+      cursor: $wii-cursor;
+    }
+  }
+  .back {
+    min-width: 160px;
+    font-size: 1rem;
+  }
+}

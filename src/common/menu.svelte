@@ -2,13 +2,8 @@
   import { Hr } from 'flowbite-svelte';
   import { musicController } from './myLocalStorage';
   import { onMount } from 'svelte';
-  import {
-    isYoutubeUrl,
-    loadYoutubeApi,
-    youtubeEmbedUrl,
-    PlayerState,
-    type YouTubePlayer,
-  } from './youtube';
+  import { isYoutubeUrl, PlayerState, type YouTubePlayer } from './youtube';
+  import YoutubeAudio from './youtube-audio.svelte';
 
   let display_entire_menu = $state(false);
   interface Props {
@@ -27,7 +22,6 @@
   let currentAudioTime: any = $state();
 
   let audio: HTMLAudioElement | undefined = $state();
-  let youtubeFrame: HTMLIFrameElement | undefined = $state();
   let youtubePlayer: YouTubePlayer | undefined;
 
   onMount(() => {
@@ -43,38 +37,26 @@
 
     // The <audio> tag keeps these in sync through its bindings; YouTube has to be asked
     const poll = setInterval(() => {
-      if (!youtubePlayer?.getCurrentTime) return;
+      if (!youtubePlayer) return;
       currentAudioTime = youtubePlayer.getCurrentTime();
       audioLength = youtubePlayer.getDuration();
     }, 500);
 
-    loadYoutubeApi().then((YT) => {
-      if (!youtubeFrame) return;
-      youtubePlayer = new YT.Player(youtubeFrame, {
-        events: {
-          onReady: () => {
-            youtubePlayer?.setVolume(Number(songVolumeLevel) * 100);
-            if ($musicController) youtubePlayer?.playVideo();
-          },
-          onStateChange: ({ data }) => {
-            // Buffering and cueing leave the button as it was
-            if (data === PlayerState.PLAYING) paused = false;
-            if (data === PlayerState.PAUSED) paused = true;
-            if (data === PlayerState.ENDED) {
-              youtubePlayer?.seekTo(0, true);
-              youtubePlayer?.playVideo();
-            }
-          },
-        },
-      });
-    });
-
     return () => {
       clearInterval(poll);
-      youtubePlayer?.destroy();
       youtubePlayer = undefined;
     };
   });
+
+  function onYoutubeStateChange(state: number) {
+    // Buffering and cueing leave the button as it was
+    if (state === PlayerState.PLAYING) paused = false;
+    if (state === PlayerState.PAUSED) paused = true;
+    if (state === PlayerState.ENDED) {
+      youtubePlayer?.seekTo(0, true);
+      youtubePlayer?.playVideo();
+    }
+  }
 
   function setPaused(value: boolean) {
     paused = value;
@@ -101,17 +83,16 @@
 </script>
 
 {#if isYoutube}
-  <!-- Kept on the page but out of sight, so only its audio comes through -->
-  <iframe
-    bind:this={youtubeFrame}
-    id="bg-song-youtube"
-    src={youtubeEmbedUrl(songPath)}
+  <YoutubeAudio
+    url={songPath}
     title={songName}
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="autoplay; encrypted-media"
-    tabindex="-1"
-    aria-hidden="true"
-  ></iframe>
+    volume={Number(songVolumeLevel)}
+    onready={(player) => {
+      youtubePlayer = player;
+      if ($musicController) player.playVideo();
+    }}
+    onstatechange={onYoutubeStateChange}
+  ></YoutubeAudio>
 {:else}
   <audio
     bind:this={audio}
@@ -249,16 +230,6 @@
 <style lang="scss">
   .text {
     color: white;
-  }
-
-  #bg-song-youtube {
-    position: fixed;
-    left: -10000px;
-    width: 200px;
-    height: 200px;
-    opacity: 0;
-    pointer-events: none;
-    border: none;
   }
 
   .music-buttons {

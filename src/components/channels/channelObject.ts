@@ -170,7 +170,7 @@ export let channels: {
     focused: false,
     hover: false,
     redirect: '/weather',
-    musicClip: '/Audio/channels/geocache-music.mp3',
+    musicClip: 'https://youtu.be/385KWOld3OI?si=rybsvLPTpmvltdEZ',
     volumeLevel: 0.3,
     cubeColor: 'rgb( 52, 190, 237 )',
     cubeHoverColor: 'rgb( 18, 76, 150 )',

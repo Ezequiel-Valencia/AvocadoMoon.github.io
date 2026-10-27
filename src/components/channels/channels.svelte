@@ -5,11 +5,14 @@
   import { onMount } from 'svelte';
   import { musicController, musicTime, sfxController } from '../../common/myLocalStorage';
   import { channels } from './channelObject.js';
-  import { ChannelFunctions } from './channelFunctions';
+  import { ChannelFunctions, type MusicClip } from './channelFunctions';
   import ChannelCube from './channel-cube.svelte';
+  import YoutubeAudio from '../../common/youtube-audio.svelte';
+  import { isYoutubeUrl } from '../../common/youtube';
 
   let bgMusic: HTMLAudioElement;
-  let songElements: HTMLAudioElement[] = [];
+  // YouTube clips fill in their place once their player is ready
+  let songElements: MusicClip[] = [];
   let hoverAudio: HTMLAudioElement;
   let clickAudio: HTMLAudioElement;
   let focusedChannel = $state(-1);
@@ -21,8 +24,8 @@
       video.playbackRate = 0.5;
     }
     for (let i = 0; i < channels.length; i++) {
-      let s = document.getElementById('music-clip-' + i) as HTMLAudioElement;
-      songElements.push(s);
+      if (isYoutubeUrl(channels[i].musicClip)) continue;
+      songElements[i] = document.getElementById('music-clip-' + i) as HTMLAudioElement;
     }
     getAudioElements();
     windowWidth = window.innerWidth;
@@ -165,7 +168,7 @@
                 clickAudio.play();
               }
               if ($musicController) {
-                songElements[index].pause();
+                channelFunctions.stopMusic(songElements[index]);
               }
               channelFunctions.redirect(index);
             }}
@@ -187,7 +190,16 @@
       ></div>
     {/if}
 
-    <audio src={currentChannel.musicClip} id="music-clip-{index}"></audio>
+    {#if isYoutubeUrl(currentChannel.musicClip)}
+      <YoutubeAudio
+        url={currentChannel.musicClip}
+        title="{currentChannel.channelName} music"
+        volume={currentChannel.volumeLevel}
+        onready={(player) => (songElements[index] = player)}
+      ></YoutubeAudio>
+    {:else}
+      <audio src={currentChannel.musicClip} id="music-clip-{index}"></audio>
+    {/if}
   {/each}
 </section>
 

@@ -2,7 +2,7 @@
 <!-- TODO: Make cursor be appropiate when hover buttons -->
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { musicController, musicTime, sfxController } from '../../common/myLocalStorage';
   import { channels } from './channelObject.js';
   import { ChannelFunctions, type MusicClip } from './channelFunctions';
@@ -52,7 +52,9 @@
     clickAudio = document.getElementById('channel-click-audio') as HTMLAudioElement;
   }
 
-  function moveChannelToCenter(channelIndex: number) {
+  async function moveChannelToCenter(channelIndex: number) {
+    // Measure once the box has switched to its fixed position, which ignores how far the page is scrolled
+    await tick();
     let box = document.getElementById('channelBox-' + channelIndex) as HTMLElement;
     const boxRect = box.getBoundingClientRect();
 
@@ -185,7 +187,7 @@
     {#if focusedChannel != -1}
       <div
         style="height: 100vh; width:100vw; 
-      position:absolute; background-color: rgba(255, 255, 255, 0.111);
+      position:fixed; background-color: rgba(255, 255, 255, 0.111);
       backdrop-filter: blur(2px); top:0;left:0;"
       ></div>
     {/if}

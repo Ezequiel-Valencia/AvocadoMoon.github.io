@@ -95,12 +95,20 @@
         >
         </video>
       {:else}
-        <img class="front face channel-image moving-image {frontHasBackground ? 'low-opacity' : ''}" src={gifImagePath} alt="cube" />
+        <img
+          class="front face channel-image moving-image {frontHasBackground ? 'low-opacity' : ''}"
+          src={gifImagePath}
+          alt="cube"
+        />
       {/if}
 
       <!-- Not focused on -->
     {:else}
-      <img class="front face channel-image {frontHasBackground ? 'low-opacity' : ''}" src={frontImagePath} alt="cube" />
+      <img
+        class="front face channel-image {frontHasBackground ? 'low-opacity' : ''}"
+        src={frontImagePath}
+        alt="cube"
+      />
     {/if}
 
     <!-- Text on top of Image -->
@@ -240,24 +248,26 @@
   @media (max-width: 500px) {
     h1 {
       font-family: 'Times New Roman', Times, serif;
-      font-size: 5vmin;
-      word-wrap: break-word;
-      max-width: 20vw;
+      font-size: 5.5vmin;
+      // Hyphenate long names like "Steganography" instead of splitting them anywhere
+      overflow-wrap: normal;
+      hyphens: auto;
+      max-width: 90%;
     }
     section {
       width: 100%;
       height: 100%;
-      --channel-face-space-x: 16vmin;
-      --channel-face-space-y: 16vmin;
-      --channel-face-space-z: 16vmin;
+      --channel-face-space-x: 20vmin;
+      --channel-face-space-y: 20vmin;
+      --channel-face-space-z: 20vmin;
       --face-color: skyblue;
     }
 
     .rotating-cube {
       animation: turn 5s linear infinite;
-      --channel-face-space-x: 25vmin;
-      --channel-face-space-y: 25vmin;
-      --channel-face-space-z: 25vmin;
+      --channel-face-space-x: 30vmin;
+      --channel-face-space-y: 30vmin;
+      --channel-face-space-z: 30vmin;
     }
   }
 

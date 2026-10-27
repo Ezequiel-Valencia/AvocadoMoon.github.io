@@ -34,9 +34,16 @@ $channel-view-height: 80vh;
   // text-align: center;
 }
 
-.channel-container:hover {
-  // background: linear-gradient(skyblue, blue);
-  box-shadow: 0px 0px 200px 200px lightblue inset;
+// Touch screens keep :hover after a tap, which would leave the glow stuck on
+@media (hover: hover) {
+  .channel-container:hover {
+    // background: linear-gradient(skyblue, blue);
+    box-shadow: 0px 0px 200px 200px lightblue inset;
+  }
+
+  .channel-box:hover {
+    box-shadow: 0px 0px 10px 10vh lightblue inset;
+  }
 }
 
 .channel-box {
@@ -61,10 +68,6 @@ $channel-view-height: 80vh;
   }
 }
 
-.channel-box:hover {
-  box-shadow: 0px 0px 10px 10vh lightblue inset;
-}
-
 .menu-button {
   position: relative;
   height: $channel-button-height;
@@ -75,7 +78,7 @@ $channel-view-height: 80vh;
 }
 
 .channel-bar {
-  position: absolute;
+  position: fixed;
   left: 0%;
   height: 15vh;
   width: 100vw;
@@ -124,8 +127,8 @@ $channel-view-height: 80vh;
 @media (max-width: 600px) {
   .channel-box {
     padding: 2px;
-    height: 23vmin;
-    width: 23vmin;
+    height: 40vmin;
+    width: 40vmin;
     // overflow: hidden;
     border-radius: $border-radius;
     transition: all 1s;
@@ -135,15 +138,41 @@ $channel-view-height: 80vh;
   #grid-container {
     display: grid;
     grid-template-columns: repeat(2, 0fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: none;
     text-align: center;
     justify-content: center;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .channel-bar {
+    height: auto;
+    bottom: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .channel-bar h2 {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .menu-button,
+  .play-button {
+    position: static;
+    height: 48px;
+    width: 40%;
+    font-size: 16px;
   }
 
   .big-channel-container {
     position: fixed;
-    width: 50vmin;
-    height: 50vmin;
+    width: 60vmin;
+    height: 60vmin;
     z-index: 50;
     transition: all 1s;
     border-radius: $border-radius;

@@ -49,9 +49,7 @@
 
 <div id="menu-bar">
   <div>
-    <h4 class="text" style="position: absolute; left: 3%; bottom: 80%;font-size: 1.8vmin;">
-      | Audio |
-    </h4>
+    <h4 class="text bar-label" id="left-bar-label">| Audio |</h4>
     <button
       id="left-bar-button"
       class="bar-button"
@@ -63,24 +61,17 @@
     </button>
   </div>
 
-  <div style="text-align: center;">
+  <div id="center-text">
     <div id="top-text">
-      <h3 style="font-size: 2.5vmin; transform:translateY(-100%);" class="text">
-        Ezequiel Valencia
-      </h3>
+      <h3 id="name" class="text">Ezequiel Valencia</h3>
 
-      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
+      <p class="text description">
         University of Connecticut Cybersecurity graduate, Bio-Informatics innovator,
       </p>
-      <p style="font-size: 1.8vmin; transform:translateY(-200%)" id="description" class="text">
-        Dev-Ops specialist, and Full-Stack developer
-      </p>
+      <p class="text description">Dev-Ops specialist, and Full-Stack developer</p>
     </div>
 
-    <div
-      style="text-align: center; width:fit-content; transform:translateX(-50%); left:50%;"
-      id="bar-div"
-    >
+    <div id="bar-div">
       <p style="text-align: center;" id="clock">
         {displayHour}:{min > 9 ? min : '0' + min}
         {dayOrNight} | {day}
@@ -90,9 +81,7 @@
   </div>
 
   <div>
-    <h4 class="text" style="position: absolute; right: 3%; bottom: 80%;font-size: 1.8vmin;">
-      | Contact |
-    </h4>
+    <h4 class="text bar-label" id="right-bar-label">| Contact |</h4>
     <button
       id="right-bar-button"
       class="bar-button"
@@ -143,6 +132,34 @@
     // font-family:'Times New Roman', Times, serif;
   }
 
+  .bar-label {
+    position: absolute;
+    bottom: 80%;
+    font-size: 1.8vmin;
+  }
+
+  #left-bar-label {
+    left: 3%;
+  }
+
+  #right-bar-label {
+    right: 3%;
+  }
+
+  #center-text {
+    text-align: center;
+  }
+
+  #name {
+    font-size: 2.5vmin;
+    transform: translateY(-100%);
+  }
+
+  .description {
+    font-size: 1.8vmin;
+    transform: translateY(-200%);
+  }
+
   #top-text {
     text-align: center;
     top: 75vh;
@@ -159,8 +176,10 @@
   #bar-div {
     position: fixed;
     text-align: center;
-    width: 30vw;
+    width: fit-content;
     bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   #left-bar-button {
@@ -181,5 +200,55 @@
     align-content: center;
     // overflow: hidden;
     text-align: center;
+  }
+
+  // Phones: the bar sits below the channels in the page flow instead of being pinned over them
+  @media (max-width: 600px) {
+    #menu-bar {
+      position: relative;
+      height: auto;
+      display: grid;
+      grid-template-columns: 22vw 1fr 22vw;
+      align-items: center;
+      padding: 16px 16px 24px;
+    }
+
+    .bar-label {
+      position: static;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .bar-button {
+      position: static;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 20vw;
+      max-width: none;
+    }
+
+    #name {
+      font-size: 18px;
+      transform: none;
+      margin-bottom: 6px;
+    }
+
+    .description {
+      font-size: 12px;
+      line-height: 1.3;
+      transform: none;
+    }
+
+    #bar-div {
+      position: static;
+      transform: none;
+      margin: 8px auto 0;
+    }
+
+    #clock {
+      font-size: 14px;
+    }
   }
 </style>

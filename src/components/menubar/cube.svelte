@@ -96,6 +96,15 @@
     transform: translateY(var(--face-space)) rotateX(-90deg);
   }
 
+  // Size the cube to its faces so it spins in place instead of swinging off the edge of a phone
+  @media (max-width: 600px) {
+    section,
+    .cube {
+      width: 10vmin;
+      height: 10vmin;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .cube {
       animation: none;

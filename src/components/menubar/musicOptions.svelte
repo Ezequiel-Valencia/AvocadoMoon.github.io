@@ -58,4 +58,13 @@
       url('/Cursors/wii-open2.png') 17 1,
       pointer;
   }
+
+  @media (max-width: 600px) {
+    button {
+      transform: none;
+      display: block;
+      margin: 8px auto;
+      padding: 10px 16px;
+    }
+  }
 </style>

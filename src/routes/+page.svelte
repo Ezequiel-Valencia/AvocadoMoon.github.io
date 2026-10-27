@@ -42,6 +42,8 @@
 <style lang="scss">
   #mainDiv {
     height: 100vh;
+    // Mobile browsers count the hidden URL bar in 100vh; dvh is the visible height
+    height: 100dvh;
     width: 100vw;
     // background: url('/Backgrounds/Waterfall.gif');
     background-repeat: no-repeat;
@@ -59,5 +61,13 @@
     // covers whole screen
     top: 0px;
     left: 0px;
+  }
+
+  // Phones can't fit every channel on one screen, so let the page scroll
+  @media (max-width: 600px) {
+    #mainDiv {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
   }
 </style>

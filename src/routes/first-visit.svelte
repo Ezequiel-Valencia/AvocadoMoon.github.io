@@ -182,7 +182,7 @@
     max-width: 90vw;
     min-width: 72vw;
     margin: auto;
-    height: 80vh;
+    min-height: 80vh;
     -webkit-backdrop-filter: blur(10px);
   }
 
@@ -200,21 +200,25 @@
 
   @media (max-width: 500px) {
     h1 {
-      font-size: 5vmin;
+      font-size: 24px;
     }
     h2 {
-      font-size: 4vmin;
+      font-size: 20px;
     }
 
     p {
-      font-size: 3vmin;
+      font-size: 15px;
+      max-width: 85%;
     }
     button {
-      height: 2vmin;
-      width: 3vmin;
-      font-size: 4vmin;
-      // min-height: 4vh;
-      // min-width: fit-content;
+      height: auto;
+      min-height: 44px;
+      padding: 0 20px;
+      margin: 4px;
+      font-size: 18px;
+    }
+    .text-glass {
+      padding-bottom: 24px;
     }
   }
 </style>

@@ -132,6 +132,91 @@ export async function searchLocation(query: string): Promise<WeatherLocation | n
   };
 }
 
+function coordinateName(latitude: number, longitude: number) {
+  const lat = `${Math.abs(latitude).toFixed(1)}°${latitude >= 0 ? 'N' : 'S'}`;
+  const lon = `${Math.abs(longitude).toFixed(1)}°${longitude >= 0 ? 'E' : 'W'}`;
+  return `${lat}, ${lon}`;
+}
+
+// Turns coordinates into a "Town, State" name using BigDataCloud's free client-side
+// reverse geocoder, which needs no API key
+export async function reverseGeocode(latitude: number, longitude: number): Promise<string> {
+  try {
+    const params = new URLSearchParams({
+      latitude: String(latitude),
+      longitude: String(longitude),
+      localityLanguage: 'en',
+    });
+    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${params}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const town = data.locality || data.city;
+    const region = data.principalSubdivision || data.countryName;
+    const name = [town, region].filter(Boolean).join(', ');
+    return name || coordinateName(latitude, longitude);
+  } catch {
+    return coordinateName(latitude, longitude);
+  }
+}
+
+// Cities pinned on the globe, spread out so their bubbles rarely overlap
+export const globeCities: WeatherLocation[] = [
+  { name: 'Hartford, Connecticut', latitude: 41.7637, longitude: -72.6851 },
+  { name: 'Chicago, Illinois', latitude: 41.8781, longitude: -87.6298 },
+  { name: 'Miami, Florida', latitude: 25.7617, longitude: -80.1918 },
+  { name: 'Los Angeles, California', latitude: 34.0522, longitude: -118.2437 },
+  { name: 'Anchorage, Alaska', latitude: 61.2181, longitude: -149.9003 },
+  { name: 'Honolulu, Hawaii', latitude: 21.3069, longitude: -157.8583 },
+  { name: 'Mexico City, Mexico', latitude: 19.4326, longitude: -99.1332 },
+  { name: 'Lima, Peru', latitude: -12.0464, longitude: -77.0428 },
+  { name: 'São Paulo, Brazil', latitude: -23.5505, longitude: -46.6333 },
+  { name: 'Buenos Aires, Argentina', latitude: -34.6037, longitude: -58.3816 },
+  { name: 'Reykjavík, Iceland', latitude: 64.1466, longitude: -21.9426 },
+  { name: 'London, England', latitude: 51.5072, longitude: -0.1276 },
+  { name: 'Madrid, Spain', latitude: 40.4168, longitude: -3.7038 },
+  { name: 'Berlin, Germany', latitude: 52.52, longitude: 13.405 },
+  { name: 'Lagos, Nigeria', latitude: 6.5244, longitude: 3.3792 },
+  { name: 'Cairo, Egypt', latitude: 30.0444, longitude: 31.2357 },
+  { name: 'Nairobi, Kenya', latitude: -1.2921, longitude: 36.8219 },
+  { name: 'Cape Town, South Africa', latitude: -33.9249, longitude: 18.4241 },
+  { name: 'Moscow, Russia', latitude: 55.7558, longitude: 37.6173 },
+  { name: 'Dubai, UAE', latitude: 25.2048, longitude: 55.2708 },
+  { name: 'Mumbai, India', latitude: 19.076, longitude: 72.8777 },
+  { name: 'Singapore', latitude: 1.3521, longitude: 103.8198 },
+  { name: 'Beijing, China', latitude: 39.9042, longitude: 116.4074 },
+  { name: 'Tokyo, Japan', latitude: 35.6762, longitude: 139.6503 },
+  { name: 'Sydney, Australia', latitude: -33.8688, longitude: 151.2093 },
+  { name: 'Auckland, New Zealand', latitude: -36.8485, longitude: 174.7633 },
+];
+
+export interface CityNow {
+  temp: number;
+  weatherCode: number;
+  isDay: boolean;
+}
+
+// Open-Meteo accepts comma-separated coordinates, so every city's current weather is one request
+export async function fetchCurrentForCities(
+  cities: WeatherLocation[],
+  units: Units
+): Promise<CityNow[]> {
+  const params = new URLSearchParams({
+    latitude: cities.map((c) => c.latitude).join(','),
+    longitude: cities.map((c) => c.longitude).join(','),
+    current: 'temperature_2m,weather_code,is_day',
+  });
+  if (units == 'imperial') params.set('temperature_unit', 'fahrenheit');
+  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+  if (!res.ok) throw new Error(`Forecast request failed (${res.status})`);
+  const data = await res.json();
+  const results = Array.isArray(data) ? data : [data];
+  return results.map((r) => ({
+    temp: r.current.temperature_2m,
+    weatherCode: r.current.weather_code,
+    isDay: r.current.is_day == 1,
+  }));
+}
+
 // WMO weather interpretation codes, as returned by Open-Meteo
 const conditions: Record<number, { label: string; day: string; night: string }> = {
   0: { label: 'Clear', day: '☀️', night: '🌙' },

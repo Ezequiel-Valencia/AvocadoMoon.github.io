@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Menu from '../../common/menu.svelte';
   import { safeLocalStorage } from '../../common/myLocalStorage';
+  import Globe from './globe.svelte';
   import {
     clockTime,
     compassDirection,
@@ -9,6 +10,7 @@
     defaultLocation,
     describe,
     fetchForecast,
+    reverseGeocode,
     searchLocation,
     shortDate,
     type Forecast,
@@ -30,6 +32,8 @@
 
   let searchText = $state('');
   let searching = $state(false);
+  let locating = $state(false);
+  let showGlobe = $state(false);
 
   let tempUnit = $derived(units == 'imperial' ? '°F' : '°C');
   let speedUnit = $derived(units == 'imperial' ? 'mph' : 'km/h');
@@ -43,6 +47,12 @@
     try {
       const saved = safeLocalStorage?.getItem(locationKey);
       if (saved) location = JSON.parse(saved);
+      // older saves used a generic label instead of the town name
+      if (location.name == 'Your Location') {
+        reverseGeocode(location.latitude, location.longitude).then((name) =>
+          changeLocation({ ...location, name })
+        );
+      }
       const savedUnits = safeLocalStorage?.getItem(unitsKey);
       if (savedUnits == 'metric' || savedUnits == 'imperial') units = savedUnits;
     } catch {
@@ -97,14 +107,19 @@
       error = 'Your browser does not support location lookup.';
       return;
     }
+    locating = true;
     navigator.geolocation.getCurrentPosition(
-      (pos) =>
-        changeLocation({
-          name: 'Your Location',
-          latitude: Math.round(pos.coords.latitude * 100) / 100,
-          longitude: Math.round(pos.coords.longitude * 100) / 100,
-        }),
-      () => (error = 'Location permission was denied.')
+      async (pos) => {
+        const latitude = Math.round(pos.coords.latitude * 100) / 100;
+        const longitude = Math.round(pos.coords.longitude * 100) / 100;
+        const name = await reverseGeocode(latitude, longitude);
+        locating = false;
+        changeLocation({ name, latitude, longitude });
+      },
+      () => {
+        locating = false;
+        error = 'Location permission was denied.';
+      }
     );
   }
 
@@ -137,14 +152,23 @@
 
   <header class="top-bar">
     <div class="location">
-      <span class="pin">📍</span>
+      <button class="pin" onclick={() => (showGlobe = true)} title="Pick on globe">🌐</button>
       <h1>{location.name}</h1>
     </div>
     <form class="search" onsubmit={search}>
       <input type="text" placeholder="Search a city…" bind:value={searchText} aria-label="City" />
       <button type="submit" class="pill" disabled={searching}>{searching ? '…' : 'Go'}</button>
-      <button type="button" class="pill" onclick={useMyLocation} title="Use my location">
-        🧭
+      <button
+        type="button"
+        class="pill"
+        onclick={useMyLocation}
+        title="Use my location"
+        disabled={locating}
+      >
+        {locating ? '…' : '🧭'}
+      </button>
+      <button type="button" class="pill" onclick={() => (showGlobe = true)} title="Pick on globe">
+        🌐 Globe
       </button>
     </form>
   </header>
@@ -154,6 +178,18 @@
     <button class:active={view == 'day'} onclick={() => (view = 'day')}>Day</button>
     <button class="units" onclick={toggleUnits} title="Switch units">{tempUnit}</button>
   </nav>
+
+  {#if showGlobe}
+    <Globe
+      {units}
+      current={location}
+      onselect={(loc) => {
+        showGlobe = false;
+        changeLocation(loc);
+      }}
+      onclose={() => (showGlobe = false)}
+    ></Globe>
+  {/if}
 
   {#if error}
     <p class="error">{error}</p>
@@ -340,8 +376,17 @@
     }
   }
 
+  .pin {
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+    &:hover {
+      transform: rotate(20deg) scale(1.15);
+    }
+  }
+
   .search {
     display: flex;
+    flex-wrap: wrap;
     gap: 6px;
     input {
       border-radius: 999px;

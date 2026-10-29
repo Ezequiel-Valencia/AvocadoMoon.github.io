@@ -41,6 +41,8 @@ $maple-leaf: polygon(
   --gold: rgb(250, 190, 70);
   --russet: rgb(160, 55, 30);
   --bark: rgb(88, 30, 36);
+  // Tint over a genre tile's cover on hover; deep enough for white text
+  --genre-hover: rgba(196, 78, 20, 0.55);
 }
 
 .bgm-page[data-theme='fall'] {

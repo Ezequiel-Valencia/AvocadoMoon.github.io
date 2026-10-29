@@ -1,6 +1,6 @@
 <!-- Video picker: a collection, then its videos grouped by tag; each pick zooms in a level -->
 <script lang="ts">
-  import { tick, type Snippet } from 'svelte';
+  import { tick } from 'svelte';
   import Island from '../island.svelte';
   import ThemedButton from '../themed-button.svelte';
   import type { ThemeId } from '../theme_menu/themes';
@@ -16,11 +16,9 @@
     current: number;
     onselect: (index: number) => void;
     onclose: () => void;
-    // Toggles shown under the options, e.g. Shuffle and Repeat
-    settings?: Snippet;
   }
 
-  let { theme, videos, collections, current, onselect, onclose, settings }: Props = $props();
+  let { theme, videos, collections, current, onselect, onclose }: Props = $props();
 
   let openCollection: string | null = $state(null);
   let openTag: VideoTag | null = $state(null);
@@ -120,7 +118,6 @@
       onselect(Number(id));
     }}
     onclose={back}
-    footer={settings}
   >
     {#snippet toolbar()}
       {#if open}
@@ -150,15 +147,29 @@
         </button>
       {:else if collection}
         {@const group = groups.find((g) => g.tag === id)!}
-        <!-- bgm-page + data-theme gives the tile the current theme's paint -->
-        <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
-          <ThemedButton
-            label={group.tag}
-            status={count(group.indices.length, collection.unit)}
-            active={group.indices.includes(current)}
-            onclick={() => show(collection.name, group.tag)}
+        {@const url = videos[group.indices[0]].video}
+        <!-- The genre's first video under a frosted pane, the same look in every theme -->
+        <button
+          class="genre-tile"
+          aria-pressed={group.indices.includes(current)}
+          onclick={(e) => {
+            markOrigin(e);
+            show(collection.name, group.tag);
+          }}
+        >
+          <img
+            class="genre-cover"
+            src={getVideoCoverImage(url)}
+            alt=""
+            loading="lazy"
+            onload={(e) => coverFallback(e, url)}
+            onerror={(e) => coverFallback(e, url)}
           />
-        </div>
+          <span class="genre-pane">
+            <span class="genre-label">{group.tag}</span>
+            <span class="genre-status">{count(group.indices.length, collection.unit)}</span>
+          </span>
+        </button>
       {:else}
         {@const c = collections.find((c) => c.name === id)!}
         <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
@@ -189,6 +200,95 @@
     width: clamp(140px, 24vmin, 220px);
     height: clamp(140px, 24vmin, 220px);
     border-radius: 20px;
+  }
+
+  // Smaller than the collection tiles, so a collection's many genres fit together
+  .genre-tile {
+    position: relative;
+    width: clamp(96px, 15vmin, 140px);
+    height: clamp(96px, 15vmin, 140px);
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    border-radius: 18px;
+    font: inherit;
+    color: white;
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+      0 6px 16px rgba(0, 0, 0, 0.25);
+    cursor: inherit;
+    transition:
+      transform 0.15s ease-out,
+      box-shadow 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-3px);
+
+      // The cover sharpens under a tint from the theme's palette, deep enough that the
+      // text stays readable over it
+      .genre-pane {
+        backdrop-filter: blur(4px) saturate(1.3) brightness(0.8);
+        background: var(--genre-hover, rgba(10, 12, 20, 0.5));
+      }
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 3px;
+    }
+
+    // The genre holding what's playing now
+    &[aria-pressed='true'] {
+      box-shadow:
+        inset 0 0 0 3px rgba(255, 255, 255, 0.9),
+        0 0 18px rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  .genre-cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .genre-pane {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px;
+    text-align: center;
+    // A dark tint and darkened blur, so white text reads even over bright covers
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.8),
+      0 0 8px rgba(0, 0, 0, 0.5);
+    background: rgba(10, 12, 20, 0.38);
+    backdrop-filter: blur(10px) saturate(1.3) brightness(0.8);
+    transition:
+      backdrop-filter 0.2s,
+      background 0.2s;
+  }
+
+  .genre-label {
+    font-size: clamp(13px, 1.9vmin, 16px);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .genre-status {
+    font-size: clamp(9px, 1.2vmin, 11px);
+    letter-spacing: 0.08em;
   }
 
   // Layout only; each theme's stylesheet colors the rows and the back button

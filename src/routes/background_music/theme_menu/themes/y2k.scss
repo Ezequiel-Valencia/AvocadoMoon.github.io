@@ -13,6 +13,8 @@ $sparkle: polygon(50% 0%, 56% 44%, 100% 50%, 56% 56%, 50% 100%, 44% 56%, 0% 50%,
   --silver: rgb(200, 204, 212);
   --steel: rgb(120, 124, 134);
   --glow: rgba(255, 255, 255, 0.5);
+  // Tint over a genre tile's cover on hover; deep enough for white text
+  --genre-hover: rgba(20, 20, 24, 0.6);
   // Polished metal: bright bands broken by dark reflections
   --chrome: linear-gradient(
     180deg,

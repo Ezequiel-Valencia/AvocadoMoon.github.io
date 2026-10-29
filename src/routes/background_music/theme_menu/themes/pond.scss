@@ -86,6 +86,8 @@ $lily-petals: polygon(
   --bamboo-light: rgb(190, 222, 120);
   --bamboo: rgb(122, 176, 74);
   --bamboo-deep: rgb(70, 122, 48);
+  // Tint over a genre tile's cover on hover; deep enough for white text
+  --genre-hover: rgba(38, 105, 62, 0.55);
 }
 
 .bgm-page[data-theme='pond'] {

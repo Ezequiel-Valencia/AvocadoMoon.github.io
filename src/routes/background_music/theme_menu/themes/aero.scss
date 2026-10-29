@@ -8,6 +8,8 @@
   --title: rgb(30, 120, 210);
   --glow: rgba(33, 185, 255, 0.45);
   --white: rgba(255, 255, 255, 0.95);
+  // Tint over a genre tile's cover on hover; deep enough for white text
+  --genre-hover: rgba(20, 120, 230, 0.55);
 }
 
 .bgm-page[data-theme='aero'] {

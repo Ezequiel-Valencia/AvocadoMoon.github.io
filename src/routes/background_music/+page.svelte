@@ -51,8 +51,6 @@
   let playing = $state(false);
 
   let visualizer: VisualizerId = $state('off');
-  let shuffle = $state(false);
-  let repeat = $state(false);
   let theme: ThemeId = $state('aero');
   let picking: 'theme' | 'visualizer' | 'video' | null = $state(null);
   // The video's size is the listener's choice: centered with the visualizer behind it,
@@ -67,8 +65,6 @@
     saveSettings({
       visualizer,
       video: videos[currentIndex]?.video ?? '',
-      shuffle,
-      repeat,
       minimized,
     });
   });
@@ -116,35 +112,22 @@
     }
   }
 
-  // The YouTube player's callback is created once, so it reads these through a function
-  // to always see the current toggle values. Playback stays within the playing video's
-  // collection, so background music doesn't run on into an album
+  // Playback stays within the playing video's collection, so background music doesn't
+  // run on into an album
   function nextIndex(): number {
     const pool =
       pickerCollections.find((c) => c.indices.includes(currentIndex))?.indices ??
       videos.map((_, i) => i);
     if (pool.length <= 1) return pool[0] ?? 0;
-    const at = pool.indexOf(currentIndex);
-    if (shuffle) {
-      let next = at;
-      while (next === at) next = Math.floor(Math.random() * pool.length);
-      return pool[next];
-    }
-    return pool[(at + 1) % pool.length];
+    return pool[(pool.indexOf(currentIndex) + 1) % pool.length];
   }
 
   function onStateChange(state: number) {
     playing = state === PlayerState.PLAYING;
     if (state !== PlayerState.ENDED) return;
 
-    if (repeat) {
-      // Repeats the song that just ended, even partway through an album
-      player?.seekTo(0, true);
-      player?.playVideo();
-    } else if (!player || !isMidPlaylist(player)) {
-      // A playlist moves on to its next song by itself
-      playVideo(nextIndex());
-    }
+    // A playlist moves on to its next song by itself
+    if (!player || !isMidPlaylist(player)) playVideo(nextIndex());
   }
 
   // Hooks the API onto the iframe once it has rendered with its src
@@ -175,8 +158,6 @@
     theme = loadTheme();
     const saved = loadSettings();
     visualizer = saved.visualizer ?? visualizer;
-    shuffle = saved.shuffle ?? shuffle;
-    repeat = saved.repeat ?? repeat;
     minimized = saved.minimized ?? minimized;
     currentIndex = Math.max(
       0,
@@ -301,20 +282,5 @@
     current={currentIndex}
     onselect={(index) => index !== currentIndex && playVideo(index)}
     onclose={() => (picking = null)}
-  >
-    {#snippet settings()}
-      <SubButton
-        label="Shuffle"
-        status={shuffle ? 'ON' : 'OFF'}
-        active={shuffle}
-        onclick={() => (shuffle = !shuffle)}
-      />
-      <SubButton
-        label="Repeat"
-        status={repeat ? 'ON' : 'OFF'}
-        active={repeat}
-        onclick={() => (repeat = !repeat)}
-      />
-    {/snippet}
-  </VideoIsland>
+  />
 {/if}

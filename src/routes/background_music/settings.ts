@@ -7,8 +7,6 @@ export interface Settings {
   visualizer: VisualizerId;
   // The video's link rather than its place in the list, so editing the list doesn't change it
   video: string;
-  shuffle: boolean;
-  repeat: boolean;
   minimized: boolean;
 }
 
@@ -27,9 +25,7 @@ export function loadSettings(): Partial<Settings> {
   const visualizer = visualizers.find((v) => v.id === saved.visualizer);
   if (visualizer) settings.visualizer = visualizer.id;
   if (typeof saved.video === 'string') settings.video = saved.video;
-  for (const key of ['shuffle', 'repeat', 'minimized'] as const) {
-    if (typeof saved[key] === 'boolean') settings[key] = saved[key];
-  }
+  if (typeof saved.minimized === 'boolean') settings.minimized = saved.minimized;
   return settings;
 }
 

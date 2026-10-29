@@ -1,4 +1,4 @@
-<!-- Video picker: a collection, then its videos grouped by tag; each pick zooms in a level -->
+<!-- Video picker: a collection, then its videos grouped by tag; each pick fades in a level -->
 <script lang="ts">
   import { tick } from 'svelte';
   import Island from '../island.svelte';
@@ -38,9 +38,8 @@
       : []
   );
 
-  let zoom: 'in' | 'out' | undefined = $state();
-  // Where the clicked tile sat, so its list grows out of it and shrinks back into it
-  let origin: string | undefined = $state();
+  // The first view comes in with the island; every view after it fades in
+  let fade = $state(false);
   let chosen = false;
 
   const open = $derived(groups.find((group) => group.tag === openTag));
@@ -67,23 +66,16 @@
     if (img.src !== fallback) img.src = fallback;
   }
 
-  function markOrigin(e: MouseEvent) {
-    const tile = e.currentTarget as HTMLElement;
-    const view = tile.closest('.view');
-    if (!view) return;
-    const t = tile.getBoundingClientRect();
-    const v = view.getBoundingClientRect();
-    origin = `${t.left + t.width / 2 - v.left}px ${t.top + t.height / 2 - v.top}px`;
-  }
-
   async function show(name: string | null, tag: VideoTag | null) {
-    const depth = (name ? 1 : 0) + (tag ? 1 : 0);
-    const was = (openCollection ? 1 : 0) + (openTag ? 1 : 0);
-    zoom = depth > was ? 'in' : 'out';
+    fade = true;
     openCollection = name;
     openTag = tag;
-    // Keep keyboard focus inside the island as its contents are swapped out
     await tick();
+    // Each view starts from the top, not wherever the last one was scrolled to
+    const island = document.querySelector<HTMLElement>('.video-island .island');
+    if (island) island.scrollTop = 0;
+
+    // Keep keyboard focus inside the island as its contents are swapped out
     const focusable = [
       '.video-island [aria-current="true"]',
       '.video-island .island-back',
@@ -91,7 +83,12 @@
     ];
     for (const selector of focusable) {
       const el = document.querySelector<HTMLElement>(selector);
-      if (el) return el.focus();
+      if (!el) continue;
+      // Brought into view once the fade has settled, so the view doesn't jump as it appears
+      el.focus({ preventScroll: true });
+      const view = el.closest('.view');
+      await Promise.allSettled(view?.getAnimations().map((a) => a.finished) ?? []);
+      return el.scrollIntoView({ block: 'nearest' });
     }
   }
 
@@ -111,8 +108,7 @@
     {theme}
     {ids}
     list={!!listed}
-    {zoom}
-    {origin}
+    {fade}
     onselect={(id) => {
       chosen = true;
       onselect(Number(id));
@@ -152,10 +148,7 @@
         <button
           class="genre-tile"
           aria-pressed={group.indices.includes(current)}
-          onclick={(e) => {
-            markOrigin(e);
-            show(collection.name, group.tag);
-          }}
+          onclick={() => show(collection.name, group.tag)}
         >
           <img
             class="genre-cover"
@@ -172,7 +165,7 @@
         </button>
       {:else}
         {@const c = collections.find((c) => c.name === id)!}
-        <div class="bgm-page preview" data-theme={theme} onclickcapture={markOrigin}>
+        <div class="bgm-page preview" data-theme={theme}>
           <ThemedButton
             label={c.name}
             status={count(c.indices.length, c.unit)}

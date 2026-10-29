@@ -51,7 +51,7 @@
   let playing = $state(false);
 
   let visualizer: VisualizerId = $state('off');
-  let theme: ThemeId = $state('aero');
+  let theme: ThemeId = $state('fall');
   let picking: 'theme' | 'visualizer' | 'video' | null = $state(null);
   // The video's size is the listener's choice: centered with the visualizer behind it,
   // or tucked into the corner as a mini player

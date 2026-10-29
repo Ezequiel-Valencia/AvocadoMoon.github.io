@@ -1,6 +1,6 @@
 <!-- Centered picker panel shared by the theme, visualizer, and video pickers; each option is a snippet -->
 <script lang="ts" generics="Id extends string">
-  import { onMount, type Snippet } from 'svelte';
+  import { onMount, tick, type Snippet } from 'svelte';
   import type { ThemeId } from './theme_menu/themes';
 
   interface Props {
@@ -18,10 +18,8 @@
     toolbar?: Snippet;
     // Shown below the options in every view, e.g. toggles for the picker's settings
     footer?: Snippet;
-    // Pickers with more than one view change `title` to switch views; the new view zooms
-    // in (going deeper) or out (coming back), centered on `origin`
-    zoom?: 'in' | 'out';
-    origin?: string;
+    // Pickers with more than one view change `title` to switch views; the new view fades in
+    fade?: boolean;
     // Stays open after a choice, so options can be tried one after another; clicking off
     // the island or pressing Escape closes it
     stayOpen?: boolean;
@@ -37,13 +35,49 @@
     list,
     toolbar,
     footer,
-    zoom,
-    origin,
+    fade,
     stayOpen,
   }: Props = $props();
 
   let island: HTMLElement;
   let closing = false;
+
+  // When the view changes the island grows or shrinks to its new size alongside the fade,
+  // instead of jumping straight to it
+  let resizing: Animation | undefined;
+  $effect.pre(() => {
+    // Measured before the new view replaces the old one, mid-resize if one is still going
+    if (!title || !island || !fade) return;
+    const from = island.getBoundingClientRect();
+    tick().then(() => resize(from));
+  });
+
+  function resize(from: DOMRect) {
+    resizing?.cancel();
+    const view = island.querySelector<HTMLElement>('.view');
+    const to = island.getBoundingClientRect();
+    if (!view || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (from.width === to.width && from.height === to.height) return;
+
+    // The new view holds its final layout while the island opens or closes around it, and
+    // whatever doesn't fit yet is hidden rather than scrolled
+    view.style.width = `${view.offsetWidth}px`;
+    island.style.overflow = 'hidden';
+    resizing = island.animate(
+      [
+        { width: `${from.width}px`, height: `${from.height}px` },
+        { width: `${to.width}px`, height: `${to.height}px` },
+      ],
+      { duration: 300, easing: 'ease-out' }
+    );
+    const done = resizing;
+    done.onfinish = done.oncancel = () => {
+      // A newer resize has taken over and set these itself
+      if (resizing !== done) return;
+      view.style.width = '';
+      island.style.overflow = '';
+    };
+  }
 
   onMount(() => {
     // Return focus to whatever opened the island once it closes
@@ -80,7 +114,7 @@
     aria-labelledby="island-title"
   >
     {#key title}
-      <div class="view {zoom ? `zoom-${zoom}` : ''}" style:transform-origin={origin}>
+      <div class="view" class:fade>
         <h2 id="island-title">{title}</h2>
         {@render toolbar?.()}
         <div class="options" class:list>
@@ -117,10 +151,14 @@
   }
 
   .island {
-    max-width: 100%;
-    max-height: 100%;
+    --island-padding: clamp(16px, 3vmin, 32px);
+    // Never more than 80% of the screen either way, padding and border included
+    box-sizing: border-box;
+    max-width: 80vw;
+    max-height: 80vh;
+    max-height: 80dvh;
     overflow-y: auto;
-    padding: clamp(16px, 3vmin, 32px);
+    padding: var(--island-padding);
     animation: rise-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     transition:
       border-radius 0.4s,
@@ -142,7 +180,7 @@
     gap: clamp(12px, 2.5vmin, 24px);
   }
 
-  // Outside the zooming view, so settings stay put while the views change
+  // Outside the fading view, so settings stay put while the views change
   .footer {
     display: flex;
     justify-content: center;
@@ -155,30 +193,13 @@
     flex-wrap: nowrap;
     align-items: stretch;
     gap: 8px;
-    width: min(440px, 80vw);
+    // Fits inside the island's padding and the widest theme border
+    width: min(440px, calc(80vw - 2 * var(--island-padding) - 8px));
     margin: 0 auto;
   }
 
-  .zoom-in {
-    animation: zoom-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .zoom-out {
-    animation: zoom-out 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @keyframes zoom-in {
-    from {
-      opacity: 0;
-      transform: scale(0.4);
-    }
-  }
-
-  @keyframes zoom-out {
-    from {
-      opacity: 0;
-      transform: scale(1.15);
-    }
+  .fade {
+    animation: fade-in 0.3s ease-in-out;
   }
 
   @keyframes fade-in {

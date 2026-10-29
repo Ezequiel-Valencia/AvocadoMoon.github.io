@@ -1,8 +1,8 @@
 // Add or remove YouTube links here; any watch, youtu.be, embed, or live URL works.
 // Each video's tags place it in groups of the same name in the video picker.
 export const videoTags = ['Assorted Collection', 'Jazz', 'Drum n Bass', 'Classical', 
-  'Ambient Lounge', 'Psychedelic', 'Video Game OST', 'Hyperpop', 'Surf', 'Punk/Heavy',
-  'Indie', 'Folk', 'Rap', 'Jungle', 'Soul', 'Rock', 'Funk', 'Dream Pop'] as const;
+  'Ambient Lounge', 'Psychedelic', 'Video Game OST', 'Hyperpop', 'Surf', 'Punk',
+  'Indie', 'Folk', 'Rap', 'Jungle', 'Soul', 'Rock', 'Funk', 'Dream Pop', 'Heavy'] as const;
 
 export type VideoTag = (typeof videoTags)[number];
 
@@ -77,6 +77,36 @@ export const backgroundMusic: Video[] = [
     video: `https://youtu.be/MsjHOAq7WH0?si=YFZIttsIf5VSHjYr`,
     title: `Cat Train`,
     tags: [`Jazz`]
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=O3zvy2dnjjY',
+    title: 'Dinasour Music',
+    tags: ['Assorted Collection']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=rBs-dK23VR4',
+    title: 'Arcitc Fox Music',
+    tags: ['Assorted Collection']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=CKl0_F_RaH0',
+    title: 'Sea Creature Music',
+    tags: ['Ambient Lounge']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=yTcMRt4Oo5U',
+    title: 'Summer Jams',
+    tags: ['Assorted Collection']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=DNSMMc3r5qk',
+    title: 'Best Before October 10th',
+    tags: ['Classical', 'Jazz']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=bYeUiG3Kwqs',
+    title: 'Form',
+    tags: ['Assorted Collection']
   }
 ];
 
@@ -109,7 +139,7 @@ export const albums: Video[] = [
   {
     video: 'https://www.youtube.com/watch?v=uwYg1hOGRQQ&list=PLLKXGehIBqSZLp0QcHq_4J9Yi6uBcH7bb',
     title: 'Glow On',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   },
   {
     video: 'https://www.youtube.com/watch?v=mzUUQ4KoPGk&list=PLl1bFDcO4TFfVvmZIx89rpdVgVGK_uFzy',
@@ -174,17 +204,17 @@ export const albums: Video[] = [
   {
     video: 'https://www.youtube.com/watch?v=bQ-MnLUuakE',
     title: 'I Got Heaven',
-    tags: ['Punk/Heavy']
+    tags: ['Punk']
   },
   {
     video: 'https://www.youtube.com/watch?v=FV1YVZV-Wb8&list=PLqaXTO5wp6UjpRUL179-xIGmZ0-qlCrZG',
     title: 'Give Me Convience or Give Me Death',
-    tags: ['Punk/Heavy']
+    tags: ['Punk']
   },
   {
     video: 'https://www.youtube.com/watch?v=XLjo0lY450c&list=PL81_CtYCym28M8c2NFVCEIEBDCu6o1tXw',
     title: 'Dookie',
-    tags: ['Punk/Heavy']
+    tags: ['Punk']
   },
   {
     video: 'https://www.youtube.com/watch?v=seHlHzYpWBU&list=PLBLv7w9jMAjJ7HSHNpwIMrC4IqKqBLv7m',
@@ -299,27 +329,27 @@ export const albums: Video[] = [
   {
     video: 'https://www.youtube.com/watch?v=KAgZVVMmcpE&list=OLAK5uy_np1bPkY0YLe5ZtmuiLQzYZoAh0nrylfos',
     title: 'Teeth',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   },
   {
     video: 'https://www.youtube.com/watch?v=lbHRAc4vRsA&list=OLAK5uy_klqdtzrbs2UlJfrLX9GBIbaDiCVXwWCwg',
     title: 'Time And Space',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   },
   {
     video: 'https://www.youtube.com/watch?v=s7ZsYe5Uwg0&list=PLkROH3Eqs0T-21TF61hNOY00vR7bfn833&pp=0gcJCR0Ga94AFGB0',
     title: 'Toxicity',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   },
   {
     video: 'https://www.youtube.com/watch?v=UzCmERV5hZc&pp=ygUhd2FpdGluZyByb29tIG92ZXJncm93biBmdWxsIGFsYnVt',
     title: 'Waiting Room',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   },
   {
     video: 'https://www.youtube.com/watch?v=t4c4r65-Xpg&list=PLHTo__bpnlYUWWO7YJcsAMmypiJQA8KWi',
     title: 'Slipknot',
-    tags: ['Punk/Heavy']
+    tags: ['Heavy']
   }
 ];
 
@@ -328,7 +358,37 @@ export const favorites: Video[] = [
     video: 'https://www.youtube.com/watch?v=1seLZKzlQb0',
     title: 'Crumb Locket',
     tags: ['Psychedelic']
-  }
+  },
+  {
+    video: `https://www.youtube.com/watch?v=lJhNRgMIeAE&list=PLuX3i5mdbQK4BQkuSiXuEAtk6k0WRSMDa`,
+    title: `The Millennium`,
+    tags: ['Surf']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=t7hS8FSH-Vs&list=PLsAk6h4n-dS3SZnGOJ07o2WmF_0Ej8F2i',
+    title: 'Call Me If You Get Lost',
+    tags: ['Rap']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=mzUUQ4KoPGk&list=PLl1bFDcO4TFfVvmZIx89rpdVgVGK_uFzy',
+    title: 'Alone',
+    tags: ['Jazz']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=9yEbycO1a58&list=PLBCYJDQ1g88ALuW-gogwFeuf9l1bUZhW0',
+    title: 'Pet Grief',
+    tags: ['Dream Pop']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=JzYf6qskdfA&list=OLAK5uy_mTLecX_gK_CmqU1GOnd8LP2I3Op0flwno&pp=0gcJCR0Ga94AFGB0',
+    title: 'Photographs and Memories',
+    tags: ['Folk']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=lbHRAc4vRsA&list=OLAK5uy_klqdtzrbs2UlJfrLX9GBIbaDiCVXwWCwg',
+    title: 'Time And Space',
+    tags: ['Heavy']
+  },
 ]
 
 // The first step of the video picker; each collection then groups its own videos by tag

@@ -2,6 +2,9 @@
 // https://developers.google.com/youtube/iframe_api_reference
 export interface YouTubePlayer {
   loadVideoById(videoId: string): void;
+  // The video ids in the loaded playlist, or null when a single video is playing
+  getPlaylist(): string[] | null;
+  getPlaylistIndex(): number;
   playVideo(): void;
   pauseVideo(): void;
   seekTo(seconds: number, allowSeekAhead: boolean): void;
@@ -47,16 +50,25 @@ export function getYoutubeVideoId(url: string): string {
   return match ? match[1] : url;
 }
 
+// The playlist a link plays through, from its `list` parameter, e.g. an album's
+export function getYoutubePlaylistId(url: string): string | undefined {
+  return url.match(/[?&]list=([\w-]+)/)?.[1];
+}
+
 /**
  * Plain embed URL for an `<iframe>`. Loading the video through our own iframe (with a
  * referrer policy) instead of letting the API build one avoids YouTube's embed errors.
  */
-export function youtubeEmbedUrl(url: string): string {
+export function youtubeEmbedUrl(url: string, autoplay = false): string {
   const params = new URLSearchParams({
     enablejsapi: '1',
     rel: '0',
     playsinline: '1',
   });
+  if (autoplay) params.set('autoplay', '1');
+  // Starts on this video and carries on through the rest of its playlist
+  const list = getYoutubePlaylistId(url);
+  if (list) params.set('list', list);
   return `https://www.youtube.com/embed/${getYoutubeVideoId(url)}?${params}`;
 }
 
@@ -82,20 +94,13 @@ export function loadYoutubeApi(): Promise<YouTubeNamespace> {
 let player: YouTubePlayer | undefined;
 
 /**
- * Plays a YouTube video in `iframe`, which must already point at `youtubeEmbedUrl(...)`.
- * The first call hooks the IFrame API onto it for state events; later calls reuse that
- * player so switching videos doesn't reload the iframe.
+ * Hooks the IFrame API onto `iframe`, which must already point at `youtubeEmbedUrl(...)`,
+ * to control it and hear its state events. Hooking onto a new iframe lets go of the last one.
  */
 export async function embed_youtube_video(
   iframe: HTMLIFrameElement,
-  url: string,
   onStateChange: (state: number) => void
 ): Promise<YouTubePlayer> {
-  if (player) {
-    player.loadVideoById(getYoutubeVideoId(url));
-    return player;
-  }
-
   const YT = await loadYoutubeApi();
   player = new YT.Player(iframe, {
     events: {
@@ -103,6 +108,12 @@ export async function embed_youtube_video(
     },
   });
   return player;
+}
+
+// Whether the player is partway through a playlist, so a video ending isn't the end of it
+export function isMidPlaylist(player: YouTubePlayer): boolean {
+  const playlist = player.getPlaylist();
+  return !!playlist && player.getPlaylistIndex() < playlist.length - 1;
 }
 
 export function destroy_youtube_video() {

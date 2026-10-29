@@ -22,6 +22,9 @@
   import {
     embed_youtube_video,
     destroy_youtube_video,
+    isMidPlaylist,
+    getYoutubePlaylistId,
+    getYoutubeVideoId,
     youtubeEmbedUrl,
     PlayerState,
     type YouTubePlayer,
@@ -34,14 +37,11 @@
   const videos = collections.flatMap((collection) => collection.videos);
   const pickerCollections = collections.reduce<
     { name: string; unit: string; flat?: boolean; indices: number[] }[]
-  >(
-    (all, { name, unit, flat, videos: own }) => {
-      const start = all.reduce((count, c) => count + c.indices.length, 0);
-      return [...all, { name, unit, flat, indices: own.map((_, i) => start + i) }];
-    },
-    []
-  );
-  // Only the first video loads through src; later ones are swapped in through the API.
+  >((all, { name, unit, flat, videos: own }) => {
+    const start = all.reduce((count, c) => count + c.indices.length, 0);
+    return [...all, { name, unit, flat, indices: own.map((_, i) => start + i) }];
+  }, []);
+  // Single videos are swapped in through the API; the first video and albums load through src.
   // Set once the saved video is known, so the page doesn't load one video then another
   let embedSrc = $state('');
 
@@ -138,16 +138,37 @@
     if (state !== PlayerState.ENDED) return;
 
     if (repeat) {
+      // Repeats the song that just ended, even partway through an album
       player?.seekTo(0, true);
       player?.playVideo();
-    } else {
+    } else if (!player || !isMidPlaylist(player)) {
+      // A playlist moves on to its next song by itself
       playVideo(nextIndex());
     }
   }
 
+  // Hooks the API onto the iframe once it has rendered with its src
+  async function attachPlayer() {
+    await tick();
+    const frame = playerFrame;
+    if (!frame) return;
+    const attached = await embed_youtube_video(frame, onStateChange);
+    // A newer pick may have swapped the iframe out while the API loaded
+    if (frame === playerFrame) player = attached;
+  }
+
   function playVideo(index: number) {
     currentIndex = index;
-    if (playerFrame) embed_youtube_video(playerFrame, videos[index].video, onStateChange);
+    const url = videos[index].video;
+    if (player && !getYoutubePlaylistId(url)) {
+      player.loadVideoById(getYoutubeVideoId(url));
+      return;
+    }
+    // The API switches playlists a pick late, so an album's song gets a fresh embed that
+    // starts right on it and plays on through the rest of the album
+    player = undefined;
+    embedSrc = youtubeEmbedUrl(url, true);
+    attachPlayer();
   }
 
   onMount(() => {
@@ -166,16 +187,7 @@
     canListen = canCaptureTabAudio();
     if (videos.length > 0) {
       embedSrc = youtubeEmbedUrl(videos[currentIndex].video);
-      // Waits for the iframe to render with its src before the API attaches to it
-      tick().then(async () => {
-        if (playerFrame) {
-          player = await embed_youtube_video(
-            playerFrame,
-            videos[currentIndex].video,
-            onStateChange
-          );
-        }
-      });
+      attachPlayer();
     }
     return () => {
       destroy_youtube_video();
@@ -194,10 +206,7 @@
   <nav class="controls" aria-label="Background music controls">
     <ThemedButton label="Theme" status={themeName(theme)} onclick={() => (picking = 'theme')} />
     {#if videos.length > 0}
-      <ThemedButton
-        label="Music"
-        onclick={() => (picking = 'video')}
-      />
+      <ThemedButton label="Music" onclick={() => (picking = 'video')} />
     {/if}
     <ThemedButton
       label="Audio Visualizers"
@@ -225,15 +234,18 @@
           Add YouTube links to <code>video_menu/videos.ts</code> to start listening.
         </p>
       {:else if embedSrc}
-        <!-- A plain embed iframe; the YouTube API only attaches to it to track playback -->
-        <iframe
-          bind:this={playerFrame}
-          src={embedSrc}
-          title="Background music"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+        <!-- A plain embed iframe; the YouTube API only attaches to it to track playback.
+             Keyed so a new src gets a new iframe for the API to attach to -->
+        {#key embedSrc}
+          <iframe
+            bind:this={playerFrame}
+            src={embedSrc}
+            title="Background music"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        {/key}
       {/if}
     </div>
 

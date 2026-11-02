@@ -107,6 +107,11 @@ export const backgroundMusic: Video[] = [
     video: 'https://www.youtube.com/watch?v=bYeUiG3Kwqs',
     title: 'Form',
     tags: ['Assorted Collection']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=v3hWu6alQC4&list=OLAK5uy_mZB0vSjWOCepCXAwMC6bRpbi2iUkzGiKI',
+    title: 'Vholume',
+    tags: ['Ambient Lounge']
   }
 ];
 

@@ -355,6 +355,11 @@ export const albums: Video[] = [
     video: 'https://www.youtube.com/watch?v=t4c4r65-Xpg&list=PLHTo__bpnlYUWWO7YJcsAMmypiJQA8KWi',
     title: 'Slipknot',
     tags: ['Heavy']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=mk9DZCNpnc4&list=PLI6kLIhBBwmRvuv4wr6tdsAq688x8w6qb&index=1',
+    title: 'Me Chama De Gato Que Eu Sou Sua',
+    tags: ['Funk', 'Psychedelic']
   }
 ];
 
@@ -378,6 +383,11 @@ export const favorites: Video[] = [
     video: 'https://www.youtube.com/watch?v=mzUUQ4KoPGk&list=PLl1bFDcO4TFfVvmZIx89rpdVgVGK_uFzy',
     title: 'Alone',
     tags: ['Jazz']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=mk9DZCNpnc4&list=PLI6kLIhBBwmRvuv4wr6tdsAq688x8w6qb&index=1',
+    title: 'Me Chama De Gato Que Eu Sou Sua',
+    tags: ['Funk', 'Psychedelic']
   },
   {
     video: 'https://www.youtube.com/watch?v=9yEbycO1a58&list=PLBCYJDQ1g88ALuW-gogwFeuf9l1bUZhW0',

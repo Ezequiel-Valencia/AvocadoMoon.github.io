@@ -9,14 +9,14 @@
   import VisualizerIsland from './visualizer_menu/visualizer-island.svelte';
   import Menu from '../../common/menu.svelte';
   import VideoIsland from './video_menu/video-island.svelte';
-  import { visualizerName, type VisualizerId } from './visualizer_menu/visualizers';
+  import { visualizers, visualizerName, type VisualizerId } from './visualizer_menu/visualizers';
   import {
     canCaptureTabAudio,
     captureTabAudio,
     NoAudioSharedError,
     type TabAudio,
   } from './visualizer_menu/tab-audio';
-  import { loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
+  import { themes, loadTheme, saveTheme, themeName, type ThemeId } from './theme_menu/themes';
   import { loadSettings, saveSettings } from './settings';
   import { collections } from './video_menu/videos';
   import {
@@ -67,6 +67,17 @@
       video: videos[currentIndex]?.video ?? '',
       minimized,
     });
+  });
+
+  // Keep the URL in sync so the current state is easy to share
+  $effect(() => {
+    if (!settingsLoaded) return;
+    const params = new URLSearchParams();
+    params.set('theme', theme);
+    params.set('visualizer', visualizer);
+    const videoUrl = videos[currentIndex]?.video ?? '';
+    if (videoUrl) params.set('video', videoUrl);
+    window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   });
 
   // The stage jumps straight to its new place, then a transform carries it there from the
@@ -163,6 +174,20 @@
       0,
       videos.findIndex((v) => v.video === saved.video)
     );
+
+    // URL params override saved settings so shared links land on the right state
+    const params = new URLSearchParams(window.location.search);
+    const urlTheme = params.get('theme');
+    const urlVisualizer = params.get('visualizer');
+    const urlVideo = params.get('video');
+    if (urlTheme && themes.find((t) => t.id === urlTheme)) theme = urlTheme as ThemeId;
+    if (urlVisualizer && visualizers.find((v) => v.id === urlVisualizer))
+      visualizer = urlVisualizer as VisualizerId;
+    if (urlVideo) {
+      const idx = videos.findIndex((v) => v.video === urlVideo);
+      if (idx >= 0) currentIndex = idx;
+    }
+
     settingsLoaded = true;
 
     canListen = canCaptureTabAudio();

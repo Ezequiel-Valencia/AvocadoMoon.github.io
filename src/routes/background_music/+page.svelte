@@ -60,23 +60,33 @@
 
   // Saving waits until the saved settings are loaded, or the defaults would replace them
   let settingsLoaded = $state(false);
+  // The state on load may come from a shared link's URL, which shouldn't replace the
+  // listener's own saved settings. Only a change made after loading is saved
+  let skipLoadedSave = true;
   $effect(() => {
     if (!settingsLoaded) return;
-    saveSettings({
+    // Read before skipping so the effect still tracks these and reruns on a change
+    const settings = {
       visualizer,
       video: videos[currentIndex]?.video ?? '',
       minimized,
-    });
+    };
+    if (skipLoadedSave) {
+      skipLoadedSave = false;
+      return;
+    }
+    saveSettings(settings);
   });
 
   // Keep the URL in sync so the current state is easy to share
   $effect(() => {
     if (!settingsLoaded) return;
-    const params = new URLSearchParams();
-    params.set('theme', theme);
-    params.set('visualizer', visualizer);
     const videoUrl = videos[currentIndex]?.video ?? '';
-    if (videoUrl) params.set('video', videoUrl);
+    const params = new URLSearchParams({
+      theme,
+      visualizer,
+      ...(videoUrl && { video: videoUrl }),
+    });
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   });
 

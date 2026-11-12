@@ -18,7 +18,7 @@
 
   let { freshSetOfSubmissions }: Props = $props();
 
-  async function handleGuestSubmission(e: SubmitEvent) {
+  async function handleGuestSubmission() {
     username = document.querySelector<HTMLInputElement>('#username')!.value!;
     let note = document.querySelector<HTMLTextAreaElement>('#note')!.value!;
     let secretNode = document.querySelector<HTMLInputElement>('#secret');

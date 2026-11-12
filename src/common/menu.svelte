@@ -113,7 +113,7 @@
     <nav>
       <button
         id="menu-nav"
-        onclick={(e) => {
+        onclick={() => {
           display_entire_menu = !display_entire_menu;
           // scroll = false;
         }}>Menu</button
@@ -143,10 +143,10 @@
           <span
             id="play-button"
             class="music-buttons"
-            onclick={(e) => {
+            onclick={() => {
               setPaused(true);
             }}
-            onkeydown={(e) => {}}
+            onkeydown={() => {}}
             role="button"
             tabindex="0"
           >
@@ -156,10 +156,10 @@
           <span
             id="play-button"
             class="music-buttons"
-            onclick={(e) => {
+            onclick={() => {
               setPaused(false);
             }}
-            onkeydown={(e) => {}}
+            onkeydown={() => {}}
             role="button"
             tabindex="0"
           >
@@ -192,12 +192,12 @@
 
     <div style="text-align:center;" id="big-button-div">
       <button
-        onclick={(e) => {
+        onclick={() => {
           location.href = '/';
         }}>Main Menu</button
       >
       <button
-        onclick={(e) => {
+        onclick={() => {
           display_entire_menu = !display_entire_menu;
           //   scroll = true;
         }}>Return</button

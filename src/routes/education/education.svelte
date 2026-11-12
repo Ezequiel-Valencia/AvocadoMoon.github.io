@@ -58,11 +58,11 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('scroll', updateMaskHeight);
 
-    mask?.addEventListener('mouseleave', (e) => {
+    mask?.addEventListener('mouseleave', () => {
       inMask = false;
     });
 
-    mask?.addEventListener('mouseenter', (e) => {
+    mask?.addEventListener('mouseenter', () => {
       inMask = true;
       updateMaskHeight();
     });

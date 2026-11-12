@@ -39,7 +39,7 @@
         {/if}
         <button
           class={selectedButton == 1 ? 'selected' : ''}
-          onclick={(e) => {
+          onclick={() => {
             sfxController.enable();
             musicController.enable();
             showResumeBlock = true;
@@ -50,7 +50,7 @@
         </button>
         <button
           class={selectedButton == 2 ? 'selected' : ''}
-          onclick={(e) => {
+          onclick={() => {
             sfxController.disable();
             musicController.disable();
             showResumeBlock = true;
@@ -74,14 +74,14 @@
           <br />
           <br />
           <button
-            onclick={(e) => {
+            onclick={() => {
               window.open(resumeURL);
             }}
           >
             Open Resume</button
           >
           <button
-            onclick={(e) => {
+            onclick={() => {
               finished = true;
             }}>Continue</button
           >

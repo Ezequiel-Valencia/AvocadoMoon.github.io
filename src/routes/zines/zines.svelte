@@ -5,15 +5,15 @@
 </script>
 
 <div id="zines">
-  {#each zinesKeyValueArray as [key, zine], index (index)}
+  {#each zinesKeyValueArray as [, zine], index (index)}
     <div
-      onmouseenter={(e) => {
+      onmouseenter={() => {
         hoveredEntity = index;
       }}
-      onmouseleave={(e) => {
+      onmouseleave={() => {
         hoveredEntity = -1;
       }}
-      onmousedown={(e) => {
+      onmousedown={() => {
         window.open(zine.redirect);
       }}
       id={zinesKeyValueArray.length === 1 + index ? 'last-zine' : 'zine-' + index}

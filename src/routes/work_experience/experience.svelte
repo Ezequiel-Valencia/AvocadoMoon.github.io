@@ -44,12 +44,12 @@
   {/each}
   <h1 id="world">World</h1>
   <h2 id="myExperience">My Work Experience</h2>
-  {#each Object.entries(experiences) as [key, experience], index (index)}
+  {#each Object.entries(experiences) as [, experience], index (index)}
     <div id={'entry-spacer-' + index} class="spacer watch">
       <div
         id={'entry-' + index}
         class={index % 2 == 0 ? 'experience-div left' : 'experience-div right'}
-        onmousedown={(e) => {
+        onmousedown={() => {
           if ($musicController) {
             musicTime.updateTimeStamp();
           }

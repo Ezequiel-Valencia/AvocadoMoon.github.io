@@ -92,7 +92,7 @@
     <!-- Focus blur background -->
 
     <div
-      onmousedown={(e) => {
+      onmousedown={() => {
         // Audio Play on Channel Click
         if (
           !currentChannel.focused &&
@@ -108,7 +108,7 @@
           moveChannelToCenter(index);
         }
       }}
-      onmouseenter={(e) => {
+      onmouseenter={() => {
         if ($sfxController) {
           getAudioElements();
           hoverAudio.play();
@@ -124,8 +124,8 @@
         <div
           class={focusedChannel == index ? 'big-channel-container' : 'channel-box'}
           id="channelBox-{index}"
-          onanimationstart={(e) => focus(index, '50')}
-          onanimationend={(e) => focus(index, '1')}
+          onanimationstart={() => focus(index, '50')}
+          onanimationend={() => focus(index, '1')}
         >
           <ChannelCube
             cubeColor={currentChannel.cubeColor}
@@ -148,7 +148,7 @@
         <div class="channel-bar">
           <h2>Continue to {currentChannel.channelName} Channel?</h2>
           <button
-            onclick={(e) => {
+            onclick={() => {
               focusedChannel = -1;
               resetChannelPosition(index);
               if ($sfxController) {
@@ -165,7 +165,7 @@
           </button>
 
           <button
-            onclick={(e) => {
+            onclick={() => {
               if ($sfxController) {
                 clickAudio.play();
               }

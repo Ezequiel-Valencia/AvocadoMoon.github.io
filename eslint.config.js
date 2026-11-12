@@ -40,13 +40,16 @@ export default [
         parser: tsParser,
       },
     },
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
     rules: {
-      // @typescript-eslint/no-unused-vars crashes on Svelte's AST
-      '@typescript-eslint/no-unused-vars': 'off',
       // TypeScript handles undefined references inside Svelte scripts
       'no-undef': 'off',
+      // The base rule reports parameter names in type signatures like `(id: Id) => void`
+      'no-unused-vars': 'off',
       // Unused vars in Svelte: warn, but allow _-prefixed names (convention for intentional ignores)
-      'no-unused-vars': ['warn', {
+      '@typescript-eslint/no-unused-vars': ['warn', {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',

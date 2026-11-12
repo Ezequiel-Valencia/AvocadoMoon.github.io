@@ -53,7 +53,7 @@
     <button
       id="left-bar-button"
       class="bar-button"
-      onclick={(e) => {
+      onclick={() => {
         music_options = !music_options;
       }}
     >
@@ -85,7 +85,7 @@
     <button
       id="right-bar-button"
       class="bar-button"
-      onclick={(e) => {
+      onclick={() => {
         contact_info = !contact_info;
       }}
     >

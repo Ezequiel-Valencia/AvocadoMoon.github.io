@@ -6,7 +6,6 @@
   import './tabs.scss';
   import { transitionStates } from './common';
   import ScrollDown from '../../common/scroll-down.svelte';
-  const sideImageLocation = '/personal_projects/animal star blue.png';
   const projectIterator = Object.entries(projects);
   let activeIndex = $state(0);
 
@@ -25,7 +24,6 @@
     }
   }
 
-  const iconClass = 'material-symbols-outlined';
   let icons = [
     ['', 'Full Stack'],
     ['', 'DevOp/IT'],
@@ -161,7 +159,7 @@
                   <h5 style="margin-bottom: 0%;">{project.year}</h5>
                   <h5 style="margin-top:0%;">
                     Technologies:
-                    {#each project.technologies as tech, index (tech.name + projectIndex)}
+                    {#each project.technologies as tech (tech.name + projectIndex)}
                       <span
                         id={'description-' + tech.name + projectIndex}
                         class="tech description-holder"

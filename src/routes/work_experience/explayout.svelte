@@ -38,7 +38,7 @@
 <section id="wrapper">
   <button
     style=""
-    onclick={(e) => {
+    onclick={() => {
       if ($musicController) {
         musicTime.updateTimeStamp();
       }

@@ -22,7 +22,7 @@
         be dysfunctional so please if possible revisit this channel on a computer.
       </p>
       <button
-        onclick={(e) => {
+        onclick={() => {
           touchscreen = false;
         }}>Continue</button
       >

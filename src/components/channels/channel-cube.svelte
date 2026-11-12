@@ -22,7 +22,6 @@
     frontHasBackground,
     id,
   }: Props = $props();
-  let hover = $state(false);
 
   let touchscreen = false;
 
@@ -63,18 +62,14 @@
   <div
     role="gridcell"
     tabindex="0"
-    onmouseenter={(e) => {
-      hover = true;
-    }}
     style="--cube-color: {cubeColor}; --cube-hover-color: {cubeColorHover};"
     onmousemove={(e) => {
       followMouse(e);
     }}
     onmouseleave={() => {
-      hover = false;
       resetMouse();
     }}
-    onanimationend={(e) => {}}
+    onanimationend={() => {}}
     id="cube-{id}"
     class="cube {focusedOn ? 'rotating-cube' : 'unfocused-cube'}"
   >

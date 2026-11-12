@@ -18,6 +18,7 @@
             <span>{panel.header}</span>
           {/snippet}
           <p class="explanation">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -- static text from explination.ts -->
             {@html panel.explanation}
           </p>
         </AccordionItem>

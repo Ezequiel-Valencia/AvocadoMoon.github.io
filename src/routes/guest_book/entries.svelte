@@ -40,7 +40,7 @@
     let req: GetSubmissionRequest = { pageNumber: pageNumber };
     try {
       entries = await geo.getSubmission(req);
-    } catch (e) {
+    } catch {
       canAccessServer = false;
     }
   }

@@ -27,10 +27,10 @@
           </p>
           <button
             class="btn"
-            onclick={(e) => {
+            onclick={() => {
               checkedOutBook();
             }}
-            onpointerenter={(e) => {}}
+            onpointerenter={() => {}}
             style="margin-top:0; font-size:2.5em;"
           >
             {#if $bookCheckout}

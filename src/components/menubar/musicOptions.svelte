@@ -23,7 +23,7 @@
   <button
     id="sfx"
     class="menu-med-text"
-    onclick={(e) => {
+    onclick={() => {
       sfxController.toggle();
     }}
   >
@@ -32,7 +32,7 @@
   <button
     id="music"
     class="menu-med-text"
-    onclick={(e) => {
+    onclick={() => {
       musicController.toggle();
     }}
   >

@@ -21,10 +21,10 @@
     const fishes = document.querySelectorAll('.fish-slide') as NodeListOf<HTMLElement>;
 
     fishes.forEach((fish, i) => {
-      fish.addEventListener('pointerenter', (e) => {
+      fish.addEventListener('pointerenter', () => {
         fishHoverIndex = i;
       });
-      fish.addEventListener('pointerleave', (e) => {
+      fish.addEventListener('pointerleave', () => {
         fishHoverIndex = -1;
       });
     });

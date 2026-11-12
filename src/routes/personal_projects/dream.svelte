@@ -40,7 +40,7 @@
 
     const reflectedMoon = document.getElementsByClassName('reflected moon')[0] as HTMLElement;
 
-    ogMoon.addEventListener('pointerdown', (e) => {
+    ogMoon.addEventListener('pointerdown', () => {
       holdingDownMoon = true;
       drag_me_text.style.opacity = '0';
       invisibleMoon.style.opacity = '1';

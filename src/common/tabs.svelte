@@ -24,7 +24,7 @@
     {#each iterable as currentObject, index (index)}
       <li class="me-2" style="margin: auto; list-style-type:none;" role="presentation">
         <button
-          onclick={(e) => {
+          onclick={() => {
             activeIndex = index;
           }}
           class="button {tabCSSClass} {activeIndex == index ? 'selected_tab' : 'tab'}"

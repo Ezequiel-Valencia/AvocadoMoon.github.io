@@ -3,21 +3,25 @@
   import Websites from './websites.svelte';
 </script>
 
-<div style="height: auto;" id="main-div">
+<svelte:head>
+  <title>Web Ring</title>
+</svelte:head>
+
+<div id="main-div">
   <Menu
     songVolumeLevel=".3"
     songPath="https://files.catbox.moe/lgaw6k.mp3"
     songName="Anodyne 2 - Center City Cenote"
   ></Menu>
-  <div style="height: auto; min-height:100vh; text-align:center; margin:auto;">
-    <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Web ring" />
+  <header class="hero">
+    <img id="anim" src="/web_ring/zekeanimsmall.gif" alt="Animated web ring banner" />
 
-    <div style="display: flex; margin:auto; text-align:center; width:fit-content; height:auto;">
-      <img style="height: 10vh;" src="/web_ring/www.gif" alt="WWW" />
-      <h2 style="font-size: 5vmin;">Portal for Interesting Websites</h2>
-      <img style="height: 10vh;" src="/web_ring/computer_surfing.gif" alt="Computer Surfing" />
+    <div class="title-row">
+      <img class="title-gif" src="/web_ring/www.gif" alt="" />
+      <h1>Portal for Interesting Websites</h1>
+      <img class="title-gif" src="/web_ring/computer_surfing.gif" alt="" />
     </div>
-  </div>
+  </header>
 
   <Websites></Websites>
 </div>
@@ -27,25 +31,47 @@
     top: 0;
     left: 0;
     position: absolute;
-    height: auto;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
     background-image: url('/web_ring/starsbg.gif');
   }
 
-  #anim {
-    margin: 10vh;
-    aspect-ratio: 1/1;
-    border-style: groove;
-    border-color: goldenrod;
-    border-width: 5px;
-    height: 40vmin;
-    width: 50vmin;
-
-    max-height: 800px;
-    max-width: 900px;
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    text-align: center;
   }
 
-  h2 {
+  #anim {
+    margin: 10vh auto 6vh;
+    width: min(50vmin, 900px);
+    height: auto;
+    max-width: 100%;
+    border: 5px groove goldenrod;
+  }
+
+  .title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .title-gif {
+    height: 10vh;
+    max-height: 100px;
+  }
+
+  h1 {
+    margin: 0;
     color: white;
+    font-size: clamp(1.5rem, 5vmin, 3rem);
+    font-weight: bold;
   }
 </style>

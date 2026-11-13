@@ -1,103 +1,158 @@
 <script lang="ts">
   import Tabs from '../../common/tabs.svelte';
-  import { webRing } from './WebsInrRing';
+  import { webRing, type WebRingCategory } from './WebsInrRing';
   import './tabs.scss';
 
-  const webRingIterable = Object.entries(webRing);
   let activeIndex = $state(0);
-  const icons = [
-    ['material-symbols-outlined', 'construction'],
-    ['material-symbols-outlined', 'palette'],
-  ];
+  const icons = webRing.map((category) => ['material-symbols-outlined', category.icon]);
+  const activeCategory = $derived(webRing[activeIndex]);
 
-  function redirctNewTab(e: any, url: string) {
-    window.open(url, '_blank');
+  function hostname(url: string): string {
+    return new URL(url).hostname.replace(/^www\./, '');
   }
 </script>
 
-<article style="text-align: center; height:auto;">
+<article class="web-ring">
   <Tabs
-    iterable={webRingIterable}
+    iterable={webRing}
     bind:activeIndex
-    getTabNameFunction={(e) => {
-      return e[0];
-    }}
+    getTabNameFunction={(category: WebRingCategory) => category.name}
     {icons}
   ></Tabs>
 
-  {#each webRingIterable as [key, webList], index (index)}
-    {#if activeIndex == index}
-      <div style="padding-bottom:5vh;">
-        <div
-          style="width: 35vw; margin:auto; border-bottom-style:solid; border-bottom-color:white;"
-        >
-          <h3 style="font-size: 4vmin;">{key}</h3>
-        </div>
-      </div>
+  <div class="panel" role="tabpanel" aria-labelledby={activeCategory.name}>
+    <h3 class="category-title">{activeCategory.name}</h3>
 
-      {#each webList as web, index (index)}
-        <div style="text-align:center; padding-bottom: 5%; height:auto;">
-          <div
-            class="content-div"
-            onmousedown={(e) => {
-              redirctNewTab(e, web.url);
-            }}
-            role="tab"
-            aria-controls="tabpanel-{index}"
-            tabindex={index}
-          >
-            <div
-              style="padding-left:2vw; padding-right: 2vw; margin-top: auto; margin-bottom:auto;"
-            >
-              <img class="web-image" src={web.imgLocation} alt="Website Cover" />
+    <ul class="site-list">
+      {#each activeCategory.sites as web (web.url)}
+        <li>
+          <a class="site-card" href={web.url} target="_blank" rel="noopener noreferrer">
+            <img class="web-image" src={web.imgLocation} alt="" loading="lazy" />
+            <div class="site-text">
+              <h4 class="site-title">{web.webTitle}</h4>
+              <span class="site-host">{hostname(web.url)} ↗</span>
+              <p class="site-description">{web.description}</p>
+              <p class="site-opinion"><strong>Thoughts:</strong> {web.opinion}</p>
             </div>
-            <div style="text-align: left;">
-              <h2 style="font-size: 3.5vmin; padding-right:2vw;">{web.webTitle}</h2>
-              <h5 style="font-size: 2.7vmin; padding-right:2vw;">{web.description}</h5>
-              <p style="font-size: 2.5vmin; padding-right:2vw;">Thoughts: {web.opinion}</p>
-            </div>
-          </div>
-        </div>
+          </a>
+        </li>
       {/each}
-    {/if}
-  {/each}
+    </ul>
+  </div>
 </article>
 
 <style lang="scss">
-  .content-div {
-    background-color: rgba(0, 0, 0, 0.801);
-    display: flex;
-    height: max-content;
-    border-style: double;
-    border-color: indigo;
-    width: 60vw;
+  .web-ring {
     text-align: center;
-    margin: auto;
+    padding: 0 16px 5vh;
+    color: white;
+  }
+
+  .category-title {
+    width: min(35vw, 400px);
+    min-width: 200px;
+    margin: 3vh auto 4vh;
+    padding-bottom: 0.25em;
+    border-bottom: 2px solid white;
+    font-size: clamp(1.25rem, 4vmin, 2rem);
+  }
+
+  .site-list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
     max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .site-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 4px double indigo;
+    color: white;
+    text-align: left;
+    text-decoration: none;
+    transition:
+      border-color 0.2s,
+      transform 0.2s,
+      box-shadow 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      border-color: goldenrod;
+      transform: translateY(-3px);
+      box-shadow: 0 0 16px rgba(218, 165, 32, 0.45);
+    }
+
+    &:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 3px;
+    }
   }
 
   .web-image {
-    border-style: ridge;
-    width: 10vw;
-    height: 15vh;
-    max-height: 150px;
-    max-width: 150px;
-    border-color: white;
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px ridge white;
   }
 
-  h3 {
-    color: white;
+  .site-text {
+    min-width: 0;
   }
 
-  h2 {
-    color: white;
+  .site-title {
+    margin: 0;
+    font-size: clamp(1.15rem, 3.5vmin, 1.75rem);
+    font-weight: bold;
   }
 
-  h5 {
-    color: white;
+  .site-host {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #b9a4ff;
+    word-break: break-all;
   }
 
-  p {
-    color: white;
+  .site-description {
+    margin: 0 0 0.5rem;
+    font-size: clamp(0.95rem, 2.7vmin, 1.2rem);
+  }
+
+  .site-opinion {
+    margin: 0;
+    font-size: clamp(0.9rem, 2.5vmin, 1.1rem);
+    color: #ddd;
+  }
+
+  @media (max-width: 600px) {
+    .site-card {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.75rem;
+    }
+
+    .web-image {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-card {
+      transition: none;
+
+      &:hover,
+      &:focus-visible {
+        transform: none;
+      }
+    }
   }
 </style>

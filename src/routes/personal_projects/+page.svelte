@@ -8,6 +8,10 @@
   const transControl = createTransitionControl();
 </script>
 
+<svelte:head>
+  <title>Personal Projects</title>
+</svelte:head>
+
 <div id="main-div">
   <Menu
     songVolumeLevel=".3"

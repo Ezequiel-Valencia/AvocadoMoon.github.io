@@ -98,9 +98,9 @@
     <div id="sky">
       <div id="circle-missing">
         {#each dreamText as char, i (i)}
-          <span class="circle-text">{char}</span>
+          <span class="circle-text" aria-hidden="true">{char}</span>
         {/each}
-        <img src="./personal_projects/moon.svg" alt="invisible-moon" id="invisible-moon" />
+        <img src="./personal_projects/moon.svg" alt="" id="invisible-moon" />
       </div>
       <Fish></Fish>
       <figure>
@@ -126,24 +126,13 @@
     </div>
     <div id="ocean"></div>
 
-    <div style="position: absolute; bottom: 5%; right: 15%; text-align:center; z-index:5;">
-      <button
-        onclick={transControl.updateToTransitioned()}
-        style="background-color: transparent; border-color: white; border-radius:20%;"
-      >
-        <u style="color: white;">
-          <i>
-            <h3
-              style="color: white; font-family: 'Times New Roman', Times, serif; font-size:x-large;"
-            >
-              Skip Intro
-            </h3>
-          </i>
-        </u>
-      </button>
-    </div>
+    <button class="skip-intro" onclick={() => transControl.updateToTransitioned()}>
+      Skip Intro
+    </button>
 
+    <!-- Keeps the dynamically added animation classes from being pruned by Svelte. -->
     <div
+      aria-hidden="true"
       style="opacity: 0;"
       class="remove-gradient reflected slide-in-moon slide-in-moon-reflected moon-to-sun"
     ></div>
@@ -237,6 +226,28 @@
     top: 10%;
     border-radius: 50%;
     align-items: center;
+  }
+
+  .skip-intro {
+    position: absolute;
+    bottom: 5%;
+    right: 15%;
+    z-index: 5;
+    padding: 0.25em 0.75em;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 0.5em;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: x-large;
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
   }
 
   .circle-text {

@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  export const dreamThoughts = [
-    "Server side image processing for microscopist's",
+  const dreamThoughts = [
+    'Server side image processing for microscopists',
     'Bot that sends digits of pi',
     'A shaming computer trash bin',
     'mTLS with post-quantum encryption schemes',
@@ -14,35 +12,27 @@
   ];
 
   let fishHoverIndex = $state(-1);
-  let numFishes = 5;
-  let startDreamThoughtsIndex = Math.floor(Math.random() * (dreamThoughts.length - numFishes - 1));
-
-  onMount(() => {
-    const fishes = document.querySelectorAll('.fish-slide') as NodeListOf<HTMLElement>;
-
-    fishes.forEach((fish, i) => {
-      fish.addEventListener('pointerenter', () => {
-        fishHoverIndex = i;
-      });
-      fish.addEventListener('pointerleave', () => {
-        fishHoverIndex = -1;
-      });
-    });
-  });
+  const numFishes = 5;
+  // Pick a random window of consecutive ideas, one per fish.
+  const startDreamThoughtsIndex = Math.floor(
+    Math.random() * (dreamThoughts.length - numFishes + 1)
+  );
+  const fishOffsets = Array.from({ length: numFishes }, (_, i) => i * Math.random() * 20 + i * 2);
 </script>
 
 <div>
   {#each { length: numFishes } as _, i (i)}
     <figure
       class="fish-slide"
-      style="--l-val: -{i * (Math.random() * 20) + i * 2}%; 
-    left: var(--l-val); position:absolute; top: {i * 18}%;"
+      style="--l-val: -{fishOffsets[i]}%; left: var(--l-val); position:absolute; top: {i * 18}%;"
+      onpointerenter={() => (fishHoverIndex = i)}
+      onpointerleave={() => (fishHoverIndex = -1)}
     >
       <img
         draggable="false"
         class="fish"
         src={i % 2 == 0 ? './personal_projects/fish.svg' : './personal_projects/fish-2.svg'}
-        alt="fish"
+        alt=""
         style="transform: {i % 2 == 0 ? 'scale(-1, 1)' : ''};"
       />
       {#if fishHoverIndex == i}

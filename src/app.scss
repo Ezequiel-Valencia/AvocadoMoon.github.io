@@ -1,1 +1,17 @@
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+
+/* Site-wide default cursor. Cursor is inherited, so any page or element that
+   sets its own `cursor` overrides this. Hot-spot 10 1 puts the click point on the fingertip. */
+html {
+  cursor:
+    url('/Cursors/Wii-Curso-plain.png') 10 1,
+    auto;
+}
+
+/* Default hover cursor for clickable elements. :where() keeps specificity at zero
+   so any page-specific cursor rule still wins. */
+:where(a[href], button, [role='button'], summary, select, label[for], input[type='checkbox'], input[type='radio'], input[type='submit'], input[type='button']):where(:not(:disabled)) {
+  cursor:
+    url('/Cursors/wii-open2.png') 17 1,
+    pointer;
+}

@@ -6,7 +6,6 @@
 @import 'tailwindcss/utilities.css' layer(utilities) source(none);
 
 @source './routes/ctgrassroots';
-@source './common/menu.svelte';
 @source '../node_modules/flowbite-svelte/dist';
 
 @plugin 'flowbite/plugin';

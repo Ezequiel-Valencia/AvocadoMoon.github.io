@@ -1,23 +1,30 @@
-<div id="contact" class="menu-popup">
-  <h2 class="menu-large-text">Contact Info</h2>
+<script lang="ts">
+  import { resumeURL } from '../../globals';
 
-  <h4 class="menu-med-text">Email:</h4>
-  <a href="mailto:ezq.valencia@gmail.com" class="menu-med-text">ezq.valencia@gmail.com</a>
+  const links = [
+    { label: 'Email', text: 'ezq.valencia@gmail.com', href: 'mailto:ezq.valencia@gmail.com' },
+    {
+      label: 'LinkedIn',
+      text: 'Ezequiel Valencia',
+      href: 'https://www.linkedin.com/in/ezequielvalencia/',
+    },
+    { label: 'GitHub', text: 'AvocadoMoon', href: 'https://github.com/AvocadoMoon' },
+    { label: 'Resume', text: 'Personal Resume', href: resumeURL },
+  ];
+</script>
 
-  <h4 class="menu-med-text">Linkedin:</h4>
-  <a class="menu-med-text" href="https://www.linkedin.com/in/ezequielvalencia/">Ezequiel Valencia</a
-  >
+<div id="contact" class="menu-popup" role="dialog" aria-labelledby="contact-title">
+  <h2 id="contact-title" class="menu-large-text">Contact Info</h2>
 
-  <h4 class="menu-med-text">Github:</h4>
-  <a class="menu-med-text" href="https://github.com/AvocadoMoon">AvocadoMoon</a>
-
-  <h4 class="menu-med-text">Resume:</h4>
-  <a
-    class="menu-med-text"
-    href="https://docs.google.com/document/d/e/2PACX-1vQXG6xgS-gXDlE0v03SPC5k56cUHKYMERYuDSOsqoyo8cLsFWslB_Rmr0B_Het3GDX4m7YfRlge-lbo/pub"
-  >
-    Personal Resume
-  </a>
+  {#each links as link (link.label)}
+    <h3 class="menu-med-text">{link.label}:</h3>
+    <a
+      class="menu-med-text"
+      href={link.href}
+      target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+      rel="noopener noreferrer">{link.text}</a
+    >
+  {/each}
 </div>
 
 <style lang="scss">

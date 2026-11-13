@@ -1,7 +1,3 @@
-<!-- TODO: Make the center text formated more appropeatly -->
-<!-- TODO: Make left button themes, right ? -->
-<!-- TODO: Instead of auto play make a button to play the music -->
-
 <script lang="ts">
   import { onMount } from 'svelte';
   import { clickedOff } from '../../globals';
@@ -11,16 +7,19 @@
   import Cube from './cube.svelte';
 
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const dayToName = (d: number) => days[d];
+  const pad = (n: number) => String(n).padStart(2, '0');
 
   let time = $state(new Date());
-  let hour = $derived(time.getHours());
-  let min = $derived(time.getMinutes());
-  let dayOrNight = $derived(hour >= 12 ? 'PM' : 'AM');
-  let displayHour = $derived(hour % 12 || 12);
-  let date = $derived(time.getDate());
-  let month = $derived(time.getMonth() + 1); // Month is 0 indexed so January is 0
-  let day = $derived(dayToName(time.getDay()));
+  let clock = $derived.by(() => {
+    const hour = time.getHours();
+    const amPm = hour >= 12 ? 'PM' : 'AM';
+    // Month is 0 indexed so January is 0
+    const date = `${time.getDate()}/${time.getMonth() + 1}`;
+    return `${hour % 12 || 12}:${pad(time.getMinutes())} ${amPm} | ${days[time.getDay()]} ${date}`;
+  });
+
+  let musicOptions = $state(false);
+  let contactInfo = $state(false);
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -29,10 +28,10 @@
 
     const onClick = (event: MouseEvent): void => {
       if (clickedOff('contact', event) && clickedOff('right-bar-button', event)) {
-        contact_info = false;
+        contactInfo = false;
       }
       if (clickedOff('left-bar-button', event) && clickedOff('music-options', event)) {
-        music_options = false;
+        musicOptions = false;
       }
     };
     document.addEventListener('click', onClick);
@@ -42,19 +41,28 @@
       document.removeEventListener('click', onClick);
     };
   });
-
-  let music_options = $state(false);
-  let contact_info = $state(false);
 </script>
 
-<div id="menu-bar">
+<svelte:window
+  onkeydown={(e) => {
+    if (e.key == 'Escape') {
+      musicOptions = false;
+      contactInfo = false;
+    }
+  }}
+/>
+
+<footer id="menu-bar">
   <div>
-    <h4 class="text bar-label" id="left-bar-label">| Audio |</h4>
+    <span class="text bar-label" id="left-bar-label" aria-hidden="true">| Audio |</span>
     <button
       id="left-bar-button"
       class="bar-button"
+      aria-label="Audio options"
+      aria-expanded={musicOptions}
       onclick={() => {
-        music_options = !music_options;
+        musicOptions = !musicOptions;
+        contactInfo = false;
       }}
     >
       <Cube cubeImage="musical-note.png"></Cube>
@@ -63,42 +71,42 @@
 
   <div id="center-text">
     <div id="top-text">
-      <h3 id="name" class="text">Ezequiel Valencia</h3>
+      <h1 id="name" class="text">Ezequiel Valencia</h1>
 
       <p class="text description">
         University of Connecticut Cybersecurity graduate, Bio-Informatics innovator,
+        <br />
+        Dev-Ops specialist, and Full-Stack developer
       </p>
-      <p class="text description">Dev-Ops specialist, and Full-Stack developer</p>
     </div>
 
     <div id="bar-div">
-      <p style="text-align: center;" id="clock">
-        {displayHour}:{min > 9 ? min : '0' + min}
-        {dayOrNight} | {day}
-        {date}/{month}
-      </p>
+      <time id="clock" datetime={time.toISOString()}>{clock}</time>
     </div>
   </div>
 
   <div>
-    <h4 class="text bar-label" id="right-bar-label">| Contact |</h4>
+    <span class="text bar-label" id="right-bar-label" aria-hidden="true">| Contact |</span>
     <button
       id="right-bar-button"
       class="bar-button"
+      aria-label="Contact info"
+      aria-expanded={contactInfo}
       onclick={() => {
-        contact_info = !contact_info;
+        contactInfo = !contactInfo;
+        musicOptions = false;
       }}
     >
       <Cube cubeImage="mail.png"></Cube>
     </button>
   </div>
-</div>
+</footer>
 
-{#if music_options}
+{#if musicOptions}
   <MusicOptions></MusicOptions>
 {/if}
 
-{#if contact_info}
+{#if contactInfo}
   <ContactInfo></ContactInfo>
 {/if}
 
@@ -129,13 +137,19 @@
 
   .text {
     text-align: center;
-    // font-family:'Times New Roman', Times, serif;
+  }
+
+  .bar-button:focus-visible {
+    outline: 3px solid rgb(52, 190, 237);
+    outline-offset: 4px;
   }
 
   .bar-label {
     position: absolute;
     bottom: 80%;
+    margin: 1.33em 0;
     font-size: 1.8vmin;
+    font-weight: bold;
   }
 
   #left-bar-label {
@@ -152,12 +166,15 @@
 
   #name {
     font-size: 2.5vmin;
+    margin: 1em 0;
     transform: translateY(-100%);
   }
 
   .description {
     font-size: 1.8vmin;
-    transform: translateY(-200%);
+    line-height: 2;
+    margin: 0;
+    transform: translateY(-2.4em);
   }
 
   #top-text {
@@ -168,6 +185,8 @@
   }
 
   #clock {
+    display: block;
+    margin: 1em 0;
     font-size: 2.5vmin;
     text-align: center;
     font-family: 'IBM Plex Mono', monospace;
@@ -192,6 +211,8 @@
 
   #menu-bar {
     position: fixed;
+    // Sits behind the channels so a selected channel and its backdrop cover it
+    z-index: -20;
     height: 100vh - $channel-view-height;
     width: 100vw;
     bottom: 0%;
@@ -214,6 +235,8 @@
     }
 
     .bar-label {
+      display: block;
+      margin-top: 0;
       position: static;
       font-size: 12px;
       margin-bottom: 4px;
@@ -237,7 +260,7 @@
 
     .description {
       font-size: 12px;
-      line-height: 1.3;
+      line-height: 1.5;
       transform: none;
     }
 

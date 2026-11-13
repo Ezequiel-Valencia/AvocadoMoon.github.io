@@ -1,25 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  let circles: HTMLElement;
+
   onMount(() => {
-    const circlesList = document.querySelector<HTMLElement>('.circles')!;
-    let pix = document.documentElement.scrollHeight * 0.8 * -1;
-    circlesList.style.setProperty('--circle-height', pix + 'px');
+    // Float the squares up through most of the page, however tall it is
+    const travel = document.documentElement.scrollHeight * -0.8;
+    circles.style.setProperty('--circle-height', travel + 'px');
   });
 </script>
 
-<div class="area">
-  <ul class="circles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+<div class="area" aria-hidden="true">
+  <ul class="circles" bind:this={circles}>
+    {#each { length: 10 } as _, i (i)}
+      <li></li>
+    {/each}
   </ul>
 </div>
 
@@ -124,6 +119,12 @@
     height: 150px;
     animation-delay: 0s;
     animation-duration: 11s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .circles {
+      display: none;
+    }
   }
 
   @keyframes animate {

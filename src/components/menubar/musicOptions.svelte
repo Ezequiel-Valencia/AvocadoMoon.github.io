@@ -2,24 +2,26 @@
   import { sfxController, musicController } from '../../common/myLocalStorage';
 </script>
 
-<div id="music-options" class="menu-popup">
-  <h2 class="menu-large-text">Audio Options</h2>
+<div id="music-options" class="menu-popup" role="dialog" aria-labelledby="music-options-title">
+  <h2 id="music-options-title" class="menu-large-text">Audio Options</h2>
   <p class="menu-med-text" style="margin: 5%;">
-    If you can't hear this sites music here are some trouble shooting methods:
+    If you can't hear this site's music, here are some troubleshooting steps:
   </p>
   <ol class="menu-med-text" style="margin: 5%;">
     <li class="menu-med-text">Turn on and off the audio.</li>
     <li class="menu-med-text">Go to site settings in your browser, and enable autoplay.</li>
-    <li class="menu-med-text">Unmute the tab</li>
+    <li class="menu-med-text">Unmute the tab.</li>
   </ol>
-  <a
-    target="_blank"
-    style="text-align: center; margin:auto;"
-    class="menu-med-text"
-    href="https://docs.google.com/document/d/e/2PACX-1vSkQh2B7KYF8omxPyYL0deWwESOxGK9V_uYcxOaFljqY3RCpwSB0rmU0HjWcz3p5RE5ShrXQv-5MjIQ/pub"
-  >
-    <p>Songs I Use</p>
-  </a>
+  <p>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      class="menu-med-text"
+      href="https://docs.google.com/document/d/e/2PACX-1vSkQh2B7KYF8omxPyYL0deWwESOxGK9V_uYcxOaFljqY3RCpwSB0rmU0HjWcz3p5RE5ShrXQv-5MjIQ/pub"
+    >
+      Songs I Use
+    </a>
+  </p>
   <button
     id="sfx"
     class="menu-med-text"

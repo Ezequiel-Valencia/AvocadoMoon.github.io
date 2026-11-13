@@ -17,7 +17,11 @@
   });
 </script>
 
-<div id="mainDiv">
+<svelte:head>
+  <title>Ezequiel Valencia</title>
+</svelte:head>
+
+<main id="mainDiv">
   {#if $sfxController}
     <audio bind:this={hoverAudio} src="/Audio/hoverchannel.wav" id="channel-hover-audio"></audio>
     <audio src="/Audio/hover.wav" id="channel-click-audio"></audio>
@@ -32,12 +36,11 @@
   <Menubar></Menubar>
 
   <BlocksAnimated></BlocksAnimated>
-  <!-- <Particles></Particles> -->
 
   {#if !$hasVisited}
     <FirstVisit></FirstVisit>
   {/if}
-</div>
+</main>
 
 <style lang="scss">
   #mainDiv {
@@ -45,7 +48,6 @@
     // Mobile browsers count the hidden URL bar in 100vh; dvh is the visible height
     height: 100dvh;
     width: 100vw;
-    // background: url('/Backgrounds/Waterfall.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -56,7 +58,6 @@
     cursor:
       url('/Cursors/Wii-Curso-plain.png') 10 1,
       pointer;
-    // cursor: url("/Cursors/Wii-Curso-plain.png") pointer;
 
     // covers whole screen
     top: 0px;

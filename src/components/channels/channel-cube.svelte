@@ -2,14 +2,13 @@
   import { onMount } from 'svelte';
 
   interface Props {
-    description: any;
-    frontImagePath: any;
-    gifImagePath: any;
+    description: string;
+    frontImagePath: string;
+    gifImagePath: string;
     focusedOn: boolean;
     cubeColor: string;
     cubeColorHover: string;
     frontHasBackground: boolean;
-    id: any;
   }
 
   let {
@@ -20,66 +19,49 @@
     cubeColor,
     cubeColorHover,
     frontHasBackground,
-    id,
   }: Props = $props();
 
+  let cube: HTMLElement;
   let touchscreen = false;
+  let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
-  let cubeReference: HTMLElement;
   onMount(() => {
-    cubeReference = document.querySelector(`#cube-${id}`) as HTMLElement;
-    if ('ontouchstart' in window) {
-      touchscreen = true;
-    }
+    touchscreen = 'ontouchstart' in window;
+    return () => clearTimeout(resetTimer);
   });
 
+  // Tilt the cube toward the cursor
   function followMouse(e: MouseEvent) {
-    if (!touchscreen && !focusedOn) {
-      let rect = cubeReference.getBoundingClientRect();
-      let x = e.clientX - rect.left - rect.width / 2;
-      let y = e.clientY - rect.top - rect.height / 2;
-
-      let rotateString = `rotate3d(${y * -1}, ${x}, 0, 20deg)`;
-      cubeReference.style.transform = rotateString;
-    }
+    if (touchscreen || focusedOn) return;
+    clearTimeout(resetTimer);
+    const rect = cube.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    cube.style.transform = `rotate3d(${-y}, ${x}, 0, 20deg)`;
   }
-  async function resetMouse() {
-    let transformBack = () => {
-      cubeReference.style.transform = '';
-    };
-    let delayedTransform = () => {
-      setTimeout(transformBack, 2000);
-    };
-    if (!focusedOn) {
-      transformBack();
-    } else {
-      await delayedTransform();
-    }
+
+  function resetTilt() {
+    clearTimeout(resetTimer);
+    // A selected cube is mid-animation, so let it settle before snapping back
+    resetTimer = setTimeout(() => (cube.style.transform = ''), focusedOn ? 2000 : 0);
   }
 </script>
 
 <section>
   <div
-    role="gridcell"
-    tabindex="0"
+    bind:this={cube}
+    role="presentation"
     style="--cube-color: {cubeColor}; --cube-hover-color: {cubeColorHover};"
-    onmousemove={(e) => {
-      followMouse(e);
-    }}
-    onmouseleave={() => {
-      resetMouse();
-    }}
-    onanimationend={() => {}}
-    id="cube-{id}"
+    onmousemove={followMouse}
+    onmouseleave={resetTilt}
     class="cube {focusedOn ? 'rotating-cube' : 'unfocused-cube'}"
   >
     <div class="bottom face low-opacity"></div>
     <div class="left face low-opacity"></div>
     <div class="right face low-opacity"></div>
 
-    <!-- Images -->
     {#if focusedOn}
-      {#if gifImagePath.includes('.webm')}
+      {#if gifImagePath.endsWith('.webm')}
         <video
           autoplay
           loop
@@ -93,22 +75,17 @@
         <img
           class="front face channel-image moving-image {frontHasBackground ? 'low-opacity' : ''}"
           src={gifImagePath}
-          alt="cube"
+          alt=""
         />
       {/if}
-
-      <!-- Not focused on -->
     {:else}
       <img
         class="front face channel-image {frontHasBackground ? 'low-opacity' : ''}"
         src={frontImagePath}
-        alt="cube"
+        alt=""
       />
-    {/if}
-
-    <!-- Text on top of Image -->
-    {#if !focusedOn}
-      <div style="opacity: 1;" class="front face"><h1>{description}</h1></div>
+      <!-- Channel name on top of the cover image -->
+      <div class="front face"><h2>{description}</h2></div>
     {/if}
 
     <div class="back face low-opacity"></div>
@@ -234,14 +211,16 @@
     transform: translateY(var(--channel-face-space-y)) rotateX(-90deg);
   }
 
-  h1 {
+  h2 {
+    margin: 0;
+    font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
     font-size: 2.5vmin;
     word-wrap: break-word;
     color: white;
   }
   @media (max-width: 500px) {
-    h1 {
+    h2 {
       font-family: 'Times New Roman', Times, serif;
       font-size: 5.5vmin;
       // Hyphenate long names like "Steganography" instead of splitting them anywhere

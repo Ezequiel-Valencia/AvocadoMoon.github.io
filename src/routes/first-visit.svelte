@@ -15,7 +15,7 @@
   });
 </script>
 
-<section
+<div
   id="first-visit"
   onanimationend={(e) => {
     if (e.animationName.includes('fadeOut')) {
@@ -23,21 +23,23 @@
     }
   }}
   class={finished ? 'fade-out' : ''}
-  style="position:absolute; left:0%; top:0%; height: 100vh; width:100vw;"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="welcome-title"
 >
   <div class="gradient-bg">
     <div class="text-glass">
-      <h1 style="text-align: center; margin-top:10%; padding-top:2%;">Welcome to EzequielOS</h1>
-      <i><p>Before we continue please answer the following questions</p></i>
+      <h1 id="welcome-title">Welcome to EzequielOS</h1>
+      <p class="intro">Before we continue, please answer the following questions.</p>
 
       <hr />
       <div id="allowAudio" class="text-box">
         <h2>Allow Audio?</h2>
         {#if $musicController}
-          <u><p>Even if audio is turned on, autoplay needs to enabled in the browser.</p></u>
-          <br />
+          <p class="note">Even with audio on, autoplay needs to be enabled in the browser.</p>
         {/if}
         <button
+          aria-pressed={selectedButton == 1}
           class={selectedButton == 1 ? 'selected' : ''}
           onclick={() => {
             sfxController.enable();
@@ -49,6 +51,7 @@
           Yes
         </button>
         <button
+          aria-pressed={selectedButton == 2}
           class={selectedButton == 2 ? 'selected' : ''}
           onclick={() => {
             sfxController.disable();
@@ -63,33 +66,29 @@
 
       {#if showResumeBlock}
         {#if touchscreen}
-          <h1 style="text-align:center; font-size: large; margin:auto; color: red;">
+          <p class="warning">
             This website is best viewed on a computer. It will function, but certain features will
             be unavailable.
-          </h1>
+          </p>
         {/if}
         <div class="text-box" id="view-resume">
           <h2>Resume</h2>
           <p>For people who want to see everything I've done in the quickest manner possible.</p>
-          <br />
-          <br />
-          <button
-            onclick={() => {
-              window.open(resumeURL);
-            }}
-          >
-            Open Resume</button
-          >
-          <button
-            onclick={() => {
-              finished = true;
-            }}>Continue</button
-          >
+          <div class="actions">
+            <a class="button" href={resumeURL} target="_blank" rel="noopener noreferrer">
+              Open Resume
+            </a>
+            <button
+              onclick={() => {
+                finished = true;
+              }}>Continue</button
+            >
+          </div>
         </div>
       {/if}
     </div>
   </div>
-</section>
+</div>
 
 <style lang="scss">
   @keyframes fadeIn {
@@ -119,7 +118,47 @@
     text-align: center;
   }
 
-  button {
+  #first-visit {
+    position: absolute;
+    inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+  }
+
+  #welcome-title {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .intro {
+    font-style: italic;
+  }
+
+  .note {
+    text-decoration: underline;
+    margin-bottom: 16px;
+  }
+
+  .warning {
+    color: rgb(190, 20, 20);
+    font-size: large;
+    font-weight: bold;
+    margin: 24px auto 0;
+  }
+
+  .actions {
+    margin-top: 24px;
+  }
+
+  button,
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 12px;
+    text-decoration: none;
     background-color: rgb(84, 134, 243);
     border: 0;
     border-radius: 4px;
@@ -135,8 +174,17 @@
       pointer;
   }
 
-  button:hover {
+  button:hover,
+  .button:hover,
+  button:focus-visible,
+  .button:focus-visible {
     background-color: rgb(0, 12, 121);
+  }
+
+  button:focus-visible,
+  .button:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 2px;
   }
 
   h1 {
@@ -168,10 +216,14 @@
 
   .gradient-bg {
     background-image: url('/clouds.jpg');
-    height: 100vh;
+    background-size: cover;
+    height: 100%;
     width: 100vw;
     background-position: 0% 0%;
     position: absolute;
+    display: flex;
+    align-items: center;
+    overflow-y: auto;
   }
 
   .text-glass {
@@ -182,20 +234,9 @@
     max-width: 90vw;
     min-width: 72vw;
     margin: auto;
-    min-height: 80vh;
+    padding: 48px 0;
+    box-sizing: border-box;
     -webkit-backdrop-filter: blur(10px);
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 
   @media (max-width: 500px) {
@@ -210,7 +251,8 @@
       font-size: 15px;
       max-width: 85%;
     }
-    button {
+    button,
+    .button {
       height: auto;
       min-height: 44px;
       padding: 0 20px;

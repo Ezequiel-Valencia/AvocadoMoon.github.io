@@ -2,28 +2,17 @@ $channel-button-height: 40%;
 $channel-button-width: 40%;
 $channel-button-offset: -5%;
 $border-radius: 40px;
-$channel-view-height: 80vh;
+$wii-blue: rgb(52, 190, 237);
 
-.play-button {
-  position: relative;
-  height: $channel-button-height;
-  width: $channel-button-width;
-  right: $channel-button-offset;
+#grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(3, 1fr);
   text-align: center;
-  top: 20%;
-}
-
-.big-channel-container {
-  position: fixed;
-  width: 30vmin;
-  height: 30vmin;
-  z-index: 50;
-  transition: all 1s;
-  border-radius: $border-radius;
-}
-
-.channel-buttons {
-  max-width: 400px;
+  justify-content: center;
+  gap: 1%;
+  max-width: 100vw;
+  padding: 1.5%;
 }
 
 .channel-container {
@@ -31,13 +20,17 @@ $channel-view-height: 80vh;
   border-radius: $border-radius;
   max-height: 400px;
   max-width: 400px;
-  // text-align: center;
+  outline: none;
+}
+
+.channel-container:focus-visible .channel-box {
+  box-shadow: 0 0 0 4px $wii-blue;
+  border-radius: 12px;
 }
 
 // Touch screens keep :hover after a tap, which would leave the glow stuck on
 @media (hover: hover) {
-  .channel-container:hover {
-    // background: linear-gradient(skyblue, blue);
+  .channel-container:not(.empty-slot):hover {
     box-shadow: 0px 0px 200px 200px lightblue inset;
   }
 
@@ -47,44 +40,22 @@ $channel-view-height: 80vh;
 }
 
 .channel-box {
+  box-sizing: border-box;
   padding: 2px;
   height: 22vmin;
   width: 22vmin;
   max-height: 400px;
   max-width: 400px;
-  // overflow: hidden;
   border-radius: $border-radius;
   transition: all 1s;
-  z-index: 1;
-  animation: z-high 1s linear;
 }
 
-@keyframes z-high {
-  0% {
-    z-index: 100;
-  }
-  100% {
-    z-index: 100;
-  }
-}
-
-.menu-button {
-  position: relative;
-  height: $channel-button-height;
-  width: $channel-button-width;
-  left: $channel-button-offset;
-  text-align: center;
-  top: 20%;
-}
-
-.channel-bar {
+.big-channel-container {
   position: fixed;
-  left: 0%;
-  height: 15vh;
-  width: 100vw;
-  bottom: 20vh;
-  display: block;
-  z-index: 4;
+  width: 30vmin;
+  height: 30vmin;
+  z-index: 50;
+  transition: all 1s;
   border-radius: $border-radius;
 }
 
@@ -97,50 +68,117 @@ $channel-view-height: 80vh;
   border: 2px solid rgba(15, 164, 250, 0.3);
 }
 
-#grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 0fr);
-  grid-template-rows: repeat(3, 1fr);
-  text-align: center;
-  justify-content: center;
-  gap: 1%;
-  max-width: 100vw;
-  padding: 1.5%;
+.focus-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fade-in 0.4s ease-out;
 }
 
+.channel-bar {
+  position: fixed;
+  left: 0%;
+  height: 15vh;
+  width: 100vw;
+  bottom: 20vh;
+  display: block;
+  z-index: 4;
+  text-align: center;
+  animation: fade-in 0.4s ease-out;
+
+  h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: clamp(18px, 2.6vmin, 32px);
+    color: rgb(40, 40, 40);
+  }
+}
+
+.channel-buttons {
+  max-width: 400px;
+}
+
+.menu-button,
+.play-button {
+  position: relative;
+  height: $channel-button-height;
+  width: $channel-button-width;
+  top: 20%;
+  text-align: center;
+}
+
+.menu-button {
+  left: $channel-button-offset;
+}
+
+.play-button {
+  right: $channel-button-offset;
+}
+
+// Rounded, glossy buttons in the style of the Wii menu
 .future-button {
-  background: rgba(44, 188, 255, 0.363);
-  border: 2px solid black;
-  justify-content: center;
-  transition: transform 500ms;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: linear-gradient(to bottom, #ffffff 0%, #f1f8fc 50%, #ddeef7 100%);
+  border: 3px solid rgba($wii-blue, 0.6);
+  border-radius: 999px;
+  color: rgb(60, 60, 60);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(16px, 2.2vmin, 26px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
   cursor:
     url('/Cursors/wii-open2.png') 17 1,
     pointer;
 }
 
-.future-button:hover {
-  background: rgba(24, 182, 255, 0.747);
+.future-button:hover,
+.future-button:focus-visible {
+  border-color: $wii-blue;
+  box-shadow:
+    0 0 0 4px rgba($wii-blue, 0.35),
+    0 6px 18px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.future-button:active {
+  transform: translateY(1px);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .channel-box,
+  .big-channel-container {
+    transition: none;
+  }
 }
 
 @media (max-width: 600px) {
   .channel-box {
-    padding: 2px;
     height: 40vmin;
     width: 40vmin;
-    // overflow: hidden;
-    border-radius: $border-radius;
-    transition: all 1s;
-    z-index: 1;
-    animation: z-high 1s linear;
   }
+
+  // Phones only show the channels that exist
+  .empty-slot {
+    display: none;
+  }
+
   #grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 0fr);
+    grid-template-columns: repeat(2, auto);
     grid-template-rows: none;
-    text-align: center;
-    justify-content: center;
     gap: 12px;
     padding: 16px;
   }
@@ -170,11 +208,7 @@ $channel-view-height: 80vh;
   }
 
   .big-channel-container {
-    position: fixed;
     width: 60vmin;
     height: 60vmin;
-    z-index: 50;
-    transition: all 1s;
-    border-radius: $border-radius;
   }
 }

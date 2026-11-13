@@ -1,34 +1,28 @@
-/*
-  Trying to create reactive elements using classes is to much of a pain.
-  Svelte only seems to recognize top level abstraction elements, and does not bother with 
-  reactivity of nested class objects
-  */
+// The desktop grid is 4 channels wide and 3 tall
+const nCols = 4;
+const nRows = 3;
 
-const nRows = 4;
-const nCols = 3;
-
-// Needs to be initalized with some form of variables or else compiler throws fit
-export let channels: {
+export interface Channel {
+  // Shown on the cube's face while it sits in the grid
   coverImage: string;
+  // Shown (image or .webm) once the channel is selected
   gifImage: string;
-  currentImage: string;
-  focused: boolean;
-  hover: boolean;
-  redirect: string;
   channelName: string;
+  // Site path, or a full URL for channels that live on another site
+  redirect: string;
+  // Audio file or YouTube link played while the channel is selected
   musicClip: string;
   volumeLevel: number;
   cubeColor: string;
   cubeHoverColor: string;
   frontHasBackground: boolean;
-}[] = [
+}
+
+export const channels: Channel[] = [
   {
     coverImage: '/Channel Covers/cover-image/union.svg',
     gifImage: '/Channel Covers/focused-image/about me cover.webp',
     channelName: 'About Me',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/about_me',
     musicClip: 'https://files.catbox.moe/fw5j3q.mp3',
     volumeLevel: 0.4,
@@ -40,9 +34,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/bottom-waves.svg',
     gifImage: '/Channel Covers/focused-image/Work_Exp.webm',
     channelName: 'Work Experience',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/work_experience',
     musicClip: 'https://files.catbox.moe/o9ja1i.mp3',
     volumeLevel: 0.5,
@@ -54,9 +45,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/waves.svg',
     gifImage: '/Channel Covers/focused-image/personal_projects.jpg',
     channelName: 'Personal Projects',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/personal_projects',
     musicClip: 'https://files.catbox.moe/b63jos.mp3',
     volumeLevel: 0.3,
@@ -68,9 +56,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/oscillate.svg',
     gifImage: '/Channel Covers/focused-image/book.gif',
     channelName: 'Education',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/education',
     musicClip: 'https://files.catbox.moe/bb5qbv.mp3',
     volumeLevel: 0.3,
@@ -80,12 +65,9 @@ export let channels: {
   },
   // {
   //   coverImage: '/Channel Covers/cover-image/disc.svg',
-  //   gifImage: 'Channel Covers/focused-image/threemix.png',
+  //   gifImage: '/Channel Covers/focused-image/threemix.png',
   //   channelName: 'Three Mix',
-  //   currentImage: '',
-  //   focused: false,
-  //   hover: false,
-  //   redirect: '/threemix',
+  //   redirect: 'https://threemix.ezequielvalencia.com',
   //   musicClip: '/Audio/channels/threemix-music.mp3',
   //   volumeLevel: 0.5,
   //   cubeColor: 'rgb( 132, 129, 255 )',
@@ -94,12 +76,9 @@ export let channels: {
   // },
   {
     coverImage: '/Channel Covers/cover-image/blob-sandwich.svg',
-    gifImage: 'Channel Covers/focused-image/CTGrassRoots Cover.jpg',
+    gifImage: '/Channel Covers/focused-image/CTGrassRoots Cover.jpg',
     channelName: 'CTGrassRoots',
-    currentImage: '',
-    focused: false,
-    hover: false,
-    redirect: '/ctgrassroots',
+    redirect: 'https://ctgrassroots.org',
     musicClip: 'https://files.catbox.moe/cc55u4.mp3',
     volumeLevel: 0.3,
     cubeColor: 'rgb(  255, 141, 40  )',
@@ -110,9 +89,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/low-poly.svg',
     gifImage: '/Channel Covers/focused-image/cat-encryption.webp',
     channelName: 'Cat Steganography',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/cat_encryption',
     musicClip: 'https://files.catbox.moe/g8n27k.mp3',
     volumeLevel: 0.3,
@@ -124,9 +100,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/flux.svg',
     gifImage: '/Channel Covers/focused-image/book-pen.jpg',
     channelName: 'Geocache',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/guest_book',
     musicClip: '/Audio/channels/geocache-music.mp3',
     volumeLevel: 0.3,
@@ -138,9 +111,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/blue_ssstar.svg',
     gifImage: '/Channel Covers/focused-image/pink_ssstar.svg',
     channelName: 'Music',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/background_music',
     musicClip: '/Audio/channels/threemix-music.mp3',
     volumeLevel: 0.3,
@@ -152,9 +122,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/forecast.svg',
     gifImage: '/Channel Covers/focused-image/forecast-anim.svg',
     channelName: 'Weather',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/weather',
     musicClip: 'https://youtu.be/385KWOld3OI?si=rybsvLPTpmvltdEZ',
     volumeLevel: 0.3,
@@ -166,9 +133,6 @@ export let channels: {
     coverImage: '/Channel Covers/cover-image/chaos.svg',
     gifImage: '/Channel Covers/focused-image/zekeanimsmall.gif',
     channelName: 'Web Ring',
-    currentImage: '',
-    focused: false,
-    hover: false,
     redirect: '/web_ring',
     musicClip: 'https://files.catbox.moe/j7ggzi.mp3',
     volumeLevel: 0.3,
@@ -177,34 +141,26 @@ export let channels: {
     frontHasBackground: false,
   },
   // {
-  //     coverImage: "/Channel Covers/Zine_Cover.webp",
-  //     gifImage: "Channel Covers/Zine_Cover.webp",
-  //     channelName: 'Zine',
-  //     currentImage: '',
-  //     focused: false,
-  //     hover: false,
-  //     redirect: "/zines",
-  //     musicClip: 'https://files.catbox.moe/tlb833.mp3',
-  //     volumeLevel: .2
+  //   coverImage: '/Channel Covers/Zine_Cover.webp',
+  //   gifImage: '/Channel Covers/Zine_Cover.webp',
+  //   channelName: 'Zine',
+  //   redirect: '/zines',
+  //   musicClip: 'https://files.catbox.moe/tlb833.mp3',
+  //   volumeLevel: 0.2,
   // },
 ];
+
 // Fill remaining grid slots with blank placeholders
 while (channels.length < nRows * nCols) {
   channels.push({
     coverImage: '',
     gifImage: '',
-    currentImage: '',
-    hover: false,
-    focused: false,
+    channelName: '',
     redirect: '',
     musicClip: '',
     volumeLevel: 0.5,
-    channelName: '',
     cubeColor: '',
     cubeHoverColor: '',
     frontHasBackground: false,
   });
 }
-
-// Initialize currentImage for all channels
-channels.forEach((c) => (c.currentImage = c.coverImage));

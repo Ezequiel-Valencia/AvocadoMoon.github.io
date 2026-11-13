@@ -11,7 +11,15 @@
   });
 </script>
 
-<section id="loading-section" style="position: absolute; height:100vh; width:100vw;">
+<section
+  id="loading-section"
+  style="position: absolute; height:100vh; width:100vw;"
+  role="progressbar"
+  aria-label="Loading galaxy"
+  aria-valuemin={0}
+  aria-valuemax={100}
+  aria-valuenow={Math.round($percentLoaded)}
+>
   {#each { length: 40 } as _, i (i)}
     <div
       style="--fade-time: {Math.max((i * Math.random()) % 5, 2 + Math.random())}s;"
@@ -20,12 +28,12 @@
   {/each}
   <div style="text-align: center; justify-content:center; margin:auto;">
     <h1 style="text-align: center; color:white;">Galaxy is loading, please wait.</h1>
-    <div style="width: 25vw;" id="progress-bar">
+    <div style="width: max(25vw, 200px);" id="progress-bar">
       <div
         style="width: {$percentLoaded}%; background-color:purple; color:white;"
         id="progress-bar-filling"
       >
-        {$percentLoaded}%
+        {Math.round($percentLoaded)}%
       </div>
     </div>
   </div>

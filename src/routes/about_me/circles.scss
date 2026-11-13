@@ -56,6 +56,14 @@ svg {
   overflow: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .g3,
+  .g4,
+  .g5 {
+    animation: none;
+  }
+}
+
 .g3 {
   position: absolute;
   background: radial-gradient(

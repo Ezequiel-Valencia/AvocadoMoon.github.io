@@ -35,7 +35,7 @@ export const experiences: { [key: string]: WorkExperience } = {
     ],
     jobTitle: 'Full Stack Software Developer',
     description:
-      "Custom frontend Java applications, backend to support Java applications, transfer of legacy object serialization to RESTful API's, test suites for business logic, and update the user management system used.",
+      'Custom frontend Java applications, backends to support them, migration of legacy object serialization to RESTful APIs, test suites for business logic, and an updated user management system.',
     time: 'July 2023 - Now',
     redirect: prefix + '/CCAM',
   },
@@ -47,27 +47,27 @@ export const experiences: { [key: string]: WorkExperience } = {
       csWorkTechnologies.HTML,
       csWorkTechnologies.CSS,
     ],
-    jobTitle: 'Cybersecurity Teaching Assitant',
+    jobTitle: 'Cybersecurity Teaching Assistant',
     description:
       'Made an automated grading system and helped teach students about cybersecurity practices. Also developed web applications for web security labs.',
     time: 'August 2022 - May 2023',
     redirect: prefix + '/TA',
   },
   mitre: {
-    company: 'Mitre',
+    company: 'MITRE',
     jobTitle: 'Research Assistant',
     technologies: [csWorkTechnologies.Coq, csWorkTechnologies.C],
     description:
-      'Helped with proving functional equivelance between different functions, research post quantum IB encryption, and participated in a CTF.',
+      'Helped prove functional equivalence between C and Cryptol functions, researched post-quantum identity-based encryption, and competed in an embedded systems CTF.',
     time: 'May 2022 - August 2022',
     redirect: prefix + '/MITRE',
   },
   ra: {
     company: 'University of Connecticut',
-    jobTitle: 'Residential Assistant',
+    jobTitle: 'Resident Assistant',
     technologies: [],
     description:
-      'Was in charge of the residents on my floor dealing with violent, mundane, janitorial, and mental health crisis siutations.',
+      'Was in charge of the residents on my floor, handling violent, mundane, janitorial, and mental health crisis situations.',
     time: 'August 2021 - May 2022',
     redirect: prefix + '/RA',
   },
@@ -76,7 +76,7 @@ export const experiences: { [key: string]: WorkExperience } = {
     technologies: [csWorkTechnologies.Java, csWorkTechnologies.Fiji],
     jobTitle: 'Lead Developer',
     description:
-      'Developed two ImageJ plugins, one to control the microscope that this companies product used and another for analyzing the results of this microscope.',
+      "Developed two ImageJ plugins, one to control the microscope used by the company's product and another for analyzing the images it produced.",
     time: 'May 2021 - July 2021',
     redirect: prefix + '/QCDx',
   },

@@ -29,12 +29,15 @@
           }}
           class="button {tabCSSClass} {activeIndex == index ? 'selected_tab' : 'tab'}"
           role="tab"
+          aria-selected={activeIndex == index}
+          aria-label={icons.length === 0 ? undefined : getTabNameFunction(currentObject)}
+          title={icons.length === 0 ? undefined : getTabNameFunction(currentObject)}
           id={getTabNameFunction(currentObject)}
         >
           {#if icons.length === 0}
             {getTabNameFunction(currentObject)}
           {:else}
-            <span class="icon {icons[index][0]}">{icons[index][1]}</span>
+            <span class="icon {icons[index][0]}" aria-hidden="true">{icons[index][1]}</span>
           {/if}
         </button>
       </li>

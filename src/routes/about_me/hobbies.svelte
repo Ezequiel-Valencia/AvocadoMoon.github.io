@@ -19,15 +19,7 @@
 </svelte:head>
 
 <section id="hobbies">
-  <u style="color: white;">
-    <i>
-      <h2
-        style="text-align: center; color:white; font-family:'Times New Roman', Times, serif; font-size:xx-large;"
-      >
-        Hobbies <br />
-      </h2>
-    </i>
-  </u>
+  <h2 id="hob-title">Hobbies</h2>
   <Tabs
     iterable={hobbies}
     bind:activeIndex
@@ -36,34 +28,26 @@
     }}
     {icons}
   ></Tabs>
+  <h3 class="category-name">{hobbies[activeIndex].category}</h3>
   {#each hobbies as hob, index (index)}
     {#if activeIndex == index}
       <div id={hob.category} class="category">
         {#each hob.activity as activity, index (index)}
-          <div id={activity.name} class="activity">
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <h3>{activity.name}</h3>
-
-                    <p id="{activity.name}-desciption" class="description">
-                      {activity.description}
-                    </p>
-                  </td>
-
-                  <td>
-                    <img
-                      src={activity.image}
-                      alt="activity"
-                      class="activity-image"
-                      id="{activity.name}-image"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <article id={activity.name} class="activity">
+            <div class="activity-text">
+              <h4>{activity.name}</h4>
+              <p id="{activity.name}-description" class="description">
+                {activity.description}
+              </p>
+            </div>
+            <img
+              src={activity.image}
+              alt={activity.name}
+              class="activity-image"
+              id="{activity.name}-image"
+              loading="lazy"
+            />
+          </article>
         {/each}
       </div>
     {/if}
@@ -71,58 +55,85 @@
 </section>
 
 <style lang="scss">
-  // https://www.geeksforgeeks.org/how-to-wrap-the-text-around-an-image-using-html-and-css/#
   #hobbies {
-    // overflow: auto; //make stuff that overflows to make the div expand
-    overflow-y: scroll;
     height: auto;
     width: 100%;
     position: relative;
     z-index: 2;
+    padding-bottom: 5%;
   }
 
   #hob-title {
     margin: auto;
     text-align: center;
     color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    font-style: italic;
+    text-decoration: underline;
+  }
+
+  .category-name {
+    text-align: center;
+    color: white;
+    font-size: large;
+    margin-top: 1rem;
   }
 
   .category {
-    margin-left: auto; //aligns div in the center by auto making margins
-    margin-right: auto;
-    padding-left: 5%;
-    margin-bottom: 10%;
-    margin-top: 10%;
-    padding: 0%;
-    border-style: solid;
-    border-color: white;
+    margin: 2rem auto 10%;
+    border: 1px solid white;
     max-width: 1000px;
-    width: 80vw;
-    // left: 50%;
-    // transform: translate(50%);
-
-    // float: inline-start;
+    width: 90%;
   }
 
   .activity {
-    // height: 100%;
-    padding: 2%;
-    padding-bottom: 5%;
-    overflow: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
     color: white;
+  }
+
+  .activity + .activity {
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .activity-text {
+    flex: 1;
+  }
+
+  h4 {
+    font-size: x-large;
+    margin: 0 0 0.5rem;
   }
 
   .description {
     font-size: large;
-    top: 0%;
+    line-height: 1.5;
     color: white;
+    margin: 0;
   }
 
   .activity-image {
+    width: 150px;
     height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
 
-    // margin-left: 70%;
-    float: right;
-    max-width: 150px;
+  @media (max-width: 600px) {
+    .activity {
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+    }
+
+    .activity-image {
+      width: 100%;
+      max-width: 300px;
+      height: 220px;
+    }
   }
 </style>

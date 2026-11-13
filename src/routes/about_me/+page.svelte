@@ -5,22 +5,27 @@
   import { onMount } from 'svelte';
 
   let touchscreen = $state(false);
+  let interBubble: HTMLDivElement | undefined = $state();
+
   onMount(() => {
-    const interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
     let curX = 0;
     let curY = 0;
     let tgX = 0;
     let tgY = 0;
 
+    // The bubble follows the cursor, which touchscreens don't have
     if ('ontouchstart' in window) {
       touchscreen = true;
+      return;
     }
 
     let frame: number;
     function move() {
       curX += (tgX - curX) / 20;
       curY += (tgY - curY) / 20;
-      interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+      if (interBubble) {
+        interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+      }
       frame = requestAnimationFrame(move);
     }
 
@@ -38,6 +43,10 @@
     };
   });
 </script>
+
+<svelte:head>
+  <title>About Me</title>
+</svelte:head>
 
 <section id="main-div">
   <svg xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +69,7 @@
     <div class="g4"></div>
     <div class="g5"></div>
     {#if !touchscreen}
-      <div class="interactive"></div>
+      <div class="interactive" bind:this={interBubble}></div>
     {/if}
   </div>
 

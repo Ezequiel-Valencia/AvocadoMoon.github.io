@@ -9,6 +9,7 @@
   import { percentLoaded } from './experiences';
 
   let fromExperiencePage: boolean = $state(false);
+  let loaded = $derived($percentLoaded >= 100 || fromExperiencePage);
 
   onMount(() => {
     if (window.location.href.includes('#myExperience')) {
@@ -22,20 +23,23 @@
 
 <!-- https://www.twilio.com/en-us/blog/svelte-stores-share-data-between-components -->
 
+<svelte:head>
+  <title>Work Experience</title>
+</svelte:head>
+
 <div
   id="main-div"
-  style="height: {$percentLoaded == 100 || fromExperiencePage ? 'auto' : '100vh'}; 
-    overflow: {$percentLoaded == 100 || fromExperiencePage ? 'visible' : 'hidden'};"
+  style="height: {loaded ? 'auto' : '100vh'}; overflow: {loaded ? 'visible' : 'hidden'};"
 >
   <Menu songVolumeLevel=".5" songPath={experiencesSong} songName="Sabbath - Saya No Uta"></Menu>
   {#if !fromExperiencePage}
-    <div style="opacity: {$percentLoaded == 100 ? 1 : 0};">
+    <div style="opacity: {$percentLoaded >= 100 ? 1 : 0};">
       <Intro></Intro>
     </div>
   {/if}
   <Experience></Experience>
 
-  {#if $percentLoaded != 100 && !fromExperiencePage}
+  {#if !loaded}
     <Loading></Loading>
   {/if}
 </div>

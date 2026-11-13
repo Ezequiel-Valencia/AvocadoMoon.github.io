@@ -46,26 +46,25 @@
   <h2 id="myExperience">My Work Experience</h2>
   {#each Object.entries(experiences) as [, experience], index (index)}
     <div id={'entry-spacer-' + index} class="spacer watch">
-      <div
+      <a
         id={'entry-' + index}
         class={index % 2 == 0 ? 'experience-div left' : 'experience-div right'}
-        onmousedown={() => {
+        href={experience.redirect}
+        data-sveltekit-reload
+        onclick={() => {
           if ($musicController) {
             musicTime.updateTimeStamp();
           }
-          location.href = experience.redirect;
         }}
-        aria-controls="tab-index-{index}"
-        role="tab"
-        tabindex={index}
       >
         <p class="job-time">{experience.time}</p>
         <div class="text-div">
           <h3 class="company-name text">{experience.company}</h3>
-          <h5 class="job-title text">{experience.jobTitle}</h5>
+          <p class="job-title text">{experience.jobTitle}</p>
           <p class="job-description text">{experience.description}</p>
+          <span class="read-more text">Read more &#x2192;</span>
         </div>
-      </div>
+      </a>
     </div>
   {/each}
   <!-- Implemented so that in-view, right, and left class gets compiled -->
@@ -136,6 +135,8 @@
   }
 
   .experience-div {
+    text-decoration: none;
+    color: inherit;
     margin: auto;
     padding: 2%;
     border-style: dotted;
@@ -149,9 +150,55 @@
     z-index: 2;
   }
 
-  .experience-div:hover {
+  .experience-div:hover,
+  .experience-div:focus-visible {
     background-color: #2e2e2e;
     cursor: pointer;
+  }
+
+  .experience-div:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+  }
+
+  .job-title {
+    font-weight: bold;
+    color: rgb(190, 190, 190);
+  }
+
+  .read-more {
+    display: block;
+    margin-top: 1em;
+    color: rgb(88, 255, 255);
+    font-size: small;
+  }
+
+  @media (max-width: 600px) {
+    .experience-div {
+      width: 92vw;
+      flex-direction: column;
+    }
+
+    .job-time {
+      writing-mode: horizontal-tb;
+      margin: 0 0 0.5em;
+    }
+
+    .text {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star {
+      animation: none;
+    }
+
+    .in-view.left,
+    .in-view.right {
+      animation-duration: 0.01s;
+    }
   }
 
   .in-view.left {

@@ -1,106 +1,84 @@
 <script lang="ts">
-  import { createBookCheckout } from './education';
-
-  let bookCheckout = createBookCheckout();
-  let showHint = $state(false);
-
-  function checkedOutBook() {
-    bookCheckout.toggleBookStatus();
-    let main = document.querySelector('#main-div') as HTMLElement;
-    if (bookCheckout.read()) {
-      main.style.cursor = 'url("/Education/book-cursor.png") 28 23, auto'; //numbers tell where in image to center hot-spot of cursor
-    } else {
-      main.style.cursor = 'default';
-    }
+  interface Props {
+    bookCheckedOut: boolean;
   }
+
+  let { bookCheckedOut = $bindable() }: Props = $props();
 </script>
 
-<section id="intro-div" style="height: 100vh;">
-  <div
-    style="height: 100vh;background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.99));"
-  >
-    <div class="content-div" style="top: 25%; margin-bottom:25%">
-      <article>
-        <div>
-          <p class="text" style="margin-top:0; font-size:2.5em;">
-            “Education is the movement from darkness to light.” – Allan Bloom
-          </p>
-          <button
-            class="btn"
-            onclick={() => {
-              checkedOutBook();
-            }}
-            onpointerenter={() => {}}
-            style="margin-top:0; font-size:2.5em;"
-          >
-            {#if $bookCheckout}
-              Return Book
-            {:else}
-              Checkout Book
-            {/if}
-          </button>
-          <br />
-          <br />
-          <!-- <button on:click={() => {showHint = true}} style="height: fit-content; max-height:2vh;">Get hint</button> -->
-          {#if showHint}
-            <p>Hint: Checkout Book and Hover It In the Dark</p>
-          {/if}
-        </div>
-      </article>
+<section id="intro-div">
+  <div class="fade">
+    <div class="content-div">
+      <blockquote class="text">
+        “Education is the movement from darkness to light.”
+        <cite>- Allan Bloom</cite>
+      </blockquote>
+      <button
+        class="btn"
+        aria-pressed={bookCheckedOut}
+        onclick={() => {
+          bookCheckedOut = !bookCheckedOut;
+        }}
+      >
+        {bookCheckedOut ? 'Return Book' : 'Checkout Book'}
+      </button>
     </div>
   </div>
 </section>
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
   #intro-div {
-    height: auto;
-    width: 100vw;
+    width: 100%;
     background-image: url('/Education/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
   }
 
-  p {
-    color: white;
-  }
-
-  article {
-    height: auto;
-    width: auto;
+  .fade {
+    min-height: 100vh;
     display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.99));
   }
+
   .content-div {
-    width: 80vw;
-    height: 80vh;
-    text-align: center;
-    margin: auto;
-    position: relative;
+    width: min(80vw, 1100px);
+    margin: 0 auto;
+    text-align: left;
   }
 
   .text {
-    margin-top: 10vh;
-    margin-left: 5vw;
-    text-align: left;
-    font-size: 5em;
+    margin: 0 0 1.5rem;
+    color: white;
+    font-size: clamp(1.5rem, 5vmin, 2.5em);
     font-family: 'Times New Roman', Times, serif;
+
+    cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-style: normal;
+    }
   }
 
-  /* 5 */
   .btn {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    border: none;
+    border-radius: 6px;
     background: white;
     color: black;
-    line-height: 42px;
-    padding: 0;
-    border: none;
-    border-radius: 5%;
-    padding: 1%;
-    transition: all 0.3s ease;
-    display: inline-block;
-    position: relative;
     font-family: 'Times New Roman', Times, serif;
+    font-size: clamp(1.4rem, 4vmin, 2.5em);
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
-  .btn:hover {
+  .btn:hover,
+  .btn:focus-visible {
     background: black;
     color: white;
     box-shadow:
@@ -108,6 +86,10 @@
       -4px -4px 5px 0px #fff9,
       7px 7px 20px 0px #0002,
       4px 4px 5px 0px #0001;
+  }
+  .btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
   }
   .btn:before,
   .btn:after {
@@ -127,8 +109,18 @@
     bottom: 0;
   }
   .btn:hover:before,
-  .btn:hover:after {
+  .btn:hover:after,
+  .btn:focus-visible:before,
+  .btn:focus-visible:after {
     width: 100%;
     transition: 800ms ease all;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn:before,
+    .btn:after {
+      transition: none !important;
+    }
   }
 </style>

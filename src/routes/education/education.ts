@@ -1,26 +1,4 @@
-import { safeLocalStorage, convertToBoolean } from '../../common/myLocalStorage';
-import { writable } from 'svelte/store';
 import { csWorkTechnologies } from '../../globals';
-
-export function createBookCheckout() {
-  const key = 'bookCheckoutBool';
-  safeLocalStorage?.setItem(key, 'false');
-  const bool = convertToBoolean(safeLocalStorage?.getItem(key) as string);
-  const { subscribe, update } = writable(bool);
-
-  return {
-    subscribe,
-    read: () => {
-      let v = safeLocalStorage?.getItem(key);
-      return v == null ? false : convertToBoolean(v);
-    },
-    toggleBookStatus: () =>
-      update((bool) => {
-        safeLocalStorage?.setItem(key, String(!bool));
-        return !bool;
-      }),
-  };
-}
 
 export const technology_learned = [
   {
@@ -146,6 +124,6 @@ export const technology_learned = [
   {
     icon: csWorkTechnologies.Django.icon,
     iconName: csWorkTechnologies.Django.name,
-    projects: ['Auto Grader'],
+    projects: ['Auto Grading Site'],
   },
 ];

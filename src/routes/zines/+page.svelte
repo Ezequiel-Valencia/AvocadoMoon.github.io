@@ -3,6 +3,10 @@
   import Zines from './zines.svelte';
 </script>
 
+<svelte:head>
+  <title>Zines | Ezequiel Valencia</title>
+</svelte:head>
+
 <div id="bg">
   <Menu
     songVolumeLevel=".2"
@@ -12,7 +16,7 @@
 
   <div id="main-div">
     <div id="gold-border">
-      <h1 id="zine-intro">My Zine's</h1>
+      <h1 id="zine-intro">My Zines</h1>
     </div>
     <Zines></Zines>
   </div>
@@ -44,25 +48,22 @@
     overflow-y: auto;
   }
   #gold-border {
-    height: 10vh;
-    width: 50vw;
-    max-width: 500px;
-    max-height: 60px;
+    width: fit-content;
+    max-width: 85vw;
+    padding: 0.75rem 2.5rem;
     border-style: outset;
     border-color: rgb(255, 255, 255);
     border-radius: 20px;
 
-    margin: auto;
-    margin-top: 8vh;
-    margin-bottom: 2vh;
-    background-color: rgba(0, 0, 0, 0.801);
+    margin: 8vh auto 5vh;
+    background-color: rgba(0, 0, 0, 0.8);
     text-align: center;
   }
 
   #zine-intro {
-    margin: auto;
-    transform: translateY(20%);
+    margin: 0;
     font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
     color: rgb(255, 255, 255);
   }
 </style>

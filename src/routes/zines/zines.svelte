@@ -1,52 +1,36 @@
 <script lang="ts">
   import { zines } from './zine';
-  let zinesKeyValueArray = Object.entries(zines);
-  let hoveredEntity = $state(-1);
+  const zineList = Object.values(zines);
 </script>
 
-<div id="zines">
-  {#each zinesKeyValueArray as [, zine], index (index)}
-    <div
-      onmouseenter={() => {
-        hoveredEntity = index;
-      }}
-      onmouseleave={() => {
-        hoveredEntity = -1;
-      }}
-      onmousedown={() => {
-        window.open(zine.redirect);
-      }}
-      id={zinesKeyValueArray.length === 1 + index ? 'last-zine' : 'zine-' + index}
-      role="tab"
-      aria-controls="tabpanel-{index}"
-      tabindex={index}
-      style="display: flex; grid-row: 0; grid-column: {index % 1};"
-      class="zine-container"
-    >
-      {#if hoveredEntity != index}
-        <img style="display: flex;" class="zine-cover" src={zine.zineCover} alt="Zine Cover" />
-        <p style="display: flex;" class="title">{zine.title}</p>
-      {/if}
-      {#if hoveredEntity == index}
-        <p class="description">{zine.description}</p>
-      {/if}
-    </div>
+<ul id="zines">
+  {#each zineList as zine (zine.name)}
+    <li>
+      <a class="zine-card" href={zine.redirect}>
+        <div class="cover-frame">
+          <img class="zine-cover" src={zine.zineCover} alt="Cover of {zine.title}" loading="lazy" />
+          <p class="description">{zine.description}</p>
+        </div>
+        <h2 class="title">{zine.title}</h2>
+        <p class="date-made">Made {zine.dateMade}</p>
+        <p class="touch-description">{zine.description}</p>
+      </a>
+    </li>
   {/each}
-</div>
+</ul>
 
 <style lang="scss">
   #zines {
+    list-style: none;
     background-color: rgba(0, 0, 0, 0.7);
-    height: 80vh;
     width: 90vw;
-    text-align: center;
-    margin: auto;
-    margin-bottom: 5vh;
+    max-width: 1250px;
+    margin: 0 auto 8vh;
+    padding: 2.5rem 2rem;
     display: grid;
-    grid-template-columns: 50% 50%; // each 50% represents one column I want in the grid
-    grid-auto-rows: 1fr; // Full row for height
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem 2rem;
     border-style: solid;
-    max-height: 1000px;
     border-image-source: url('/zines/star-line.png');
     border-image-repeat: round;
     border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
@@ -54,76 +38,129 @@
     border-image-outset: 20px; //how far out from the height/width of the element
   }
 
-  .zine-cover {
-    max-width: 300px;
-    max-height: 500px;
-    height: 30vh;
-    margin-top: auto;
-    margin-bottom: auto;
-    padding-left: 5%;
+  .zine-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition:
+      background-color 0.4s,
+      transform 0.4s;
   }
 
-  .zine-container {
+  .zine-card:hover,
+  .zine-card:focus-visible {
+    background-color: rgba(0, 0, 0, 0.85);
+    transform: translateY(-4px);
+  }
+
+  .zine-card:focus-visible {
+    outline: 2px solid goldenrod;
+    outline-offset: 4px;
+  }
+
+  // The description fades in over the cover, so the cover is never replaced
+  .cover-frame {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  }
+
+  .zine-cover {
     width: 100%;
     height: 100%;
-    margin: auto;
-    transition: all 1s;
-    border-radius: 5px;
+    object-fit: cover;
+    transition: transform 0.6s;
   }
 
-  .zine-container:hover {
-    background-color: black;
-    transition: all 1s;
-    border-bottom-color: transparent;
+  .description {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 1rem;
+    color: white;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    background-color: rgba(0, 0, 0, 0.93);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .zine-card:hover .description,
+  .zine-card:focus-visible .description {
+    opacity: 1;
+  }
+
+  .zine-card:hover .zine-cover,
+  .zine-card:focus-visible .zine-cover {
+    transform: scale(1.05);
   }
 
   .title {
-    text-align: center;
+    margin: 0;
     color: goldenrod;
-    padding: 5%;
-    font-size: medium;
-    margin-top: auto;
-    margin-bottom: auto;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    text-align: center;
   }
-  .description {
-    color: white;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin: auto;
-    padding-left: 2%;
-    padding-right: 2%;
+
+  .date-made {
+    margin: -0.5rem 0 0;
+    color: goldenrod;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    opacity: 0.85;
+  }
+
+  .touch-description {
+    display: none;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  // Touch screens can't hover, so show the description under the title instead
+  @media (hover: none) {
+    .cover-frame {
+      max-width: 260px;
+    }
+    .description {
+      display: none;
+    }
+    .touch-description {
+      display: block;
+    }
   }
 
   @media screen and (max-width: 768px) {
     #zines {
-      grid-template-columns: 1fr;
-      background-color: rgba(0, 0, 0, 0.7);
-      height: 100%;
-      width: 80vw;
-      text-align: center;
-      margin: auto;
-      margin-bottom: 5vh;
-      display: grid;
-      grid-auto-rows: 1fr; // Full row for height
-      border-style: solid;
-      border-image-source: url('/zines/star-line.png');
-      border-image-repeat: round;
-      border-image-slice: 33%; // what percent of the image from left, right, top, and bottom sides should the slicing line drop to
-      border-image-width: 25px; //size of the border
-      border-image-outset: 20px; //how far out from the height/width of the element
+      width: 85vw;
+      padding: 2rem 1rem;
     }
-    .zine-container {
-      width: 100%;
-      height: 35vh;
-      margin: auto;
-      transition: all 1s;
-      border-bottom-style: inset;
-      border-radius: 0px;
-      border-bottom-color: white;
-    }
+  }
 
-    #last-zine {
-      border-bottom: transparent;
+  @media (prefers-reduced-motion: reduce) {
+    .zine-card,
+    .zine-cover,
+    .description {
+      transition: none;
+    }
+    .zine-card:hover,
+    .zine-card:focus-visible {
+      transform: none;
     }
   }
 </style>

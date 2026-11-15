@@ -1,6 +1,6 @@
-// The desktop grid is 4 channels wide and 3 tall
-const nCols = 4;
-const nRows = 3;
+// A page of channels is at most 4 wide and 3 tall; smaller screens fit fewer per page
+export const maxCols = 4;
+export const maxRows = 3;
 
 export interface Channel {
   // Shown on the cube's face while it sits in the grid
@@ -18,7 +18,11 @@ export interface Channel {
   frontHasBackground: boolean;
 }
 
-export const channels: Channel[] = [
+// An empty object `{}` in the list below holds a blank space in the grid
+export type EmptySlot = Record<string, never>;
+export type ChannelSlot = Channel | EmptySlot;
+
+export const channels: ChannelSlot[] = [
   {
     coverImage: '/Channel Covers/cover-image/union.svg',
     gifImage: '/Channel Covers/focused-image/about me cover.webp',
@@ -140,17 +144,6 @@ export const channels: Channel[] = [
     cubeHoverColor: 'rgb(  29, 67, 122 )',
     frontHasBackground: false,
   },
-  // {
-  //   coverImage: '/Channel Covers/Zine_Cover.webp',
-  //   gifImage: '/Channel Covers/Zine_Cover.webp',
-  //   channelName: 'Zine',
-  //   redirect: '/zines',
-  //   musicClip: 'https://files.catbox.moe/tlb833.mp3',
-  //   volumeLevel: 0.2,
-  //   cubeColor: 'rgb( 52, 190, 237 )',
-  //   cubeHoverColor: 'rgb( 18, 76, 150 )',
-  //   frontHasBackground: true
-  // },
   {
     coverImage: '/Channel Covers/cover-image/composeapi.svg',
     gifImage: '/Channel Covers/focused-image/composeapi.jpg',
@@ -160,21 +153,36 @@ export const channels: Channel[] = [
     volumeLevel: 0.3,
     cubeColor: 'rgb(8, 8, 8)',
     cubeHoverColor: 'rgb( 18, 76, 150 )',
+    frontHasBackground: true,
+  },
+  {},
+  {
+    coverImage: '/Channel Covers/cover-image/zine.svg',
+    gifImage: '/Channel Covers/focused-image/Zine_Cover.webp',
+    channelName: 'Zine',
+    redirect: '/zines',
+    musicClip: 'https://files.catbox.moe/0x0xh8.mp3',
+    volumeLevel: 0.2,
+    cubeColor: 'rgb(52, 6, 92)',
+    cubeHoverColor: 'rgb( 18, 76, 150 )',
     frontHasBackground: true
   },
 ];
 
-// Fill remaining grid slots with blank placeholders
-while (channels.length < nRows * nCols) {
-  channels.push({
-    coverImage: '',
-    gifImage: '',
-    channelName: '',
-    redirect: '',
-    musicClip: '',
-    volumeLevel: 0.5,
-    cubeColor: '',
-    cubeHoverColor: '',
-    frontHasBackground: false,
-  });
+export function isChannel(slot: ChannelSlot): slot is Channel {
+  return typeof slot.redirect == 'string' && slot.redirect != '';
+}
+
+// Split the channels into pages of `pageSize`; once a page is full the rest spill onto the next.
+// One blank page is added at the end, which also sits to the left of the first page when wrapping around.
+export function paginate(slots: ChannelSlot[], pageSize: number): ChannelSlot[][] {
+  const pages: ChannelSlot[][] = [];
+  for (let i = 0; i < slots.length; i += pageSize) pages.push(slots.slice(i, i + pageSize));
+  if (pages.length == 0) pages.push([]);
+
+  const lastPage = pages[pages.length - 1];
+  while (lastPage.length < pageSize) lastPage.push({});
+
+  pages.push(Array.from({ length: pageSize }, () => ({})));
+  return pages;
 }

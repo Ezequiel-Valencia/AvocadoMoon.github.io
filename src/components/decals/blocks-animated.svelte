@@ -30,6 +30,8 @@
     left: 0;
     width: 100%;
     height: 100%;
+    // A list's default margin would push it past the bottom and make phones scroll
+    margin: 0;
     overflow: hidden;
     z-index: -50;
   }

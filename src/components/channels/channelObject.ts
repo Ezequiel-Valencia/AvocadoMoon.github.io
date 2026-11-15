@@ -147,7 +147,21 @@ export const channels: Channel[] = [
   //   redirect: '/zines',
   //   musicClip: 'https://files.catbox.moe/tlb833.mp3',
   //   volumeLevel: 0.2,
+  //   cubeColor: 'rgb( 52, 190, 237 )',
+  //   cubeHoverColor: 'rgb( 18, 76, 150 )',
+  //   frontHasBackground: true
   // },
+  {
+    coverImage: '/Channel Covers/cover-image/composeapi.svg',
+    gifImage: '/Channel Covers/focused-image/composeapi.jpg',
+    channelName: 'Compose',
+    redirect: 'https://compose.cam.uchc.edu/ui',
+    musicClip: 'https://youtu.be/EmdXKFGKxVo?si=LEvKpaApg4YS1Mj1',
+    volumeLevel: 0.3,
+    cubeColor: 'rgb(8, 8, 8)',
+    cubeHoverColor: 'rgb( 18, 76, 150 )',
+    frontHasBackground: true
+  },
 ];
 
 // Fill remaining grid slots with blank placeholders

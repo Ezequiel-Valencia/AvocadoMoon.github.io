@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { zineMetaData } from './zine';
+  import Menu from '../../common/menu.svelte';
   interface Props {
     zine: zineMetaData;
   }
@@ -10,6 +11,12 @@
 <svelte:head>
   <title>{zine.title} | Ezequiel Valencia</title>
 </svelte:head>
+
+<Menu
+  songPath={zine.songUrl ?? ''}
+  songName={zine.songName ?? zine.title}
+  songVolumeLevel={String(zine.songVolume ?? 0.3)}
+></Menu>
 
 <div class="zine-page" style="background-image: url('{zine.backgroundImage}');">
   <div class="zine-header">

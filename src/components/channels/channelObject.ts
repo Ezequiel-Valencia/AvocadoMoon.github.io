@@ -155,7 +155,6 @@ export const channels: ChannelSlot[] = [
     cubeHoverColor: 'rgb( 18, 76, 150 )',
     frontHasBackground: true,
   },
-  {},
   {
     coverImage: '/Channel Covers/cover-image/zine.svg',
     gifImage: '/Channel Covers/focused-image/Zine_Cover.webp',

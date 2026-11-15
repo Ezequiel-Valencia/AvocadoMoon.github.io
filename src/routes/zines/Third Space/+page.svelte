@@ -1,7 +1,6 @@
 <script lang="ts">
   import { zines } from '../zine';
   import DisplayZine from '../displayZine.svelte';
-  import Menu from '../../../common/menu.svelte';
 </script>
 
 <div
@@ -9,7 +8,6 @@
  height:100%; width: 100%;
  "
 >
-  <Menu songName=""></Menu>
   <DisplayZine zine={zines.thirdSpace}></DisplayZine>
 </div>
 

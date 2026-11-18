@@ -111,7 +111,12 @@ export const backgroundMusic: Video[] = [
   {
     video: 'https://www.youtube.com/watch?v=v3hWu6alQC4&list=OLAK5uy_mZB0vSjWOCepCXAwMC6bRpbi2iUkzGiKI',
     title: 'Vholume',
-    tags: ['Ambient Lounge']
+    tags: ['Ambient Lounge', 'Video Game OST']
+  },
+  {
+    video: 'https://www.youtube.com/watch?v=l6WVPiS_ang&list=PL4l-_roC68Gwmt668QBow23JKyOPwrBb8',
+    title: 'Super Liminal',
+    tags: ['Video Game OST', 'Jazz']
   }
 ];
 
